@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/RootLayout"
+    tools:context=".activities.HomeActivity">
+
+
+    <LinearLayout
+        android:id="@+id/llDisableLocation"
+        style="@style/RootLayout"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/padding_xxlarge">
+
+        <TextView
+            style="@style/TvLarge"
+            android:text="@string/disable_location"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/TvLarge"
+            android:layout_marginTop="@dimen/margin_view"
+            android:gravity="center"
+            android:text="@string/disable_location_msg" />
+
+        <com.rey.material.widget.Button
+            style="@style/RippleBtnStandard"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding_xxlarge"
+            android:background="@drawable/btn_primary"
+            android:drawableRight="@drawable/ic_enable_location_24"
+            android:padding="@dimen/padding_micro"
+            android:text="Enable Location" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llLoginWithPhone"
+        style="@style/RootLayout"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/padding_xxlarge">
+
+        <TextView
+            style="@style/TvLarge"
+            android:text="@string/disable_location"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/TvLarge"
+            android:layout_marginTop="@dimen/margin_view"
+            android:gravity="center"
+            android:text="@string/disable_location_msg" />
+
+        <com.rey.material.widget.Button
+            style="@style/RippleBtnStandard"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding_xxlarge"
+            android:background="@drawable/btn_primary"
+            android:drawableRight="@drawable/ic_enable_location_24"
+            android:padding="@dimen/padding_micro"
+            android:text="Enable Location" />
+
+    </LinearLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.HomeActivity" />
+</LinearLayout>

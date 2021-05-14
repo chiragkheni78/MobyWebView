@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llRoot"
+    style="@style/RootLayout"
+    android:background="@color/light_yellow"
+    tools:context=".activities.HomeActivity">
+
+    <LinearLayout
+        style="@style/RootLayout"
+        android:background="@color/transparent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            style="@style/RootLayout"
+            android:background="@color/transparent"
+            android:layout_height="@dimen/_180sdp"
+            tools:context=".activities.HomeActivity">
+
+        <ImageView
+            android:id="@+id/ivBanner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_180sdp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_enable_location_24" />
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_transparent" />
+
+            <TextView
+                android:id="@+id/tvOfferDescription"
+                style="@style/TvStandard"
+                android:layout_width="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@color/black"
+                android:paddingHorizontal="@dimen/padding_standard"
+                android:paddingVertical="@dimen/padding_nano"
+                android:text="ok"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                style="@style/RootLayout"
+                android:layout_above="@+id/btnWinCoupon"
+                android:background="@color/transparent"
+                android:padding="@dimen/padding_large">
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:background="@color/transparent">
+
+                    <TextView
+                        android:id="@+id/lblBankCard"
+                        style="@style/TvLarge"
+                        android:text="Bank &amp; Card Name"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvBankCard"
+                        style="@style/TvStandard"
+                        android:layout_marginTop="@dimen/padding_micro"
+                        android:text="none"
+                        android:textColor="@color/colorSecondaryText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/padding_large"
+                    android:background="@color/transparent">
+
+                    <TextView
+                        android:id="@+id/lblOffer"
+                        style="@style/TvLarge"
+                        android:text="The Offer"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvOffer"
+                        style="@style/TvStandard"
+                        android:layout_marginTop="@dimen/padding_micro"
+                        android:text="none"
+                        android:textColor="@color/colorSecondaryText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/padding_large"
+                    android:background="@color/transparent">
+
+                    <TextView
+                        android:id="@+id/lblDescription"
+                        style="@style/TvLarge"
+                        android:text="Description"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        style="@style/TvStandard"
+                        android:layout_marginTop="@dimen/padding_micro"
+                        android:text="none"
+                        android:textColor="@color/colorSecondaryText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/padding_large"
+                    android:background="@color/transparent">
+
+                    <TextView
+                        android:id="@+id/lblAddress"
+                        style="@style/TvLarge"
+                        android:text="Store Address"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        style="@style/TvStandard"
+                        android:layout_marginTop="@dimen/padding_micro"
+                        android:text="none"
+                        android:textColor="@color/colorSecondaryText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/padding_large"
+                    android:background="@color/transparent">
+
+                    <TextView
+                        android:id="@+id/lblDeal"
+                        style="@style/TvLarge"
+                        android:text="Deal Terms &amp; Conditions"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDeal"
+                        style="@style/TvStandard"
+                        android:layout_marginTop="@dimen/padding_micro"
+                        android:text="none"
+                        android:textColor="@color/colorPrimary" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btnLocate"
+                style="@style/RippleBtnStandard"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:text="@string/locate"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</FrameLayout>

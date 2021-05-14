@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home_24"
+        android:title="Cashbacks" />
+
+    <item
+        android:id="@+id/nav_my_coupons"
+        android:icon="@drawable/ic_my_coupon_24"
+        android:title="My Coupons" />
+
+    <item
+        android:id="@+id/nav_ongoing_deals"
+        android:icon="@drawable/ic_my_coupon_24"
+        android:title="Ongoing Deals" />
+
+    <item
+        android:id="@+id/nav_wallet"
+        android:icon="@drawable/ic_moby_wallet_24"
+        android:title="Moby Wallets" />
+
+    <item
+        android:id="@+id/nav_messages"
+        android:icon="@drawable/ic_message_24"
+        android:title="Messages" />
+
+    <item
+        android:id="@+id/nav_help"
+        android:icon="@drawable/ic_help_24"
+        android:title="Help?" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile_24"
+        android:title="My Profile" />
+    <item
+        android:id="@+id/nav_tc"
+        android:icon="@drawable/ic_tc_24"
+        android:title="Moby T &amp; C" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_logout_24"
+        android:title="Logout" />
+
+<!--    <item android:title="Share &amp; Rate App">-->
+<!--        <menu>-->
+<!--            <item-->
+<!--                android:id="@+id/nav_share_earn_app"-->
+<!--                android:icon="@drawable/ic_share_app"-->
+<!--                android:title="@string/menu_share_earn" />-->
+<!--            <item-->
+<!--                android:id="@+id/nav_rate_app"-->
+<!--                android:icon="@drawable/ic_rate_app"-->
+<!--                android:title="@string/menu_rate_apps" />-->
+<!--            <item-->
+<!--                android:id="@+id/nav_feedback"-->
+<!--                android:icon="@drawable/ic_feedback"-->
+<!--                android:title="@string/menu_feedback" />-->
+<!--        </menu>-->
+<!--    </item>-->
+
+</menu>

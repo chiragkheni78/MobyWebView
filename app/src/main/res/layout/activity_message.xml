@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/RootLayout"
+    android:orientation="vertical"
+    tools:context=".activities.MessageActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMessages"
+        style="@style/RecycleView78"
+        android:padding="@dimen/padding_mini"
+        android:visibility="visible" />
+
+
+</LinearLayout>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llRoot"
+    style="@style/RootLayout"
+    android:background="@color/white"
+    android:visibility="visible"
+    tools:context=".activities.ShortProfileActivity">
+
+    <RelativeLayout
+        style="@style/RootLayout"
+        android:layout_margin="@dimen/_10sdp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llBottom">
+
+            <LinearLayout
+                style="@style/NormalLayout"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/padding_large"
+                android:paddingVertical="@dimen/padding_standard">
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TvLarge"
+                        android:letterSpacing="0.1"
+                        android:text="My Age is" />
+
+                    <EditText
+                        android:id="@+id/etAge"
+                        style="@style/etStandard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_marginHorizontal="@dimen/_15sdp"
+                        android:background="@drawable/bg_white_blue"
+                        android:gravity="center"
+                        android:hint="XX"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:minWidth="@dimen/_60sdp"
+                        android:padding="@dimen/padding_mini"
+                        android:textColor="@color/primary_text" />
+
+                    <TextView
+                        style="@style/TvLarge"
+                        android:letterSpacing="0.1"
+                        android:text="Years &amp; I" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/padding_mini"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TvLarge"
+                        android:letterSpacing="0.2"
+                        android:text="Want to see Offers for" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:id="@+id/rgGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toLeftOf="@+id/tvTimeline"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_3sdp"
+                        android:weightSum="2">
+
+                        <RadioButton
+                            android:id="@+id/rbMap"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:layout_marginRight="@dimen/padding_mini"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_radio_gender"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="FEMALE"
+                            android:textColor="@drawable/color_radio_txt"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rbList"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:layout_marginLeft="@dimen/padding_mini"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_radio_gender"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:text="MALE"
+                            android:textColor="@drawable/color_radio_txt"
+                            android:textStyle="bold" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TvLarge"
+                        android:letterSpacing="0.05"
+                        android:text="Choose E-wallet for Cashback credit" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/rlDonate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp">
+
+                            <Spinner
+                                android:id="@+id/spinWallet"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_36sdp"
+                                android:background="@drawable/bg_white_blue"
+                                android:padding="8dp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/padding_standard"
+                                android:src="@drawable/ic_arrow_drop_down" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rlSpinnerClick"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/sample3"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/llBottom"
+            style="@style/NormalLayout"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:paddingVertical="@dimen/padding_standard">
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btnSaveProfile"
+                style="@style/RippleBtnStandard"
+                android:layout_width="match_parent"
+                android:background="@drawable/bg_black_blue"
+                android:text="Save" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

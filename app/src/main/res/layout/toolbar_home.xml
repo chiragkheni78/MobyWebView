@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    style="@style/ToolBar78"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.rey.material.widget.ImageButton
+            android:id="@+id/ibNavigation"
+            style="@style/IbToolBarBack78"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_round_menu_24"
+            android:tint="@color/white" />
+
+        <com.rey.material.widget.ImageView
+            android:id="@+id/ivMobyIcon"
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_56sdp"
+            android:layout_toRightOf="@+id/ibNavigation"
+            android:padding="@dimen/padding_standard"
+            android:src="@drawable/ic_moby_small" />
+
+        <com.rey.material.widget.ImageButton
+            android:id="@+id/ibShare"
+            style="@style/IbToolBarBack78"
+            android:layout_toRightOf="@+id/ivMobyIcon"
+            android:src="@drawable/ic_share_24"
+            android:tint="@color/white" />
+
+        <com.rey.material.widget.ImageButton
+            android:id="@+id/ibDashBoard"
+            style="@style/IbToolBarBack78"
+            android:layout_toRightOf="@+id/ibShare"
+            android:src="@drawable/ic_dashboard_24"
+            android:visibility="gone"
+            android:tint="@color/white" />
+
+
+        <RadioGroup
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tvMyCoupon"
+            android:background="@drawable/back_transparent_white"
+            android:orientation="horizontal"
+            android:padding="@dimen/_3sdp"
+            android:weightSum="2">
+
+            <RadioButton
+                android:id="@+id/rbMap"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_radio_map"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="MAP"
+                android:textColor="@drawable/text_color_page_switch"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbList"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_radio_list"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="LIST"
+                android:textColor="@drawable/text_color_page_switch"
+                android:textStyle="bold" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tvMyCoupon"
+            style="@style/TvStandard"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padding_micro"
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="@dimen/padding_standard"
+            android:text="MY\nCOUPONS"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_small"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</androidx.appcompat.widget.Toolbar>

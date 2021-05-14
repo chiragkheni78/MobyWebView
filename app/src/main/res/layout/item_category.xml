@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llCategory"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_3sdp"
+    android:layout_marginVertical="@dimen/_5sdp"
+    android:background="@drawable/btn_blue"
+    android:padding="@dimen/_5sdp">
+
+    <TextView
+        android:id="@+id/tvCategory"
+        style="@style/TvStandard"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:minWidth="@dimen/_80sdp"
+        android:padding="@dimen/padding_mini"
+        android:text="Category"
+        android:textColor="@color/white" />
+
+</LinearLayout>

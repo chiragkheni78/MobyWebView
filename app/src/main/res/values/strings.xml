@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Moby Cashback</string>
+
+<!--messages-->
+    <string name="validate_age">Please enter your age</string>
+    <string name="validate_eWallet">Please select your eWallet</string>
+    <string name="contact_support">Something went wrong, Please contact to support team.</string>
+    <string name="share_message">The New Way To Shop Online…. MOBY CASHBACK, Highest payouts on Over 1000 Brands with Offers Upto 50% + EXTRA (5-30)% Moby Cashback! Use my referral link, Click XXXXXX</string>
+    <string name="validate_gps_coordinates">Something went wrong with your GPS connectivity, We are unable to fetch your coordinates..</string>
+    <string name="disable_location">LOCATION DISABLE!</string>
+    <string name="disable_location_msg">View Store Coupon &amp; Bank Rewards\n in Real Time Near You !\nPlease Allow Location</string>
+
+
+    <!--buttons-->
+    <string name="online_coupon">ONLINE\nCOUPON</string>
+    <string name="instore_coupon">INSTORE\nCOUPON</string>
+    <string name="view_details">VIEW\nDETAILS</string>
+    <string name="engaged">ENGAGED</string>
+
+    <string name="win_coupon">Win Coupon</string>
+    <string name="locate">Locate</string>
+
+
+
+    <!--other-->
+    <string name="fab_content_desc">Search</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+
+</resources>

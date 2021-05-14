@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Theme Color-->
+    <color name="colorPrimary">@color/primary</color>
+    <color name="colorPrimaryDark">@color/primary</color>
+    <color name="colorAccent">@color/accent</color>
+    <color name="colorPrimaryLight">@color/primary_light</color>
+    <color name="colorPrimaryText">@color/primary_text</color>
+    <color name="colorSecondaryText">@color/secondary_text</color>
+    <color name="colorIcons">@color/icons</color>
+    <color name="colorDivider">@color/divider</color>
+    <color name="colorBtn">@color/button</color>
+
+
+    <color name="colorBackground">#F2EFE7</color>
+    <color name="colorPrimaryBtn">@color/colorPrimary</color>
+    <color name="colorSecondaryBtn">#231f20</color>
+    <color name="colorTransparent">#00ffffff</color>
+
+
+    <!--Base Color-->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="blue">#1976D2</color>
+    <color name="red">#DD0000</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="green">#008000</color>
+    <color name="twitter">#55acef</color>
+    <color name="google">#dc4a3d</color>
+    <color name="grey">#a9a9a9</color>
+    <color name="orange">#FFDF720E</color>
+    <color name="gray3">#a8a8a8</color>
+
+    <!--Custom Color-->
+    <color name="yellow_primary">#FFEB3B</color>
+    <color name="flat_green">#07880E</color>
+
+    <color name="light_red">#fceae6</color>
+    <color name="light_green">#eef4ec</color>
+    <color name="light_yellow">#fefaea</color>
+</resources>

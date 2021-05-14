@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llProgressBack"
+    android:layout_width="@dimen/_80sdp"
+    android:layout_height="@dimen/_80sdp"
+    android:layout_gravity="center"
+    android:background="@drawable/dw_progressbar_back"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.cashback.utils.custom.ProgressWheel
+        android:id="@+id/pwCommon"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_gravity="center"
+        app:matProg_barColor="@color/colorPrimary"
+        app:matProg_progressIndeterminate="true" />
+
+</LinearLayout>
