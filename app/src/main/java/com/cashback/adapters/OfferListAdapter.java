@@ -1,6 +1,7 @@
 package com.cashback.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,15 +17,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
-import com.cashback.databinding.ItemOfferListBinding;
+import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.models.Ad;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.DataObjectHolder> {
 
@@ -48,7 +47,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             super(foView);
             loTvAdName = foView.findViewById(R.id.tvAdName);
             loTvBrandName = foView.findViewById(R.id.tvBrandName);
-            loTvOffer = foView.findViewById(R.id.tvOffer);
+            loTvOffer = foView.findViewById(R.id.tvOfferRewards);
             loBtnAdDetails = foView.findViewById(R.id.btnAdDetails);
             loIvLogo = foView.findViewById(R.id.ivLogo);
             loLlRoot = foView.findViewById(R.id.llRoot);
@@ -60,19 +59,17 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
         public void onClick(View foView) {
             if (foView.getId() == R.id.btnAdDetails) {
                 int liPosition = (int) foView.getTag();
-//                Intent loIntent = new Intent(moContext, ProcessDocumentActivity.class);
-//                loIntent.putExtra(Common.IntentKey.SUB_CATEGORY_ID, moOfferList.get(liPosition).getLegalIssue().getSubCategory().getSubCategoryId());
-//                moContext.startActivity(loIntent);
+                Intent loIntent = new Intent(moContext, OfferDetailsActivity.class);
+                loIntent.putExtra(Constants.IntentKey.OFFER_ID, moOfferList.get(liPosition).getAdID());
+                if (moOfferList.get(liPosition).getLocationList().size() > 0)
+                    loIntent.putExtra(Constants.IntentKey.LOCATION_ID, moOfferList.get(liPosition).getLocationList().get(0).getLocationID());
+                moContext.startActivity(loIntent);
             }
         }
     }
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-//        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-//        ItemOfferListBinding moBinding = ItemOfferListBinding.inflate(layoutInflater, parent, false);
-//        moBinding.
 
         View loView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_offer_list, parent, false);
         DataObjectHolder loDataObjectHolder = new DataObjectHolder(loView);
@@ -97,7 +94,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     }
 
     private void setButton(Button loBtnAdDetails, Ad foAdOffer) {
-        if (foAdOffer.getEngagedFlag() == 1) {
+        if (foAdOffer.getEngagedFlag() == true) {
             loBtnAdDetails.setText(Common.getDynamicText(moContext, "engaged"));
             loBtnAdDetails.setBackgroundColor(moContext.getResources().getColor(R.color.grey));
         } else {
@@ -118,29 +115,22 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     }
 
     private void setLogo(ImageView loIvLogo, Ad foAdOffer) {
-
-//        Picasso.get()
-//                .load(foAdOffer.getLogoUrl())
-//                .error(moContext.getResources().getDrawable(R.drawable.ic_moby_small))
-//                .placeholder(moContext.getResources().getDrawable(R.drawable.ic_moby_small))
-//                .resize(75, 75)
-//                .centerCrop()
-//                .into(loIvLogo);
-
-        Common.loadImage(loIvLogo, foAdOffer.getLogoUrl(), moContext.getResources().getDrawable(R.drawable.ic_moby_small), moContext.getResources().getDrawable(R.drawable.ic_moby_small));
+        Common.loadImage(loIvLogo, foAdOffer.getLogoUrl(),
+                moContext.getResources().getDrawable(R.drawable.ic_moby_small),
+                moContext.getResources().getDrawable(R.drawable.ic_moby_small));
     }
 
     private void setOfferLabel(TextView foTvCashBackOffer, Ad foAdOffer) {
 
         int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.white);
 
-        if (!foAdOffer.getDiscountUpTo().isEmpty()){
+        if (!foAdOffer.getDiscountUpTo().isEmpty()) {
             foTvCashBackOffer.setText(Common.getColorText("Upto ", Color.WHITE));
             foTvCashBackOffer.append(Common.getColorText(foAdOffer.getDiscountUpTo(), fiPrimaryColor));
             foTvCashBackOffer.append(Common.getColorText(" Off", Color.WHITE));
         }
 
-        if (!foAdOffer.getFlatCashBack().isEmpty()){
+        if (!foAdOffer.getFlatCashBack().isEmpty()) {
 
             if (foTvCashBackOffer.getText().length() > 0) {
                 foTvCashBackOffer.append(Common.getColorText(" + ", Color.WHITE));

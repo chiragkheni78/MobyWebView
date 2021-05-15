@@ -10,14 +10,30 @@ public class AdLocation {
     @SerializedName("ffLatitude")
     double latitude;
 
-    @SerializedName("ffLogitude")
+    @SerializedName("ffLongitude")
     double longitude;
-
-    @SerializedName("location_distance")
-    int distance;
 
     @SerializedName("fsLandmark")
     String landmark;
+
+    @SerializedName("fsAddress")
+    String address;
+
+    @SerializedName("fsContact")
+    String phone;
+
+    @SerializedName("fsEmail")
+    String email;
+
+    @SerializedName("fsCity")
+    String city;
+
+     @SerializedName("fsState")
+    String state;
+
+    @SerializedName("ffDistanceToUser")
+    int distance;
+
 
     public long getLocationID() {
         return locationID;
@@ -37,5 +53,25 @@ public class AdLocation {
 
     public String getLandmark() {
         return landmark;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
     }
 }

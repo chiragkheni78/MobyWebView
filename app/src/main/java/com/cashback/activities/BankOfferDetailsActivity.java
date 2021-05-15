@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.R;
 import com.cashback.databinding.ActivityBankOfferDetailsBinding;
 import com.cashback.models.Ad;
+import com.cashback.models.AdLocation;
 import com.cashback.models.OfferDetailsViewModel;
-import com.cashback.models.response.OffersDetailsResponse;
+import com.cashback.models.response.OfferDetailsResponse;
 import com.cashback.utils.Common;
 import com.squareup.picasso.Picasso;
 
@@ -42,9 +43,9 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
         showProgressDialog();
     }
 
-    Observer<OffersDetailsResponse> fetchOfferDetailsObserver = new Observer<OffersDetailsResponse>() {
+    Observer<OfferDetailsResponse> fetchOfferDetailsObserver = new Observer<OfferDetailsResponse>() {
         @Override
-        public void onChanged(OffersDetailsResponse loJsonObject) {
+        public void onChanged(OfferDetailsResponse loJsonObject) {
             if (!loJsonObject.isError()) {
                 moOffer = loJsonObject.getOffer();
                 setUpOfferDatailsView(loJsonObject.getOffer());
@@ -64,7 +65,7 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
                 }
 
                 moBinding.tvBankCard.setText(offer.getAdName() + "   " + offer.getCardType() + "   " + offer.getCardName());
-                moBinding.tvOffer.setText(offer.getDescription());
+                moBinding.tvOfferRewards.setText(offer.getDescription());
 
                 moBinding.tvOfferDescription.setText(offer.getDescription());
                 moBinding.tvDescription.setText(offer.getDescription());
@@ -92,8 +93,10 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
     }
 
     private void btnLocatePressed() {
-        if (moOffer != null && moOffer.getLocation()!= null){
-            String lsUrl = "http://maps.google.com/maps?daddr=" + moOffer.getLocation().getLatitude() + "," + moOffer.getLocation().getLongitude();
+
+        if (moOffer != null && moOffer.getLocationList().size() > 0){
+            AdLocation loLocation = moOffer.getLocationList().get(0);
+            String lsUrl = "http://maps.google.com/maps?daddr=" + loLocation.getLatitude() + "," + loLocation.getLongitude();
             Common.openBrowser(getContext(), lsUrl);
         }
     }

@@ -68,9 +68,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         loIbNavigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(moBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                if (moBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     moBinding.drawerLayout.closeDrawer(Gravity.LEFT); //CLOSE Nav Drawer!
-                }else{
+                } else {
                     moBinding.drawerLayout.openDrawer(Gravity.LEFT); //OPEN Nav Drawer!
                 }
             }
@@ -108,9 +108,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void shareApp() {
-        if (getPreferenceManager().getReferralLink().isEmpty()) {
+        if (!getPreferenceManager().getReferralLink().isEmpty()) {
             String lsMessage = Common.getDynamicText(this, "share_message");
-            lsMessage = lsMessage.replace("CCCCC", getPreferenceManager().getReferralCode());
+            if (getPreferenceManager().getReferralCode() != null)
+                lsMessage = lsMessage.replace("CCCCC", getPreferenceManager().getReferralCode());
             lsMessage = lsMessage.replace("XXXXXX", getPreferenceManager().getReferralLink());
             Common.shareApp(this, lsMessage);
         }
@@ -178,15 +179,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void logout() {
+
     }
 
     private void openTC() {
+
     }
 
     private void openProfile() {
+
     }
 
     private void openHelp() {
+
     }
 
     private void openMessages() {
@@ -195,8 +200,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void openWallet() {
+
     }
 
     private void openOngoingDeal() {
+
     }
 }

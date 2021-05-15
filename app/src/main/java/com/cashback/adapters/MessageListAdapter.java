@@ -1,14 +1,12 @@
 package com.cashback.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,7 +20,6 @@ import com.cashback.models.Message;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +45,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             super(foView);
             loTvTitle = foView.findViewById(R.id.tvAdName);
             loTvDate = foView.findViewById(R.id.tvBrandName);
-            loTvContent = foView.findViewById(R.id.tvOffer);
+            loTvContent = foView.findViewById(R.id.tvOfferRewards);
             loTvReadMore = foView.findViewById(R.id.tvReadMoreMessage);
 
             loLlRoot = foView.findViewById(R.id.llRoot);
@@ -100,7 +97,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     private void setButton(Button loBtnAdDetails, Ad foAdOffer) {
-        if (foAdOffer.getEngagedFlag() == 1) {
+        if (foAdOffer.getEngagedFlag() == true) {
             loBtnAdDetails.setText(Common.getDynamicText(moContext, "engaged"));
             loBtnAdDetails.setBackgroundColor(moContext.getResources().getColor(R.color.grey));
         } else {

@@ -1,6 +1,5 @@
 package com.cashback.fragments;
 
-import android.app.ProgressDialog;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,6 +35,8 @@ import static com.cashback.AppGlobal.isSearchButtonBlink;
 
 public class OfferListFragment extends BaseFragment implements View.OnClickListener {
 
+    public static final int PAGE_SIZE = 30;
+
     FragmentOfferListBinding moBinding;
     OfferListViewModel moOfferListViewModel;
 
@@ -47,7 +48,55 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     public static int miCategoryId = -1;
 
     private int miCurrentPage = 1;
-    public static int visibleLastIndex = 0;
+    private boolean isLastPage = false;
+    private boolean isLoading = false;
+    private LinearLayoutManager moLayoutManager;
+
+
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int visibleItemCount = moLayoutManager.getChildCount();
+            int totalItemCount = moLayoutManager.getItemCount();
+            int firstVisibleItemPosition = moLayoutManager.findFirstVisibleItemPosition();
+
+            if (!isLoading && !isLastPage) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        /*&& totalItemCount >= PAGE_SIZE*/) {
+                    miCurrentPage = miCurrentPage + 1;
+                    fetchOffers();
+                }
+            }
+        }
+    };
+
+    RecyclerView.OnScrollListener moOfferScrollListener = new RecyclerView.OnScrollListener() {
+
+        private boolean isScrolledDown = false;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+
+            if (newState == RecyclerView.SCROLL_STATE_SETTLING && isScrolledDown) {
+                miCurrentPage = miCurrentPage + 1;
+                fetchOffers();
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            isScrolledDown = dy < 0;
+        }
+    };
 
 
     @Nullable
@@ -70,7 +119,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
         moBinding.btnSearch.setOnClickListener(this);
         moBinding.floatingActionSearch.setOnClickListener(this);
-        moBinding.rvOfferList.addOnScrollListener(moOfferScrollListener);
+        moBinding.rvOfferList.addOnScrollListener(recyclerViewOnScrollListener);
 
 
         final LinearLayoutManager loLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -79,9 +128,9 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         moBinding.rvCategory.setAdapter(moCategoryAdapter);
 
 
-        final LinearLayoutManager loLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        moBinding.rvOfferList.setLayoutManager(loLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(moBinding.rvOfferList.getContext(), loLayoutManager.getOrientation());
+        moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        moBinding.rvOfferList.setLayoutManager(moLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(moBinding.rvOfferList.getContext(), moLayoutManager.getOrientation());
         moBinding.rvOfferList.addItemDecoration(dividerItemDecoration);
         moOfferListAdapter = new OfferListAdapter(getActivity(), moOfferList);
         moBinding.rvOfferList.setAdapter(moOfferListAdapter);
@@ -96,6 +145,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     private void fetchOffers() {
         showProgressDialog();
+        isLoading = true;
 
         String lsSearchText = (moBinding.etSearch.getText().length() > 0) ? moBinding.etSearch.getText().toString().trim() : "";
         OfferFilter loOfferFilter = new OfferFilter(lsSearchText, miCurrentPage, miCategoryId);
@@ -111,18 +161,35 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     Observer<FetchOffersResponse> fetchOffersObserver = new Observer<FetchOffersResponse>() {
+
         @Override
         public void onChanged(FetchOffersResponse loJsonObject) {
             if (!loJsonObject.isError()) {
                 if (loJsonObject.getOfferList() != null) {
-                    moOfferList.addAll(loJsonObject.getOfferList());
-                    moOfferListAdapter.notifyList(moOfferList);
-                    if (isSearchButtonBlink)
-                        Common.blinkAnimation(moBinding.floatingActionSearch);
+                    if (loJsonObject.getOfferList().size() > 0) {
+
+                        int scrollToPosition = moLayoutManager.getItemCount();
+                        moOfferList.addAll(loJsonObject.getOfferList());
+                        moOfferListAdapter.notifyList(moOfferList);
+
+//                        if (miCurrentPage > 1){
+//                            moBinding.rvOfferList.smoothScrollToPosition(scrollToPosition);
+//                        } else {
+//                            moBinding.rvOfferList.smoothScrollToPosition(0);
+//                        }
+
+                        if (isSearchButtonBlink)
+                            Common.blinkAnimation(moBinding.floatingActionSearch);
+                    } else isLastPage = true;
+
+//                    if (loJsonObject.getOfferList().size() < PAGE_SIZE) {
+//                        isLastPage = true;
+//                    }
                 }
             } else {
                 Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
             }
+            isLoading = false;
             dismissProgressDialog();
         }
     };
@@ -161,27 +228,6 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-    RecyclerView.OnScrollListener moOfferScrollListener = new RecyclerView.OnScrollListener() {
-
-        private boolean isScrolledDown = false;
-
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-
-            if (newState == RecyclerView.SCROLL_STATE_SETTLING && isScrolledDown) {
-                miCurrentPage = miCurrentPage + 1;
-                fetchOffers();
-            }
-        }
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            isScrolledDown = dy < 0;
-        }
-    };
-
     private void floatingSearchPress() {
         isSearchButtonBlink = false;
         moBinding.floatingActionSearch.clearAnimation();
@@ -210,7 +256,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void searchButtonPressed() {
-        if (moCategories != null) miCategoryId = moCategories.get(0).getCategoryId();
+        if (moCategories != null)
+            miCategoryId = moCategories.get(0).getCategoryId();
         Common.hideKeyboard(getActivity());
         refreshData();
         moCategoryAdapter.updateCategoryByPosition(0);
@@ -227,7 +274,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     private void refreshData() {
         if (moOfferList != null) moOfferList.clear();
         miCurrentPage = 1;
-        visibleLastIndex = 0;
+        isLastPage = false;
         moBinding.btnSearch.clearAnimation();
         fetchOffers();
     }

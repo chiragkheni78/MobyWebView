@@ -24,6 +24,9 @@ public class GetProfileResponse {
     @SerializedName("foAdvertisementList")
     private ArrayList<Advertisement> advertisementList;
 
+    @SerializedName("foUserDetails")
+    private UserDetails userDetails;
+
     public GetProfileResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
@@ -55,5 +58,9 @@ public class GetProfileResponse {
 
     public ArrayList<Advertisement> getAdvertisementList() {
         return advertisementList;
+    }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
     }
 }

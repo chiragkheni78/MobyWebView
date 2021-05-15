@@ -48,7 +48,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:singleLine="true"
                         android:text="Offer Name"
                         android:textColor="@color/black"
                         android:textSize="14sp"
@@ -94,7 +93,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvOffer"
+                    android:id="@+id/tvOfferRewards"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rect_grey"

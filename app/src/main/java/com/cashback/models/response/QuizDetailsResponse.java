@@ -1,11 +1,12 @@
 package com.cashback.models.response;
 
 import com.cashback.models.Ad;
+import com.cashback.models.Quiz;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class OffersDetailsResponse {
+public class QuizDetailsResponse {
 
     @SerializedName("fbIsError")
     private boolean isError;
@@ -13,8 +14,8 @@ public class OffersDetailsResponse {
     @SerializedName("fsMessage")
     private String message;
 
-    @SerializedName("foAdOffer")
-    private Ad offer;
+    @SerializedName("foQuizList")
+    private ArrayList<Quiz> quizList;
 
     public boolean isError() {
         return isError;
@@ -24,11 +25,11 @@ public class OffersDetailsResponse {
         return message;
     }
 
-    public Ad getOffer() {
-        return offer;
+    public ArrayList<Quiz> getQuizList() {
+        return quizList;
     }
 
-    public OffersDetailsResponse(boolean isError, String message) {
+    public QuizDetailsResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
     }

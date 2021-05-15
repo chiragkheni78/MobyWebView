@@ -6,13 +6,17 @@ import com.cashback.models.request.GetProfileRequest;
 import com.cashback.models.request.MessageListRequest;
 import com.cashback.models.request.OfferDetailsRequest;
 import com.cashback.models.request.OfferFilterRequest;
+import com.cashback.models.request.QuizDetailsRequest;
 import com.cashback.models.request.SaveMiniProfileRequest;
+import com.cashback.models.request.SubmitQuizRequest;
 import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.GetProfileResponse;
 import com.cashback.models.response.MessageListResponse;
-import com.cashback.models.response.OffersDetailsResponse;
+import com.cashback.models.response.OfferDetailsResponse;
+import com.cashback.models.response.QuizDetailsResponse;
 import com.cashback.models.response.SaveProfileResponse;
+import com.cashback.models.response.SubmitQuizResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,7 +37,13 @@ public interface AppServices {
     Call<OfferFilterResponse> getOfferFilter(@Body OfferFilterRequest foRequest);
 
     @POST("v2-apis/")
-    Call<OffersDetailsResponse> fetchOfferDetails(@Body OfferDetailsRequest foRequest);
+    Call<OfferDetailsResponse> getOfferDetails(@Body OfferDetailsRequest foRequest);
+
+    @POST("v2-apis/")
+    Call<QuizDetailsResponse> getQuizDetails(@Body QuizDetailsRequest foRequest);
+
+    @POST("v2-apis/")
+    Call<SubmitQuizResponse> submitQuizAnswer(@Body SubmitQuizRequest foRequest);
 
     @POST("v2-apis/")
     Call<MessageListResponse> getMessageList(@Body MessageListRequest foRequest);

@@ -5,6 +5,7 @@ import com.cashback.BuildConfig;
 public class Constants {
 
     public static final int SPLASH_TIME = 3 * 1000;
+
     public static String BASE_URL = BuildConfig.BASE_URL;
     public static String IMAGE_BASE_URL = "https://mobyads.in/moby/";
 
@@ -14,16 +15,49 @@ public class Constants {
         public static final String TAG_MAP_VIEW = "map_view";
     }
 
+    public class IntentKey {
+        public static final String OFFER_ID = "offerId";
+        public static final String LOCATION_ID = "locationId";
+        public static final String REPORT_ID = "reportId";
+        public static final String QR_DATA = "qr_data";
+    }
+
     public enum API
     {
         GET_USER_PROFILE("getUserProfile"),
         SAVE_MINI_PROFILE("saveMiniProfile"),
         GET_OFFER_FILTER("getOfferFilter"),
-        GET_OFFER_LIST("getOfferList");
+        GET_OFFER_LIST("getOfferList"),
+        GET_OFFER_DETAILS("getOfferDetails"),
+        GET_QUIZ_DETAILS("getQuizDetails"),
+        SUBMIT_QUIZ_ANSWER("submitQuizAnswer")
+                ;
 
         private String type;
 
         API (String type)
+        {
+            this.type = type;
+        }
+
+        public String getValue()
+        {
+            return type;
+        }
+    }
+
+    public enum AnswerType
+    {
+        BARCODE("barCode"),
+        YOUTUBE_VIDEO("youtubeVideo"),
+        MULTI_CHOICE("multiChoice"),
+        TEXABLE("texable"),
+        CAMPAIGN("campaign")
+        ;
+
+        private String type;
+
+        AnswerType (String type)
         {
             this.type = type;
         }
@@ -70,7 +104,7 @@ public class Constants {
 
     public enum OfferPage
     {
-        MAP_VIEW(2),  OFFER_LIST(4);
+        MAP_VIEW(2),  OFFER_LIST(1);
 
         private int type;
 

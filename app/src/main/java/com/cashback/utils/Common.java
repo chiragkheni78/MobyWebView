@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -35,6 +36,7 @@ import com.cashback.R;
 import com.cashback.activities.ShortProfileActivity;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import org.json.JSONObject;
 
@@ -243,7 +245,18 @@ public class Common {
     }
 
     public static void hideKeyboard(Activity foContext) {
-        foContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        //foContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        try {
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) foContext.getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+
+            if (foContext.getCurrentFocus() != null)
+                inputMethodManager.hideSoftInputFromWindow(foContext.getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void replaceFragment(Context foContext, Fragment foFragment, String fsTag, boolean isBackStack) {
@@ -308,12 +321,24 @@ public class Common {
 
     public static void loadImage(ImageView loImageView, String fsURL, Drawable fdError, Drawable placeholder) {
         if (fsURL != null) {
-            fsURL = (Constants.IMAGE_BASE_URL + fsURL).replace("https", "http");;
-            Picasso.get()
-                    .load(fsURL)
-                    .error(fdError)
-                    .placeholder(placeholder)
-                    .into(loImageView);
+            fsURL = (Constants.IMAGE_BASE_URL + fsURL).replace("https", "http");
+
+
+            RequestCreator loRequest = Picasso.get().load(fsURL);
+
+            if (fdError != null && placeholder != null){
+                loRequest.error(fdError)
+                        .placeholder(placeholder)
+                        .into(loImageView);
+            } else if (fdError != null && placeholder == null) {
+                loRequest.error(fdError)
+                        .into(loImageView);
+            } else if (fdError == null && placeholder != null) {
+                loRequest.placeholder(placeholder)
+                        .into(loImageView);
+            } else {
+                loRequest.into(loImageView);
+            }
         }
     }
 }

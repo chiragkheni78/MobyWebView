@@ -64,4 +64,9 @@ dependencies {
     //google-map
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
 
+    // Youtube Viewer
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
+    //QR-Scanner
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
 }

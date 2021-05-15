@@ -9,6 +9,7 @@
     <string name="validate_gps_coordinates">Something went wrong with your GPS connectivity, We are unable to fetch your coordinates..</string>
     <string name="disable_location">LOCATION DISABLE!</string>
     <string name="disable_location_msg">View Store Coupon &amp; Bank Rewards\n in Real Time Near You !\nPlease Allow Location</string>
+    <string name="scanned_qr_is_not_correct">Scanned QR code is not correct.</string>
 
 
     <!--buttons-->
@@ -19,6 +20,9 @@
 
     <string name="win_coupon">Win Coupon</string>
     <string name="locate">Locate</string>
+
+    <string name="submit_quiz">Submit Quiz</string>
+    <string name="next_question">Next Question</string>
 
 
 

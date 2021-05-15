@@ -2,16 +2,16 @@ package com.cashback.models.request;
 
 import android.content.Context;
 
+import com.cashback.models.QuizAnswer;
 import com.cashback.utils.Common;
 import com.google.gson.annotations.SerializedName;
 
-public class OfferDetailsRequest {
+import java.util.ArrayList;
+
+public class SubmitQuizRequest {
 
     @SerializedName("fsAction")
-    private String action;
-
-    @SerializedName("user_contact")
-    private String mobileNumber;
+    String action;
 
     @SerializedName("fsDeviceId")
     private String deviceId;
@@ -22,17 +22,17 @@ public class OfferDetailsRequest {
     @SerializedName("fiLocationId")
     private long locationId;
 
-    @SerializedName("fiReportId")
-    private long reportId;
+    @SerializedName("foQuizAnswerList")
+    ArrayList<QuizAnswer> quizAnswerList;
 
-    public OfferDetailsRequest(String mobileNumber, long offerId, long locationId) {
-        this.mobileNumber = mobileNumber;
+    public SubmitQuizRequest(String deviceId, long offerId, long locationId) {
+        this.deviceId = deviceId;
         this.offerId = offerId;
         this.locationId = locationId;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public void setDeviceId(String deviceId) {
@@ -47,18 +47,13 @@ public class OfferDetailsRequest {
         this.locationId = locationId;
     }
 
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public void setReportId(long reportId) {
-        this.reportId = reportId;
+    public void setQuizAnswerList(ArrayList<QuizAnswer> quizAnswerList) {
+        this.quizAnswerList = quizAnswerList;
     }
 
     public String validateData(Context foContext) {
+
         if (Common.getDeviceUniqueId(foContext).isEmpty()) {
-            return Common.getDynamicText(foContext, "contact_support");
-        } else if (offerId == 0 || locationId == 0){
             return Common.getDynamicText(foContext, "contact_support");
         }
         return null;

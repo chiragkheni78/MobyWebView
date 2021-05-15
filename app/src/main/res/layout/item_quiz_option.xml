@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/padding_xnano"
+    android:background="@drawable/rect_white"
+    android:elevation="@dimen/_8sdp"
+    app:cardElevation="@dimen/_5sdp">
+
+    <TextView
+        android:id="@+id/tvOption"
+        style="@style/TvStandard"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/padding_standard"
+        android:text="Category"
+        android:textColor="@color/colorPrimaryText" />
+</androidx.cardview.widget.CardView>

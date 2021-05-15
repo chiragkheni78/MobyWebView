@@ -5,7 +5,7 @@ import android.content.Context;
 import com.cashback.utils.Common;
 import com.google.gson.annotations.SerializedName;
 
-public class OfferDetailsRequest {
+public class QuizDetailsRequest {
 
     @SerializedName("fsAction")
     private String action;
@@ -22,10 +22,7 @@ public class OfferDetailsRequest {
     @SerializedName("fiLocationId")
     private long locationId;
 
-    @SerializedName("fiReportId")
-    private long reportId;
-
-    public OfferDetailsRequest(String mobileNumber, long offerId, long locationId) {
+    public QuizDetailsRequest(String mobileNumber, long offerId, long locationId) {
         this.mobileNumber = mobileNumber;
         this.offerId = offerId;
         this.locationId = locationId;
@@ -49,10 +46,6 @@ public class OfferDetailsRequest {
 
     public void setAction(String action) {
         this.action = action;
-    }
-
-    public void setReportId(long reportId) {
-        this.reportId = reportId;
     }
 
     public String validateData(Context foContext) {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Ad {
 
     @SerializedName("fiAdId")
-    int adID;
+    long adID;
 
     @SerializedName("fsAdName")
     String adName;
@@ -15,17 +15,14 @@ public class Ad {
     @SerializedName("fsAdType")
     String adType;
 
-    @SerializedName("fbIsAdEngaged")
-    int engagedFlag;
+    @SerializedName("fsPinColor")
+    String pinColor;
 
     @SerializedName("fsProductName")
     String productName;
 
-    @SerializedName("fsCompanyLogo")
-    String logoUrl;
-
-    @SerializedName("fsCompanyBanner")
-    String bannerUrl;
+    @SerializedName("fbIsAdEngaged")
+    boolean engagedFlag;
 
     @SerializedName("flCoverageRadius")
     String coverageRadius;
@@ -36,12 +33,6 @@ public class Ad {
     @SerializedName("fsDiscountUpTo")
     String discountUpTo;
 
-    @SerializedName("ffAdDistance")
-    double distance;
-
-    @SerializedName("fsPinColor")
-    String pinColor;
-
     @SerializedName("fiQuizReward")
     int quizReward;
 
@@ -51,32 +42,10 @@ public class Ad {
     @SerializedName("fiNormalReward")
     int normalRewardAmount;
 
-    @SerializedName("description")
-    String description;
-
-    @SerializedName("campaign_name")
-    String campaignName;
-
-    @SerializedName("desc_1")
-    String desc1;
-
-    @SerializedName("desc_2")
-    String desc2;
-
-    @SerializedName("desc_3")
-    String desc3;
-
-    @SerializedName("desc_4")
-    String desc4;
-
-
     @SerializedName("foLocationList")
     ArrayList<AdLocation> locationList;
 
-    @SerializedName("foLocation")
-    AdLocation location;
-
-    public int getAdID() {
+    public long getAdID() {
         return adID;
     }
 
@@ -88,20 +57,12 @@ public class Ad {
         return adType;
     }
 
-    public int getEngagedFlag() {
+    public boolean getEngagedFlag() {
         return engagedFlag;
     }
 
     public String getProductName() {
         return productName;
-    }
-
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public String getBannerUrl() {
-        return bannerUrl;
     }
 
     public String getCoverageRadius() {
@@ -114,10 +75,6 @@ public class Ad {
 
     public String getDiscountUpTo() {
         return discountUpTo;
-    }
-
-    public double getDistance() {
-        return distance;
     }
 
     public String getPinColor() {
@@ -144,39 +101,52 @@ public class Ad {
         return campaignName;
     }
 
-    public String getDesc1() {
-        return desc1;
-    }
-
-    public String getDesc2() {
-        return desc2;
-    }
-
-    public String getDesc3() {
-        return desc3;
-    }
-
-    public String getDesc4() {
-        return desc4;
-    }
-
     public ArrayList<AdLocation> getLocationList() {
         return locationList;
     }
 
-    public AdLocation getLocation() {
-        return location;
-    }
-
-
 
     /*details*/
+    @SerializedName("description")
+    String description;
+
+    @SerializedName("fsCompanyName")
+    String campaignName;
+
+    @SerializedName("fsAdLogo")
+    String logoUrl;
+
+    @SerializedName("fsAdBanner")
+    String fsBannerURL;
+
+    @SerializedName("fsDescription1")
+    String desc1;
+
+    @SerializedName("fsDescription2")
+    String desc2;
+
+    @SerializedName("fsDescription3")
+    String desc3;
+
+    @SerializedName("fsDescription4")
+    String desc4;
 
     @SerializedName("cardType")
     String cardType;
+
     @SerializedName("cardName")
     String cardName;
-    @SerializedName("terms_conditions_URL")
+
+    @SerializedName("fbIsAdEngageLimitOver")
+    String isAdEngageLimitOver;
+
+    @SerializedName("fsMsgEngageLimitOver")
+    String engageLimitOverMessage;
+
+    @SerializedName("fsCompanyUrl")
+    String fsCompanyURL;
+
+    @SerializedName("fsTC")
     String termsCondition;
 
     public String getCardType() {
@@ -190,5 +160,28 @@ public class Ad {
     public String getTermsCondition() {
         return termsCondition;
     }
-}
 
+    public String getDesc1() {
+        return desc1.replace("<br/>", "\n");
+    }
+
+    public String getDesc2() {
+        return desc2.replace("<br/>", "\n");
+    }
+
+    public String getDesc3() {
+        return desc3.replace("<br/>", "\n");
+    }
+
+    public String getDesc4() {
+        return desc4.replace("<br/>", "\n");
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public String getBannerUrl() {
+        return fsBannerURL;
+    }
+}

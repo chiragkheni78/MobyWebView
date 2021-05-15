@@ -77,6 +77,13 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                 } else moBinding.ivBanner.setVisibility(View.GONE);
 
                 if (loJsonObject.isUserExist()) {
+                    if (loJsonObject.getUserDetails() != null) {
+                        UserDetails loUserDetails = loJsonObject.getUserDetails();
+                        getPreferenceManager().setUserLogIn(true);
+                        getPreferenceManager().setReferralCode(loUserDetails.getReferralCode());
+                        getPreferenceManager().setReferralLink(loUserDetails.getReferralUrl());
+                    }
+
                     Intent intent = new Intent(ShortProfileActivity.this, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

@@ -83,7 +83,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvOffer"
+                        android:id="@+id/tvOfferRewards"
                         style="@style/TvStandard"
                         android:layout_marginTop="@dimen/padding_micro"
                         android:text="none"

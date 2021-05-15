@@ -16,7 +16,8 @@
 
         <TextView
             android:id="@+id/tvToolbarTitle"
-            style="@style/TvToolBarTitle78" />
+            style="@style/TvToolBarTitle78"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tvTitleEnd"
@@ -30,7 +31,7 @@
             style="@style/IbToolBarBack78"
             android:tint="@color/white"
             android:layout_margin="@dimen/padding_micro"
-            android:background="@drawable/rect_black"/>
+            android:background="@drawable/rect_black_transparent"/>
 
 <!--        <com.rey.material.widget.ImageButton-->
 <!--            android:id="@+id/ibDownload"-->
