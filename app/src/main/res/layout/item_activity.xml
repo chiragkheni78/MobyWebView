@@ -59,7 +59,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_activity_adName"
+                            android:id="@+id/tvOfferName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toLeftOf="@+id/llQuizReward"
@@ -69,10 +69,10 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_activity_date"
+                            android:id="@+id/tvDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_activity_adName"
+                            android:layout_below="@id/tvOfferName"
                             android:layout_centerVertical="true"
                             android:text="2nd May 2017"
                             android:textColor="@color/secondary_text"
@@ -89,7 +89,7 @@
                             android:visibility="visible">
 
                             <TextView
-                                android:id="@+id/tv_activity_reward"
+                                android:id="@+id/tvQuizReward"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="5dp"
@@ -128,7 +128,6 @@
                         android:id="@+id/lblCashBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_activity_adName"
                         android:layout_marginRight="@dimen/_3sdp"
                         android:text="Cashback Amount:"
                         android:textColor="@color/primary_text"
@@ -141,7 +140,6 @@
                         android:id="@+id/tvCashBackAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_activity_adName"
                         android:background="@drawable/rect_black"
                         android:gravity="center_vertical"
                         android:minWidth="@dimen/_190sdp"
@@ -162,7 +160,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvBillPayment"
+                    android:id="@+id/tvRegisterBill"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_4sdp"
