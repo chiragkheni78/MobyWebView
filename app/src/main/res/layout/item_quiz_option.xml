@@ -5,18 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/padding_xnano"
+    android:layout_margin="@dimen/padding_mini"
     android:background="@drawable/rect_white"
-    android:elevation="@dimen/_8sdp"
-    app:cardElevation="@dimen/_5sdp">
+    app:cardElevation="@dimen/_4sdp">
 
-    <TextView
+    <RadioButton
         android:id="@+id/tvOption"
-        style="@style/TvStandard"
+        style="@style/TvLarge"
         android:layout_width="match_parent"
         android:layout_gravity="center"
+        android:button="@null"
         android:gravity="center"
         android:padding="@dimen/padding_standard"
+        android:background="@drawable/bg_radio_multi_choice"
         android:text="Category"
-        android:textColor="@color/colorPrimaryText" />
+        android:textColor="@drawable/text_color_multi_choice" />
 </androidx.cardview.widget.CardView>

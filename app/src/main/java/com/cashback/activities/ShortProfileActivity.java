@@ -4,10 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
 
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -17,15 +15,12 @@ import com.cashback.adapters.EWalletAdapter;
 import com.cashback.databinding.ActivityShortProfileBinding;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
-import com.cashback.models.ProfileViewModel;
+import com.cashback.models.viewmodel.ProfileViewModel;
 import com.cashback.models.UserDetails;
 import com.cashback.models.response.GetProfileResponse;
 import com.cashback.models.response.SaveProfileResponse;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 

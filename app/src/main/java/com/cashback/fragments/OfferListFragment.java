@@ -23,7 +23,7 @@ import com.cashback.databinding.FragmentOfferListBinding;
 import com.cashback.models.Ad;
 import com.cashback.models.Category;
 import com.cashback.models.OfferFilter;
-import com.cashback.models.OfferListViewModel;
+import com.cashback.models.viewmodel.OfferListViewModel;
 import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.utils.Common;
@@ -278,4 +278,5 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         moBinding.btnSearch.clearAnimation();
         fetchOffers();
     }
+
 }

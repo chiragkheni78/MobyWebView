@@ -5,6 +5,8 @@ import android.content.Context;
 
 public class AppGlobal extends Application {
 
+
+    public static boolean isDisplayRewardNote = false;
     public static boolean isSearchButtonBlink = true;
 
     public static Context moContext;

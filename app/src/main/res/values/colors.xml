@@ -33,7 +33,7 @@
 
     <!--Custom Color-->
     <color name="yellow_primary">#FFEB3B</color>
-    <color name="flat_green">#07880E</color>
+    <color name="green_primary">#07880E</color>
 
     <color name="light_red">#fceae6</color>
     <color name="light_green">#eef4ec</color>

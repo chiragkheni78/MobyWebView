@@ -2,7 +2,9 @@ package com.cashback.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AdLocation {
+import java.io.Serializable;
+
+public class AdLocation implements Serializable {
 
     @SerializedName("fiLocationId")
     long locationID;

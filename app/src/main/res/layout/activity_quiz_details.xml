@@ -8,13 +8,14 @@
     tools:context=".activities.HomeActivity">
 
     <LinearLayout
+        android:id="@+id/llQuestion"
         style="@style/NormalLayout"
         android:background="@drawable/half_circle_light_green"
         android:orientation="vertical">
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar_transparent" />
+            layout="@layout/toolbar_quiz" />
 
 
         <LinearLayout
@@ -26,17 +27,17 @@
 
             <TextView
                 android:id="@+id/tvQuestion"
-                style="@style/TvXLarge"
+                style="@style/TvLarge"
                 android:text="Shop via moby coupon to get all "
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvNumber"
-                style="@style/TvXLarge"
-                android:layout_marginTop="@dimen/_20sdp"
+                style="@style/TvStandard"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
-                android:text="1 of 3"
-                android:textStyle="bold" />
+                android:text="1 of 3" />
 
         </LinearLayout>
     </LinearLayout>
@@ -52,12 +53,14 @@
             android:background="@color/transparent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/_20sdp">
+            android:paddingHorizontal="@dimen/_20sdp">
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvQuizOptions"
                 style="@style/RecycleView78"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:visibility="gone"
                 tools:listitem="@layout/item_quiz_option" />
 
@@ -121,6 +124,7 @@
                     android:layout_gravity="bottom|center"
                     android:layout_margin="@dimen/padding_xnano"
                     android:background="@drawable/rect_white"
+                    android:visibility="gone"
                     android:elevation="@dimen/_8sdp">
 
                     <EditText

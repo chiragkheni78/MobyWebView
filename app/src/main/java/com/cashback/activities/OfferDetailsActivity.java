@@ -1,6 +1,7 @@
 package com.cashback.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.R;
 import com.cashback.databinding.ActivityOfferDetailsBinding;
 import com.cashback.models.Ad;
-import com.cashback.models.OfferDetailsViewModel;
+import com.cashback.models.viewmodel.OfferDetailsViewModel;
 import com.cashback.models.response.OfferDetailsResponse;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -26,7 +27,11 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
     ActivityOfferDetailsBinding moBinding;
     OfferDetailsViewModel moOfferDetailsViewModel;
 
+    private Ad moOffer;
     private long miOfferID, miLocationID;
+
+    private boolean isEngageLimitOver = false;
+    private String msEngageLimitMsg = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,11 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
             miLocationID = getIntent().getLongExtra(Constants.IntentKey.LOCATION_ID, 0);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getOfferDetails();
     }
 
@@ -77,6 +87,8 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onChanged(OfferDetailsResponse loJsonObject) {
             if (!loJsonObject.isError()) {
+                msEngageLimitMsg = loJsonObject.getEngageLimitOverMessage();
+                isEngageLimitOver = loJsonObject.isAdEngageLimitOver();
                 setUpOfferDetailsView(loJsonObject.getOffer());
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
@@ -86,6 +98,7 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
 
         private void setUpOfferDetailsView(Ad offer) {
             if (offer != null) {
+                moOffer = offer;
                 if (offer.getBannerUrl() != null) {
                     Common.loadImage(moBinding.ivBanner, offer.getBannerUrl(), null, ActivityCompat.getDrawable(getContext(), R.drawable.iv_place_holder));
                 }
@@ -147,6 +160,16 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void btnWinCouponPressed() {
-
+        if (moOffer != null) {
+            if (!isEngageLimitOver) {
+                Intent loIntent = new Intent(moContext, QuizDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.IntentKey.OFFER_OBJECT, moOffer);
+                loIntent.putExtras(bundle);
+                moContext.startActivity(loIntent);
+            } else {
+                Common.showErrorDialog(getContext(), msEngageLimitMsg, true);
+            }
+        }
     }
 }

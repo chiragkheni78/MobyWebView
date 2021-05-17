@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.adapters.MessageListAdapter;
 import com.cashback.databinding.ActivityMessageBinding;
 import com.cashback.models.Message;
-import com.cashback.models.MessagesViewModel;
+import com.cashback.models.viewmodel.MessagesViewModel;
 import com.cashback.models.response.MessageListResponse;
 import com.cashback.utils.Common;
 

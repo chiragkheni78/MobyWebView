@@ -10,7 +10,7 @@ import com.cashback.R;
 import com.cashback.databinding.ActivityBankOfferDetailsBinding;
 import com.cashback.models.Ad;
 import com.cashback.models.AdLocation;
-import com.cashback.models.OfferDetailsViewModel;
+import com.cashback.models.viewmodel.OfferDetailsViewModel;
 import com.cashback.models.response.OfferDetailsResponse;
 import com.cashback.utils.Common;
 import com.squareup.picasso.Picasso;

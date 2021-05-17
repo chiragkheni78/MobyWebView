@@ -13,6 +13,12 @@ public class OfferDetailsResponse {
     @SerializedName("fsMessage")
     private String message;
 
+    @SerializedName("fbIsEngageLimitOver")
+    boolean isAdEngageLimitOver;
+
+    @SerializedName("fsMsgEngageLimitOver")
+    String engageLimitOverMessage;
+
     @SerializedName("foOfferDetails")
     private Ad offer;
 
@@ -26,6 +32,14 @@ public class OfferDetailsResponse {
 
     public Ad getOffer() {
         return offer;
+    }
+
+    public boolean isAdEngageLimitOver() {
+        return isAdEngageLimitOver;
+    }
+
+    public String getEngageLimitOverMessage() {
+        return engageLimitOverMessage;
     }
 
     public OfferDetailsResponse(boolean isError, String message) {

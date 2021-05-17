@@ -1,4 +1,4 @@
-package com.cashback.models;
+package com.cashback.models.viewmodel;
 
 import android.content.Context;
 

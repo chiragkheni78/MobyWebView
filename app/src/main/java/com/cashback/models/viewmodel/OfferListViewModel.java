@@ -1,10 +1,11 @@
-package com.cashback.models;
+package com.cashback.models.viewmodel;
 
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.models.OfferFilter;
 import com.cashback.models.request.FetchOffersRequest;
 import com.cashback.models.request.OfferFilterRequest;
 import com.cashback.models.response.OfferFilterResponse;
@@ -12,6 +13,9 @@ import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.SharedPreferenceManager;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;

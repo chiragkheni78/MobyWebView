@@ -16,6 +16,7 @@ public class Constants {
     }
 
     public class IntentKey {
+        public static final String OFFER_OBJECT = "offer_object";
         public static final String OFFER_ID = "offerId";
         public static final String LOCATION_ID = "locationId";
         public static final String REPORT_ID = "reportId";
@@ -24,13 +25,15 @@ public class Constants {
 
     public enum API
     {
+        GET_GLOBAL_SETTING("getGlobalSetting"),
         GET_USER_PROFILE("getUserProfile"),
         SAVE_MINI_PROFILE("saveMiniProfile"),
         GET_OFFER_FILTER("getOfferFilter"),
         GET_OFFER_LIST("getOfferList"),
         GET_OFFER_DETAILS("getOfferDetails"),
         GET_QUIZ_DETAILS("getQuizDetails"),
-        SUBMIT_QUIZ_ANSWER("submitQuizAnswer")
+        SUBMIT_QUIZ_ANSWER("submitQuiz")
+
                 ;
 
         private String type;

@@ -2,9 +2,10 @@ package com.cashback.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ad {
+public class Ad implements Serializable {
 
     @SerializedName("fiAdId")
     long adID;
@@ -136,12 +137,6 @@ public class Ad {
 
     @SerializedName("cardName")
     String cardName;
-
-    @SerializedName("fbIsAdEngageLimitOver")
-    String isAdEngageLimitOver;
-
-    @SerializedName("fsMsgEngageLimitOver")
-    String engageLimitOverMessage;
 
     @SerializedName("fsCompanyUrl")
     String fsCompanyURL;

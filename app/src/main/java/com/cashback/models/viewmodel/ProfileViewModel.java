@@ -1,4 +1,4 @@
-package com.cashback.models;
+package com.cashback.models.viewmodel;
 
 import android.content.Context;
 
@@ -6,6 +6,8 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.models.Advertisement;
+import com.cashback.models.EWallet;
 import com.cashback.models.request.GetProfileRequest;
 import com.cashback.models.request.SaveMiniProfileRequest;
 import com.cashback.models.response.GetProfileResponse;

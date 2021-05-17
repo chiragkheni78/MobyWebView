@@ -1,10 +1,11 @@
-package com.cashback.models;
+package com.cashback.models.viewmodel;
 
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.models.QuizAnswer;
 import com.cashback.models.request.QuizDetailsRequest;
 import com.cashback.models.request.SubmitQuizRequest;
 import com.cashback.models.response.QuizDetailsResponse;
@@ -76,12 +77,12 @@ public class QuizDetailsViewModel extends ViewModel {
 
         //API Call
         Call<SubmitQuizResponse> loRequest = APIClient.getInterface().submitQuizAnswer(loQuizDetailsRequest);
-        Common.printReqRes(loRequest, "submitQuizAnswer", Common.LogType.REQUEST);
+        Common.printReqRes(loRequest, "submitQuiz", Common.LogType.REQUEST);
 
         loRequest.enqueue(new Callback<SubmitQuizResponse>() {
             @Override
             public void onResponse(Call<SubmitQuizResponse> call, Response<SubmitQuizResponse> foResponse) {
-                Common.printReqRes(foResponse.body(), "submitQuizAnswer", Common.LogType.RESPONSE);
+                Common.printReqRes(foResponse.body(), "submitQuiz", Common.LogType.RESPONSE);
                 if (foResponse.isSuccessful()) {
                     SubmitQuizResponse loJsonObject = foResponse.body();
                     submitQuizAnswerStatus.postValue(loJsonObject);
@@ -93,7 +94,7 @@ public class QuizDetailsViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<SubmitQuizResponse> call, Throwable t) {
-                Common.printReqRes(t, "submitQuizAnswer", Common.LogType.ERROR);
+                Common.printReqRes(t, "submitQuiz", Common.LogType.ERROR);
                 submitQuizAnswerStatus.postValue(new SubmitQuizResponse(true, t.getMessage()));
             }
         });

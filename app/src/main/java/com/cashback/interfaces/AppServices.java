@@ -3,12 +3,14 @@ package com.cashback.interfaces;
 
 import com.cashback.models.request.FetchOffersRequest;
 import com.cashback.models.request.GetProfileRequest;
+import com.cashback.models.request.GetSettingRequest;
 import com.cashback.models.request.MessageListRequest;
 import com.cashback.models.request.OfferDetailsRequest;
 import com.cashback.models.request.OfferFilterRequest;
 import com.cashback.models.request.QuizDetailsRequest;
 import com.cashback.models.request.SaveMiniProfileRequest;
 import com.cashback.models.request.SubmitQuizRequest;
+import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.GetProfileResponse;
@@ -23,6 +25,9 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface AppServices {
+
+    @POST("v2-apis/")
+    Call<GetSettingResponse> getGlobalSetting(@Body GetSettingRequest foRequest);
 
     @POST("v2-apis/")
     Call<GetProfileResponse> getUserProfile(@Body GetProfileRequest foRequest);

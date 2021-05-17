@@ -8,9 +8,11 @@ public class SharedPreferenceManager {
     SharedPreferences moSharedPreferences;
 
     private static final String IS_LOGIN = "isLogin";
+    private static final String IS_MARKETING_AD = "isMarketingAd";
     public static final String REFERRAL_LINK = "referralLink";
     public static final String REFERRAL_CODE = "referralCode";
     public static final String ADVERT_BANNER_POSITION = "advertBannerPosition";
+    public static final String QUIZ_TIME_PERIOD = "quizTimePeriod";
 
 
 
@@ -128,6 +130,41 @@ public class SharedPreferenceManager {
         }
         return 0;
     }
+
+    //START isMarketingAd
+    public void setMarketingAd(boolean fbIsMarketingAd) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putBoolean(IS_MARKETING_AD, fbIsMarketingAd);
+            loEditor.commit();
+        }
+    }
+
+    public boolean isMarketingAd() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getBoolean(IS_MARKETING_AD, false);
+        }
+        return false;
+    }
+    //END isMarketingAd
+
+
+    //START QUIZ_TIME_PERIOD
+    public void setQuizTimePeriod(int fiQuizTimePeriod) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putInt(QUIZ_TIME_PERIOD, fiQuizTimePeriod);
+            loEditor.commit();
+        }
+    }
+
+    public int getQuizTimePeriod() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getInt(QUIZ_TIME_PERIOD, 80);
+        }
+        return 0;
+    }
+    //END QUIZ_TIME_PERIOD
 
 //=====================================================
 

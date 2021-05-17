@@ -1,12 +1,21 @@
 package com.cashback.activities;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,19 +23,34 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.databinding.ActivityHomeBinding;
 import com.cashback.fragments.MapViewFragment;
 import com.cashback.fragments.OfferListFragment;
+import com.cashback.models.Advertisement;
+import com.cashback.models.response.GetSettingResponse;
+import com.cashback.models.response.QuizDetailsResponse;
+import com.cashback.models.viewmodel.HomeViewModel;
+import com.cashback.models.viewmodel.QuizDetailsViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.SharedPreferenceManager;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     ActivityHomeBinding moBinding;
+
+    HomeViewModel moHomeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +61,23 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initializeContent() {
+
+        moHomeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        moHomeViewModel.getSettingStatus.observe(this, getSettingObserver);
+
+
         setNavigationBar();
         moBinding.toolbar.ivMobyIcon.setOnClickListener(this);
         moBinding.toolbar.ibShare.setOnClickListener(this);
         moBinding.toolbar.ibDashBoard.setOnClickListener(this);
         moBinding.toolbar.tvMyCoupon.setOnClickListener(this);
         moBinding.toolbar.rbList.setOnCheckedChangeListener(this);
-        loadOfferListFragment();
+        getSettings();
+    }
+
+    private void getSettings() {
+        showProgressDialog();
+        moHomeViewModel.getGlobalSetting(getContext());
     }
 
     private void setNavigationBar() {
@@ -205,5 +239,93 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void openOngoingDeal() {
 
+    }
+
+
+    Observer<GetSettingResponse> getSettingObserver = new Observer<GetSettingResponse>() {
+        @Override
+        public void onChanged(GetSettingResponse loJsonObject) {
+            if (!loJsonObject.isError()) {
+
+                if (loJsonObject.getAppUpdate().getStatus() == 1) {
+                    //showAlertTwoBtn(fsMessage, message);
+                } else if (loJsonObject.getAppUpdate().getStatus() == 2) {
+                    //dialogUpdateApp(fsMessage, true, false);
+                } else {
+                    if (!getPreferenceManager().isMarketingAd()){
+                        showFirstDialog(loJsonObject.getFirstTimeAlertTitle(), loJsonObject.getFirstTimeAlertMsg(), loJsonObject.getAdvertisementList());
+                    }
+                }
+
+            } else {
+                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
+            }
+            dismissProgressDialog();
+        }
+    };
+
+    private void showFirstDialog(String fsTitle, String fsMessage, ArrayList<Advertisement> foAdvertisementList){
+
+        if (!AppGlobal.isDisplayRewardNote && !isFinishing()) {
+
+            final Dialog alertDialog = new Dialog(getContext());
+            alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            alertDialog.setContentView(R.layout.dialog_reward_note);
+            alertDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            alertDialog.getWindow().setGravity(Gravity.CENTER);
+            alertDialog.setCancelable(false);
+            alertDialog.show();
+
+            if (!isFinishing())
+                alertDialog.show();
+
+            Button loBtnShopNow = alertDialog.findViewById(R.id.b_cis_ok);
+            Button loBtnFindMore = alertDialog.findViewById(R.id.b_cis_cancel);
+            TextView loTvTitle = alertDialog.findViewById(R.id.tv_cis_title);
+            TextView loTvNote = alertDialog.findViewById(R.id.tv_cis_message);
+            ImageView loIvBanner = alertDialog.findViewById(R.id.ivBanner);
+
+            loTvTitle.setText(fsTitle);
+            loBtnShopNow.setText(Common.getDynamicText(getContext(), "btn_redeem_coupon"));
+            loBtnFindMore.setText(Common.getDynamicText(getContext(), "btn_get_free_coupon"));
+
+            if (fsMessage != null && !fsMessage.isEmpty()) {
+                loTvNote.setText(fsMessage);
+            } else {
+                loTvNote.setText(Common.getDynamicText(getContext(), "default_reward_note"));
+            }
+
+            ArrayList<Advertisement> loAdvertisementList = foAdvertisementList;
+            if (loAdvertisementList != null && loAdvertisementList.size() > 0) {
+                String lsURL = moHomeViewModel.getAdvertImage(getContext(), loAdvertisementList);
+                if (lsURL != null) {
+                    //Common.loadImage(loIvBanner, "https://res.cloudinary.com/demo/image/upload/sample.jpg", null, null);
+
+                    Picasso.get().load(lsURL.replace("https", "http")).into(loIvBanner);
+
+                    loIvBanner.setVisibility(View.VISIBLE);
+                }
+            } else loIvBanner.setVisibility(View.GONE);
+
+            loBtnShopNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                    AppGlobal.isDisplayRewardNote = true;
+                    Intent intent = new Intent(getContext(), MyCouponsActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            loBtnFindMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                    AppGlobal.isDisplayRewardNote = true;
+                    loadOfferListFragment();
+                }
+            });
+        }
     }
 }

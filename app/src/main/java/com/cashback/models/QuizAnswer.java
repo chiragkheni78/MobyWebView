@@ -8,7 +8,7 @@ public class QuizAnswer {
     long quizId;
 
     @SerializedName("fiAnsInterval")
-    int ansInterval;
+    long ansInterval;
 
     @SerializedName("fsAnswer")
     String answer;
@@ -23,7 +23,7 @@ public class QuizAnswer {
         this.quizId = quizId;
     }
 
-    public void setAnsInterval(int ansInterval) {
+    public void setAnsInterval(long ansInterval) {
         this.ansInterval = ansInterval;
     }
 

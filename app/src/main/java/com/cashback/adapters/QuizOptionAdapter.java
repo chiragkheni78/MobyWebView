@@ -20,6 +20,8 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.Da
     private ArrayList<QuizOption> moQuizOptionList;
     private Context moContext;
 
+    private int selectedPosition = -1;
+
     public interface OnOptionSelectListener {
         void onOptionSelect(int imageData);
     }
@@ -38,13 +40,19 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.Da
         public DataObjectHolder(View foView) {
             super(foView);
             loTvOption = foView.findViewById(R.id.tvOption);
+            loTvOption.setOnClickListener(this);
             foView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View foView) {
-            if (foView.getId() == R.id.btnAdDetails) {
+            if (foView.getId() == R.id.tvOption) {
                 int liPosition = (int) foView.getTag();
+
+                if (selectedPosition >= 0)
+                    notifyItemChanged(selectedPosition);
+                selectedPosition = liPosition;
+                notifyItemChanged(liPosition);
 
                 if (moQuizOptionList != null && moQuizOptionList.size()>0){
                     onOptionSelectListener.onOptionSelect(moQuizOptionList.get(liPosition).getIndex());
@@ -66,7 +74,16 @@ public class QuizOptionAdapter extends RecyclerView.Adapter<QuizOptionAdapter.Da
         try {
             QuizOption loQuizOption = moQuizOptionList.get(fiPosition);
             foHolder.loTvOption.setText(loQuizOption.getValue());
+            foHolder.loTvOption.setTag(fiPosition);
             foHolder.itemView.setTag(fiPosition);
+
+            if (selectedPosition == fiPosition) {
+                foHolder.loTvOption.setSelected(true); //using selector drawable
+                //foHolder.loTvOption.setTextColor(ContextCompat.getColor(holder.tvText.getContext(),R.color.white));
+            } else {
+                foHolder.loTvOption.setSelected(false);
+                //foHolder.loTvOption.setTextColor(ContextCompat.getColor(holder.tvText.getContext(),R.color.black));
+            }
 
         } catch (Exception e) {
             LogV2.logException(TAG, e);
