@@ -13,6 +13,14 @@
     <string name="action_already_engaged">Already Engaged... :)</string>
     <string name="default_reward_note">TOUCH THE RED PINS NEAR YOU IN THE MALL &amp; ANSWER THE POP UP QUIZ. MUST BE “INSIDE\" THE RELEVANT STORES,\n" +
                         "ELSE YOUR REWARD MONEY WILL BE REVERSE</string>
+    <string name="bill_uploaded">You have already uploaded bill for this Ad, Try other brands.</string>
+    <string name="upload_bill_restrict">Please use your MOBY COUPON first, before you upload the bill.</string>
+    <string name="coupon_expired">Expired</string>
+    <string name="empty_timeline">Your Timeline is empty!\nEngage with the Brands to earn money.</string>
+    <string name="dont_forget_bill_upload">SHOP &amp; UPLOAD BILL TO VERIFY &amp; ENTER LUCKY DRAW (OPTIONAL). CREDIT IN YOUR XXXXXX APP WALLET IN XX DAYS.</string>
+    <string name="msg_copy_to_clipboard">After you shop, we will verify\nyour purchase within 24 hrs,\nPayment (Delivery + XX Days)</string>
+    <string name="mobile_no_mark_used">Mobile No. to Mark as Used</string>
+    <string name="ask_store_cashier">Ask Store Cashier</string>
 
 
     <!--buttons-->
@@ -29,7 +37,14 @@
 
     <string name="btn_redeem_coupon">Redeem Coupons</string>
     <string name="btn_get_free_coupon">Get Free Coupons</string>
+    <string name="view_coupon">View Coupon</string>
+    <string name="register_bill">Register Bill</string>
+    <string name="btn_shop_in_store">SHOP IN-STORE</string>
+    <string name="btn_shop_online">SHOP ONLINE</string>
+    <string name="view_offer">View Offer</string>
 
+    <!--other-->
+    <string name="my_coupon">My Coupons</string>
 
 
     <!--other-->
@@ -37,5 +52,21 @@
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
 
+
+    <!--Timeline Sorting-->
+    <string-array name="sort_by">
+        <item>Featured</item>
+        <item>Expiring</item>
+        <item>Highest Price</item>
+        <item>Alphabetic</item>
+    </string-array>
+
+    <!--Timeline Filter-->
+    <string-array name="filter_by">
+        <item>All Coupons</item>
+        <item>Bills Upload</item>
+        <item>Verified Coupons</item>
+        <item>Paid</item>
+    </string-array>
 </resources>
 

@@ -2,6 +2,8 @@ package com.cashback.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Activity {
 
     @SerializedName("fiActivityId")
@@ -19,14 +21,11 @@ public class Activity {
     @SerializedName("fbIsVirtualCash")
     boolean isVirtualCash;
 
-    @SerializedName("fbIsVerifiedCash")
-    boolean isVerifiedCash;
-
     @SerializedName("fbIsCouponUsed")
     boolean isCouponUsed;
 
     @SerializedName("fsCouponCode")
-    String fsCouponCode;
+    String couponCode;
 
     @SerializedName("fbIsCouponExpired")
     boolean isCouponExpired;
@@ -58,7 +57,7 @@ public class Activity {
     @SerializedName("fbIsMarketingAd")
     boolean isMarketingAd;
 
-    @SerializedName("fdQuizEngageTime")
+    @SerializedName("fdQuizEnggagTime")
     String quizEngageDateTime;
 
     @SerializedName("fsRemainDay")
@@ -84,16 +83,12 @@ public class Activity {
         return isVirtualCash;
     }
 
-    public boolean isVerifiedCash() {
-        return isVerifiedCash;
-    }
-
     public boolean isCouponUsed() {
         return isCouponUsed;
     }
 
-    public String getFsCouponCode() {
-        return fsCouponCode;
+    public String getCouponCode() {
+        return couponCode;
     }
 
     public boolean isCouponExpired() {
@@ -143,4 +138,69 @@ public class Activity {
     public String getRemainDay() {
         return remainDay;
     }
+
+    @SerializedName("fsWalletName")
+    String walletName;
+
+    @SerializedName("fsCouponDescription")
+    String couponDescription;
+
+    @SerializedName("fsOfferDetails")
+    String offerDetails;
+
+    @SerializedName("fsCouponType")
+    String couponType;
+
+    @SerializedName("fsCouponPassword")
+    String couponPassword;
+
+    @SerializedName("fsShopOnlineLink")
+    String shopOnlineLink;
+
+    @SerializedName("fiVirtualCashTransferDays")
+    int virtualCashTransferDays;
+
+    @SerializedName("foCouponList")
+    ArrayList<Coupon> couponList;
+
+    @SerializedName("foLocationList")
+    ArrayList<AdLocation> locationList;
+
+    public String getWalletName() {
+        return walletName;
+    }
+
+    public String getCouponDescription() {
+        return couponDescription;
+    }
+
+    public String getOfferDetails() {
+        return offerDetails;
+    }
+
+    public String getCouponType() {
+        return couponType;
+    }
+
+    public String getCouponPassword() {
+        return couponPassword;
+    }
+
+    public String getShopOnlineLink() {
+        return shopOnlineLink;
+    }
+
+    public int getVirtualCashTransferDays() {
+        return virtualCashTransferDays;
+    }
+
+    public ArrayList<Coupon> getCouponList() {
+        return couponList;
+    }
+
+    public ArrayList<AdLocation> getLocationList() {
+        return locationList;
+    }
 }
+
+

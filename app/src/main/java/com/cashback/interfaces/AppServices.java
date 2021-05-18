@@ -1,16 +1,20 @@
 package com.cashback.interfaces;
 
 
+import com.cashback.models.request.ActivityDetailsRequest;
 import com.cashback.models.request.FetchOffersRequest;
 import com.cashback.models.request.GetProfileRequest;
 import com.cashback.models.request.GetSettingRequest;
+import com.cashback.models.request.ActivityListRequest;
 import com.cashback.models.request.MessageListRequest;
 import com.cashback.models.request.OfferDetailsRequest;
 import com.cashback.models.request.OfferFilterRequest;
 import com.cashback.models.request.QuizDetailsRequest;
 import com.cashback.models.request.SaveMiniProfileRequest;
 import com.cashback.models.request.SubmitQuizRequest;
+import com.cashback.models.response.ActivityDetailsResponse;
 import com.cashback.models.response.GetSettingResponse;
+import com.cashback.models.response.ActivityListResponse;
 import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.GetProfileResponse;
@@ -49,6 +53,12 @@ public interface AppServices {
 
     @POST("v2-apis/")
     Call<SubmitQuizResponse> submitQuizAnswer(@Body SubmitQuizRequest foRequest);
+
+    @POST("v2-apis/")
+    Call<ActivityListResponse> getActivityList(@Body ActivityListRequest foRequest);
+
+    @POST("v2-apis/")
+    Call<ActivityDetailsResponse> getActivityDetails(@Body ActivityDetailsRequest foRequest);
 
     @POST("v2-apis/")
     Call<MessageListResponse> getMessageList(@Body MessageListRequest foRequest);

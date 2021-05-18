@@ -3,10 +3,14 @@ package com.cashback.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
+import com.cashback.activities.CouponDetailsActivity;
 import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.models.Activity;
 import com.cashback.models.Ad;
@@ -39,31 +44,57 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode, tvRegisterBill;
+        TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode, tvRegisterBill, tvExpireDay;
 
-        ImageView loIvLogo;
+
         LinearLayout loLlRoot;
 
         public DataObjectHolder(View foView) {
             super(foView);
-            loTvAdName = foView.findViewById(R.id.tvAdName);
+            loTvAdName = foView.findViewById(R.id.tvOfferName);
             loTvQuizReward = foView.findViewById(R.id.tvQuizReward);
             loTvDate = foView.findViewById(R.id.tvDate);
             loTvCashBackAmount = foView.findViewById(R.id.tvCashBackAmount);
+            tvCouponCode = foView.findViewById(R.id.tvCouponCode);
+            tvRegisterBill = foView.findViewById(R.id.tvRegisterBill);
+            tvExpireDay = foView.findViewById(R.id.tvExpireDay);
 
-            loLlRoot = foView.findViewById(R.id.llRoot);
-            foView.setOnClickListener(this);
+            loLlRoot = foView.findViewById(R.id.llTimeline);
+            loLlRoot.setOnClickListener(this);
+            tvCouponCode.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View foView) {
-            if (foView.getId() == R.id.btnAdDetails) {
-//                int liPosition = (int) foView.getTag();
-//                Intent loIntent = new Intent(moContext, OfferDetailsActivity.class);
-//                loIntent.putExtra(Constants.IntentKey.OFFER_ID, moActivityList.get(liPosition).getAdID());
-//                if (moActivityList.get(liPosition).getLocationList().size() > 0)
-//                    loIntent.putExtra(Constants.IntentKey.LOCATION_ID, moActivityList.get(liPosition).getLocationList().get(0).getLocationID());
-//                moContext.startActivity(loIntent);
+            int liPosition = (int) foView.getTag();
+
+            switch (foView.getId()) {
+                case R.id.llRoot:
+                    handleRegisterBill(liPosition);
+                    break;
+                case R.id.tvCouponCode:
+                    Intent loIntent = new Intent(moContext, CouponDetailsActivity.class);
+                    loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(liPosition).getActivityID());
+                    moContext.startActivity(loIntent);
+                    break;
+            }
+        }
+
+        private void handleRegisterBill(int fiPosition) {
+            Activity loActivity = moActivityList.get(fiPosition);
+
+            if (loActivity.isBillUploadEnable()) {
+                if (loActivity.isBillUploaded()) {
+                    Common.showErrorDialog(moContext, Common.getDynamicText(moContext, "bill_uploaded"), false);
+                } else {
+                    if ((!loActivity.isCouponUsed() && loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue()))
+                            || (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue()) && loActivity.isClickShopOnline())) {
+                        Common.showErrorDialog(moContext, Common.getDynamicText(moContext, "upload_bill_restrict"), false);
+                    } else {
+                        //Open BillUpload Screen
+
+                    }
+                }
             }
         }
     }
@@ -80,31 +111,99 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     public void onBindViewHolder(final DataObjectHolder foHolder, final int fiPosition) {
         try {
             Activity loActivity = moActivityList.get(fiPosition);
+            setOfferLabel(foHolder.loTvCashBackAmount, loActivity);
+            setQuizReward(foHolder.loTvQuizReward, loActivity);
+            foHolder.loTvAdName.setText(loActivity.getAdName());
+            foHolder.loTvDate.setText(loActivity.getQuizEngageDateTime());
+            foHolder.tvExpireDay.setText(loActivity.getRemainDay());
+            foHolder.tvCouponCode.setText(Common.getDynamicText(moContext, "view_coupon"));
+            foHolder.tvRegisterBill.setText(Common.getDynamicText(moContext, "register_bill"));
 
+            foHolder.tvCouponCode.setTag(fiPosition);
+            foHolder.loLlRoot.setTag(fiPosition);
 
+            handleLogicalOperation(foHolder, loActivity);
         } catch (Exception e) {
             LogV2.logException(TAG, e);
         }
     }
 
+    private void handleLogicalOperation(DataObjectHolder foHolder, Activity foActivity) {
+        if (foActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
+            foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_green_black));
+        } else {
+            foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_red_black));
+        }
+
+        if (foActivity.getCouponCode() == null || foActivity.getCouponCode().isEmpty()) {
+            foHolder.tvCouponCode.setVisibility(View.GONE);
+            foHolder.tvRegisterBill.setVisibility(View.GONE);
+            foHolder.tvRegisterBill.setPaintFlags(0);
+            foHolder.tvExpireDay.setVisibility(View.GONE);
+        } else {
+            foHolder.tvCouponCode.setVisibility(View.VISIBLE);
+
+            if (foActivity.isCouponUsed()) {
+                foHolder.tvCouponCode.setPaintFlags(foHolder.tvCouponCode.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                foHolder.tvCouponCode.setEnabled(false);
+                foHolder.tvCouponCode.setClickable(false);
+                foHolder.tvExpireDay.setVisibility(View.GONE);
+                foHolder.tvCouponCode.clearAnimation();
+                if (!foActivity.isBillUploaded()) {
+                    foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
+                    foHolder.tvRegisterBill.setPaintFlags(0);
+                }
+            } else {
+                Common.blinkAnimation(foHolder.tvCouponCode);
+
+                foHolder.tvCouponCode.setPaintFlags(0);
+                foHolder.tvCouponCode.setEnabled(true);
+                foHolder.tvCouponCode.setClickable(true);
+                foHolder.tvExpireDay.setVisibility(View.VISIBLE);
+                foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.twhite));
+
+                if (foActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())
+                        && !foActivity.isClickShopOnline()) {
+                    foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
+                }
+            }
+
+            if (foActivity.isBillUploadEnable()) {
+                foHolder.tvRegisterBill.setVisibility(View.VISIBLE);
+                foHolder.tvRegisterBill.setPaintFlags(0);
+                if (foActivity.isBillUploaded()) {
+                    foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
+                    foHolder.tvRegisterBill.setPaintFlags(foHolder.tvRegisterBill.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+            } else {
+                foHolder.tvRegisterBill.setVisibility(View.GONE);
+            }
+            if (foActivity.isCouponExpired()) {
+                foHolder.tvExpireDay.setText(Common.getDynamicText(moContext, "coupon_expired"));
+                foHolder.tvExpireDay.setTextColor(moContext.getResources().getColor(R.color.colorPrimary));
+            }
+
+        }
+    }
+
     private void setQuizReward(TextView foTvQuizReward, Activity foActivity) {
         int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.colorPrimary);
-        int rewardColor = (foActivity.isVirtualCash())? fiPrimaryColor: fiPrimaryColor;
+        int rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
 
         foTvQuizReward.setText(Common.getColorText("Quiz Cash ", Color.BLACK));
-        foTvQuizReward.append(Common.getColorText("Rs. "+ foActivity.getQuizReward(), rewardColor));
+        foTvQuizReward.append(Common.getColorText("Rs. " + foActivity.getQuizReward(), rewardColor));
     }
 
     private void setOfferLabel(TextView foTvCashbackAmount, Activity foActivity) {
         int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.colorPrimary);
 
-        if (!foActivity.getDiscountUpTo().isEmpty()){
+        if (!foActivity.getDiscountUpTo().isEmpty()) {
             foTvCashbackAmount.setText(Common.getColorText("Upto ", Color.WHITE));
             foTvCashbackAmount.append(Common.getColorText(foActivity.getDiscountUpTo(), fiPrimaryColor));
             foTvCashbackAmount.append(Common.getColorText(" Off", Color.WHITE));
         }
 
-        if (!foActivity.getFlatCashBack().isEmpty()){
+        if (!foActivity.getFlatCashBack().isEmpty()) {
 
             if (foTvCashbackAmount.getText().length() > 0) {
                 foTvCashbackAmount.append(Common.getColorText(" + ", Color.WHITE));
@@ -112,7 +211,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             } else {
                 foTvCashbackAmount.setText(Common.getColorText("Extra ", Color.WHITE));
             }
-            foTvCashbackAmount.append(Common.getColorText(foActivity.getFsCouponCode(), fiPrimaryColor));
+            foTvCashbackAmount.append(Common.getColorText(foActivity.getFlatCashBack(), fiPrimaryColor));
             foTvCashbackAmount.append(Common.getColorText(" Cashback", Color.WHITE));
         }
         foTvCashbackAmount.setBackground(ActivityCompat.getDrawable(moContext, R.drawable.rect_black));

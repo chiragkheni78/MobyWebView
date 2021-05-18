@@ -77,28 +77,6 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         }
     };
 
-    RecyclerView.OnScrollListener moOfferScrollListener = new RecyclerView.OnScrollListener() {
-
-        private boolean isScrolledDown = false;
-
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-
-            if (newState == RecyclerView.SCROLL_STATE_SETTLING && isScrolledDown) {
-                miCurrentPage = miCurrentPage + 1;
-                fetchOffers();
-            }
-        }
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            isScrolledDown = dy < 0;
-        }
-    };
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

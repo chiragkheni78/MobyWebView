@@ -21,6 +21,7 @@ public class Constants {
         public static final String LOCATION_ID = "locationId";
         public static final String REPORT_ID = "reportId";
         public static final String QR_DATA = "qr_data";
+        public static final String ACTIVITY_ID = "activityId";
     }
 
     public enum API
@@ -32,7 +33,9 @@ public class Constants {
         GET_OFFER_LIST("getOfferList"),
         GET_OFFER_DETAILS("getOfferDetails"),
         GET_QUIZ_DETAILS("getQuizDetails"),
-        SUBMIT_QUIZ_ANSWER("submitQuiz")
+        SUBMIT_QUIZ_ANSWER("submitQuiz"),
+        GET_ACTIVITY_LIST("getActivityList"),
+        GET_ACTIVITY_DETAILS("getActivityDetails")
 
                 ;
 

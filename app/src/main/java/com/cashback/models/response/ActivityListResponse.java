@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class GetTimelineResponse {
+public class ActivityListResponse {
 
     @SerializedName("fbIsError")
     private boolean isError;
@@ -14,7 +14,7 @@ public class GetTimelineResponse {
     @SerializedName("fsMessage")
     private String message;
 
-    @SerializedName("foTimelineList")
+    @SerializedName("foActivityList")
     private ArrayList<Activity> activityList;
 
     public boolean isError() {
@@ -29,7 +29,7 @@ public class GetTimelineResponse {
         return activityList;
     }
 
-    public GetTimelineResponse(boolean isError, String message) {
+    public ActivityListResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
     }

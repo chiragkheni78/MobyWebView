@@ -341,4 +341,32 @@ public class Common {
             }
         }
     }
+
+    public static String getLinkifiedMyText(String mytext) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String[] splitted = mytext.split(" ");
+        for (int i = 0; i < splitted.length; i++) {
+            String link = splitted[i];
+            if ((splitted[i]).contains("www.") || (splitted[i]).contains("https") || (splitted[i]).contains("http")) { // use more statements for
+                System.out.println(splitted[i]); //just checking the output
+                //link = "<a href=\"" + splitted[i] + "\" >" + splitted[i] + "</a>"; //style=color:#2196F3;
+                link = splitted[i];
+                return link;
+            }
+            stringBuilder.append(link);
+            stringBuilder.append(" ");
+        }
+        return "";
+    }
+
+    public static void setClipboard(Context context, String text) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(text);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+            clipboard.setPrimaryClip(clip);
+        }
+    }
 }
