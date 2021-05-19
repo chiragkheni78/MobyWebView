@@ -7,11 +7,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -25,6 +27,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -40,6 +43,8 @@ import com.squareup.picasso.RequestCreator;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -369,4 +374,26 @@ public class Common {
             clipboard.setPrimaryClip(clip);
         }
     }
+
+    public static String getRealPathFromURI(Context foContext, Uri foURI) {
+
+        String lsPath = null;
+        Cursor loCursor = null;
+        try {
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            loCursor = foContext.getContentResolver().query(foURI, filePathColumn, null, null, null);
+            loCursor.moveToFirst();
+            int columnIndex = loCursor.getColumnIndex(filePathColumn[0]);
+            lsPath = loCursor.getString(columnIndex);
+            loCursor.close();
+        } catch (Exception e) {
+            LogV2.logException(TAG, e);
+        } finally {
+            if (loCursor != null)
+                loCursor.close();
+            return lsPath;
+        }
+    }
+
+
 }

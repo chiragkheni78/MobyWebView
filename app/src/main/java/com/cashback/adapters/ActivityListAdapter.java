@@ -4,32 +4,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
+import com.cashback.activities.BillUploadActivity;
 import com.cashback.activities.CouponDetailsActivity;
-import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.models.Activity;
-import com.cashback.models.Ad;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
+
+import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
+import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.DataObjectHolder> {
 
@@ -45,8 +40,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode, tvRegisterBill, tvExpireDay;
-
-
         LinearLayout loLlRoot;
 
         public DataObjectHolder(View foView) {
@@ -60,7 +53,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             tvExpireDay = foView.findViewById(R.id.tvExpireDay);
 
             loLlRoot = foView.findViewById(R.id.llTimeline);
-            loLlRoot.setOnClickListener(this);
+            foView.setOnClickListener(this);
             tvCouponCode.setOnClickListener(this);
         }
 
@@ -69,13 +62,13 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             int liPosition = (int) foView.getTag();
 
             switch (foView.getId()) {
-                case R.id.llRoot:
-                    handleRegisterBill(liPosition);
-                    break;
                 case R.id.tvCouponCode:
                     Intent loIntent = new Intent(moContext, CouponDetailsActivity.class);
                     loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(liPosition).getActivityID());
                     moContext.startActivity(loIntent);
+                    break;
+                default:
+                    handleRegisterBill(liPosition);
                     break;
             }
         }
@@ -88,11 +81,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                     Common.showErrorDialog(moContext, Common.getDynamicText(moContext, "bill_uploaded"), false);
                 } else {
                     if ((!loActivity.isCouponUsed() && loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue()))
-                            || (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue()) && loActivity.isClickShopOnline())) {
+                            || (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue()) && loActivity.isBlinkShopOnline())) {
                         Common.showErrorDialog(moContext, Common.getDynamicText(moContext, "upload_bill_restrict"), false);
                     } else {
                         //Open BillUpload Screen
-
+                        Intent loIntent = new Intent(moContext, BillUploadActivity.class);
+                        loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, loActivity.getActivityID());
+                        loIntent.putExtra(ENGAGED_DATE, loActivity.getQuizEngageDateTime());
+                        loIntent.putExtra(PIN_COLOR, loActivity.getPinColor());
+                        moContext.startActivity(loIntent);
                     }
                 }
             }
@@ -120,7 +117,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             foHolder.tvRegisterBill.setText(Common.getDynamicText(moContext, "register_bill"));
 
             foHolder.tvCouponCode.setTag(fiPosition);
-            foHolder.loLlRoot.setTag(fiPosition);
+            foHolder.itemView.setTag(fiPosition);
 
             handleLogicalOperation(foHolder, loActivity);
         } catch (Exception e) {
@@ -163,8 +160,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.twhite));
 
                 if (foActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())
-                        && !foActivity.isClickShopOnline()) {
+                        && !foActivity.isBlinkShopOnline()) {
                     foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
+                    foHolder.tvCouponCode.clearAnimation();
                 }
             }
 

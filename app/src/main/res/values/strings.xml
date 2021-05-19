@@ -21,6 +21,12 @@
     <string name="msg_copy_to_clipboard">After you shop, we will verify\nyour purchase within 24 hrs,\nPayment (Delivery + XX Days)</string>
     <string name="mobile_no_mark_used">Mobile No. to Mark as Used</string>
     <string name="ask_store_cashier">Ask Store Cashier</string>
+    <string name="coupon_code_conformation_msg">Register your transaction for us\nto credit you</string>
+    <string name="validate_transaction_date">Please select your transaction date</string>
+    <string name="validate_transaction_amount">Please enter transaction amount</string>
+    <string name="camera_access_permission">App needs to access the Camera for capture photo.</string>
+    <string name="gallery_access_permission">App needs to access the file storage for view gallery.</string>
+
 
 
     <!--buttons-->
@@ -42,6 +48,13 @@
     <string name="btn_shop_in_store">SHOP IN-STORE</string>
     <string name="btn_shop_online">SHOP ONLINE</string>
     <string name="view_offer">View Offer</string>
+
+    <string name="btn_upload_now">Register Now</string>
+    <string name="btn_upload_later">Later</string>
+
+    <string name="file_chooser">Image Chooser</string>
+    <string name="capture_photo">Capture Photo</string>
+    <string name="photo_gallery">Photo Gallery</string>
 
     <!--other-->
     <string name="my_coupon">My Coupons</string>

@@ -1,0 +1,96 @@
+{
+  "project_info": {
+    "project_number": "335145993405",
+    "firebase_url": "https://mobyads-ee40d.firebaseio.com",
+    "project_id": "mobyads-ee40d",
+    "storage_bucket": "mobyads-ee40d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335145993405:android:44930d5f41e1fcef",
+        "android_client_info": {
+          "package_name": "com.mobyads"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335145993405-8n1v7sjhf9rioru56a92ig9jpmpq49cb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobyads",
+            "certificate_hash": "861c4ce6a95e611ef29d183c43de519969c744a8"
+          }
+        },
+        {
+          "client_id": "335145993405-ec0nalkpobr4ltkhh47b81ldvr6cambu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobyads",
+            "certificate_hash": "e97b9f88890b2c2f0c0a3c113a1c4f090f12a976"
+          }
+        },
+        {
+          "client_id": "335145993405-1pu219d73vhu51ge54637lkg5g787rvt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobyads",
+            "certificate_hash": "bd6eb457b4a2aa7a2acc294ac047dbe417060bb5"
+          }
+        },
+        {
+          "client_id": "335145993405-tb3ugguo7cc3663b9hv69l3q82h5589p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobyads",
+            "certificate_hash": "0961714b2e0141305b7607084e4852db2f18bd33"
+          }
+        },
+        {
+          "client_id": "335145993405-nu1sgf469bv64fjd8n58am8drkrjsef8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobyads",
+            "certificate_hash": "8d662d3f3486fae94e0d9709881fa3fdc782cf8b"
+          }
+        },
+        {
+          "client_id": "335145993405-2auja3tn7frkttsj9lts8doqlv57pei9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobyads",
+            "certificate_hash": "4c84b514d6f13e31dc6692cc5425740d1a825468"
+          }
+        },
+        {
+          "client_id": "335145993405-i65i8bovvlkvmq8c7us65uov42ln18fd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq6HoPuV3Pu2p4916DilGiaOM0HC2AeOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335145993405-i65i8bovvlkvmq8c7us65uov42ln18fd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "335145993405-qqm0cig6lhahjjfjbe6lrj6jln7jfsuv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.encriss.mobyads",
+                "app_store_id": "1436508159"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

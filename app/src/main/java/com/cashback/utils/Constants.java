@@ -20,8 +20,10 @@ public class Constants {
         public static final String OFFER_ID = "offerId";
         public static final String LOCATION_ID = "locationId";
         public static final String REPORT_ID = "reportId";
-        public static final String QR_DATA = "qr_data";
+        public static final String QR_DATA = "qrData";
         public static final String ACTIVITY_ID = "activityId";
+        public static final String ENGAGED_DATE = "engagedDate";
+        public static final String PIN_COLOR = "pinColor";
     }
 
     public enum API
@@ -35,9 +37,11 @@ public class Constants {
         GET_QUIZ_DETAILS("getQuizDetails"),
         SUBMIT_QUIZ_ANSWER("submitQuiz"),
         GET_ACTIVITY_LIST("getActivityList"),
-        GET_ACTIVITY_DETAILS("getActivityDetails")
-
-                ;
+        GET_ACTIVITY_DETAILS("getActivityDetails"),
+        COUPON_MARK_AS_USED("couponMarkAsUsed"),
+        UPLOAD_TRANSACTION_BILL("uploadTrasactionBill"),
+        UPLOAD_SHOP_ONLINE_BLINK("updateShopOnlineBlink")
+        ;
 
         private String type;
 

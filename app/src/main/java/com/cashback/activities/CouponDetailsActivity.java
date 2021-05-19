@@ -2,6 +2,7 @@ package com.cashback.activities;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,10 +33,15 @@ import com.cashback.models.Activity;
 import com.cashback.models.AdLocation;
 import com.cashback.models.Coupon;
 import com.cashback.models.response.ActivityDetailsResponse;
+import com.cashback.models.response.ActivityMarkAsUsedResponse;
+import com.cashback.models.response.UpdateShopOnlineBlinkResponse;
 import com.cashback.models.viewmodel.ActivityDetailsViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
+
+import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
+import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
 public class CouponDetailsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -106,6 +111,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void initializeContent() {
         moActivityDetailsViewModel = new ViewModelProvider(this).get(ActivityDetailsViewModel.class);
         moActivityDetailsViewModel.fetchActivityStatus.observe(this, fetchActivityObserver);
+        moActivityDetailsViewModel.updateMarkAsUsedStatus.observe(this, updateMarkAdUsedObserver);
+        moActivityDetailsViewModel.updateShopOnlineBlinkStatus.observe(this, updateShopOnlineBlinkObserver);
         moBinding.etMobileNumber.addTextChangedListener(moTextChangeListener);
         moBinding.tvShopOnline.setOnClickListener(this);
         moBinding.tvMarkAsUsed.setOnClickListener(this);
@@ -177,7 +184,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 moBinding.llInStore.setVisibility(View.GONE);
             }
             moBinding.rlMobile.setVisibility(View.GONE);
-        } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
+        } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
             moBinding.llOffers.setVisibility(View.GONE);
             moBinding.llInStore.setVisibility(View.VISIBLE);
         }
@@ -208,7 +215,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
             private void enablePhone() {
 
-                if (moActivity.isClickShopOnline()) {
+                if (moActivity.isBlinkShopOnline()) {
 
                     if (!moBinding.etMobileNumber.isEnabled()) {
                         Handler handler = new Handler();
@@ -225,6 +232,13 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             }
         });
 
+        if (moActivity.getCouponType().equalsIgnoreCase("default")) {
+            moBinding.etMobileNumber.setHint(Common.getDynamicText(getContext(), "mobile_no_mark_used"));
+            moBinding.tvNumberType.setVisibility(View.VISIBLE);
+        } else {
+            moBinding.etMobileNumber.setHint(Common.getDynamicText(getContext(), "ask_store_cashier"));
+            moBinding.tvNumberType.setVisibility(View.GONE);
+        }
 
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             moBinding.tvBrand.setText(moActivity.getAdName() + " (Online)");
@@ -250,21 +264,20 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.tvShopOnline.setClickable(true);
             moBinding.tvShopOnline.setEnabled(true);
 
-            if (moActivity.isClickShopOnline())
+            if (moActivity.isBlinkShopOnline())
                 Common.blinkAnimation(moBinding.tvShopOnline);
-
+            else {
+                moBinding.etMobileNumber.setEnabled(true);
+                moBinding.etMobileNumber.setHintTextColor(ActivityCompat.getColor(getContext(), R.color.white));
+                byPassPhone();
+            }
         } else {
             moBinding.tvShopOnline.setTextColor(getResources().getColor(R.color.twhite));
             moBinding.tvShopOnline.setClickable(false);
             moBinding.tvShopOnline.setEnabled(false);
-        }
-
-        if (moActivity.getCouponType().equalsIgnoreCase("default")) {
-            moBinding.etMobileNumber.setHint(Common.getDynamicText(getContext(), "mobile_no_mark_used"));
-            moBinding.tvNumberType.setVisibility(View.VISIBLE);
-        } else {
-            moBinding.etMobileNumber.setHint(Common.getDynamicText(getContext(), "ask_store_cashier"));
-            moBinding.tvNumberType.setVisibility(View.GONE);
+            //enable phone if no link exist
+            moBinding.etMobileNumber.setEnabled(true);
+            moBinding.etMobileNumber.setHintTextColor(ActivityCompat.getColor(getContext(), R.color.white));
         }
 
     }
@@ -276,7 +289,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
             callAPIBlinkShopOnline();
 
-            if (moActivity.isClickShopOnline()) {
+            if (moActivity.isBlinkShopOnline()) {
                 if (!moBinding.etMobileNumber.isEnabled()) {
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
@@ -299,36 +312,115 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void byPassPhone() {
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             //moBinding.etMobileNumber.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().replace("+91", ""));
+
+            //remove code when above code enable
+            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
+            moBinding.tvMarkAsUsed.setClickable(true);
+            moBinding.tvMarkAsUsed.setEnabled(true);
         }
     }
 
     private void callAPIBlinkShopOnline() {
+        showProgressDialog();
+        moActivityDetailsViewModel.updateShopOnlineBlink(getContext(), "", miActivityId);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tvShopOnline:
-
-                final String fsLink = (!moActivity.getShopOnlineLink().isEmpty())
-                        ? moActivity.getShopOnlineLink()
-                        : Common.getLinkifiedMyText(moActivity.getCouponDescription());
-
-                if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-                    if (fsLink != null && !fsLink.isEmpty()) {
-                        dialogCopyToClipboard(fsLink);
-                    }
-                } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-                    moBinding.llInStore.setVisibility(View.VISIBLE);
-                }
-                moBinding.tvShopOnline.clearAnimation();
+                shopOnlinePressed();
                 break;
             case R.id.tvMarkAsUsed:
-
+                markAsUsedPressed();
                 break;
             case R.id.tvCancel:
                 onBackPressed();
                 break;
+        }
+    }
+
+    private void shopOnlinePressed() {
+        String fsLink = (!moActivity.getShopOnlineLink().isEmpty())
+                ? moActivity.getShopOnlineLink()
+                : Common.getLinkifiedMyText(moActivity.getCouponDescription());
+
+        if (fsLink.isEmpty() && moActivity.getCouponList().size() > 0) {
+            fsLink = moActivity.getCouponList().get(0).getCouponLink();
+        }
+
+        if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
+            if (fsLink != null && !fsLink.isEmpty()) {
+                dialogCopyToClipboard(fsLink);
+            }
+        } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
+            moBinding.llInStore.setVisibility(View.VISIBLE);
+        }
+        moBinding.tvShopOnline.clearAnimation();
+    }
+
+    private void markAsUsedPressed() {
+        if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
+            openBillUploadActivity();
+        } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
+            dialogUploadAlert();
+        }
+        moBinding.tvMarkAsUsed.clearAnimation();
+    }
+
+    private void dialogUploadAlert() {
+        Dialog moDialog = new Dialog(getContext());
+        moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        moDialog.setContentView(R.layout.dialog_upload_alert);
+        moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        moDialog.getWindow().setGravity(Gravity.CENTER);
+        moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        moDialog.setCancelable(false);
+        moDialog.show();
+
+        final TextView loTvMessage = moDialog.findViewById(R.id.tvMessage);
+        final Button loBtnNow = moDialog.findViewById(R.id.btnUpdateNow);
+        final Button loBtnLater = moDialog.findViewById(R.id.btnLater);
+
+        loTvMessage.setText(Common.getDynamicText(getContext(), "coupon_code_conformation_msg"));
+        loBtnNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moDialog.dismiss();
+                showProgressDialog();
+                moActivityDetailsViewModel.updateMarkAsUsed(getContext(), "", miActivityId);
+            }
+        });
+
+        loBtnLater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moDialog.dismiss();
+            }
+        });
+
+    }
+
+    Observer<ActivityMarkAsUsedResponse> updateMarkAdUsedObserver = new Observer<ActivityMarkAsUsedResponse>() {
+        @Override
+        public void onChanged(ActivityMarkAsUsedResponse loJsonObject) {
+            if (!loJsonObject.isError()) {
+                openBillUploadActivity();
+            } else {
+                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
+            }
+            dismissProgressDialog();
+        }
+    };
+
+    private void openBillUploadActivity() {
+        if (moActivity != null) {
+            Intent loIntent = new Intent(getContext(), BillUploadActivity.class);
+            loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivity.getActivityID());
+            loIntent.putExtra(ENGAGED_DATE, moActivity.getQuizEngageDateTime());
+            loIntent.putExtra(PIN_COLOR, moActivity.getPinColor());
+            startActivity(loIntent);
+            finish();
         }
     }
 
@@ -359,4 +451,16 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             LogV2.logException(TAG, e);
         }
     }
+
+    Observer<UpdateShopOnlineBlinkResponse> updateShopOnlineBlinkObserver = new Observer<UpdateShopOnlineBlinkResponse>() {
+        @Override
+        public void onChanged(UpdateShopOnlineBlinkResponse loJsonObject) {
+            if (!loJsonObject.isError()) {
+                moActivity.setBlinkShopOnline(false);
+            } else {
+                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
+            }
+            dismissProgressDialog();
+        }
+    };
 }

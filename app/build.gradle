@@ -18,7 +18,7 @@ android {
         targetSdkVersion 30
         versionCode 112
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,6 +31,8 @@ android {
         }
 
         debug {
+            minifyEnabled false
+            shrinkResources false
             buildConfigField "String", "BASE_URL", "\"http://mobyads.in/preprod-moby/\""
         }
     }
@@ -48,6 +50,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    implementation 'com.android.support:multidex:1.0.3'
 
     //Material UI
     implementation 'com.github.rey5137:material:1.3.1'
@@ -69,4 +73,7 @@ dependencies {
 
     //QR-Scanner
     implementation 'com.budiyev.android:code-scanner:2.1.0'
+
+    //date-picker
+    implementation 'com.shagi:material-datepicker:1.3'
 }

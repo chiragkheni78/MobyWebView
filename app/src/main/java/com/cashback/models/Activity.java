@@ -16,7 +16,7 @@ public class Activity {
     String discountUpTo;
 
     @SerializedName("fbIsBlinkShopOnline")
-    boolean isClickShopOnline;
+    boolean isBlinkShopOnline;
 
     @SerializedName("fbIsVirtualCash")
     boolean isVirtualCash;
@@ -75,8 +75,12 @@ public class Activity {
         return discountUpTo;
     }
 
-    public boolean isClickShopOnline() {
-        return isClickShopOnline;
+    public void setBlinkShopOnline(boolean clickShopOnline) {
+        isBlinkShopOnline = clickShopOnline;
+    }
+
+    public boolean isBlinkShopOnline() {
+        return isBlinkShopOnline;
     }
 
     public boolean isVirtualCash() {

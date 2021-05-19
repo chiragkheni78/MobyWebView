@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
 import com.cashback.fragments.OfferListFragment;
-import com.cashback.models.Ad;
 import com.cashback.models.Category;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.itemView.setTag(moCategoryList.get(position));
         holder.loTvCategoryName.setText(moCategoryList.get(position).getCategoryName());
 
-        holder.loLlCategory.setBackground(ActivityCompat.getDrawable(context, R.drawable.optional_background));
+        holder.loLlCategory.setBackground(ActivityCompat.getDrawable(context, R.drawable.rect_white_black));
         holder.loTvCategoryName.setTextColor(ActivityCompat.getColor(context, R.color.black));
 
         if (selectedItem == position) {
