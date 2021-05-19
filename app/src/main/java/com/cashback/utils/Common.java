@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -49,6 +50,7 @@ import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Locale;
 
 import retrofit2.Response;
@@ -75,6 +77,24 @@ public class Common {
             lsValue = foContext.getResources().getString(liResID);
         } finally {
             return lsValue;
+        }
+    }
+
+    private void setDynamicText(Context foContext, JSONObject foJsonObject) {
+        try {
+            Iterator<String> iterator = foJsonObject.keys();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                try {
+                    String value = (String) foJsonObject.get(key);
+                    SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(foContext);
+                    sharedPreferenceManager.setDynamicValue(key, value);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -394,6 +414,5 @@ public class Common {
             return lsPath;
         }
     }
-
 
 }
