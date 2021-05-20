@@ -8,10 +8,8 @@ import android.os.Looper;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.cashback.R;
 import com.cashback.databinding.ActivitySplashBinding;
-import com.cashback.models.SplashViewModel;
-import com.cashback.models.viewmodel.BillUploadViewModel;
+import com.cashback.models.viewmodel.SplashViewModel;
 
 import static com.cashback.utils.Constants.SPLASH_TIME;
 

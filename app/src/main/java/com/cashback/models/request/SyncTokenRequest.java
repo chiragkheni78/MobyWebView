@@ -34,3 +34,5 @@ public class SyncTokenRequest {
         this.fcmToken = fcmToken;
     }
 }
+
+
