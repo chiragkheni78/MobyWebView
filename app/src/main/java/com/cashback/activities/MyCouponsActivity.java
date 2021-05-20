@@ -1,5 +1,6 @@
 package com.cashback.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import com.cashback.models.Activity;
 import com.cashback.models.response.ActivityListResponse;
 import com.cashback.models.viewmodel.ActivityListViewModel;
 import com.cashback.utils.Common;
+import com.cashback.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -55,6 +57,15 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
         moBinding.rvActivityList.setAdapter(moActivityListAdapter);
         setFilterView();
         getActivityList();
+
+        if (getIntent() != null){
+            long llActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
+            if (llActivityId > 0){
+                Intent loIntent = new Intent(getContext(), CouponDetailsActivity.class);
+                loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityId);
+                moContext.startActivity(loIntent);
+            }
+        }
     }
 
     private void setToolbar() {

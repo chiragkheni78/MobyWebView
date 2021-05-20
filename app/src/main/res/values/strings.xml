@@ -56,7 +56,8 @@
     <string name="capture_photo">Capture Photo</string>
     <string name="photo_gallery">Photo Gallery</string>
 
-    <!--other-->
+
+    <!--Screen Title-->
     <string name="my_coupon">My Coupons</string>
 
 
@@ -64,6 +65,8 @@
     <string name="fab_content_desc">Search</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
+    <!--Firebase Settings-->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
 
     <!--Timeline Sorting-->

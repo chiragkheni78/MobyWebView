@@ -91,10 +91,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         }
     }
 
-    public void updateCategoryByPosition(int fiPosition){
+    public void updateCategoryByPosition(int fiPosition) {
 
-        if (moHolder!= null){
+        if (moHolder != null) {
             selectedItem = fiPosition;
+            notifyDataSetChanged();
+        }
+    }
+
+    public void updateCategoryByID(int fiCategoryID) {
+
+        if (moCategoryList != null) {
+            for (int liPosition = 0; liPosition < moCategoryList.size(); liPosition++) {
+                Category loCategory = moCategoryList.get(liPosition);
+                if (loCategory.getCategoryId() == fiCategoryID) {
+                    selectedItem = liPosition;
+
+                    break;
+                }
+            }
             notifyDataSetChanged();
         }
     }

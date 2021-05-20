@@ -1,5 +1,6 @@
 package com.cashback.fragments;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
+import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.adapters.CategoryAdapter;
 import com.cashback.adapters.OfferListAdapter;
 import com.cashback.databinding.FragmentOfferListBinding;
@@ -69,7 +71,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             if (!isLoading && !isLastPage) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
-                        /*&& totalItemCount >= PAGE_SIZE*/) {
+                    /*&& totalItemCount >= PAGE_SIZE*/) {
                     miCurrentPage = miCurrentPage + 1;
                     fetchOffers();
                 }
@@ -113,7 +115,25 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         moOfferListAdapter = new OfferListAdapter(getActivity(), moOfferList);
         moBinding.rvOfferList.setAdapter(moOfferListAdapter);
 
-        fetchCategory();
+
+        if (getArguments() != null) {
+            miCategoryId = getArguments().getInt(Constants.IntentKey.CATEGORY_ID);
+            long llOfferId = getArguments().getLong(Constants.IntentKey.OFFER_ID);
+            long llLocationId = getArguments().getLong(Constants.IntentKey.LOCATION_ID);
+
+            if (miCategoryId > 0) {
+//                setSelection
+                moCategoryAdapter.updateCategoryByID(miCategoryId);
+            }
+            fetchCategory();
+
+            if (llOfferId > 0 && llLocationId > 0) {
+                Intent loIntent = new Intent(getActivity(), OfferDetailsActivity.class);
+                loIntent.putExtra(Constants.IntentKey.OFFER_ID, llOfferId);
+                loIntent.putExtra(Constants.IntentKey.LOCATION_ID, llLocationId);
+                startActivity(loIntent);
+            }
+        } else fetchCategory();
     }
 
     private void fetchCategory() {

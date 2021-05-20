@@ -13,6 +13,7 @@ import com.cashback.models.request.OfferFilterRequest;
 import com.cashback.models.request.QuizDetailsRequest;
 import com.cashback.models.request.SaveMiniProfileRequest;
 import com.cashback.models.request.SubmitQuizRequest;
+import com.cashback.models.request.SyncTokenRequest;
 import com.cashback.models.request.UpdateShopOnlineBlinkRequest;
 import com.cashback.models.response.ActivityDetailsResponse;
 import com.cashback.models.response.ActivityMarkAsUsedResponse;
@@ -27,7 +28,10 @@ import com.cashback.models.response.OfferDetailsResponse;
 import com.cashback.models.response.QuizDetailsResponse;
 import com.cashback.models.response.SaveProfileResponse;
 import com.cashback.models.response.SubmitQuizResponse;
+import com.cashback.models.response.SyncTokenResponse;
 import com.cashback.models.response.UpdateShopOnlineBlinkResponse;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -44,6 +48,9 @@ public interface AppServices {
 
     @POST("v2-apis/")
     Call<GetSettingResponse> getGlobalSetting(@Body GetSettingRequest foRequest);
+
+    @POST("syncTokenToServer")
+    Call<SyncTokenResponse> syncTokenToServer(@Body SyncTokenRequest foRequestObject);
 
     @POST("v2-apis/")
     Call<GetProfileResponse> getUserProfile(@Body GetProfileRequest foRequest);

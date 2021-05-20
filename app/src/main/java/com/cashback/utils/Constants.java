@@ -19,9 +19,11 @@ public class Constants {
         public static final String OFFER_OBJECT = "offer_object";
         public static final String OFFER_ID = "offerId";
         public static final String LOCATION_ID = "locationId";
+        public static final String CATEGORY_ID = "categoryId";
         public static final String REPORT_ID = "reportId";
         public static final String QR_DATA = "qrData";
         public static final String ACTIVITY_ID = "activityId";
+        public static final String MESSAGE_ID = "messageId";
         public static final String ENGAGED_DATE = "engagedDate";
         public static final String PIN_COLOR = "pinColor";
     }
@@ -29,6 +31,7 @@ public class Constants {
     public enum API
     {
         GET_GLOBAL_SETTING("getGlobalSetting"),
+        SYNC_FB_TOKEN_TO_SERVER("syncTokenToServer"),
         GET_USER_PROFILE("getUserProfile"),
         SAVE_MINI_PROFILE("saveMiniProfile"),
         GET_OFFER_FILTER("getOfferFilter"),
