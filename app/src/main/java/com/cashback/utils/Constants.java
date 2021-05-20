@@ -7,6 +7,8 @@ public class Constants {
     public static final int SPLASH_TIME = 3 * 1000;
 
     public static String BASE_URL = BuildConfig.BASE_URL;
+    public static String ADGYDE_APP_KEY = BuildConfig.ADGYDE_APP_KEY;
+
     public static String IMAGE_BASE_URL = "https://mobyads.in/moby/";
 
 

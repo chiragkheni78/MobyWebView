@@ -14,11 +14,16 @@ public class SharedPreferenceManager {
     public static final String ADVERT_BANNER_POSITION = "advertBannerPosition";
     public static final String QUIZ_TIME_PERIOD = "quizTimePeriod";
 
-
-
+    public static final String APP_DOWNLOAD_SOURCE = "app_download_source";
+    public static final String APP_DOWNLOAD_MEDIUM = "app_download_medium";
+    public static final String APP_DOWNLOAD_CAMPAIGN = "app_download_campaign";
 
     private static final String IS_FCM_SYNC = "is_fcm_sync";
     private static final String FCM_TOKEN = "fcm_token";
+
+
+
+
     private static final String TERMS_CONDITION = "terms_conditions";
 
     private static final String IS_PROFILE_SAVE = "is_profile_save";
@@ -115,6 +120,56 @@ public class SharedPreferenceManager {
     }
     //END REFERRAL_CODE
 
+    //START APP_DOWNLOAD_CAMPAIGN
+    public void setAppDownloadCampaign(String fsAppDownloadCampaign) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putString(APP_DOWNLOAD_CAMPAIGN, fsAppDownloadCampaign);
+            loEditor.commit();
+        }
+    }
+
+    public String getAppDownloadCampaign() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getString(APP_DOWNLOAD_CAMPAIGN, "");
+        }
+        return "";
+    }
+    //END APP_DOWNLOAD_CAMPAIGN
+
+    //START APP_DOWNLOAD_MEDIUM
+    public void setAppDownloadMedium(String fsAppDownloadMedium) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putString(APP_DOWNLOAD_MEDIUM, fsAppDownloadMedium);
+            loEditor.commit();
+        }
+    }
+
+    public String getAppDownloadMedium() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getString(APP_DOWNLOAD_MEDIUM, "");
+        }
+        return null;
+    }
+    //END APP_DOWNLOAD_MEDIUM
+
+    //START APP_DOWNLOAD_SOURCE
+    public void setAppDownloadSource(String fsAppDownloadSource) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putString(APP_DOWNLOAD_SOURCE, fsAppDownloadSource);
+            loEditor.commit();
+        }
+    }
+
+    public String getAppDownloadSource() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getString(APP_DOWNLOAD_SOURCE, "");
+        }
+        return null;
+    }
+    //END APP_DOWNLOAD_SOURCE
 
     public void setAdvertBannerPosition(int fiAdvertBannerPosition) {
         if (moSharedPreferences != null) {

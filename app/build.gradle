@@ -30,12 +30,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             buildConfigField "String", "BASE_URL", "\"http://mobyads.in/preprod-moby/v2-apis/\""
+            buildConfigField "String", "ADGYDE_APP_KEY", "\"K323933399337795\""
         }
 
         debug {
             minifyEnabled false
             shrinkResources false
             buildConfigField "String", "BASE_URL", "\"http://mobyads.in/preprod-moby/\""
+            buildConfigField "String", "ADGYDE_APP_KEY", "\"K323933399337795\""
         }
     }
     compileOptions {
@@ -92,5 +94,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics'
     // Dynamic Links and Analytics libraries
     implementation 'com.google.firebase:firebase-dynamic-links'
+
+    // install referrer - tracking
+    implementation "com.android.installreferrer:installreferrer:2.2"
+
+    // AdGyde Sdk with AndroidX support
+    implementation 'com.adgyde:adgyde-androidx-sdk:4.1.12'
 
 }
