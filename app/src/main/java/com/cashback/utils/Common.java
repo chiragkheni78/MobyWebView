@@ -221,13 +221,13 @@ public class Common {
         Calendar loCalender = Calendar.getInstance();
         JSONObject loJsonObject = new JSONObject();
         try {
-            loJsonObject.put("api-level", android.os.Build.VERSION.SDK_INT);
             loJsonObject.put("versionName", BuildConfig.VERSION_NAME);
             loJsonObject.put("versionCode", BuildConfig.VERSION_CODE);
             loJsonObject.put("deviceDateTime", getFormattedDateTime(loCalender.getTimeInMillis()));
             loJsonObject.put("manufacturer", getDeviceName());
             loJsonObject.put("deviceId", getDeviceUniqueId(foContext));
             loJsonObject.put("platformId", 1); // Android = 1; iOS = 2;
+            loJsonObject.put("osVersion", android.os.Build.VERSION.SDK_INT);
             return loJsonObject;
         } catch (Exception e) {
             e.printStackTrace();

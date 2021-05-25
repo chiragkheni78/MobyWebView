@@ -31,13 +31,13 @@ public class GetSettingResponse {
     @SerializedName("fbIsAdsSliderReset")
     private boolean isResetAdvertisementSlider;
 
-    @SerializedName("referralCode")
+    @SerializedName("fsReferralCode")
     String referralCode;
 
-    @SerializedName("referralLink")
+    @SerializedName("fsReferralLink")
     String referralUrl;
 
-    @SerializedName("fiZoomLevel")
+    @SerializedName("fIZoomAndroid")
     int zoomLevel;
 
     @SerializedName("fiUnreadCount")
