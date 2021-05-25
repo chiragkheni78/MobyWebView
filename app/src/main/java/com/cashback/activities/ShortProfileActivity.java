@@ -56,20 +56,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onChanged(GetProfileResponse loJsonObject) {
             if (!loJsonObject.isError()) {
-                if (loJsonObject.getWalletList() != null) {
-                    loEWalletAdapter = new EWalletAdapter(ShortProfileActivity.this, loJsonObject.getWalletList());
-                    moBinding.spinWallet.setAdapter(loEWalletAdapter);
-                    moBinding.spinWallet.setSelection(moProfileViewModel.getSelectedWalletPosition(loJsonObject.getWalletList()));
-                }
 
-                ArrayList<Advertisement> loAdvertisementList = loJsonObject.getAdvertisementList();
-                if (loAdvertisementList != null && loAdvertisementList.size() > 0) {
-                    String lsURL = moProfileViewModel.getAdvertImage(getContext(), loAdvertisementList);
-                    if (lsURL != null) {
-                        Common.loadImage(moBinding.ivBanner, lsURL, null, null);
-                        moBinding.ivBanner.setVisibility(View.VISIBLE);
-                    }
-                } else moBinding.ivBanner.setVisibility(View.GONE);
 
                 if (loJsonObject.isUserExist()) {
                     if (loJsonObject.getUserDetails() != null) {
@@ -84,6 +71,22 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                     startActivity(intent);
                     finish();
                 } else {
+
+                    if (loJsonObject.getWalletList() != null) {
+                        loEWalletAdapter = new EWalletAdapter(ShortProfileActivity.this, loJsonObject.getWalletList());
+                        moBinding.spinWallet.setAdapter(loEWalletAdapter);
+                        moBinding.spinWallet.setSelection(moProfileViewModel.getSelectedWalletPosition(loJsonObject.getWalletList()));
+                    }
+
+                    ArrayList<Advertisement> loAdvertisementList = loJsonObject.getAdvertisementList();
+                    if (loAdvertisementList != null && loAdvertisementList.size() > 0) {
+                        String lsURL = moProfileViewModel.getAdvertImage(getContext(), loAdvertisementList);
+                        if (lsURL != null) {
+                            Common.loadImage(moBinding.ivBanner, lsURL, null, null);
+                            moBinding.ivBanner.setVisibility(View.VISIBLE);
+                        }
+                    } else moBinding.ivBanner.setVisibility(View.GONE);
+
                     moBinding.llRoot.setVisibility(View.VISIBLE);
                 }
 

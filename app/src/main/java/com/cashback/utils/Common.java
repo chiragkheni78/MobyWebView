@@ -11,12 +11,14 @@ import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.WindowManager;
@@ -52,6 +54,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Response;
 
@@ -80,7 +84,7 @@ public class Common {
         }
     }
 
-    private void setDynamicText(Context foContext, JSONObject foJsonObject) {
+    public static void setDynamicText(Context foContext, JSONObject foJsonObject) {
         try {
             Iterator<String> iterator = foJsonObject.keys();
             while (iterator.hasNext()) {
@@ -413,6 +417,32 @@ public class Common {
                 loCursor.close();
             return lsPath;
         }
+    }
+
+
+    public static String validatePhoneNumber(String fsPhoneNumber) {
+
+        if (TextUtils.isEmpty(fsPhoneNumber)) {
+            return "Invalid phone number.";
+        } else if (fsPhoneNumber.length() != 10) {
+            return "Enter valid 10 digit number";
+        }
+        return "";
+    }
+
+
+    public static boolean isValidEmail(String fsEmail) {
+        String EMAIL_ADDRESS_EXPRESSIONS = "[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?";
+        Pattern pattern = Pattern.compile(EMAIL_ADDRESS_EXPRESSIONS);
+        Matcher matcher = pattern.matcher(fsEmail);
+
+        boolean matchFound = matcher.matches();
+        return matchFound;
+    }
+
+    public static boolean isGPSEnabled(Context foContext) {
+        LocationManager locManager = (LocationManager) foContext.getSystemService(Context.LOCATION_SERVICE);
+        return locManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
 }

@@ -7,11 +7,13 @@ import com.cashback.models.request.FetchOffersRequest;
 import com.cashback.models.request.GetProfileRequest;
 import com.cashback.models.request.GetSettingRequest;
 import com.cashback.models.request.ActivityListRequest;
+import com.cashback.models.request.MessageDetailsRequest;
 import com.cashback.models.request.MessageListRequest;
 import com.cashback.models.request.OfferDetailsRequest;
 import com.cashback.models.request.OfferFilterRequest;
 import com.cashback.models.request.QuizDetailsRequest;
 import com.cashback.models.request.SaveMiniProfileRequest;
+import com.cashback.models.request.StaticLabelsRequest;
 import com.cashback.models.request.SubmitQuizRequest;
 import com.cashback.models.request.SyncTokenRequest;
 import com.cashback.models.request.UpdateShopOnlineBlinkRequest;
@@ -20,6 +22,7 @@ import com.cashback.models.response.ActivityMarkAsUsedResponse;
 import com.cashback.models.response.BillUploadResponse;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.response.ActivityListResponse;
+import com.cashback.models.response.MessageDetailsResponse;
 import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.GetProfileResponse;
@@ -27,6 +30,7 @@ import com.cashback.models.response.MessageListResponse;
 import com.cashback.models.response.OfferDetailsResponse;
 import com.cashback.models.response.QuizDetailsResponse;
 import com.cashback.models.response.SaveProfileResponse;
+import com.cashback.models.response.StaticLabelsResponse;
 import com.cashback.models.response.SubmitQuizResponse;
 import com.cashback.models.response.SyncTokenResponse;
 import com.cashback.models.response.UpdateShopOnlineBlinkResponse;
@@ -91,5 +95,11 @@ public interface AppServices {
 
     @POST("v2-apis/")
     Call<MessageListResponse> getMessageList(@Body MessageListRequest foRequest);
+
+    @POST("v2-apis/")
+    Call<MessageDetailsResponse> getMessageDetails(@Body MessageDetailsRequest foRequest);
+
+    @POST("v2-apis/")
+    Call<StaticLabelsResponse> getAllStaticLabelsList(@Body StaticLabelsRequest foRequest);
 
 }

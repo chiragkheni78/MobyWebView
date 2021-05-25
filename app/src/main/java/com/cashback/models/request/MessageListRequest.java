@@ -8,14 +8,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class MessageListRequest {
 
-    @SerializedName("user_contact")
-    private String mobileNumber;
+    @SerializedName("fsAction")
+    private String action;
 
     @SerializedName("fsDeviceId")
     private String deviceId;
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public void setDeviceId(String deviceId) {
@@ -23,7 +23,7 @@ public class MessageListRequest {
     }
 
     public String validateData(Context foContext) {
-        if (Common.getDeviceUniqueId(foContext).isEmpty()) {
+        if (deviceId.isEmpty()) {
             return Common.getDynamicText(foContext, "contact_support");
         }
         return null;

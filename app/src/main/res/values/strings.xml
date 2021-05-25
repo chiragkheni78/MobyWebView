@@ -27,6 +27,16 @@
     <string name="camera_access_permission">App needs to access the Camera for capture photo.</string>
     <string name="gallery_access_permission">App needs to access the file storage for view gallery.</string>
 
+    <string name="text_login_title">Login with Mobile Number</string>
+    <string name="text_login_msg">We will send you an</string>
+    <string name="hint_mobile_no">10 digit mobile number</string>
+
+    <string name="status_verification_failed">Verification failed</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
+
+    <string name="text_verify_phone_no">Verify Phone Number</string>
+    <string name="msg_verify_phone_number">Please verify your phone with\n OTP to view the In-Store Rewards.</string>
+
 
 
     <!--buttons-->

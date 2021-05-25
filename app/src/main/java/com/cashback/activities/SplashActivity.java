@@ -6,9 +6,11 @@ import android.os.Handler;
 import android.os.Looper;
 
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cashback.databinding.ActivitySplashBinding;
+import com.cashback.models.response.StaticLabelsResponse;
 import com.cashback.models.viewmodel.SplashViewModel;
 
 import static com.cashback.utils.Constants.SPLASH_TIME;
@@ -19,6 +21,20 @@ public class SplashActivity extends BaseActivity {
 
     ActivitySplashBinding moBinding;
     SplashViewModel moSplashViewModel;
+
+    Observer<StaticLabelsResponse> fetchStaticLabelsObserver = new Observer<StaticLabelsResponse>() {
+        @Override
+        public void onChanged(StaticLabelsResponse loJsonObject) {
+            if (!loJsonObject.isError()) {
+                if (loJsonObject.getLabels() != null) {
+                    //handle Result here
+                }
+            } else {
+                //handle Error here
+                //Common.showErrorDialog(getContext(), loJsonObject.getFsMessage(), false);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +48,9 @@ public class SplashActivity extends BaseActivity {
         moSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         moSplashViewModel.checkInstallReferrer(getContext());
         moSplashViewModel.retrieveFirebaseDeepLink(this, getIntent());
+
+        moSplashViewModel.fetchStaticLabels.observe(this, fetchStaticLabelsObserver);
+        moSplashViewModel.fetchStaticLabelsList(getContext());
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override

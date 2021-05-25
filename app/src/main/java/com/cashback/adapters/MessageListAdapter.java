@@ -10,11 +10,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
+import com.cashback.activities.MessageActivity;
 import com.cashback.models.Ad;
 import com.cashback.models.Message;
 import com.cashback.utils.Common;
@@ -40,36 +42,28 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         TextView loTvTitle, loTvDate, loTvContent;
         com.rey.material.widget.TextView loTvReadMore;
         LinearLayout loLlRoot;
+        Button btnAdDetails;
+        CardView mainCard;
 
         public DataObjectHolder(View foView) {
             super(foView);
-            loTvTitle = foView.findViewById(R.id.tvAdName);
-            loTvDate = foView.findViewById(R.id.tvBrandName);
-            loTvContent = foView.findViewById(R.id.tvOfferRewards);
+            loTvTitle = foView.findViewById(R.id.tvTitle);
+            loTvDate = foView.findViewById(R.id.tvDate);
+            loTvContent = foView.findViewById(R.id.tvContent);
             loTvReadMore = foView.findViewById(R.id.tvReadMoreMessage);
+            mainCard = foView.findViewById(R.id.cv_main);
 
             loLlRoot = foView.findViewById(R.id.llRoot);
-            foView.setOnClickListener(this);
+            loTvReadMore.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View foView) {
-            int liPosition = (int) foView.getTag();
-            //if (foView.getId() == R.id.tvReadMoreMessage) {
-                openMessage(moMessageList.get(liPosition));
-            //}
+            openMessage(moMessageList.get(getAdapterPosition()));
         }
 
-        private void openMessage(Message message){
-//            if (!message.isSeen()) {
-//                ((NotificationsActivity) mContext).hitAPIForSeenMessage(position, messageList.get(position).getMessage_id());
-//            } else {
-//                Intent intent = new Intent(moContext,
-//                        NotificationMoreDetailScreen.class);
-//                intent.putExtra("Title", messageList.get(position).getTitle());
-//                intent.putExtra("Desc", messageList.get(position).getContent());
-//                mContext.startActivity(intent);
-//            }
+        private void openMessage(Message message) {
+            ((MessageActivity) moContext).openDetailsScreen(message.getTitle(), message.getContent(), "" + message.getMessageID());
         }
     }
 
@@ -90,56 +84,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             foHolder.loTvContent.setText(loMessage.getContent());
             foHolder.loLlRoot.setTag(fiPosition);
             foHolder.loTvReadMore.setTag(fiPosition);
+            if (loMessage.isSeen()) {
+                foHolder.mainCard.setCardBackgroundColor(moContext.getResources().getColor(R.color.white));
+            } else {
+                foHolder.mainCard.setCardBackgroundColor(moContext.getResources().getColor(R.color.colorPrimaryLight));
+            }
 
         } catch (Exception e) {
             LogV2.logException(TAG, e);
         }
-    }
-
-    private void setButton(Button loBtnAdDetails, Ad foAdOffer) {
-        if (foAdOffer.getEngagedFlag() == true) {
-            loBtnAdDetails.setText(Common.getDynamicText(moContext, "engaged"));
-            loBtnAdDetails.setBackgroundColor(moContext.getResources().getColor(R.color.grey));
-        } else {
-            String lsPinColor = foAdOffer.getPinColor();
-            int liDrawable;
-            if (lsPinColor.equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-                liDrawable = R.drawable.btn_green;
-                loBtnAdDetails.setText(Common.getDynamicText(moContext, "online_coupon"));
-            } else if (lsPinColor.equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
-                liDrawable = R.drawable.btn_primary;
-                loBtnAdDetails.setText(Common.getDynamicText(moContext, "instore_coupon"));
-            } else {
-                liDrawable = R.drawable.btn_yello;
-                loBtnAdDetails.setText(Common.getDynamicText(moContext, "view_details"));
-            }
-            loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, liDrawable));
-        }
-    }
-
-    private void setOfferLabel(TextView foTvCashBackOffer, Ad foAdOffer) {
-
-        int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.white);
-
-        if (!foAdOffer.getDiscountUpTo().isEmpty()){
-            foTvCashBackOffer.setText(Common.getColorText("Upto ", Color.WHITE));
-            foTvCashBackOffer.append(Common.getColorText(foAdOffer.getDiscountUpTo(), fiPrimaryColor));
-            foTvCashBackOffer.append(Common.getColorText(" Off", Color.WHITE));
-        }
-
-        if (!foAdOffer.getFlatCashBack().isEmpty()){
-
-            if (foTvCashBackOffer.getText().length() > 0) {
-                foTvCashBackOffer.append(Common.getColorText(" + ", Color.WHITE));
-                foTvCashBackOffer.append(Common.getColorText("Extra ", Color.WHITE));
-            } else {
-                foTvCashBackOffer.setText(Common.getColorText("Extra ", Color.WHITE));
-            }
-            foTvCashBackOffer.append(Common.getColorText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
-            foTvCashBackOffer.append(Common.getColorText(" Cashback", Color.WHITE));
-        }
-        foTvCashBackOffer.setBackground(ActivityCompat.getDrawable(moContext, R.drawable.rect_black));
-        foTvCashBackOffer.setGravity(Gravity.CENTER);
     }
 
     @Override

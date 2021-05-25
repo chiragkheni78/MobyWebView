@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.adgyde.android.AdGyde;
 import com.cashback.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AppGlobal extends Application {
 
@@ -28,5 +30,9 @@ public class AppGlobal extends Application {
     private void configAdGyde() {
 //        AdGyde.init(this, Constants.ADGYDE_APP_KEY, "Organic");
 //        AdGyde.setDebugEnabled(true);
+    }
+
+    public static FirebaseUser getFirebaseUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
     }
 }

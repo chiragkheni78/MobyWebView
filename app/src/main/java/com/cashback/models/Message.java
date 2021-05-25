@@ -4,15 +4,19 @@ import com.google.gson.annotations.SerializedName;
 
 public class Message {
 
-    @SerializedName("message_id")
+    @SerializedName("fiMessageId")
     long messageID;
-    @SerializedName("title")
+
+    @SerializedName("fsTitle")
     String title;
-    @SerializedName("content")
+
+    @SerializedName("fsContent")
     String content;
-    @SerializedName("datetime")
+
+    @SerializedName("fdTimestamp")
     String dateTime;
-    @SerializedName("message_seen")
+
+    @SerializedName("fdIsMessageSeen")
     boolean isSeen;
 
     public long getMessageID() {

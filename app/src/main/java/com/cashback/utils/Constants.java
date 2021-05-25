@@ -32,6 +32,7 @@ public class Constants {
 
     public enum API
     {
+        GET_ALL_STATIC_LABEL("getAllStaticLabels"),
         GET_GLOBAL_SETTING("getGlobalSetting"),
         SYNC_FB_TOKEN_TO_SERVER("syncTokenToServer"),
         GET_USER_PROFILE("getUserProfile"),
@@ -45,7 +46,9 @@ public class Constants {
         GET_ACTIVITY_DETAILS("getActivityDetails"),
         COUPON_MARK_AS_USED("couponMarkAsUsed"),
         UPLOAD_TRANSACTION_BILL("uploadTrasactionBill"),
-        UPLOAD_SHOP_ONLINE_BLINK("updateShopOnlineBlink")
+        UPLOAD_SHOP_ONLINE_BLINK("updateShopOnlineBlink"),
+        GET_MESSAGE_LIST("getMessages"),
+        UPDATE_MESSAGE_AS_READ("updateMessageAsRead")
         ;
 
         private String type;

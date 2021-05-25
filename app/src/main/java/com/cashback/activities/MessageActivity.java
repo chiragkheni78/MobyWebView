@@ -1,6 +1,7 @@
 package com.cashback.activities;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.lifecycle.Observer;
@@ -9,8 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.adapters.MessageListAdapter;
 import com.cashback.databinding.ActivityMessageBinding;
 import com.cashback.models.Message;
-import com.cashback.models.viewmodel.MessagesViewModel;
 import com.cashback.models.response.MessageListResponse;
+import com.cashback.models.viewmodel.MessagesViewModel;
 import com.cashback.utils.Common;
 
 import java.util.ArrayList;
@@ -18,11 +19,29 @@ import java.util.ArrayList;
 public class MessageActivity extends BaseActivity {
 
     private static final String TAG = MessageActivity.class.getSimpleName();
+
     ActivityMessageBinding moBinding;
     MessagesViewModel moMessagesViewModel;
 
     MessageListAdapter moMessageListAdapter;
     ArrayList<Message> moMessageList;
+
+    Observer<MessageListResponse> fetchMessageObserver = new Observer<MessageListResponse>() {
+        @Override
+        public void onChanged(MessageListResponse loJsonObject) {
+            if (!loJsonObject.isError()) {
+                if (loJsonObject.getMessageList() != null) {
+                    moMessageList = loJsonObject.getMessageList();
+                    moMessageListAdapter = new MessageListAdapter(getContext(), moMessageList);
+                    moBinding.rvMessages.setAdapter(moMessageListAdapter);
+
+                }
+            } else {
+                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
+            }
+            dismissProgressDialog();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +49,19 @@ public class MessageActivity extends BaseActivity {
         moBinding = ActivityMessageBinding.inflate(getLayoutInflater());
         setContentView(getContentView(moBinding));
         initializeContent();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // check that it is the SecondActivity with an OK result
+        if (requestCode == 10) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+                getMessageDetails();
+
+            }
+        }
     }
 
     private void initializeContent() {
@@ -44,20 +76,12 @@ public class MessageActivity extends BaseActivity {
         moMessagesViewModel.fetchMessageList(getContext());
     }
 
-    Observer<MessageListResponse> fetchMessageObserver = new Observer<MessageListResponse>() {
-        @Override
-        public void onChanged(MessageListResponse loJsonObject) {
-            if (!loJsonObject.isError()) {
-                if (loJsonObject.getMessageList() != null) {
-                    moMessageList = loJsonObject.getMessageList();
-                    moMessageListAdapter = new MessageListAdapter(getContext(), moMessageList);
-                    moBinding.rvMessages.setAdapter(moMessageListAdapter);
-                }
-            } else {
-                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
-            }
-            dismissProgressDialog();
-        }
-    };
+    public void openDetailsScreen(String title, String desc, String id) {
+        Intent intent = new Intent(moContext, MessageDetailActivity.class);
+        intent.putExtra("MessageTitle", title);
+        intent.putExtra("MessageDesc", desc);
+        intent.putExtra("MessageId", id);
+        startActivityForResult(intent, 10);
+    }
 
 }
