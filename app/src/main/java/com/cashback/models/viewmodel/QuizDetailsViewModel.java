@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.AppGlobal;
 import com.cashback.models.QuizAnswer;
 import com.cashback.models.request.QuizDetailsRequest;
 import com.cashback.models.request.SubmitQuizRequest;
@@ -28,6 +29,7 @@ public class QuizDetailsViewModel extends ViewModel {
         QuizDetailsRequest loQuizDetailsRequest = new QuizDetailsRequest(mobileNumber, offerId, locationId);
         loQuizDetailsRequest.setAction(Constants.API.GET_QUIZ_DETAILS.getValue());
         loQuizDetailsRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loQuizDetailsRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loQuizDetailsRequest.validateData(foContext);
         if (lsMessage != null) {
@@ -68,6 +70,7 @@ public class QuizDetailsViewModel extends ViewModel {
         loQuizDetailsRequest.setAction(Constants.API.SUBMIT_QUIZ_ANSWER.getValue());
         loQuizDetailsRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
         loQuizDetailsRequest.setQuizAnswerList(foQuizAnswerList);
+        loQuizDetailsRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loQuizDetailsRequest.validateData(foContext);
         if (lsMessage != null) {

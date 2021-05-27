@@ -21,6 +21,8 @@ public class SharedPreferenceManager {
     private static final String IS_FCM_SYNC = "is_fcm_sync";
     private static final String FCM_TOKEN = "fcm_token";
 
+    public static final String MAP_ZOOM_LEVEL = "mapZoomLevel";
+
 
 
 
@@ -220,6 +222,24 @@ public class SharedPreferenceManager {
         return 0;
     }
     //END QUIZ_TIME_PERIOD
+
+
+    //START MAP_ZOOM_LEVEL
+    public void setMapZoomLevel(int fiZoomLevel) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putInt(MAP_ZOOM_LEVEL, fiZoomLevel);
+            loEditor.commit();
+        }
+    }
+
+    public int getMapZoomLevel() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getInt(MAP_ZOOM_LEVEL, 11);
+        }
+        return 11;
+    }
+    //END MAP_ZOOM_LEVEL
 
 //=====================================================
 

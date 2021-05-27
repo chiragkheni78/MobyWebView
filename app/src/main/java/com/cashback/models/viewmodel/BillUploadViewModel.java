@@ -5,7 +5,8 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.cashback.models.Transaction;
+import com.cashback.AppGlobal;
+import com.cashback.models.request.BillUploadRequest;
 import com.cashback.models.response.BillUploadResponse;
 import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
@@ -27,16 +28,17 @@ public class BillUploadViewModel extends ViewModel {
     public MutableLiveData<BillUploadResponse> uploadBillStatus = new MutableLiveData<>();
 
     public void uploadTransactionBill(Context foContext, String phoneNumber, long fiActivityId, String transactionDate, int transactionAmount, String fsBillImagePath_1, String fsBillImagePath_2) {
-        Transaction loTransactionData = new Transaction(phoneNumber, fiActivityId, transactionDate, transactionAmount);
-        loTransactionData.setDeviceId(Common.getDeviceUniqueId(foContext));
+        BillUploadRequest loBillUploadRequestData = new BillUploadRequest(phoneNumber, fiActivityId, transactionDate, transactionAmount);
+        loBillUploadRequestData.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loBillUploadRequestData.setMobileNumber(AppGlobal.getPhoneNumber());
 
-        String lsMessage = loTransactionData.validateData(foContext);
+        String lsMessage = loBillUploadRequestData.validateData(foContext);
         if (lsMessage != null) {
             uploadBillStatus.postValue(new BillUploadResponse(true, lsMessage));
             return;
         }
 
-        RequestBody loRequestData = RequestBody.create(Common.getJsonFromObject(loTransactionData), MediaType.parse("application/json"));
+        RequestBody loRequestData = RequestBody.create(Common.getJsonFromObject(loBillUploadRequestData), MediaType.parse("application/json"));
         RequestBody loAction = RequestBody.create(Constants.API.UPLOAD_TRANSACTION_BILL.getValue(), okhttp3.MultipartBody.FORM);
 
         List<MultipartBody.Part> loMultiPartList = getMultipartList(fsBillImagePath_1, fsBillImagePath_2);

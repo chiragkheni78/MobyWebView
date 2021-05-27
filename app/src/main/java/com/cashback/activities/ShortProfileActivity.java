@@ -17,7 +17,7 @@ import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
 import com.cashback.models.viewmodel.ProfileViewModel;
 import com.cashback.models.UserDetails;
-import com.cashback.models.response.GetProfileResponse;
+import com.cashback.models.response.GetMiniProfileResponse;
 import com.cashback.models.response.SaveProfileResponse;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -45,16 +45,16 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
     private void initializeContent() {
         Common.hideKeyboard(this);
         moProfileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        moProfileViewModel.saveProfileStatus.observe(this, saveProfileObserver);
-        moProfileViewModel.getProfileStatus.observe(this, getProfileObserver);
+        moProfileViewModel.saveMiniProfileStatus.observe(this, saveProfileObserver);
+        moProfileViewModel.getMiniProfileStatus.observe(this, getProfileObserver);
         moBinding.btnSaveProfile.setOnClickListener(this);
 
-        moProfileViewModel.getProfile(getContext());
+        moProfileViewModel.getMiniProfile(getContext());
     }
 
-    Observer<GetProfileResponse> getProfileObserver = new Observer<GetProfileResponse>() {
+    Observer<GetMiniProfileResponse> getProfileObserver = new Observer<GetMiniProfileResponse>() {
         @Override
-        public void onChanged(GetProfileResponse loJsonObject) {
+        public void onChanged(GetMiniProfileResponse loJsonObject) {
             if (!loJsonObject.isError()) {
 
 

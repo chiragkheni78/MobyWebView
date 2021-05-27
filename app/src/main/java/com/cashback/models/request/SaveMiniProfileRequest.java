@@ -13,6 +13,9 @@ public class SaveMiniProfileRequest {
     @SerializedName("fsDeviceId")
     String deviceId;
 
+    @SerializedName("fsUserContact")
+    private String mobileNumber;
+
     @SerializedName("fiAge")
     int age;
 
@@ -53,6 +56,10 @@ public class SaveMiniProfileRequest {
 
     public void setReferralCode(String referralCode) {
         this.referralCode = referralCode;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String validateData(Context foContext) {

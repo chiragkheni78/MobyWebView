@@ -95,7 +95,7 @@ public class Ad implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return description = (description != null)? description: "";
     }
 
     public String getCampaignName() {
@@ -108,8 +108,11 @@ public class Ad implements Serializable {
 
 
     /*details*/
-    @SerializedName("description")
+    @SerializedName("fsDescription")
     String description;
+
+    @SerializedName("fsOfferDetail")
+    String offerDetails;
 
     @SerializedName("fsCompanyName")
     String campaignName;
@@ -132,10 +135,10 @@ public class Ad implements Serializable {
     @SerializedName("fsDescription4")
     String desc4;
 
-    @SerializedName("cardType")
+    @SerializedName("fsCardType")
     String cardType;
 
-    @SerializedName("cardName")
+    @SerializedName("fsCardName")
     String cardName;
 
     @SerializedName("fsCompanyUrl")
@@ -146,6 +149,10 @@ public class Ad implements Serializable {
 
     public String getCardType() {
         return cardType;
+    }
+
+    public String getOfferDetails() {
+        return offerDetails = (offerDetails != null)? offerDetails : "none";
     }
 
     public String getCardName() {

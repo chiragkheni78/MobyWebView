@@ -13,16 +13,16 @@
 
         <FrameLayout
             style="@style/RootLayout"
-            android:background="@color/transparent"
             android:layout_height="@dimen/_180sdp"
+            android:background="@color/transparent"
             tools:context=".activities.HomeActivity">
 
-        <ImageView
-            android:id="@+id/ivBanner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_180sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_enable_location_24" />
+            <ImageView
+                android:id="@+id/ivBanner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp"
+                android:scaleType="fitXY"
+                android:background="@drawable/iv_place_holder"/>
 
             <include
                 android:id="@+id/toolbar"
@@ -46,124 +46,143 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                style="@style/RootLayout"
-                android:layout_above="@+id/btnWinCoupon"
-                android:background="@color/transparent"
-                android:padding="@dimen/padding_large">
-
-                <LinearLayout
-                    style="@style/NormalLayout"
-                    android:background="@color/transparent">
-
-                    <TextView
-                        android:id="@+id/lblBankCard"
-                        style="@style/TvLarge"
-                        android:text="Bank &amp; Card Name"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvBankCard"
-                        style="@style/TvStandard"
-                        android:layout_marginTop="@dimen/padding_micro"
-                        android:text="none"
-                        android:textColor="@color/colorSecondaryText" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/NormalLayout"
-                    android:layout_marginTop="@dimen/padding_large"
-                    android:background="@color/transparent">
-
-                    <TextView
-                        android:id="@+id/lblOffer"
-                        style="@style/TvLarge"
-                        android:text="The Offer"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvOfferRewards"
-                        style="@style/TvStandard"
-                        android:layout_marginTop="@dimen/padding_micro"
-                        android:text="none"
-                        android:textColor="@color/colorSecondaryText" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/NormalLayout"
-                    android:layout_marginTop="@dimen/padding_large"
-                    android:background="@color/transparent">
-
-                    <TextView
-                        android:id="@+id/lblDescription"
-                        style="@style/TvLarge"
-                        android:text="Description"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvDescription"
-                        style="@style/TvStandard"
-                        android:layout_marginTop="@dimen/padding_micro"
-                        android:text="none"
-                        android:textColor="@color/colorSecondaryText" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/NormalLayout"
-                    android:layout_marginTop="@dimen/padding_large"
-                    android:background="@color/transparent">
-
-                    <TextView
-                        android:id="@+id/lblAddress"
-                        style="@style/TvLarge"
-                        android:text="Store Address"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvAddress"
-                        style="@style/TvStandard"
-                        android:layout_marginTop="@dimen/padding_micro"
-                        android:text="none"
-                        android:textColor="@color/colorSecondaryText" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/NormalLayout"
-                    android:layout_marginTop="@dimen/padding_large"
-                    android:background="@color/transparent">
-
-                    <TextView
-                        android:id="@+id/lblDeal"
-                        style="@style/TvLarge"
-                        android:text="Deal Terms &amp; Conditions"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvDeal"
-                        style="@style/TvStandard"
-                        android:layout_marginTop="@dimen/padding_micro"
-                        android:text="none"
-                        android:textColor="@color/colorPrimary" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <com.rey.material.widget.Button
-                android:id="@+id/btnLocate"
-                style="@style/RippleBtnStandard"
+            <ScrollView
+                android:layout_above="@+id/llLocate"
                 android:layout_width="match_parent"
-                android:layout_alignParentBottom="true"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    style="@style/RootLayout"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/padding_large">
+
+                    <LinearLayout
+                        style="@style/NormalLayout"
+                        android:background="@color/transparent">
+
+                        <TextView
+                            android:id="@+id/lblBankCard"
+                            style="@style/TvLarge"
+                            android:text="Bank &amp; Card Name"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvBankCard"
+                            style="@style/TvStandard"
+                            android:layout_marginTop="@dimen/padding_micro"
+                            android:text="none"
+                            android:textColor="@color/colorSecondaryText" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/NormalLayout"
+                        android:layout_marginTop="@dimen/padding_large"
+                        android:background="@color/transparent">
+
+                        <TextView
+                            android:id="@+id/lblOffer"
+                            style="@style/TvLarge"
+                            android:text="The Offer"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvOfferRewards"
+                            style="@style/TvStandard"
+                            android:layout_marginTop="@dimen/padding_micro"
+                            android:text="none"
+                            android:textColor="@color/colorSecondaryText" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/NormalLayout"
+                        android:layout_marginTop="@dimen/padding_large"
+                        android:background="@color/transparent">
+
+                        <TextView
+                            android:id="@+id/lblDescription"
+                            style="@style/TvLarge"
+                            android:text="Description"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDescription"
+                            style="@style/TvStandard"
+                            android:layout_marginTop="@dimen/padding_micro"
+                            android:text="none"
+                            android:textColor="@color/colorSecondaryText" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/NormalLayout"
+                        android:layout_marginTop="@dimen/padding_large"
+                        android:background="@color/transparent">
+
+                        <TextView
+                            android:id="@+id/lblAddress"
+                            style="@style/TvLarge"
+                            android:text="Store Address"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvAddress"
+                            style="@style/TvStandard"
+                            android:layout_marginTop="@dimen/padding_micro"
+                            android:text="none"
+                            android:textColor="@color/colorSecondaryText" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/NormalLayout"
+                        android:layout_marginTop="@dimen/padding_large"
+                        android:background="@color/transparent">
+
+                        <TextView
+                            android:id="@+id/lblDeal"
+                            style="@style/TvLarge"
+                            android:text="Deal Terms &amp; Conditions"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDeal"
+                            style="@style/TvStandard"
+                            android:layout_marginTop="@dimen/padding_micro"
+                            android:text="none"
+                            android:textColor="@color/blue" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <com.rey.material.widget.LinearLayout
+                style="@style/NormalRippleLayout"
+                android:id="@+id/llLocate"
                 android:gravity="center"
-                android:text="@string/locate"
-                android:textStyle="bold" />
+                android:layout_alignParentBottom="true"
+                android:background="@color/yellow_primary">
+
+                <TextView
+                    android:id="@+id/btnLocate"
+                    style="@style/TvLarge"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/locate"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:drawableRight="@drawable/ic_enable_location_24"
+                    android:drawablePadding="@dimen/_15sdp"
+                    android:padding="@dimen/padding_standard"
+                    android:textStyle="bold" />
+
+            </com.rey.material.widget.LinearLayout>
+
         </RelativeLayout>
     </LinearLayout>
-
 
 
 </FrameLayout>

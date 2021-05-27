@@ -13,11 +13,18 @@ public class OfferFilterRequest {
     @SerializedName("fsDeviceId")
     String deviceId;
 
+    @SerializedName("fsUserContact")
+    private String mobileNumber;
+
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 }

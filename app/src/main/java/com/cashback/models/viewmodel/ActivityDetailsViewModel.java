@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.AppGlobal;
 import com.cashback.models.request.ActivityDetailsRequest;
 import com.cashback.models.request.ActivityMarkAsUsedRequest;
 import com.cashback.models.request.UpdateShopOnlineBlinkRequest;
@@ -27,6 +28,7 @@ public class ActivityDetailsViewModel extends ViewModel {
         ActivityDetailsRequest loActivityDetailsRequest = new ActivityDetailsRequest(mobileNumber, fiActivityID);
         loActivityDetailsRequest.setAction(Constants.API.GET_ACTIVITY_DETAILS.getValue());
         loActivityDetailsRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loActivityDetailsRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loActivityDetailsRequest.validateData(foContext);
         if (lsMessage != null) {
@@ -66,6 +68,7 @@ public class ActivityDetailsViewModel extends ViewModel {
         ActivityMarkAsUsedRequest loActivityMarkAsUsedRequest = new ActivityMarkAsUsedRequest(mobileNumber, fiActivityID);
         loActivityMarkAsUsedRequest.setAction(Constants.API.COUPON_MARK_AS_USED.getValue());
         loActivityMarkAsUsedRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loActivityMarkAsUsedRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loActivityMarkAsUsedRequest.validateData(foContext);
         if (lsMessage != null) {
@@ -105,6 +108,7 @@ public class ActivityDetailsViewModel extends ViewModel {
         UpdateShopOnlineBlinkRequest loUpdateShopOnlineBlinkRequest = new UpdateShopOnlineBlinkRequest(mobileNumber, fiActivityID);
         loUpdateShopOnlineBlinkRequest.setAction(Constants.API.UPLOAD_SHOP_ONLINE_BLINK.getValue());
         loUpdateShopOnlineBlinkRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loUpdateShopOnlineBlinkRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loUpdateShopOnlineBlinkRequest.validateData(foContext);
         if (lsMessage != null) {

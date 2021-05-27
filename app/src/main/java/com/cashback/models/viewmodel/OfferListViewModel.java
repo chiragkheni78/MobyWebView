@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.AppGlobal;
 import com.cashback.models.OfferFilter;
 import com.cashback.models.request.FetchOffersRequest;
 import com.cashback.models.request.OfferFilterRequest;
@@ -30,6 +31,7 @@ public class OfferListViewModel extends ViewModel {
         loFetchOffersRequest.setAction(Constants.API.GET_OFFER_LIST.getValue());
         loFetchOffersRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
         loFetchOffersRequest.setOfferFilter(foOfferFilter);
+        loFetchOffersRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loFetchOffersRequest.validateData(foContext);
         if (lsMessage != null) {
@@ -69,6 +71,7 @@ public class OfferListViewModel extends ViewModel {
         OfferFilterRequest loOfferFilterRequest = new OfferFilterRequest();
         loOfferFilterRequest.setAction(Constants.API.GET_OFFER_FILTER.getValue());
         loOfferFilterRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loOfferFilterRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         //API Call
         Call<OfferFilterResponse> loRequest = APIClient.getInterface().getOfferFilter(loOfferFilterRequest);

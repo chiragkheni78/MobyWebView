@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.AppGlobal;
 import com.cashback.models.request.ActivityListRequest;
 import com.cashback.models.response.ActivityListResponse;
 import com.cashback.utils.APIClient;
@@ -23,6 +24,7 @@ public class ActivityListViewModel extends ViewModel {
         ActivityListRequest loActivityListRequest = new ActivityListRequest(mobileNumber, orderBy, fsFilter);
         loActivityListRequest.setAction(Constants.API.GET_ACTIVITY_LIST.getValue());
         loActivityListRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loActivityListRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loActivityListRequest.validateData(foContext);
         if (lsMessage != null) {

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class GetProfileResponse {
+public class GetMiniProfileResponse {
 
     @SerializedName("fbIsError")
     private boolean isError;
@@ -27,7 +27,7 @@ public class GetProfileResponse {
     @SerializedName("foUserDetails")
     private UserDetails userDetails;
 
-    public GetProfileResponse(boolean isError, String message) {
+    public GetMiniProfileResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
     }

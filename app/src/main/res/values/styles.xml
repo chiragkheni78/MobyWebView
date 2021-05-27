@@ -216,9 +216,11 @@
 
     <style name="etStandard">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/_36sdp</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
-        <item name="android:textSize">@dimen/txt_standard</item>
+        <item name="android:textSize">@dimen/txt_small</item>
+        <item name="android:background">@drawable/bg_white_blue</item>
+        <item name="android:padding">@dimen/padding_mini</item>
         <item name="android:maxLines">1</item>
     </style>
 
@@ -256,5 +258,11 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="TvProfileHint" parent="TvStandard">
+        <item name="android:textSize">@dimen/txt_small</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">@dimen/padding_nano</item>
 
+    </style>
 </resources>

@@ -234,7 +234,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void openWallet() {
-
+        Intent loIntent = new Intent(this, WalletActivity.class);
+        startActivity(loIntent);
     }
 
     private void openOngoingDeal() {
@@ -245,6 +246,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         @Override
         public void onChanged(GetSettingResponse loJsonObject) {
             if (!loJsonObject.isError()) {
+                if (!loJsonObject.isDeviceExist()){
+                    AppGlobal.logOutUser();
+                    Intent intent = new Intent(HomeActivity.this, ShortProfileActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
+                getPreferenceManager().setMapZoomLevel(loJsonObject.getZoomLevel());
+                getPreferenceManager().setQuizTimePeriod(loJsonObject.getQuizTimeInterval());
 
                 if (getIntent() != null && getIntent().getAction() != null){
                     loadOfferListFragment(0,0,0);
@@ -256,7 +267,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         //dialogUpdateApp(fsMessage, true, false);
                     } else {
                         if (!getPreferenceManager().isMarketingAd()) {
-                            showFirstDialog(loJsonObject.getFirstTimeAlertTitle(), loJsonObject.getFirstTimeAlertMsg(), loJsonObject.getAdvertisementList());
+                            if (!AppGlobal.isDisplayRewardNote) {
+                                showFirstDialog(loJsonObject.getFirstTimeAlertTitle(), loJsonObject.getFirstTimeAlertMsg(), loJsonObject.getAdvertisementList());
+                            }else {
+                                loadOfferListFragment(0,0,0);
+                            }
                         }
                     }
                 }
@@ -269,7 +284,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void showFirstDialog(String fsTitle, String fsMessage, ArrayList<Advertisement> foAdvertisementList) {
 
-        if (!AppGlobal.isDisplayRewardNote && !isFinishing()) {
+        if (!isFinishing()) {
 
             final Dialog alertDialog = new Dialog(getContext());
             alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

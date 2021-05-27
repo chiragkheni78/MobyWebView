@@ -6,11 +6,12 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.AppGlobal;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
-import com.cashback.models.request.GetProfileRequest;
+import com.cashback.models.request.GetMiniProfileRequest;
 import com.cashback.models.request.SaveMiniProfileRequest;
-import com.cashback.models.response.GetProfileResponse;
+import com.cashback.models.response.GetMiniProfileResponse;
 import com.cashback.models.response.SaveProfileResponse;
 import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
@@ -26,41 +27,43 @@ import retrofit2.Response;
 
 public class ProfileViewModel extends ViewModel {
 
-    public MutableLiveData<GetProfileResponse> getProfileStatus = new MutableLiveData<>();
+    public MutableLiveData<GetMiniProfileResponse> getMiniProfileStatus = new MutableLiveData<>();
 
-    public void getProfile(Context foContext) {
-        GetProfileRequest loGetProfileRequest = new GetProfileRequest();
-        loGetProfileRequest.setAction(Constants.API.GET_USER_PROFILE.getValue());
-        loGetProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
-        loGetProfileRequest.setReferralCode("OTHER");
+    public void getMiniProfile(Context foContext) {
+        GetMiniProfileRequest loGetMiniProfileRequest = new GetMiniProfileRequest();
+        loGetMiniProfileRequest.setAction(Constants.API.GET_USER_PROFILE.getValue());
+        loGetMiniProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+//        loGetProfileRequest.setReferralCode(AppGlobal.getPreferenceManager().getReferralCode());
+        loGetMiniProfileRequest.setReferralCode("OTHER");
+        loGetMiniProfileRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
-        String lsMessage = loGetProfileRequest.validateData(foContext);
+        String lsMessage = loGetMiniProfileRequest.validateData(foContext);
         if (lsMessage != null) {
-            getProfileStatus.postValue(new GetProfileResponse(true, lsMessage));
+            getMiniProfileStatus.postValue(new GetMiniProfileResponse(true, lsMessage));
             return;
         }
 
         //API Call
-        Call<GetProfileResponse> loRequest = APIClient.getInterface().getUserProfile(loGetProfileRequest);
+        Call<GetMiniProfileResponse> loRequest = APIClient.getInterface().getUserProfile(loGetMiniProfileRequest);
         Common.printReqRes(loRequest, "getProfile", Common.LogType.REQUEST);
 
-        loRequest.enqueue(new Callback<GetProfileResponse>() {
+        loRequest.enqueue(new Callback<GetMiniProfileResponse>() {
             @Override
-            public void onResponse(Call<GetProfileResponse> call, Response<GetProfileResponse> foResponse) {
+            public void onResponse(Call<GetMiniProfileResponse> call, Response<GetMiniProfileResponse> foResponse) {
                 Common.printReqRes(foResponse.body(), "getProfile", Common.LogType.RESPONSE);
                 if (foResponse.isSuccessful()) {
-                    GetProfileResponse loJsonObject = foResponse.body();
-                    getProfileStatus.postValue(loJsonObject);
+                    GetMiniProfileResponse loJsonObject = foResponse.body();
+                    getMiniProfileStatus.postValue(loJsonObject);
                 } else {
                     String fsMessage = Common.getErrorMessage(foResponse);
-                    getProfileStatus.postValue(new GetProfileResponse(true, fsMessage));
+                    getMiniProfileStatus.postValue(new GetMiniProfileResponse(true, fsMessage));
                 }
             }
 
             @Override
-            public void onFailure(Call<GetProfileResponse> call, Throwable t) {
+            public void onFailure(Call<GetMiniProfileResponse> call, Throwable t) {
                 Common.printReqRes(t, "getProfile", Common.LogType.ERROR);
-                getProfileStatus.postValue(new GetProfileResponse(true, t.getMessage()));
+                getMiniProfileStatus.postValue(new GetMiniProfileResponse(true, t.getMessage()));
             }
         });
     }
@@ -99,17 +102,19 @@ public class ProfileViewModel extends ViewModel {
         return null;
     }
 
-    public MutableLiveData<SaveProfileResponse> saveProfileStatus = new MutableLiveData<>();
+    public MutableLiveData<SaveProfileResponse> saveMiniProfileStatus = new MutableLiveData<>();
 
     public void saveProfile(Context foContext, int fiAge, String fsGender, int fiEWalletId) {
         SaveMiniProfileRequest loSaveMiniProfileRequest = new SaveMiniProfileRequest(fiAge, fsGender, fiEWalletId);
         loSaveMiniProfileRequest.setAction(Constants.API.SAVE_MINI_PROFILE.getValue());
         loSaveMiniProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+//        loSaveMiniProfileRequest.setReferralCode(AppGlobal.getPreferenceManager().getReferralCode());
         loSaveMiniProfileRequest.setReferralCode("OTHER");
+        loSaveMiniProfileRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loSaveMiniProfileRequest.validateData(foContext);
         if (lsMessage != null) {
-            saveProfileStatus.postValue(new SaveProfileResponse(true, lsMessage));
+            saveMiniProfileStatus.postValue(new SaveProfileResponse(true, lsMessage));
             return;
         }
 
@@ -123,17 +128,17 @@ public class ProfileViewModel extends ViewModel {
                 Common.printReqRes(foResponse.body(), "saveMiniProfile", Common.LogType.RESPONSE);
                 if (foResponse.isSuccessful()) {
                     SaveProfileResponse loJsonObject = foResponse.body();
-                    saveProfileStatus.postValue(loJsonObject);
+                    saveMiniProfileStatus.postValue(loJsonObject);
                 } else {
                     String fsMessage = Common.getErrorMessage(foResponse);
-                    saveProfileStatus.postValue(new SaveProfileResponse(true, fsMessage));
+                    saveMiniProfileStatus.postValue(new SaveProfileResponse(true, fsMessage));
                 }
             }
 
             @Override
             public void onFailure(Call<SaveProfileResponse> call, Throwable t) {
                 Common.printReqRes(t, "saveMiniProfile", Common.LogType.ERROR);
-                saveProfileStatus.postValue(new SaveProfileResponse(true, t.getMessage()));
+                saveMiniProfileStatus.postValue(new SaveProfileResponse(true, t.getMessage()));
             }
         });
     }

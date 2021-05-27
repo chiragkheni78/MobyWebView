@@ -10,7 +10,7 @@ public class UpdateShopOnlineBlinkRequest {
     @SerializedName("fsAction")
     private String action;
 
-    @SerializedName("user_contact")
+    @SerializedName("fsUserContact")
     private String mobileNumber;
 
     @SerializedName("fsDeviceId")

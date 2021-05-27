@@ -14,6 +14,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.HomeActivity;
 import com.cashback.models.request.SyncTokenRequest;
@@ -193,7 +194,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         SyncTokenRequest loRequestObject = new SyncTokenRequest();
         loRequestObject.setAction(Constants.API.SYNC_FB_TOKEN_TO_SERVER.getValue());
         loRequestObject.setDeviceId(Common.getDeviceUniqueId(foContext));
-        loRequestObject.setMobileNumber("");
+        loRequestObject.setMobileNumber(AppGlobal.getPhoneNumber());
         loRequestObject.setFcmToken(lsToken);
 
         if (loSharedPreferenceManager.isUserLogin()) {

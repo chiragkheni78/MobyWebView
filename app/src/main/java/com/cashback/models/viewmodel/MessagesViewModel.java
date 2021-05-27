@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.AppGlobal;
 import com.cashback.models.request.MessageDetailsRequest;
 import com.cashback.models.request.MessageListRequest;
 import com.cashback.models.response.MessageDetailsResponse;
@@ -25,6 +26,7 @@ public class MessagesViewModel extends ViewModel {
         MessageListRequest loMessageListRequest = new MessageListRequest();
         loMessageListRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
         loMessageListRequest.setAction(Constants.API.GET_MESSAGE_LIST.getValue());
+        loMessageListRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loMessageListRequest.validateData(foContext);
         if (lsMessage != null) {
@@ -65,6 +67,7 @@ public class MessagesViewModel extends ViewModel {
         loMessageListRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
         loMessageListRequest.setAction(Constants.API.UPDATE_MESSAGE_AS_READ.getValue());
         loMessageListRequest.setmessageId(msgid);
+        loMessageListRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loMessageListRequest.validateData(foContext);
         if (lsMessage != null) {

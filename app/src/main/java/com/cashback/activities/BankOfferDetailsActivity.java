@@ -2,7 +2,10 @@ package com.cashback.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,6 +16,7 @@ import com.cashback.models.AdLocation;
 import com.cashback.models.viewmodel.OfferDetailsViewModel;
 import com.cashback.models.response.OfferDetailsResponse;
 import com.cashback.utils.Common;
+import com.cashback.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 public class BankOfferDetailsActivity extends BaseActivity implements View.OnClickListener {
@@ -22,6 +26,7 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
     OfferDetailsViewModel moOfferDetailsViewModel;
 
     private Ad moOffer;
+    private long miOfferID, miLocationID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +39,38 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
     private void initializeContent() {
         moOfferDetailsViewModel = new ViewModelProvider(this).get(OfferDetailsViewModel.class);
         moOfferDetailsViewModel.fetchOfferDetailsStatus.observe(this, fetchOfferDetailsObserver);
-        moBinding.btnLocate.setOnClickListener(this);
 
+        setToolbar();
+        moBinding.llLocate.setOnClickListener(this);
+
+        if (getIntent() != null) {
+            miOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
+            miLocationID = getIntent().getLongExtra(Constants.IntentKey.LOCATION_ID, 0);
+        }
         getOfferDetails();
+    }
+
+    private void setToolbar() {
+
+        Toolbar loToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(loToolbar);
+
+        ImageButton loIbNavigation = loToolbar.findViewById(R.id.ibNavigation);
+        loIbNavigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
+        loTvToolbarTitle.setVisibility(View.GONE);
+
     }
 
     private void getOfferDetails() {
         showProgressDialog();
+        moOfferDetailsViewModel.fetchOfferDetails(getContext(), "", miOfferID, miLocationID);
     }
 
     Observer<OfferDetailsResponse> fetchOfferDetailsObserver = new Observer<OfferDetailsResponse>() {
@@ -68,7 +98,7 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
                 moBinding.tvOfferRewards.setText(offer.getDescription());
 
                 moBinding.tvOfferDescription.setText(offer.getDescription());
-                moBinding.tvDescription.setText(offer.getDescription());
+                moBinding.tvDescription.setText(offer.getOfferDetails());
                 moBinding.tvAddress.setText(offer.getDesc3());
                 moBinding.tvDeal.setText(offer.getTermsCondition());
                 moBinding.tvDeal.setOnClickListener(BankOfferDetailsActivity.this);
@@ -81,7 +111,7 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnLocate:
+            case R.id.llLocate:
                 btnLocatePressed();
                 break;
             case R.id.tvDeal:

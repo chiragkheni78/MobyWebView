@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.AppGlobal;
 import com.cashback.models.request.OfferDetailsRequest;
 import com.cashback.models.response.OfferDetailsResponse;
 import com.cashback.utils.APIClient;
@@ -23,6 +24,7 @@ public class OfferDetailsViewModel extends ViewModel {
         OfferDetailsRequest loOfferDetailsRequest = new OfferDetailsRequest(mobileNumber, offerId, locationId);
         loOfferDetailsRequest.setAction(Constants.API.GET_OFFER_DETAILS.getValue());
         loOfferDetailsRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loOfferDetailsRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loOfferDetailsRequest.validateData(foContext);
         if (lsMessage != null) {

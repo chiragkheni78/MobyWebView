@@ -13,7 +13,7 @@ public class GetSettingRequest {
     @SerializedName("fsDeviceId")
     String deviceId;
 
-    @SerializedName("fsPhoneNumber")
+    @SerializedName("fsUserContact")
     String phoneNumber;
 
     public void setAction(String action) {

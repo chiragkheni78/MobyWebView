@@ -14,8 +14,15 @@ public class MessageListRequest {
     @SerializedName("fsDeviceId")
     private String deviceId;
 
+    @SerializedName("fsUserContact")
+    private String mobileNumber;
+
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public void setDeviceId(String deviceId) {

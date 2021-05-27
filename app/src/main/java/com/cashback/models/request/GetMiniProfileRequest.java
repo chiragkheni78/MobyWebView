@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
-public class GetProfileRequest {
+public class GetMiniProfileRequest {
 
     @SerializedName("fsAction")
     String action;
@@ -17,6 +17,9 @@ public class GetProfileRequest {
 
     @SerializedName("fsReferrelCode")
     String referralCode;
+
+    @SerializedName("fsUserContact")
+    private String mobileNumber;
 
     public void setAction(String action) {
         this.action = action;
@@ -28,6 +31,10 @@ public class GetProfileRequest {
 
     public void setReferralCode(String referralCode) {
         this.referralCode = referralCode;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String validateData(Context foContext) {

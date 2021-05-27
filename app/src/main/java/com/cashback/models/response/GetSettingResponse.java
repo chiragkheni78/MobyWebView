@@ -49,6 +49,9 @@ public class GetSettingResponse {
     @SerializedName("fsFirstTimeAlertTitle")
     String firstTimeAlertTitle;
 
+    @SerializedName("fbIsDeviceExist")
+    private boolean isDeviceExist;
+
     public GetSettingResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
@@ -104,5 +107,9 @@ public class GetSettingResponse {
 
     public String getFirstTimeAlertTitle() {
         return firstTimeAlertTitle;
+    }
+
+    public boolean isDeviceExist() {
+        return isDeviceExist;
     }
 }

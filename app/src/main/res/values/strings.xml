@@ -36,8 +36,25 @@
 
     <string name="text_verify_phone_no">Verify Phone Number</string>
     <string name="msg_verify_phone_number">Please verify your phone with\n OTP to view the In-Store Rewards.</string>
+    <string name="multiple_device_title">Found Multiple Devices</string>
+    <string name="multiple_device_msg">Your phone number is connected with multiple devices, so please select any one from them and make sure other device data will be removed permanently.</string>
 
 
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Surname</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_select_gender">Select Gender</string>
+    <string name="hint_dob">Date Of Birth</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_email_address">Email Address</string>
+    <string name="hint_upi_address">UPI Address(Make sure this is correct.)</string>
+    <string name="hint_e_wallet">Choose E-wallet for Cashback credit</string>
+
+    <string name="add_card_header_tv"><![CDATA[My CREDIT & DEBIT Cards]]></string>
+    <string name="profile_non_required">(NO CARD NUMBER REQUIRED | NO CARD TRANSACTION REQUIRED | NO CARD CSV REQUIRED | DISCOVER YOUR CARD BENEFITS NEAR YOU!)</string>
+    <string name="category_offer">Category offers I want to see</string>
+    <string name="bank_offer_with_in">I want to see bank offer Within</string>
+    <string name="payment_transfer_setting">Payment Transfer Setting</string>
 
     <!--buttons-->
     <string name="online_coupon">ONLINE\nCOUPON</string>
@@ -66,9 +83,23 @@
     <string name="capture_photo">Capture Photo</string>
     <string name="photo_gallery">Photo Gallery</string>
 
+    <string name="save_profile">Save Profile</string>
+
+
+    <string name="lbl_you_earned">YOU HAVE EARNED</string>
+    <string name="tv_instant_cash">Instant Cash Rewards</string>
+    <string name="tv_virtual_cash">Virtual Cash Credits</string>
+    <string name="instant_cash">Cash Reward</string>
+    <string name="virtual_cash">Virtual Cash</string>
+    <string name="cash_back">Cash Back</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_credited">Credited</string>
+
+    <string name="empty_wallet">Your Wallet is empty!\nEngage with the Brands to earn money.</string>
 
     <!--Screen Title-->
     <string name="my_coupon">My Coupons</string>
+    <string name="moby_wallet">Moby Wallet</string>
 
 
     <!--other-->
@@ -77,7 +108,6 @@
     <string name="navigation_drawer_close">close</string>
     <!--Firebase Settings-->
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-
 
     <!--Timeline Sorting-->
     <string-array name="sort_by">

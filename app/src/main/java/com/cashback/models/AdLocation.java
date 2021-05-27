@@ -34,7 +34,7 @@ public class AdLocation implements Serializable {
     String state;
 
     @SerializedName("ffDistanceToUser")
-    int distance;
+    double distance;
 
 
     public long getLocationID() {
@@ -49,7 +49,7 @@ public class AdLocation implements Serializable {
         return longitude;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 

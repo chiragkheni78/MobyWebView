@@ -9,7 +9,7 @@ public class SyncTokenRequest {
     @SerializedName("fsAction")
     private String action;
 
-    @SerializedName("user_contact")
+    @SerializedName("fsUserContact")
     private String mobileNumber;
 
     @SerializedName("fsDeviceId")

@@ -48,7 +48,10 @@ public class Constants {
         UPLOAD_TRANSACTION_BILL("uploadTrasactionBill"),
         UPLOAD_SHOP_ONLINE_BLINK("updateShopOnlineBlink"),
         GET_MESSAGE_LIST("getMessages"),
-        UPDATE_MESSAGE_AS_READ("updateMessageAsRead")
+        UPDATE_MESSAGE_AS_READ("updateMessageAsRead"),
+        CHECK_CONNECTED_DEVICE("checkMultipleDevicesWithMobile"),
+        PROCEED_DEVICE("proceedWithDevice"),
+        GET_USER_TRANSACTION("getUserTransaction")
         ;
 
         private String type;
@@ -110,6 +113,23 @@ public class Constants {
         private String type;
 
         PinColor (String type)
+        {
+            this.type = type;
+        }
+
+        public String getValue()
+        {
+            return type;
+        }
+    }
+
+    public enum AdType
+    {
+        BANK_OFFER("Bank Offer"),  RETAIL("Retail");
+
+        private String type;
+
+        AdType (String type)
         {
             this.type = type;
         }

@@ -1,4 +1,4 @@
-package com.cashback.models;
+package com.cashback.models.request;
 
 import android.content.Context;
 
@@ -8,12 +8,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Transaction implements Serializable {
+public class BillUploadRequest implements Serializable {
 
     @SerializedName("fsAction")
     private String action;
 
-    @SerializedName("user_contact")
+    @SerializedName("fsUserContact")
     private String mobileNumber;
 
     @SerializedName("fsDeviceId")
@@ -28,11 +28,15 @@ public class Transaction implements Serializable {
     @SerializedName("fiAmount")
     int amount;
 
-    public Transaction(String mobileNumber, long activityId, String transactionDate, int amount) {
+    public BillUploadRequest(String mobileNumber, long activityId, String transactionDate, int amount) {
         this.mobileNumber = mobileNumber;
         this.activityId = activityId;
         this.transactionDate = transactionDate;
         this.amount = amount;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public void setAction(String action) {

@@ -6,14 +6,11 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.cashback.AppGlobal;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
-import com.cashback.models.request.GetProfileRequest;
 import com.cashback.models.request.GetSettingRequest;
-import com.cashback.models.request.SaveMiniProfileRequest;
-import com.cashback.models.response.GetProfileResponse;
 import com.cashback.models.response.GetSettingResponse;
-import com.cashback.models.response.SaveProfileResponse;
 import com.cashback.services.MyFirebaseMessagingService;
 import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
@@ -38,7 +35,7 @@ public class HomeViewModel extends ViewModel {
         GetSettingRequest loGetSettingRequest = new GetSettingRequest();
         loGetSettingRequest.setAction(Constants.API.GET_GLOBAL_SETTING.getValue());
         loGetSettingRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
-        loGetSettingRequest.setPhoneNumber("");
+        loGetSettingRequest.setPhoneNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loGetSettingRequest.validateData(foContext);
         if (lsMessage != null) {

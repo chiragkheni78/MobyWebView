@@ -80,11 +80,11 @@ public class UserDetails {
         this.gender = gender;
     }
 
-    public int geteWalletId() {
+    public int getEWalletId() {
         return eWalletId;
     }
 
-    public void seteWalletId(int eWalletId) {
+    public void setEWalletId(int eWalletId) {
         this.eWalletId = eWalletId;
     }
 

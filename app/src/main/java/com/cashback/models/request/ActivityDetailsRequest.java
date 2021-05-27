@@ -10,7 +10,7 @@ public class ActivityDetailsRequest {
     @SerializedName("fsAction")
     private String action;
 
-    @SerializedName("user_contact")
+    @SerializedName("fsUserContact")
     private String mobileNumber;
 
     @SerializedName("fsDeviceId")

@@ -16,6 +16,9 @@ public class SubmitQuizRequest {
     @SerializedName("fsDeviceId")
     private String deviceId;
 
+    @SerializedName("fsUserContact")
+    private String mobileNumber;
+
     @SerializedName("fiAdId")
     private long offerId;
 
@@ -24,6 +27,8 @@ public class SubmitQuizRequest {
 
     @SerializedName("foQuizAnswerList")
     ArrayList<QuizAnswer> quizAnswerList;
+
+
 
     public SubmitQuizRequest(String deviceId, long offerId, long locationId) {
         this.deviceId = deviceId;
@@ -37,6 +42,10 @@ public class SubmitQuizRequest {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public void setOfferId(long offerId) {
