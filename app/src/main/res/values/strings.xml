@@ -56,6 +56,23 @@
     <string name="bank_offer_with_in">I want to see bank offer Within</string>
     <string name="payment_transfer_setting">Payment Transfer Setting</string>
 
+    <string name="UPI_alert">Please enter correct UPI ID.</string>
+    <string name="error_term_condition">Please accept Terms and Condition.</string>
+    <string name="all_delete_card_validation">You can\'t delete all cards</string>
+
+    <string name="empty_wallet">Your Wallet is empty!\nEngage with the Brands to earn money.</string>
+
+    <string name="back_from_timeline_title">DON"T LIKE YOUR COUPONS?</string>
+    <string name="back_from_timeline_message"><![CDATA[Search for your favorite brands,<br/>Win coupon, & Shop to Get upto<br/><br/>
+                  50% off + Extra MOBY Cashback<br/>Over & Above All Other Deals!<br/><br/>
+                  Like to Shop Offline? Try Map view<br/>(Need 1 Verified Online Purchase)<br/>Yellow Pins - Real time Card Offers,<br/>Red Pins - All In-Store Coupons<br/>Shown Nearby you, But Pan India!]]></string>
+
+
+    <string name="bank_offer_message">View Real Time In Store Coupons (Red)\nAnd Bank Card Offers (Yellow)\nWe have selected all major cards,\nyou may edit later in your Profile &amp;\nchange Range as Needed </string>
+
+
+
+
     <!--buttons-->
     <string name="online_coupon">ONLINE\nCOUPON</string>
     <string name="instore_coupon">INSTORE\nCOUPON</string>
@@ -79,11 +96,17 @@
     <string name="btn_upload_now">Register Now</string>
     <string name="btn_upload_later">Later</string>
 
+    <string name="btn_proceed">PROCEED</string>
+
     <string name="file_chooser">Image Chooser</string>
     <string name="capture_photo">Capture Photo</string>
     <string name="photo_gallery">Photo Gallery</string>
 
     <string name="save_profile">Save Profile</string>
+
+    <string name="redeem_coupon">REDEEM COUPON</string>
+    <string name="offline_coupon">SEE OFFLINE OFFERS</string>
+    <string name="online_offers">BACK TO ONLINE OFFERS</string>
 
 
     <string name="lbl_you_earned">YOU HAVE EARNED</string>
@@ -95,11 +118,17 @@
     <string name="status_pending">Pending</string>
     <string name="status_credited">Credited</string>
 
-    <string name="empty_wallet">Your Wallet is empty!\nEngage with the Brands to earn money.</string>
+
 
     <!--Screen Title-->
     <string name="my_coupon">My Coupons</string>
     <string name="moby_wallet">Moby Wallet</string>
+    <string name="message">Message</string>
+    <string name="message_details">Message Details</string>
+    <string name="ongoing_deals">Ongoing Deals</string>
+    <string name="help">Help?</string>
+    <string name="my_profile">My Profile</string>
+    <string name="terms_condition">Moby T &amp; C</string>
 
 
     <!--other-->

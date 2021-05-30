@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/llErrorMessage"
+        style="@style/RootLayout"
+        android:gravity="center"
+        android:visibility="gone"
+        android:paddingHorizontal="@dimen/padding_xxlarge">
+
+        <TextView
+            android:id="@+id/tvErrorTitle"
+            style="@style/TvXLarge"
+            android:text="@string/text_verify_phone_no"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvErrorMessage"
+            style="@style/TvLarge"
+            android:layout_marginTop="@dimen/margin_view"
+            android:gravity="center"
+            android:text="@string/msg_verify_phone_number" />
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btnError"
+            style="@style/RippleBtnStandard"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding_xxlarge"
+            android:background="@drawable/btn_primary"
+            android:padding="@dimen/padding_micro"
+            android:text="Continue" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            style="@style/NormalLayout"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llProfile"
+                style="@style/NormalLayout"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_standard">
+
+                <LinearLayout
+                    android:id="@+id/llName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/llFName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvFirstName"
+                            style="@style/TvProfileHint"
+                            android:text="@string/hint_first_name" />
+
+                        <EditText
+                            android:id="@+id/etFirstName"
+                            style="@style/etStandard"
+                            android:hint="@string/hint_first_name"
+                            android:inputType="text" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="0dp" />
+
+                    <LinearLayout
+                        android:id="@+id/llLName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tvLastName"
+                            style="@style/TvProfileHint"
+                            android:text="@string/hint_last_name" />
+
+                        <EditText
+                            android:id="@+id/etLastName"
+                            style="@style/etStandard"
+                            android:hint="@string/hint_last_name"
+                            android:inputType="text" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/NormalLayout"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblGender"
+                        style="@style/TvProfileHint"
+                        android:text="@string/hint_select_gender" />
+
+                    <RadioGroup
+                        android:id="@+id/rgGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toLeftOf="@+id/tvTimeline"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RadioButton
+                            android:id="@+id/rbMap"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:layout_marginRight="@dimen/padding_mini"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_radio_gender"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="FEMALE"
+                            android:textColor="@drawable/color_radio_txt"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rbList"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:layout_marginLeft="@dimen/padding_mini"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_radio_gender"
+                            android:button="@null"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:text="MALE"
+                            android:textColor="@drawable/color_radio_txt"
+                            android:textStyle="bold" />
+
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDOB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblDOB"
+                        style="@style/TvProfileHint"
+                        android:text="@string/hint_dob" />
+
+                    <EditText
+                        android:id="@+id/etDob"
+                        style="@style/etStandard"
+                        android:focusable="false"
+                        android:hint="dd-mm-yyyy"
+                        android:inputType="text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblPhoneNumber"
+                        style="@style/TvProfileHint"
+                        android:text="@string/hint_phone_number" />
+
+                    <LinearLayout
+                        style="@style/NormalLayout"
+                        android:layout_gravity="center"
+                        android:background="@drawable/rect_grey_black"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_standard">
+
+                        <TextView
+                            android:id="@+id/tvCountryCode"
+                            style="@style/TvStandard"
+                            android:background="@null"
+                            android:gravity="right"
+                            android:text="+91"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/padding_mini"
+                            android:layout_marginEnd="@dimen/padding_mini"
+                            android:background="@color/colorSecondaryText" />
+
+                        <EditText
+                            android:id="@+id/etPhoneNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:enabled="false"
+                            android:gravity="left"
+                            android:hint="@string/hint_mobile_no"
+                            android:imeOptions="actionDone"
+                            android:inputType="phone"
+                            android:maxLength="10"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblEmail"
+                        style="@style/TvProfileHint"
+                        android:text="@string/hint_email_address" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        style="@style/etStandard"
+                        android:focusable="false"
+                        android:hint="@string/hint_email_address"
+                        android:inputType="textPersonName" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llEWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lblEWallet"
+                        style="@style/TvProfileHint"
+                        android:letterSpacing="0.05"
+                        android:text="@string/hint_e_wallet" />
+
+                    <RelativeLayout
+                        android:id="@+id/rlEWallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <Spinner
+                                android:id="@+id/spinWallet"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_36sdp"
+                                android:background="@drawable/bg_white_blue"
+                                android:padding="8dp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="@dimen/padding_standard"
+                                android:src="@drawable/ic_arrow_drop_down" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCreditCard"
+                style="@style/NormalLayout"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/white"
+                android:paddingVertical="@dimen/padding_large">
+
+                <TextView
+                    android:id="@+id/tvCreditCardTitle"
+                    style="@style/TvXLarge"
+                    android:paddingHorizontal="@dimen/padding_standard"
+                    android:text="@string/add_card_header_tv" />
+
+                <TextView
+                    android:id="@+id/tvCreditCardMessage"
+                    style="@style/TvProfileHint"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:lineSpacingMultiplier="1.2"
+                    android:paddingHorizontal="@dimen/padding_standard"
+                    android:text="@string/profile_non_required"
+                    android:textColor="@color/colorPrimary" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBankCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_view" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBankOfferCategory"
+                style="@style/NormalLayout"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/white"
+                android:padding="@dimen/padding_standard">
+
+
+                <TextView
+                    android:id="@+id/tvCategoryOffer"
+                    style="@style/TvXLarge"
+                    android:text="@string/category_offer" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBankOfferCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_view" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llRange"
+                style="@style/NormalLayout"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/white"
+
+                android:padding="@dimen/padding_standard">
+
+                <TextView
+                    android:id="@+id/lblRange"
+                    style="@style/TvXLarge"
+                    android:text="@string/bank_offer_with_in" />
+
+
+                <RadioGroup
+                    android:id="@+id/rgRange"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:layout_toLeftOf="@+id/tvTimeline"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <RadioButton
+                        android:id="@+id/rb250m"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_marginRight="@dimen/padding_mini"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radio_gender"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="250M"
+                        android:textColor="@drawable/color_radio_txt"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rb500m"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_marginLeft="@dimen/padding_mini"
+                        android:layout_marginRight="@dimen/padding_mini"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radio_gender"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="500M"
+                        android:textColor="@drawable/color_radio_txt"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rb1km"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_marginLeft="@dimen/padding_mini"
+                        android:layout_marginRight="@dimen/padding_mini"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radio_gender"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="1KM"
+                        android:textColor="@drawable/color_radio_txt"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rb2km"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_marginLeft="@dimen/padding_mini"
+                        android:layout_marginRight="@dimen/padding_mini"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radio_gender"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="3KM"
+                        android:textColor="@drawable/color_radio_txt"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rb5km"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_marginLeft="@dimen/padding_mini"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radio_gender"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="5KM"
+                        android:textColor="@drawable/color_radio_txt"
+                        android:textStyle="bold" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llPaymentMode"
+                style="@style/NormalLayout"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/white"
+
+                android:padding="@dimen/padding_standard">
+
+                <TextView
+                    android:id="@+id/lblPaymentMode"
+                    style="@style/TvXLarge"
+                    android:text="@string/payment_transfer_setting" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_view"
+                    android:orientation="vertical">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="1dp"
+                        android:weightSum="2">
+
+                        <RadioButton
+                            android:id="@+id/rbPaytm"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="Paytm Mobile"
+                            android:buttonTint="@color/secondary"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rbUPI"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:buttonTint="@color/secondary"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:text="UPI"
+                            android:textStyle="bold" />
+
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/llUPI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/lblUPI"
+                            style="@style/TvProfileHint"
+                            android:text="@string/hint_upi_address" />
+
+                        <EditText
+                            android:id="@+id/etUpiID"
+                            style="@style/etStandard"
+                            android:hint="ENTER UPI ID"
+                            android:inputType="text" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cbTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:checked="true"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="top"
+                android:buttonTint="@color/secondary"
+                android:padding="@dimen/padding_micro"
+                android:layout_margin="@dimen/padding_standard"
+                android:text="I accept the Terms &amp; Conditions."
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/llBottom"
+                style="@style/NormalLayout"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/padding_standard"
+                android:paddingVertical="@dimen/padding_large">
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/btnSaveProfile"
+                    style="@style/RippleBtnStandard"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/bg_black_blue"
+                    android:text="@string/save_profile" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

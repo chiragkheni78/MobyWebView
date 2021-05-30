@@ -1,11 +1,19 @@
 package com.cashback.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -21,8 +29,11 @@ import com.cashback.models.response.ActivityListResponse;
 import com.cashback.models.viewmodel.ActivityListViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
+
+import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 
 public class MyCouponsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -38,6 +49,8 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
     private String[] maFilter = new String[]{"", "bill_uploaded", "bill_verified", "cashback_recieved"};
 
     private String msSortBy = "", msFilter = "";
+    private boolean isPendingBillUpload;
+    private int miTotalVerifiedBill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +71,9 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
         setFilterView();
         getActivityList();
 
-        if (getIntent() != null){
+        if (getIntent() != null) {
             long llActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
-            if (llActivityId > 0){
+            if (llActivityId > 0) {
                 Intent loIntent = new Intent(getContext(), CouponDetailsActivity.class);
                 loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityId);
                 moContext.startActivity(loIntent);
@@ -102,7 +115,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (!msSortBy.equalsIgnoreCase(maSortBy[pos])) {
                     msSortBy = maSortBy[pos];
-                   // mbIsFilterCall = true;
+                    // mbIsFilterCall = true;
                     getActivityList();
                 }
             }
@@ -141,17 +154,20 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
             dismissProgressDialog();
             if (!loJsonObject.isError()) {
                 if (loJsonObject.getActivityList() != null) {
+
                     moActivityList = loJsonObject.getActivityList();
                     moActivityListAdapter.notifyList(moActivityList);
                     moBinding.llFilterSorting.setVisibility(View.VISIBLE);
 
-                    if (loJsonObject.getActivityList().size() == 0){
+                    if (loJsonObject.getActivityList().size() == 0) {
                         moBinding.tvNoData.setVisibility(View.VISIBLE);
                         moBinding.rvActivityList.setVisibility(View.GONE);
                     } else {
                         moBinding.tvNoData.setVisibility(View.GONE);
                         moBinding.rvActivityList.setVisibility(View.VISIBLE);
                     }
+                    isPendingBillUpload = loJsonObject.isPendingBillUpload();
+                    miTotalVerifiedBill = loJsonObject.getTotalVerifiedBill();
                 }
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
@@ -165,5 +181,85 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if (isPendingBillUpload) {
+            showBackToCouponDialog();
+        } else {
+            backToHome(null);
+        }
+    }
+
+    private void showBackToCouponDialog() {
+        try {
+            if (!isFinishing()) {
+                final Dialog moDialog = new Dialog(this);
+                moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                moDialog.setContentView(R.layout.dialog_my_coupon_back);
+
+                TextView loTvTitle = moDialog.findViewById(R.id.tvTitle);
+                TextView loTvMessage = moDialog.findViewById(R.id.tvMessage);
+                TextView loTvError = moDialog.findViewById(R.id.tvErrorMessage);
+                Button loBtnOfflineOffers = moDialog.findViewById(R.id.btnOfflineOffers);
+                Button loBtnRedeemCoupon = moDialog.findViewById(R.id.btnRedeemCoupon);
+                Button loBtnOnlineOffers = moDialog.findViewById(R.id.btnOnlineOffers);
+
+                String lsTitle = Common.getDynamicText(getContext(), "back_from_timeline_title");
+                String lsMessage = Common.getDynamicText(getContext(), "back_from_timeline_message");
+
+                loTvTitle.setText(Html.fromHtml(lsTitle));
+                loTvMessage.setText(Html.fromHtml(lsMessage));
+
+                loBtnOfflineOffers.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (miTotalVerifiedBill == 0){
+                            loTvError.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        moDialog.dismiss();
+                        backToHome(MAP_SCREEN);
+                    }
+                });
+
+                loBtnRedeemCoupon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        moDialog.dismiss();
+                    }
+                });
+
+                loBtnOnlineOffers.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        moDialog.dismiss();
+                        backToHome(null);
+                    }
+                });
+
+                if (moDialog.getWindow() != null) {
+                    moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    moDialog.getWindow().setGravity(Gravity.CENTER);
+                    moDialog.setCancelable(false);
+                    moDialog.show();
+                }
+            }
+        } catch (Exception e) {
+            LogV2.logException(TAG, e);
+        }
+    }
+
+    private void backToHome(String fsAction) {
+        Intent loIntent = new Intent(getContext(), HomeActivity.class);
+        loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (fsAction != null){
+            loIntent.setAction(fsAction);
+        }
+        startActivity(loIntent);
+        finish();
     }
 }

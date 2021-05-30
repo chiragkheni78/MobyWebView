@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp"
+    android:paddingVertical="@dimen/padding_micro"
     android:weightSum="1">
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:text="BH87688"
-            android:padding="@dimen/_5sdp"
+            android:padding="@dimen/padding_mini"
             android:textColor="@color/white"
             android:textSize="14dp"
             android:textStyle="bold" />

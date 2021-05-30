@@ -8,25 +8,57 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_activity_details" />
 
+    <LinearLayout
+        android:id="@+id/llErrorMessage"
+        style="@style/RootLayout"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/padding_xxlarge"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvErrorTitle"
+            style="@style/TvXLarge"
+            android:text="@string/text_verify_phone_no"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvErrorMessage"
+            style="@style/TvLarge"
+            android:layout_marginTop="@dimen/margin_view"
+            android:gravity="center"
+            android:text="@string/msg_verify_phone_number" />
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btnError"
+            style="@style/RippleBtnStandard"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/padding_xxlarge"
+            android:background="@drawable/btn_primary"
+            android:padding="@dimen/padding_micro"
+            android:text="Continue" />
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/secondary"
-        android:paddingHorizontal="@dimen/_15sdp"
-        android:paddingBottom="@dimen/_15sdp">
+        android:background="@color/secondary">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_15sdp">
 
             <TextView
                 android:id="@+id/tvBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="CODE"
                 android:padding="@dimen/padding_micro"
+                android:text="CODE"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -50,16 +82,17 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvCouponDesc"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
                         android:padding="@dimen/_8sdp"
-                        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                        android:text="Hello"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -72,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@color/blue"
+                android:background="@color/secondary"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -98,6 +131,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="OFFER CODE"
+                        android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -106,16 +140,16 @@
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_90sdp">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="@dimen/_100sdp">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rvCoupon"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_above="@+id/llBottom"
                             android:layout_marginTop="8dp" />
                     </LinearLayout>
@@ -139,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/blue"
+                android:background="@color/secondary"
                 android:orientation="vertical"
                 android:visibility="gone">
 

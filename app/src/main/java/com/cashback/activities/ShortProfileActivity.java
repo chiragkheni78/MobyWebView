@@ -15,10 +15,10 @@ import com.cashback.adapters.EWalletAdapter;
 import com.cashback.databinding.ActivityShortProfileBinding;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
-import com.cashback.models.viewmodel.ProfileViewModel;
+import com.cashback.models.viewmodel.MiniProfileViewModel;
 import com.cashback.models.UserDetails;
 import com.cashback.models.response.GetMiniProfileResponse;
-import com.cashback.models.response.SaveProfileResponse;
+import com.cashback.models.response.SaveMiniProfileResponse;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 
@@ -31,7 +31,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
     ProgressDialog loProgressDialog;
     EWalletAdapter loEWalletAdapter;
 
-    ProfileViewModel moProfileViewModel;
+    MiniProfileViewModel moMiniProfileViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +44,12 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
 
     private void initializeContent() {
         Common.hideKeyboard(this);
-        moProfileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        moProfileViewModel.saveMiniProfileStatus.observe(this, saveProfileObserver);
-        moProfileViewModel.getMiniProfileStatus.observe(this, getProfileObserver);
+        moMiniProfileViewModel = new ViewModelProvider(this).get(MiniProfileViewModel.class);
+        moMiniProfileViewModel.saveMiniProfileStatus.observe(this, saveProfileObserver);
+        moMiniProfileViewModel.getMiniProfileStatus.observe(this, getProfileObserver);
         moBinding.btnSaveProfile.setOnClickListener(this);
 
-        moProfileViewModel.getMiniProfile(getContext());
+        moMiniProfileViewModel.getMiniProfile(getContext());
     }
 
     Observer<GetMiniProfileResponse> getProfileObserver = new Observer<GetMiniProfileResponse>() {
@@ -64,6 +64,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                         getPreferenceManager().setUserLogIn(true);
                         getPreferenceManager().setReferralCode(loUserDetails.getReferralCode());
                         getPreferenceManager().setReferralLink(loUserDetails.getReferralUrl());
+                        getPreferenceManager().setPhoneID(loUserDetails.getMobileNumber());
                     }
 
                     Intent intent = new Intent(ShortProfileActivity.this, HomeActivity.class);
@@ -75,12 +76,12 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                     if (loJsonObject.getWalletList() != null) {
                         loEWalletAdapter = new EWalletAdapter(ShortProfileActivity.this, loJsonObject.getWalletList());
                         moBinding.spinWallet.setAdapter(loEWalletAdapter);
-                        moBinding.spinWallet.setSelection(moProfileViewModel.getSelectedWalletPosition(loJsonObject.getWalletList()));
+                        moBinding.spinWallet.setSelection(moMiniProfileViewModel.getSelectedWalletPosition(loJsonObject.getWalletList()));
                     }
 
                     ArrayList<Advertisement> loAdvertisementList = loJsonObject.getAdvertisementList();
                     if (loAdvertisementList != null && loAdvertisementList.size() > 0) {
-                        String lsURL = moProfileViewModel.getAdvertImage(getContext(), loAdvertisementList);
+                        String lsURL = moMiniProfileViewModel.getAdvertImage(getContext(), loAdvertisementList);
                         if (lsURL != null) {
                             Common.loadImage(moBinding.ivBanner, lsURL, null, null);
                             moBinding.ivBanner.setVisibility(View.VISIBLE);
@@ -97,9 +98,9 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         }
     };
 
-    Observer<SaveProfileResponse> saveProfileObserver = new Observer<SaveProfileResponse>() {
+    Observer<SaveMiniProfileResponse> saveProfileObserver = new Observer<SaveMiniProfileResponse>() {
         @Override
-        public void onChanged(SaveProfileResponse loJsonObject) {
+        public void onChanged(SaveMiniProfileResponse loJsonObject) {
             if (!loJsonObject.isError()) {
                 UserDetails loUserDetails = loJsonObject.getUserDetails();
                 if (loUserDetails != null) {
@@ -139,6 +140,6 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         int eWalletId = ((EWallet) moBinding.spinWallet.getSelectedItem()).getWalletId();
 
         loProgressDialog = Common.showProgressDialog(ShortProfileActivity.this);
-        moProfileViewModel.saveProfile(this, age, gender, eWalletId);
+        moMiniProfileViewModel.saveProfile(this, age, gender, eWalletId);
     }
 }

@@ -3,14 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/RootLayout"
-    android:orientation="vertical"
     tools:context=".activities.MessageActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMessages"
-        style="@style/RecycleView78"
-        android:padding="@dimen/padding_mini"
-        android:visibility="visible" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
+    <LinearLayout style="@style/RootLayout">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMessages"
+            style="@style/RecycleView78"
+            tools:listitem="@layout/item_message_list"
+            android:paddingVertical="@dimen/_5sdp"
+            android:visibility="visible" />
+    </LinearLayout>
 </LinearLayout>

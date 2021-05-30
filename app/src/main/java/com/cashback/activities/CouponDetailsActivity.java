@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -19,12 +20,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.AdLocationAdapter;
 import com.cashback.adapters.CouponAdapter;
@@ -39,7 +42,9 @@ import com.cashback.models.viewmodel.ActivityDetailsViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
+import com.google.firebase.auth.FirebaseAuth;
 
+import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
 import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
 import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
@@ -51,7 +56,6 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private long miActivityId;
     Activity moActivity;
-
 
     TextWatcher moTextChangeListener = new TextWatcher() {
         @Override
@@ -65,19 +69,19 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 if (moActivity.getCouponType().equalsIgnoreCase("default")) {
                     String number = s.toString().trim();
 
-//                    if (FirebaseAuth.getInstance().getCurrentUser() != null &&
-//                            FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null) {
-//                        if (String.valueOf("+91" + number).equalsIgnoreCase(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
-//                            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
-//                            moBinding.tvMarkAsUsed.setClickable(true);
-//                            moBinding.tvMarkAsUsed.setEnabled(true);
-//                            Common.blinkAnimation(moBinding.tvMarkAsUsed);
-//                        } else {
-//                            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.twhite));
-//                            moBinding.tvMarkAsUsed.setClickable(false);
-//                            moBinding.tvMarkAsUsed.setEnabled(false);
-//                        }
-//                    }
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null &&
+                            FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null) {
+                        if (String.valueOf("+91" + number).equalsIgnoreCase(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
+                            moBinding.tvMarkAsUsed.setClickable(true);
+                            moBinding.tvMarkAsUsed.setEnabled(true);
+                            Common.blinkAnimation(moBinding.tvMarkAsUsed);
+                        } else {
+                            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.twhite));
+                            moBinding.tvMarkAsUsed.setClickable(false);
+                            moBinding.tvMarkAsUsed.setEnabled(false);
+                        }
+                    }
                 } else {
                     Log.d("TTT", "pass..." + moActivity.getCouponPassword());
                     if (s.toString().equalsIgnoreCase(moActivity.getCouponPassword().trim())) {
@@ -120,6 +124,24 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
         setToolbar();
 
+        if (AppGlobal.getFirebaseUser() == null) {
+            moBinding.toolbar.toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            moBinding.toolbar.ibNavigation.setColorFilter(getResources().getColor(R.color.white));
+            moBinding.toolbar.tvToolbarTitle.setTextColor(getResources().getColor(R.color.white));
+            moBinding.btnError.setOnClickListener(this);
+            moBinding.llErrorMessage.setVisibility(View.VISIBLE);
+            moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "text_verify_phone_no"));
+            moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number"));
+        } else {
+            loadCouponView();
+        }
+    }
+
+    private void loadCouponView() {
+        moBinding.llErrorMessage.setVisibility(View.GONE);
+        moBinding.toolbar.toolbar.setBackgroundColor(getResources().getColor(R.color.secondary));
+        moBinding.toolbar.ibNavigation.setColorFilter(getResources().getColor(R.color.colorPrimaryText));
+        moBinding.toolbar.tvToolbarTitle.setTextColor(getResources().getColor(R.color.colorPrimaryText));
         if (getIntent() != null) {
             miActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
             getActivityDetails();
@@ -186,7 +208,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.rlMobile.setVisibility(View.GONE);
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
             moBinding.llOffers.setVisibility(View.GONE);
-            moBinding.llInStore.setVisibility(View.VISIBLE);
+            moBinding.llInStore.setVisibility(View.GONE);
         }
 
         loOfferAdapter.setOnItemClickListener(new CouponAdapter.ClickListener() {
@@ -291,7 +313,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
             if (moActivity.isBlinkShopOnline()) {
                 if (!moBinding.etMobileNumber.isEnabled()) {
-                    Handler handler = new Handler();
+                    Handler handler = new Handler(Looper.getMainLooper());
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -311,12 +333,12 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void byPassPhone() {
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            //moBinding.etMobileNumber.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().replace("+91", ""));
+            moBinding.etMobileNumber.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().replace("+91", ""));
 
             //remove code when above code enable
-            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
-            moBinding.tvMarkAsUsed.setClickable(true);
-            moBinding.tvMarkAsUsed.setEnabled(true);
+//            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
+//            moBinding.tvMarkAsUsed.setClickable(true);
+//            moBinding.tvMarkAsUsed.setEnabled(true);
         }
     }
 
@@ -337,6 +359,26 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             case R.id.tvCancel:
                 onBackPressed();
                 break;
+            case R.id.btnError:
+                errorButtonPressed();
+                break;
+        }
+    }
+
+    private void errorButtonPressed() {
+        if (AppGlobal.getFirebaseUser() == null) {
+            Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
+            startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PHONE_LOGIN) {
+            if (resultCode == RESULT_OK) {
+                loadCouponView();
+            }
         }
     }
 

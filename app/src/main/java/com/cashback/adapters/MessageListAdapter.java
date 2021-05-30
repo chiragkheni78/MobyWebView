@@ -33,8 +33,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     private Context moContext;
 
 
-    public MessageListAdapter(Context foContext, List<Message> foMessageList) {
-        moMessageList.addAll(foMessageList);
+    public MessageListAdapter(Context foContext, ArrayList<Message> foMessageList) {
+        moMessageList = foMessageList;
         moContext = foContext;
     }
 
@@ -70,7 +70,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View loView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_offer_list, parent, false);
+        View loView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_list, parent, false);
         DataObjectHolder loDataObjectHolder = new DataObjectHolder(loView);
         return loDataObjectHolder;
     }
@@ -87,7 +87,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             if (loMessage.isSeen()) {
                 foHolder.mainCard.setCardBackgroundColor(moContext.getResources().getColor(R.color.white));
             } else {
-                foHolder.mainCard.setCardBackgroundColor(moContext.getResources().getColor(R.color.colorPrimaryLight));
+                foHolder.mainCard.setCardBackgroundColor(moContext.getResources().getColor(R.color.light_red));
             }
 
         } catch (Exception e) {

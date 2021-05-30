@@ -23,10 +23,14 @@ public class SharedPreferenceManager {
 
     public static final String MAP_ZOOM_LEVEL = "mapZoomLevel";
 
-
-
+    public static final String OFFER_LIST_PAGE_SIZE = "offerListPageSize";
 
     private static final String TERMS_CONDITION = "terms_conditions";
+
+    private static final String IS_BLINK_MOBY_ICON = "isBlinkMobyIcon";
+
+    private static final String PHONE_ID = "phoneID";
+
 
     private static final String IS_PROFILE_SAVE = "is_profile_save";
     private static final String LANG_ID = "language_id";
@@ -240,6 +244,78 @@ public class SharedPreferenceManager {
         return 11;
     }
     //END MAP_ZOOM_LEVEL
+
+    //START OFFER_LIST_PAGE_SIZE
+    public void setOfferListPageSize(int fiOfferListPageSize) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putInt(OFFER_LIST_PAGE_SIZE, fiOfferListPageSize);
+            loEditor.commit();
+        }
+    }
+
+    public int getOfferListPageSize() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getInt(OFFER_LIST_PAGE_SIZE, 100);
+        }
+        return 100;
+    }
+    //END OFFER_LIST_PAGE_SIZE
+
+    //START IS_BLINK_MOBY_ICON
+    public void setBlinkMobyIcon(boolean fbIsBlinkMobyIcon) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putBoolean(IS_BLINK_MOBY_ICON, fbIsBlinkMobyIcon);
+            loEditor.commit();
+        }
+    }
+
+    public boolean isBlinkMobyIcon() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getBoolean(IS_BLINK_MOBY_ICON, true);
+        }
+        return true;
+    }
+    //END IS_BLINK_MOBY_ICON
+
+
+    private static final String IS_BANK_OFFER_MESSAGE_SHOWN = "isBankOfferMessageShown";
+
+    //START IS_BANK_OFFER_MESSAGE_SHOWN
+    public void setBankOfferMessageShown(boolean fbIsBankOfferMessageShown) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putBoolean(IS_BANK_OFFER_MESSAGE_SHOWN, fbIsBankOfferMessageShown);
+            loEditor.commit();
+        }
+    }
+
+    public boolean isBankOfferMessageShown() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getBoolean(IS_BANK_OFFER_MESSAGE_SHOWN, false);
+        }
+        return false;
+    }
+    //END IS_BANK_OFFER_MESSAGE_SHOWN
+
+
+    //START PHONE_ID
+    public void setPhoneID(String fsPhoneID) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putString(PHONE_ID, fsPhoneID);
+            loEditor.commit();
+        }
+    }
+
+    public String getPhoneID() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getString(PHONE_ID, "");
+        }
+        return "";
+    }
+    //END PHONE_ID
 
 //=====================================================
 

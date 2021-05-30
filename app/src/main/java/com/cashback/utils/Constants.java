@@ -28,6 +28,18 @@ public class Constants {
         public static final String MESSAGE_ID = "messageId";
         public static final String ENGAGED_DATE = "engagedDate";
         public static final String PIN_COLOR = "pinColor";
+        public static final String ADVERT_SCREEN_TYPE = "advertScreenType";
+        public static final String SCREEN_TITLE = "screenTitle";
+        public static final String WEBVIEW_PAGE_NAME = "webviewURL";
+        public static final String VIDEO_URL = "videoURL";
+
+
+        public class Action {
+            public static final String MAP_SCREEN = "MAP_SCREEN";
+            public static final String OFFER_LIST = "OFFER_LIST";
+            public static final String ACTIVITY_LIST = "ACTIVITY_LIST";
+            public static final String MESSAGE_LIST = "MESSAGE_LIST";
+        }
     }
 
     public enum API
@@ -35,7 +47,7 @@ public class Constants {
         GET_ALL_STATIC_LABEL("getAllStaticLabels"),
         GET_GLOBAL_SETTING("getGlobalSetting"),
         SYNC_FB_TOKEN_TO_SERVER("syncTokenToServer"),
-        GET_USER_PROFILE("getUserProfile"),
+        GET_MINI_PROFILE("getUserProfile"),
         SAVE_MINI_PROFILE("saveMiniProfile"),
         GET_OFFER_FILTER("getOfferFilter"),
         GET_OFFER_LIST("getOfferList"),
@@ -51,8 +63,15 @@ public class Constants {
         UPDATE_MESSAGE_AS_READ("updateMessageAsRead"),
         CHECK_CONNECTED_DEVICE("checkMultipleDevicesWithMobile"),
         PROCEED_DEVICE("proceedWithDevice"),
-        GET_USER_TRANSACTION("getUserTransaction")
+        GET_USER_TRANSACTION("getUserTransaction"),
+        GET_ADVERT_IMAGES("getAdvertisementImage"),
+        LOAD_WEB_VIEW_DATA("loadWebView"),
+        GET_USER_DETAILS("getUserDetails"),
+        SAVE_USER_DETAILS("saveFullProfile"),
+        DELETE_USER_CARD("deleteUserCard"),
         ;
+
+
 
         private String type;
 
@@ -130,6 +149,46 @@ public class Constants {
         private String type;
 
         AdType (String type)
+        {
+            this.type = type;
+        }
+
+        public String getValue()
+        {
+            return type;
+        }
+    }
+
+    public enum AdvertScreenType
+    {
+        HELP_SCREEN("help-screen"),
+        ADVERTISEMENT_SCREEN("advertiesment-popup"),
+        ONGOING_DEALS("ongoing-deals"),
+        TRANSACTION_SCREEN("trasaction-screen"),
+        PROFILE_SCREEN("profile-screen")
+        ;
+
+        private String type;
+
+        AdvertScreenType (String type)
+        {
+            this.type = type;
+        }
+
+        public String getValue()
+        {
+            return type;
+        }
+    }
+
+    public enum WebViewPage
+    {
+        TERMS_CONDITION("tandc"),
+        ;
+
+        private String type;
+
+        WebViewPage (String type)
         {
             this.type = type;
         }

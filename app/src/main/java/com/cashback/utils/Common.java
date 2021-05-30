@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -16,16 +17,22 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +46,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.cashback.BuildConfig;
 import com.cashback.R;
 import com.cashback.activities.ShortProfileActivity;
+import com.cashback.databinding.ActivityVideoViewBinding;
+import com.cashback.utils.custom.MessageDialog;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -58,6 +67,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import retrofit2.Response;
+
+import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 
 public class Common {
 
@@ -115,18 +126,21 @@ public class Common {
 
 
     public static void showErrorDialog(final Context foContext, String lsMessage, boolean isFinish) {
-        if (isFinish) {
-            new AlertDialog.Builder(foContext).setMessage(lsMessage)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ((Activity) foContext).finish();
-                        }
-                    }).show();
-        } else {
-            new AlertDialog.Builder(foContext).setMessage(lsMessage)
-                    .setPositiveButton("Ok", null).show();
-        }
+//        if (isFinish) {
+//            new AlertDialog.Builder(foContext).setMessage(lsMessage)
+//                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            ((Activity) foContext).finish();
+//                        }
+//                    }).show();
+//        } else {
+//            new AlertDialog.Builder(foContext).setMessage(lsMessage)
+//                    .setPositiveButton("Ok", null).show();
+//        }
+        MessageDialog loDialog = new MessageDialog(foContext, null, lsMessage,  null, isFinish);
+        loDialog.show();
+
     }
 
     public static void showErrorDialog(Context foContext, String lsMessage, DialogInterface.OnClickListener foListener) {
@@ -134,7 +148,6 @@ public class Common {
         new AlertDialog.Builder(foContext).setMessage(lsMessage)
                 .setPositiveButton("Ok", foListener).show();
     }
-
 
     public static int getLayoutManagerOrientation(int activityOrientation) {
         if (activityOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
@@ -349,25 +362,30 @@ public class Common {
     }
 
     public static void loadImage(ImageView loImageView, String fsURL, Drawable fdError, Drawable placeholder) {
-        if (fsURL != null) {
-            fsURL = (Constants.IMAGE_BASE_URL + fsURL).replace("https", "http");
+
+        try {
+            if (fsURL != null) {
+                fsURL = (Constants.IMAGE_BASE_URL + fsURL).replace("https", "http");
 
 
-            RequestCreator loRequest = Picasso.get().load(fsURL);
+                RequestCreator loRequest = Picasso.get().load(fsURL);
 
-            if (fdError != null && placeholder != null){
-                loRequest.error(fdError)
-                        .placeholder(placeholder)
-                        .into(loImageView);
-            } else if (fdError != null && placeholder == null) {
-                loRequest.error(fdError)
-                        .into(loImageView);
-            } else if (fdError == null && placeholder != null) {
-                loRequest.placeholder(placeholder)
-                        .into(loImageView);
-            } else {
-                loRequest.into(loImageView);
+                if (fdError != null && placeholder != null) {
+                    loRequest.error(fdError)
+                            .placeholder(placeholder)
+                            .into(loImageView);
+                } else if (fdError != null && placeholder == null) {
+                    loRequest.error(fdError)
+                            .into(loImageView);
+                } else if (fdError == null && placeholder != null) {
+                    loRequest.placeholder(placeholder)
+                            .into(loImageView);
+                } else {
+                    loRequest.into(loImageView);
+                }
             }
+        } catch (Exception e) {
+            LogV2.logException(TAG, e);
         }
     }
 

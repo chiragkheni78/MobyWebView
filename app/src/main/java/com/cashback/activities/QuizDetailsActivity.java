@@ -41,11 +41,13 @@ import com.cashback.models.response.QuizDetailsResponse;
 import com.cashback.models.response.SubmitQuizResponse;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.custom.MessageDialog;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static android.view.View.GONE;
+import static com.cashback.utils.Constants.IntentKey.VIDEO_URL;
 
 public class QuizDetailsActivity extends BaseActivity implements View.OnClickListener, QuizOptionAdapter.OnOptionSelectListener {
 
@@ -95,6 +97,9 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             moOffer = (Ad) getIntent().getExtras().getSerializable(Constants.IntentKey.OFFER_OBJECT);
 
             setToolbar();
+            moBinding.btnNext.setOnClickListener(this);
+            moBinding.cvQRCode.setOnClickListener(this);
+            moBinding.cvYouTube.setOnClickListener(this);
             moBinding.btnNext.setOnClickListener(this);
             moBinding.etTextAnswer.addTextChangedListener(moTextChangeListener);
 
@@ -222,8 +227,10 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.cvQRCode:
                 btnQRCodePressed();
+                break;
             case R.id.cvYouTube:
                 btnYoutubePressed();
+                break;
             default:
                 break;
         }
@@ -236,12 +243,11 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
                 loQuiz.getOptionList().size() > 0) {
 
             Intent loIntent = new Intent(getContext(), VideoViewActivity.class);
-            loIntent.putExtra("video_url", loQuiz.getOptionList().get(0).getValue());
-            loIntent.putExtra("ad_name", "ad.getAdname()");
+            loIntent.putExtra(Constants.IntentKey.VIDEO_URL, loQuiz.getOptionList().get(0).getValue());
+            loIntent.putExtra(Constants.IntentKey.SCREEN_TITLE, moOffer.getAdName());
             startActivity(loIntent);
         }
-
-        setAnswer(String.valueOf(moQuizList.get(miCurrentQuestion).getOptionList().get(0).getValue()));
+        setAnswer(String.valueOf(loQuiz.getOptionList().get(0).getValue()));
     }
 
     private void btnQRCodePressed() {
@@ -249,8 +255,6 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
                 moQuizList.get(miCurrentQuestion).getOptionList().size() > 0) {
 
             Intent loIntent = new Intent(getContext(), QrScannerActivity.class);
-            loIntent.putExtra("video_url", moQuizList.get(miCurrentQuestion).getOptionList().get(0).getValue());
-            loIntent.putExtra("ad_name", "ad.getAdname()");
             startActivityForResult(loIntent, REQUEST_QR);
         }
     }
@@ -336,14 +340,26 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             } else {
                 if (loJsonObject.isMarketingAd())
                 {
-                    Common.showErrorDialog(getContext(), loJsonObject.getMessage(), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
+//                    Common.showErrorDialog(getContext(), loJsonObject.getMessage(), new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.cancel();
+//                            Intent intent = new Intent(getContext(), HomeActivity.class);
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(intent);
+//                        }
+//                    });
+
+                    MessageDialog loDialog = new MessageDialog(getContext(), null, loJsonObject.getMessage(), null, false);
+                    loDialog.setClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            loDialog.cancel();
                             Intent intent = new Intent(getContext(), HomeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
                     });
+                    loDialog.show();
                 } else {
                     Common.showErrorDialog(getContext(), loJsonObject.getMessage(), true);
                 }

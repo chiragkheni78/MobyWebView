@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,14 +33,19 @@ import com.cashback.fragments.OfferListFragment;
 import com.cashback.models.Advertisement;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.viewmodel.HomeViewModel;
+import com.cashback.models.viewmodel.WebViewModel;
 import com.cashback.services.MyFirebaseMessagingService;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
+import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -116,7 +120,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivMobyIcon:
-                showAdvertisements();
+                openOngoingDeal();
                 break;
             case R.id.ibShare:
                 shareApp();
@@ -134,9 +138,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         } else {
             loadMapViewFragment();
         }
-    }
-
-    private void showAdvertisements() {
     }
 
     private void shareApp() {
@@ -211,20 +212,24 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void logout() {
-        getPreferenceManager().clear();
-        //Clear firebase-auth if exist
+        AppGlobal.logOutUser();
+        Intent intent = new Intent(HomeActivity.this, ShortProfileActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void openTC() {
-
+        openWebView(getString(R.string.terms_condition), Constants.WebViewPage.TERMS_CONDITION.getValue());
     }
 
     private void openProfile() {
-
+        Intent loIntent = new Intent(this, UserProfileActivity.class);
+        startActivity(loIntent);
     }
 
     private void openHelp() {
-
+        openAdvertisement(getString(R.string.help), Constants.AdvertScreenType.HELP_SCREEN.getValue());
     }
 
     private void openMessages(long llMessageId) {
@@ -239,7 +244,22 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void openOngoingDeal() {
+        openAdvertisement(getString(R.string.ongoing_deals), Constants.AdvertScreenType.ONGOING_DEALS.getValue());
+        getPreferenceManager().setBlinkMobyIcon(false);
+    }
 
+    private void openAdvertisement(String fsScreenTitle, String fsScreenType) {
+        Intent loIntent = new Intent(this, AdvertisementActivity.class);
+        loIntent.putExtra(Constants.IntentKey.SCREEN_TITLE, fsScreenTitle);
+        loIntent.putExtra(Constants.IntentKey.ADVERT_SCREEN_TYPE, fsScreenType);
+        startActivity(loIntent);
+    }
+
+    private void openWebView(String fsScreenTitle, String fsPageName) {
+        Intent loIntent = new Intent(this, WebViewActivity.class);
+        loIntent.putExtra(Constants.IntentKey.SCREEN_TITLE, fsScreenTitle);
+        loIntent.putExtra(Constants.IntentKey.WEBVIEW_PAGE_NAME, fsPageName);
+        startActivity(loIntent);
     }
 
     Observer<GetSettingResponse> getSettingObserver = new Observer<GetSettingResponse>() {
@@ -247,40 +267,50 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         public void onChanged(GetSettingResponse loJsonObject) {
             if (!loJsonObject.isError()) {
                 if (!loJsonObject.isDeviceExist()){
-                    AppGlobal.logOutUser();
-                    Intent intent = new Intent(HomeActivity.this, ShortProfileActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
+                    logout();
                     return;
                 }
                 getPreferenceManager().setMapZoomLevel(loJsonObject.getZoomLevel());
                 getPreferenceManager().setQuizTimePeriod(loJsonObject.getQuizTimeInterval());
+                getPreferenceManager().setOfferListPageSize(loJsonObject.getOfferListPageSize());
+                handleView(loJsonObject);
 
-                if (getIntent() != null && getIntent().getAction() != null){
-                    loadOfferListFragment(0,0,0);
-                    openNotifications();
-                } else {
-                    if (loJsonObject.getAppUpdate().getStatus() == 1) {
-                        //showAlertTwoBtn(fsMessage, message);
-                    } else if (loJsonObject.getAppUpdate().getStatus() == 2) {
-                        //dialogUpdateApp(fsMessage, true, false);
-                    } else {
-                        if (!getPreferenceManager().isMarketingAd()) {
-                            if (!AppGlobal.isDisplayRewardNote) {
-                                showFirstDialog(loJsonObject.getFirstTimeAlertTitle(), loJsonObject.getFirstTimeAlertMsg(), loJsonObject.getAdvertisementList());
-                            }else {
-                                loadOfferListFragment(0,0,0);
-                            }
-                        }
-                    }
-                }
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
             }
             dismissProgressDialog();
         }
     };
+
+    private void handleView(GetSettingResponse foJsonObject) {
+
+        if (getPreferenceManager().isBlinkMobyIcon()){
+            Common.blinkAnimation(moBinding.toolbar.ivMobyIcon);
+        }
+
+        if (getIntent() != null && getIntent().getAction() != null){
+            String lsAction = getIntent().getAction();
+            if (lsAction.equalsIgnoreCase(MAP_SCREEN)){
+                moBinding.toolbar.rbMap.setChecked(true);
+            } else {
+                openNotifications();
+            }
+        } else {
+            if (foJsonObject.getAppUpdate().getStatus() == 1) {
+                //showAlertTwoBtn(fsMessage, message);
+            } else if (foJsonObject.getAppUpdate().getStatus() == 2) {
+                //dialogUpdateApp(fsMessage, true, false);
+            } else {
+                if (!getPreferenceManager().isMarketingAd()) {
+                    if (!AppGlobal.isDisplayRewardNote) {
+                        showFirstDialog(foJsonObject.getFirstTimeAlertTitle(), foJsonObject.getFirstTimeAlertMsg(), foJsonObject.getAdvertisementList());
+                    }else {
+                        loadOfferListFragment(0,0,0);
+                    }
+                }
+            }
+        }
+    }
 
     private void showFirstDialog(String fsTitle, String fsMessage, ArrayList<Advertisement> foAdvertisementList) {
 
@@ -351,23 +381,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         if (getIntent() != null) {
             String lsAction = getIntent().getAction();
             if (lsAction != null) {
-
-                int liNotifyID = Integer.parseInt(lsAction);
-
-                switch (liNotifyID) {
-                    case MyFirebaseMessagingService.NotificationType.OFFER_LIST:
+                switch (lsAction) {
+                    case OFFER_LIST:
                         int liCategoryId = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
                         long llOfferId = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
                         long llLocationId = getIntent().getLongExtra(Constants.IntentKey.LOCATION_ID, 0);
                         loadOfferListFragment(liCategoryId, llOfferId, llLocationId);
                         break;
 
-                    case MyFirebaseMessagingService.NotificationType.ACTIVITY_LIST:
+                    case ACTIVITY_LIST:
                         long llActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
                         openMyCoupons(llActivityId);
                         break;
 
-                    case MyFirebaseMessagingService.NotificationType.MESSAGE_LIST:
+                    case MESSAGE_LIST:
                         long llMessageId = getIntent().getLongExtra(Constants.IntentKey.MESSAGE_ID, 0);
                         openMessages(llMessageId);
                         break;

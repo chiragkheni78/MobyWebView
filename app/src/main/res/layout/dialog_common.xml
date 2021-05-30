@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/_20sdp"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:id="@+id/llRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/margin_view"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:text="Cashback Activated !"
+                android:letterSpacing="0.1"
+                android:lineSpacingExtra="@dimen/_3sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_15sdp"/>
+
+            <TextView
+                android:id="@+id/tvMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:text="@string/msg_copy_to_clipboard"
+                android:letterSpacing="0.08"
+                android:lineSpacingExtra="@dimen/_3sdp"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/_14sdp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnOk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/secondary"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="OK"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

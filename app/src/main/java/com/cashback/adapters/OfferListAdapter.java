@@ -57,14 +57,14 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 
         @Override
         public void onClick(View foView) {
-            if (foView.getId() == R.id.btnAdDetails) {
+            //if (foView.getId() == R.id.btnAdDetails) {
                 int liPosition = (int) foView.getTag();
                 Intent loIntent = new Intent(moContext, OfferDetailsActivity.class);
                 loIntent.putExtra(Constants.IntentKey.OFFER_ID, moOfferList.get(liPosition).getAdID());
                 if (moOfferList.get(liPosition).getLocationList().size() > 0)
                     loIntent.putExtra(Constants.IntentKey.LOCATION_ID, moOfferList.get(liPosition).getLocationList().get(0).getLocationID());
                 moContext.startActivity(loIntent);
-            }
+            //}
         }
     }
 
@@ -85,7 +85,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             setOfferLabel(foHolder.loTvOffer, loAdOffer);
             setLogo(foHolder.loIvLogo, loAdOffer);
             setButton(foHolder.loBtnAdDetails, loAdOffer);
-            foHolder.loLlRoot.setTag(fiPosition);
+            foHolder.itemView.setTag(fiPosition);
             foHolder.loBtnAdDetails.setTag(fiPosition);
 
         } catch (Exception e) {

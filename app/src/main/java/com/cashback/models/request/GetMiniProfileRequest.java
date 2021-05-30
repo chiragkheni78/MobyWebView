@@ -5,8 +5,6 @@ import android.content.Context;
 import com.cashback.utils.Common;
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONObject;
-
 public class GetMiniProfileRequest {
 
     @SerializedName("fsAction")
@@ -15,8 +13,8 @@ public class GetMiniProfileRequest {
     @SerializedName("fsDeviceId")
     String deviceId;
 
-    @SerializedName("fsReferrelCode")
-    String referralCode;
+    @SerializedName("fsReferrerCode")
+    String referrer;
 
     @SerializedName("fsUserContact")
     private String mobileNumber;
@@ -29,8 +27,8 @@ public class GetMiniProfileRequest {
         this.deviceId = deviceId;
     }
 
-    public void setReferralCode(String referralCode) {
-        this.referralCode = referralCode;
+    public void setReferrer(String referrer) {
+        this.referrer = referrer;
     }
 
     public void setMobileNumber(String mobileNumber) {

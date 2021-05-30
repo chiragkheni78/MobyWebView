@@ -53,6 +53,7 @@ public class HomeViewModel extends ViewModel {
                 Common.printReqRes(foResponse.body(), "getGlobalSetting", Common.LogType.RESPONSE);
                 if (foResponse.isSuccessful()) {
                     GetSettingResponse loJsonObject = foResponse.body();
+                    AppGlobal.setCategories(loJsonObject.getCategoryList());
                     getSettingStatus.postValue(loJsonObject);
                     updateToken(foContext);
                 } else {

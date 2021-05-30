@@ -17,6 +17,12 @@ public class ActivityListResponse {
     @SerializedName("foActivityList")
     private ArrayList<Activity> activityList;
 
+    @SerializedName("fbIsPendingBillUpload")
+    private boolean isPendingBillUpload;
+
+    @SerializedName("fiTotalBillVerified")
+    private int totalVerifiedBill;
+
     public boolean isError() {
         return isError;
     }
@@ -34,4 +40,11 @@ public class ActivityListResponse {
         this.message = message;
     }
 
+    public boolean isPendingBillUpload() {
+        return isPendingBillUpload;
+    }
+
+    public int getTotalVerifiedBill() {
+        return totalVerifiedBill;
+    }
 }

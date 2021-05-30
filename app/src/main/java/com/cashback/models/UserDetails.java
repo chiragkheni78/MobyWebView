@@ -10,11 +10,17 @@ import org.json.JSONObject;
 
 public class UserDetails {
 
-    @SerializedName("fsUserName")
-    String userName;
+    @SerializedName("fsFirstName")
+    String firstName;
+
+    @SerializedName("fsLastName")
+    String lastName;
 
     @SerializedName("fsUserEmail")
     String email;
+
+    @SerializedName("fsContactNo")
+    String mobileNumber;
 
     @SerializedName("fiAge")
     int age;
@@ -28,11 +34,17 @@ public class UserDetails {
     @SerializedName("fiEWalletId")
     int eWalletId;
 
-    @SerializedName("fsShareCode")
+    @SerializedName("fsReferralCode")
     String referralCode;
 
-    @SerializedName("fsShareFirebaseUrl")
+    @SerializedName("fsReferralLink")
     String referralUrl;
+
+    @SerializedName("fsReferrerCode")
+    String referrer;
+
+    @SerializedName("fiBankOfferRadius")
+    int bankOfferRadius;
 
     public UserDetails(int age, String gender, int eWalletId) {
         this.age = age;
@@ -40,68 +52,52 @@ public class UserDetails {
         this.eWalletId = eWalletId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getBirthDate() {
         return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getEWalletId() {
+    public int geteWalletId() {
         return eWalletId;
-    }
-
-    public void setEWalletId(int eWalletId) {
-        this.eWalletId = eWalletId;
     }
 
     public String getReferralCode() {
         return referralCode;
     }
 
-    public void setReferralCode(String referralCode) {
-        this.referralCode = referralCode;
-    }
-
     public String getReferralUrl() {
         return referralUrl;
     }
 
-    public void setReferralUrl(String referralUrl) {
-        this.referralUrl = referralUrl;
+    public String getReferrer() {
+        return referrer;
     }
 
+    public int getBankOfferRadius() {
+        return bankOfferRadius;
+    }
 }
+

@@ -31,8 +31,8 @@ public class SaveMiniProfileRequest {
         this.eWalletId = eWalletId;
     }
 
-    @SerializedName("fsReferrelCode")
-    String referralCode;
+    @SerializedName("fsReferrerCode")
+    String referrer;
 
     public void setAction(String action) {
         this.action = action;
@@ -54,8 +54,8 @@ public class SaveMiniProfileRequest {
         this.deviceId = deviceId;
     }
 
-    public void setReferralCode(String referralCode) {
-        this.referralCode = referralCode;
+    public void setReferrer(String referrer) {
+        this.referrer = referrer;
     }
 
     public void setMobileNumber(String mobileNumber) {

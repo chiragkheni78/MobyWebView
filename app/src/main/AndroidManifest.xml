@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -36,12 +37,14 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="example.com"
-                    android:scheme="https"/>
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
@@ -89,7 +92,15 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".activities.MessageDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activities.VideoViewActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.QrScannerActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -102,7 +113,15 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activities.MyProfileActivity"
+            android:name=".activities.UserProfileActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.AdvertisementActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.WebViewActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -137,9 +156,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <service android:name="com.adgyde.android.AppJobService"
+        <service
+            android:name="com.adgyde.android.AppJobService"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 

@@ -2,6 +2,7 @@ package com.cashback.activities;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import com.cashback.models.viewmodel.BillUploadViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
+import com.cashback.utils.custom.MessageDialog;
 import com.shagi.materialdatepicker.date.DatePickerFragmentDialog;
 import com.squareup.picasso.Picasso;
 
@@ -94,6 +96,10 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
 
         }
 
+        moBinding.ivOne.setOnClickListener(this);
+        moBinding.ivCloseFirst.setOnClickListener(this);
+        moBinding.ivCloseSecond.setOnClickListener(this);
+        moBinding.ivTwo.setOnClickListener(this);
         moBinding.btnLater.setOnClickListener(this);
         moBinding.btnRegisterNow.setOnClickListener(this);
         moBinding.tvDate.setOnClickListener(this);
@@ -120,7 +126,26 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
                 if (msBillImagePath_2 == null)
                     imageClick();
                 break;
+            case R.id.ivCloseFirst:
+                    deleteImage(1);
+                break;
+            case R.id.ivCloseSecond:
+                deleteImage(2);
+                break;
         }
+    }
+
+    private void deleteImage(int fiPosition) {
+       imageCounter--;
+       if (fiPosition == 1){
+           msBillImagePath_1 = null;
+           moBinding.ivOne.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_camera_24));
+           moBinding.ivCloseFirst.setVisibility(GONE);
+       } else {
+           msBillImagePath_2 = null;
+           moBinding.ivTwo.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_camera_24));
+           moBinding.ivCloseSecond.setVisibility(GONE);
+       }
     }
 
     private void imageClick() {
@@ -174,15 +199,18 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
         public void onChanged(BillUploadResponse loJsonObject) {
             if (!loJsonObject.isError()) {
 
-                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), new DialogInterface.OnClickListener() {
+                MessageDialog loDialog = new MessageDialog(getContext(), null, loJsonObject.getMessage(), null, false);
+                loDialog.setClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View v) {
+                        loDialog.dismiss();
                         Intent intent = new Intent(getContext(), BillUploadActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                         finish();
                     }
                 });
+                loDialog.show();
 
                 if (msPinColor.equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
                     ActivityDetailsViewModel moActivityDetailsViewModel = new ViewModelProvider(BillUploadActivity.this).get(ActivityDetailsViewModel.class);
@@ -321,16 +349,14 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     private void openAlertDialog(int fiType) {
         String lsMessage = (fiType == 1) ? getResources().getString(R.string.gallery_access_permission) : getResources().getString(R.string.camera_access_permission);
 
-        Common.showErrorDialog(getContext(), lsMessage, new DialogInterface.OnClickListener() {
+        MessageDialog loDialog = new MessageDialog(getContext(), null, lsMessage, null, false);
+        loDialog.setClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (fiType == 1) {
-                    isCameraPermissionGranted();
-                } else {
-                    isWriteStoragePermissionGranted();
-                }
+            public void onClick(View v) {
+
             }
         });
+        loDialog.show();
     }
 
     private static final int REQUEST_CAPTURE_IMAGE = 100;
@@ -393,9 +419,11 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
         if (imageCounter == 0) {
             msBillImagePath_1 = fsFilePath;
             Picasso.get().load(loFile).into(moBinding.ivOne);
+            moBinding.ivCloseFirst.setVisibility(View.VISIBLE);
         } else {
             msBillImagePath_2 = fsFilePath;
             Picasso.get().load(loFile).into(moBinding.ivTwo);
+            moBinding.ivCloseSecond.setVisibility(View.VISIBLE);
         }
         imageCounter++;
     }

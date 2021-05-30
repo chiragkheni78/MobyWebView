@@ -107,7 +107,7 @@ dependencies {
     // AdGyde Sdk with AndroidX support
     implementation 'com.adgyde:adgyde-androidx-sdk:4.1.12'
 
-    //
+    // Location
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
 }

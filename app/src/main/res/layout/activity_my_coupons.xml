@@ -94,6 +94,7 @@
         <TextView
             android:id="@+id/tvNoData"
             style="@style/TvXLarge"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_marginTop="@dimen/margin_view"

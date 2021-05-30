@@ -2,6 +2,7 @@ package com.cashback.models.response;
 
 import com.cashback.models.Advertisement;
 import com.cashback.models.AppUpdate;
+import com.cashback.models.Category;
 import com.cashback.models.EWallet;
 import com.cashback.models.UserDetails;
 import com.google.gson.annotations.SerializedName;
@@ -51,6 +52,12 @@ public class GetSettingResponse {
 
     @SerializedName("fbIsDeviceExist")
     private boolean isDeviceExist;
+
+    @SerializedName("foCategoryList")
+    private ArrayList<Category> categoryList;
+
+    @SerializedName("fiOfferListPageSize")
+    int offerListPageSize;
 
     public GetSettingResponse(boolean isError, String message) {
         this.isError = isError;
@@ -111,5 +118,13 @@ public class GetSettingResponse {
 
     public boolean isDeviceExist() {
         return isDeviceExist;
+    }
+
+    public ArrayList<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public int getOfferListPageSize() {
+        return offerListPageSize;
     }
 }

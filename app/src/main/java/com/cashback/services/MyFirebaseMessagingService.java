@@ -35,6 +35,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
@@ -110,7 +114,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 case NotificationType.OFFER_LIST:
 
                     loIntent = new Intent(this, HomeActivity.class);
-                    loIntent.setAction(String.valueOf(NotificationType.OFFER_LIST));
+                    loIntent.setAction(OFFER_LIST);
                     loIntent.putExtra(Constants.IntentKey.CATEGORY_ID, liCategoryId);
                     loIntent.putExtra(Constants.IntentKey.OFFER_ID, llAdID);
                     loIntent.putExtra(Constants.IntentKey.LOCATION_ID, llLocationID);
@@ -122,7 +126,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 case NotificationType.ACTIVITY_LIST:
 
                     loIntent = new Intent(this, HomeActivity.class);
-                    loIntent.setAction(String.valueOf(NotificationType.ACTIVITY_LIST));
+                    loIntent.setAction(ACTIVITY_LIST);
                     loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityID);
                     loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,
@@ -132,7 +136,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 case NotificationType.MESSAGE_LIST:
 
                     loIntent = new Intent(this, HomeActivity.class);
-                    loIntent.setAction(String.valueOf(NotificationType.MESSAGE_LIST));
+                    loIntent.setAction(MESSAGE_LIST);
                     loIntent.putExtra(Constants.IntentKey.MESSAGE_ID, llMessageID);
                     loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,

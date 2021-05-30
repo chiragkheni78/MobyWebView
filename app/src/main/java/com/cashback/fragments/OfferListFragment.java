@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.adapters.CategoryAdapter;
@@ -36,8 +37,6 @@ import java.util.ArrayList;
 import static com.cashback.AppGlobal.isSearchButtonBlink;
 
 public class OfferListFragment extends BaseFragment implements View.OnClickListener {
-
-    public static final int PAGE_SIZE = 30;
 
     FragmentOfferListBinding moBinding;
     OfferListViewModel moOfferListViewModel;
@@ -69,9 +68,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             int firstVisibleItemPosition = moLayoutManager.findFirstVisibleItemPosition();
 
             if (!isLoading && !isLastPage) {
-                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                        && firstVisibleItemPosition >= 0
-                    /*&& totalItemCount >= PAGE_SIZE*/) {
+                if ((visibleItemCount + firstVisibleItemPosition) >= (totalItemCount - 10)
+                        && firstVisibleItemPosition >= 0) {
                     miCurrentPage = miCurrentPage + 1;
                     fetchOffers();
                 }
@@ -93,20 +91,13 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void initializeContent() {
-        moOfferListViewModel = new ViewModelProvider(this).get(OfferListViewModel.class);
-        moOfferListViewModel.fetchCategoryStatus.observe(getActivity(), fetchCategoryObserver);
-        moOfferListViewModel.fetchOffersStatus.observe(getActivity(), fetchOffersObserver);
+        initViewModel();
 
         moBinding.btnSearch.setOnClickListener(this);
         moBinding.floatingActionSearch.setOnClickListener(this);
         moBinding.rvOfferList.addOnScrollListener(recyclerViewOnScrollListener);
 
-
-        final LinearLayoutManager loLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        moBinding.rvCategory.setLayoutManager(loLayoutManager1);
-        moCategoryAdapter = new CategoryAdapter(getActivity(), moCategories, OfferListFragment.this);
-        moBinding.rvCategory.setAdapter(moCategoryAdapter);
-
+        setCategoryView();
 
         moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         moBinding.rvOfferList.setLayoutManager(moLayoutManager);
@@ -122,10 +113,10 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             long llLocationId = getArguments().getLong(Constants.IntentKey.LOCATION_ID);
 
             if (miCategoryId > 0) {
-//                setSelection
+                // setSelection
                 moCategoryAdapter.updateCategoryByID(miCategoryId);
             }
-            fetchCategory();
+            fetchOffers();
 
             if (llOfferId > 0 && llLocationId > 0) {
                 Intent loIntent = new Intent(getActivity(), OfferDetailsActivity.class);
@@ -133,16 +124,33 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 loIntent.putExtra(Constants.IntentKey.LOCATION_ID, llLocationId);
                 startActivity(loIntent);
             }
-        } else fetchCategory();
+        } else fetchOffers();
     }
 
-    private void fetchCategory() {
-        showProgressDialog();
-        moOfferListViewModel.fetchCategory(getActivity());
+    private void setCategoryView() {
+        moCategories = AppGlobal.getCategories();
+        if (moCategories != null && moCategories.size() > 0) {
+            final LinearLayoutManager loLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            moBinding.rvCategory.setLayoutManager(loLayoutManager1);
+            moCategoryAdapter = new CategoryAdapter(getActivity(), moCategories, OfferListFragment.this);
+            moBinding.rvCategory.setAdapter(moCategoryAdapter);
+
+            moBinding.llSearchCategory.setVisibility(View.VISIBLE);
+
+            miCategoryId = moCategories.get(0).getCategoryId();
+            moBinding.rvCategory.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void initViewModel() {
+        moOfferListViewModel = new ViewModelProvider(this).get(OfferListViewModel.class);
+//        moOfferListViewModel.fetchCategoryStatus.observe(getActivity(), fetchCategoryObserver);
+        moOfferListViewModel.fetchOffersStatus.observe(getActivity(), fetchOffersObserver);
     }
 
     private void fetchOffers() {
-        showProgressDialog();
+        if (miCurrentPage == 1)
+            showProgressDialog();
         isLoading = true;
 
         String lsSearchText = (moBinding.etSearch.getText().length() > 0) ? moBinding.etSearch.getText().toString().trim() : "";
@@ -179,10 +187,6 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         if (isSearchButtonBlink)
                             Common.blinkAnimation(moBinding.floatingActionSearch);
                     } else isLastPage = true;
-
-//                    if (loJsonObject.getOfferList().size() < PAGE_SIZE) {
-//                        isLastPage = true;
-//                    }
                 }
             } else {
                 Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
@@ -191,6 +195,11 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             dismissProgressDialog();
         }
     };
+
+    private void fetchCategory() {
+        showProgressDialog();
+        moOfferListViewModel.fetchCategory(getActivity());
+    }
 
     Observer<OfferFilterResponse> fetchCategoryObserver = new Observer<OfferFilterResponse>() {
         @Override

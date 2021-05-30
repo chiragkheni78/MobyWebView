@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/RootLayout"
+    tools:context=".activities.HomeActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <LinearLayout style="@style/RootLayout">
+
+        <FrameLayout
+            android:id="@+id/flSlider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout_collapseMode="parallax"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+            <com.cashback.utils.custom.LoopViewPager
+                android:id="@+id/vpAdvert"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.cashback.utils.custom.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#77000000"
+                android:padding="@dimen/padding_standard"
+                android:visibility="visible"
+                app:fillColor="@color/colorPrimary"
+                app:pageColor="@color/white"
+                app:radius="5dp"
+                app:strokeWidth="-2dp" />
+
+
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

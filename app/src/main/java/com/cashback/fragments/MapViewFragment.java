@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.BankOfferDetailsActivity;
+import com.cashback.activities.BillUploadActivity;
 import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.activities.PhoneLoginActivity;
 import com.cashback.databinding.FragmentMapViewBinding;
@@ -41,6 +42,7 @@ import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.custom.MessageDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -75,6 +77,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                 if (loJsonObject.getOfferList() != null) {
                     if (loJsonObject.getOfferList().size() > 0) {
                         moOfferList = loJsonObject.getOfferList();
+                        showBankOfferMessage();
                         drawMarkers();
                     }
                 }
@@ -84,6 +87,16 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             dismissProgressDialog();
         }
     };
+
+    private void showBankOfferMessage() {
+        //if (!getPreferenceManager().isBankOfferMessageShown()) {
+            String lsMessage = Common.getDynamicText(getContext(), "bank_offer_message");
+            String lsButtonName = Common.getDynamicText(getContext(), "btn_proceed");
+            MessageDialog loDialog = new MessageDialog(getContext(), null, lsMessage, lsButtonName, false);
+            loDialog.show();
+            getPreferenceManager().setBankOfferMessageShown(true);
+       // }
+    }
 
     Observer<String> functionCallObserver = new Observer<String>() {
         @Override
@@ -168,7 +181,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         }
     }
 
-    private static final int REQUEST_PHONE_LOGIN = 837;
+    public static final int REQUEST_PHONE_LOGIN = 837;
     private static boolean isReloadEnable = false;
 
     private void errorButtonPressed() {
@@ -198,7 +211,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PHONE_LOGIN) {
             if (resultCode == RESULT_OK) {
-               loadView();
+                loadView();
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.cashback.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +15,9 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.cashback.databinding.ActivityQrScanBinding;
 import com.cashback.databinding.ActivityVideoViewBinding;
+import com.cashback.utils.Constants;
+import com.cashback.utils.LogV2;
 import com.google.zxing.Result;
-
 
 
 public class QrScannerActivity extends BaseActivity {
@@ -64,13 +66,14 @@ public class QrScannerActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //  Toast.makeText(QrScannerActivity.this, result.getText(), Toast.LENGTH_SHORT).show();
                         if (result != null && result.getText() != null) {
-                            Log.d("TTT", "scal result..." + result.getText());
-
-                        } else {
-                            finish();
+                            LogV2.i("TTT", "Scan Result::: " + result.getText());
+                            Intent intent = new Intent();
+                            intent.putExtra(Constants.IntentKey.QR_DATA, result.getText().toString());
+                            setResult(1, intent);
+                            setResult(Activity.RESULT_OK, intent);
                         }
+                        finish();
                     }
                 });
             }

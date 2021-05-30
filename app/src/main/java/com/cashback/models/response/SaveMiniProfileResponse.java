@@ -3,7 +3,7 @@ package com.cashback.models.response;
 import com.cashback.models.UserDetails;
 import com.google.gson.annotations.SerializedName;
 
-public class SaveProfileResponse {
+public class SaveMiniProfileResponse {
 
     @SerializedName("fbIsError")
     private boolean isError;
@@ -14,7 +14,7 @@ public class SaveProfileResponse {
     @SerializedName("foUserDetails")
     private UserDetails userDetails;
 
-    public SaveProfileResponse(boolean isError, String message) {
+    public SaveMiniProfileResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
     }
