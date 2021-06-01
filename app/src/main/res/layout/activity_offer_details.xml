@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llRoot"
     style="@style/RootLayout"
-    tools:context=".activities.HomeActivity"
-    android:visibility="visible">
+    android:visibility="visible"
+    tools:context=".activities.HomeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/btnWinCoupon">
+            android:layout_above="@+id/llWinCoupon">
 
             <LinearLayout
                 style="@style/RootLayout"
@@ -45,8 +45,8 @@
                             style="@style/NormalLayout"
                             android:layout_width="@dimen/_100sdp"
                             android:layout_height="@dimen/_100sdp"
-                            android:layout_margin="@dimen/padding_xnano"
                             android:layout_gravity="bottom"
+                            android:layout_margin="@dimen/padding_xnano"
                             android:background="@drawable/rect_white"
                             android:elevation="@dimen/_4sdp">
 
@@ -92,9 +92,9 @@
                 <LinearLayout
                     style="@style/RootLayout"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_view"
                     android:background="@color/transparent"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/margin_view"
                     android:padding="@dimen/padding_large">
 
                     <TextView
@@ -133,14 +133,24 @@
             </LinearLayout>
         </ScrollView>
 
-        <com.rey.material.widget.Button
-            android:id="@+id/btnWinCoupon"
-            style="@style/RippleBtnStandard"
-            android:layout_width="match_parent"
+        <com.rey.material.widget.LinearLayout
+            android:id="@+id/llWinCoupon"
+            style="@style/NormalRippleLayout"
             android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:text="@string/win_coupon"
-            android:textStyle="bold" />
+            android:background="@color/colorPrimary"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/btnWinCoupon"
+                style="@style/TvLarge"
+                android:gravity="center"
+                android:drawableRight="@drawable/ic_right_24"
+                android:drawablePadding="@dimen/_15sdp"
+                android:text="@string/win_coupon"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="@dimen/padding_standard" />
+        </com.rey.material.widget.LinearLayout>
     </RelativeLayout>
 
     <include

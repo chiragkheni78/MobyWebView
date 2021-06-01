@@ -46,6 +46,9 @@ public class Ad implements Serializable {
     @SerializedName("foLocationList")
     ArrayList<AdLocation> locationList;
 
+    @SerializedName("fiOfferLeft")
+    int offerLeft;
+
     public long getAdID() {
         return adID;
     }
@@ -106,6 +109,9 @@ public class Ad implements Serializable {
         return locationList;
     }
 
+    public int getOfferLeft() {
+        return offerLeft;
+    }
 
     /*details*/
     @SerializedName("fsDescription")

@@ -38,6 +38,8 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
             buildConfigField "String", "BASE_URL", "\"http://mobyads.in/preprod-moby/\""
             buildConfigField "String", "ADGYDE_APP_KEY", "\"K323933399337795\""
         }

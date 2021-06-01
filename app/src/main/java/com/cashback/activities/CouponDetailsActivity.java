@@ -39,9 +39,11 @@ import com.cashback.models.response.ActivityDetailsResponse;
 import com.cashback.models.response.ActivityMarkAsUsedResponse;
 import com.cashback.models.response.UpdateShopOnlineBlinkResponse;
 import com.cashback.models.viewmodel.ActivityDetailsViewModel;
+import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
+import com.cashback.utils.custom.MessageDialog;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
@@ -124,24 +126,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
         setToolbar();
 
-        if (AppGlobal.getFirebaseUser() == null) {
-            moBinding.toolbar.toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            moBinding.toolbar.ibNavigation.setColorFilter(getResources().getColor(R.color.white));
-            moBinding.toolbar.tvToolbarTitle.setTextColor(getResources().getColor(R.color.white));
-            moBinding.btnError.setOnClickListener(this);
-            moBinding.llErrorMessage.setVisibility(View.VISIBLE);
-            moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "text_verify_phone_no"));
-            moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number"));
-        } else {
-            loadCouponView();
-        }
+
+        loadCouponView();
     }
 
     private void loadCouponView() {
-        moBinding.llErrorMessage.setVisibility(View.GONE);
-        moBinding.toolbar.toolbar.setBackgroundColor(getResources().getColor(R.color.secondary));
-        moBinding.toolbar.ibNavigation.setColorFilter(getResources().getColor(R.color.colorPrimaryText));
-        moBinding.toolbar.tvToolbarTitle.setTextColor(getResources().getColor(R.color.colorPrimaryText));
         if (getIntent() != null) {
             miActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
             getActivityDetails();
@@ -359,30 +348,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             case R.id.tvCancel:
                 onBackPressed();
                 break;
-            case R.id.btnError:
-                errorButtonPressed();
-                break;
-        }
-    }
-
-    private void errorButtonPressed() {
-        if (AppGlobal.getFirebaseUser() == null) {
-            Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
-            startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PHONE_LOGIN) {
-            if (resultCode == RESULT_OK) {
-                loadCouponView();
-            }
         }
     }
 
     private void shopOnlinePressed() {
+
         String fsLink = (!moActivity.getShopOnlineLink().isEmpty())
                 ? moActivity.getShopOnlineLink()
                 : Common.getLinkifiedMyText(moActivity.getCouponDescription());
@@ -399,6 +369,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.llInStore.setVisibility(View.VISIBLE);
         }
         moBinding.tvShopOnline.clearAnimation();
+
     }
 
     private void markAsUsedPressed() {
@@ -467,30 +438,43 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     private void dialogCopyToClipboard(String fsUrl) {
-        try {
-            Dialog loDialog = new Dialog(getContext());
-            loDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            loDialog.setContentView(R.layout.dialog_copy_to_clipboard);
-            loDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            loDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            loDialog.getWindow().setGravity(Gravity.CENTER);
-            loDialog.setCancelable(true);
-            loDialog.show();
 
-            TextView loTvMessage = loDialog.findViewById(R.id.tvMessage);
-            loTvMessage.setText(Common.getDynamicText(getContext(), "msg_copy_to_clipboard")
-                    .replace("XX", String.valueOf(moActivity.getVirtualCashTransferDays())));
-            Button loBtnUpdateCard = loDialog.findViewById(R.id.btnViewOffer);
+        if (AppGlobal.getFirebaseUser() == null) {
+            openPhoneLogin(fsUrl);
+        } else {
+            try {
+                String lsTitle = Common.getDynamicText(getContext(), "title_copy_to_clipboard");
+                String lsMessage = Common.getDynamicText(getContext(), "msg_copy_to_clipboard").replace("XX", String.valueOf(moActivity.getVirtualCashTransferDays()));
+                MessageDialog loDialog = new MessageDialog(CouponDetailsActivity.this, lsTitle, lsMessage, null, false);
+                loDialog.setClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        loDialog.dismiss();
+                        openDeepLink(fsUrl);
+                    }
+                });
+                loDialog.show();
+            } catch (Exception e) {
+                LogV2.logException(TAG, e);
+            }
+        }
+    }
 
-            loBtnUpdateCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loDialog.dismiss();
-                    openDeepLink(fsUrl);
-                }
-            });
-        } catch (Exception e) {
-            LogV2.logException(TAG, e);
+    private String msURL;
+    private void openPhoneLogin(String fsUrl) {
+        msURL = fsUrl;
+            Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
+            startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PHONE_LOGIN) {
+            if (resultCode == RESULT_OK) {
+                dialogCopyToClipboard(msURL);
+                AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
+            }
         }
     }
 

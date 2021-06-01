@@ -80,9 +80,9 @@
                             android:layout_height="wrap_content"
                             android:drawablePadding="5dp"
                             android:gravity="right"
-                            android:text="(Min Cashback)"
+                            android:text="(Max Cashback On Used Coupon)"
                             android:textColor="@color/primary_text"
-                            android:textSize="11sp"
+                            android:textSize="8sp"
                             android:visibility="visible" />
 
                     </LinearLayout>

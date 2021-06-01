@@ -38,6 +38,7 @@ public class MessageDialog extends Dialog {
         this.moListener = listener;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

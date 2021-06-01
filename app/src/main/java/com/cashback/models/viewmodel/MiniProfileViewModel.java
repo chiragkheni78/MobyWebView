@@ -1,11 +1,13 @@
 package com.cashback.models.viewmodel;
 
 import android.content.Context;
+import android.os.Bundle;
 
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.adgyde.android.AdGyde;
 import com.cashback.AppGlobal;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
@@ -17,8 +19,10 @@ import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,8 +37,8 @@ public class MiniProfileViewModel extends ViewModel {
         GetMiniProfileRequest loGetMiniProfileRequest = new GetMiniProfileRequest();
         loGetMiniProfileRequest.setAction(Constants.API.GET_MINI_PROFILE.getValue());
         loGetMiniProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
-//        loGetProfileRequest.setReferralCode(AppGlobal.getPreferenceManager().getReferralCode());
-        loGetMiniProfileRequest.setReferrer("OTHER");
+        loGetMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getReferralCode());
+//        loGetMiniProfileRequest.setReferrer("OTHER");
         loGetMiniProfileRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loGetMiniProfileRequest.validateData(foContext);
@@ -79,7 +83,7 @@ public class MiniProfileViewModel extends ViewModel {
     }
 
 
-    public String getAdvertImage(Context foContext, ArrayList<Advertisement> foAdvertisementList) {
+    public int getAdvertPosition(Context foContext, ArrayList<Advertisement> foAdvertisementList) {
 
         if (foAdvertisementList.size() > 0) {
             String lsBannerURL;
@@ -91,25 +95,25 @@ public class MiniProfileViewModel extends ViewModel {
                 position = liOldPosition + 1;
             }
 
-            position = (position < foAdvertisementList.size())? position : 0;
+            position = (position < foAdvertisementList.size()) ? position : 0;
 
             lsBannerURL = foAdvertisementList.get(position).getImageUrl();
 
             loSharedPreferenceManager.setAdvertBannerPosition(position);
 
-            return lsBannerURL;
+            return position;
         }
-        return null;
+        return 0;
     }
 
     public MutableLiveData<SaveMiniProfileResponse> saveMiniProfileStatus = new MutableLiveData<>();
 
-    public void saveProfile(Context foContext, int fiAge, String fsGender, int fiEWalletId) {
-        SaveMiniProfileRequest loSaveMiniProfileRequest = new SaveMiniProfileRequest(fiAge, fsGender, fiEWalletId);
+    public void saveProfile(Context foContext, int fiAge, String fsGender, int fiEWalletId, String fsUPIAddress) {
+        SaveMiniProfileRequest loSaveMiniProfileRequest = new SaveMiniProfileRequest(fiAge, fsGender, fiEWalletId, fsUPIAddress);
         loSaveMiniProfileRequest.setAction(Constants.API.SAVE_MINI_PROFILE.getValue());
         loSaveMiniProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
-//        loSaveMiniProfileRequest.setReferralCode(AppGlobal.getPreferenceManager().getReferralCode());
-        loSaveMiniProfileRequest.setReferrer("OTHER");
+        loSaveMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getReferralCode());
+//        loSaveMiniProfileRequest.setReferrer("OTHER");
         loSaveMiniProfileRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loSaveMiniProfileRequest.validateData(foContext);
@@ -142,4 +146,6 @@ public class MiniProfileViewModel extends ViewModel {
             }
         });
     }
+
+
 }

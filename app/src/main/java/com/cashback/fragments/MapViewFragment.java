@@ -89,13 +89,14 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
     };
 
     private void showBankOfferMessage() {
-        //if (!getPreferenceManager().isBankOfferMessageShown()) {
+        if (!getPreferenceManager().isBankOfferMessageShown()) {
+            String lsTitle = Common.getDynamicText(getContext(), "bank_offer_title");
             String lsMessage = Common.getDynamicText(getContext(), "bank_offer_message");
             String lsButtonName = Common.getDynamicText(getContext(), "btn_proceed");
-            MessageDialog loDialog = new MessageDialog(getContext(), null, lsMessage, lsButtonName, false);
+            MessageDialog loDialog = new MessageDialog(getContext(), lsTitle, lsMessage, lsButtonName, false);
             loDialog.show();
             getPreferenceManager().setBankOfferMessageShown(true);
-       // }
+        }
     }
 
     Observer<String> functionCallObserver = new Observer<String>() {
@@ -132,6 +133,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
     private void loadView() {
         if (AppGlobal.getFirebaseUser() == null) {
+            errorButtonPressed();
             moBinding.llErrorMessage.setVisibility(View.VISIBLE);
             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "text_verify_phone_no"));
             moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number"));
@@ -202,7 +204,8 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         if (isReloadEnable) {
             moMapViewModel.checkGPSEnabled(getActivity());
         } else {
-            loadView();
+            if (moBinding.llErrorMessage.getVisibility() == View.VISIBLE)
+                loadView();
         }
     }
 

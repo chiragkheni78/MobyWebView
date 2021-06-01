@@ -22,6 +22,7 @@ public class Constants {
         public static final String OFFER_ID = "offerId";
         public static final String LOCATION_ID = "locationId";
         public static final String CATEGORY_ID = "categoryId";
+        public static final String BANNER_ID = "bannerId";
         public static final String REPORT_ID = "reportId";
         public static final String QR_DATA = "qrData";
         public static final String ACTIVITY_ID = "activityId";

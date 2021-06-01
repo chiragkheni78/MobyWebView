@@ -49,7 +49,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             loTvTitle = foView.findViewById(R.id.tvTitle);
             loTvQuizReward = foView.findViewById(R.id.tvQuizReward);
             loTvActivityDate = foView.findViewById(R.id.tvActivityDate);
-            loTvCashBackUpto = foView.findViewById(R.id.tvCashBackUpto);
+            loTvCashBackUpto = foView.findViewById(R.id.tvCashbackUpto);
             loTvStatus = foView.findViewById(R.id.tvStatus);
             loTvType = foView.findViewById(R.id.tvType);
             loLlCashback = foView.findViewById(R.id.llCashback);
@@ -64,7 +64,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             int liPosition = (int) foView.getTag();
 
             switch (foView.getId()) {
-                case R.id.tvCashBackUpto:
+                case R.id.tvCashbackUpto:
                     Transaction loUserTransaction = moTransactionList.get(liPosition);
                     long llAdId = loUserTransaction.getAdID();
                     //boolean lbIsGiftCard = (!loUserTransaction.getMobyCoupon().isEmpty()) ? true : false;

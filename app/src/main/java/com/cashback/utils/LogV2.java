@@ -50,14 +50,14 @@ public class LogV2 {
     public static void logException(String fsTag, Throwable foTr) {
         if (BUILD.equals(Build.Debug)) {
             foTr.printStackTrace();
-            try {
-                BufferedWriter loBufferedWriter = getBufferedWriter();
-                loBufferedWriter.append(getCurrentDateTimeString(true) + "\t" + APP_NAME + "/" + fsTag
-                        + "\t" + "/Exception" + "\n" + android.util.Log.getStackTraceString(foTr) + "\n");
-                loBufferedWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                BufferedWriter loBufferedWriter = getBufferedWriter();
+//                loBufferedWriter.append(getCurrentDateTimeString(true) + "\t" + APP_NAME + "/" + fsTag
+//                        + "\t" + "/Exception" + "\n" + android.util.Log.getStackTraceString(foTr) + "\n");
+//                loBufferedWriter.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -71,17 +71,17 @@ public class LogV2 {
     public static void i(String fsTag, String fsMessage) {
         if (BUILD.equals(Build.Debug)) {
             android.util.Log.i(fsTag, fsMessage);
-            try {
-                BufferedWriter loBufferedWriter = getBufferedWriter();
-                loBufferedWriter.append(getCurrentDateTimeString(true) + "\t" + APP_NAME + "/" + fsTag
-                        + "\t" + fsMessage + "\n");
-                if (loBufferedWriter != null) {
-                    loBufferedWriter.flush();
-                    loBufferedWriter.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                BufferedWriter loBufferedWriter = getBufferedWriter();
+//                loBufferedWriter.append(getCurrentDateTimeString(true) + "\t" + APP_NAME + "/" + fsTag
+//                        + "\t" + fsMessage + "\n");
+//                if (loBufferedWriter != null) {
+//                    loBufferedWriter.flush();
+//                    loBufferedWriter.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 

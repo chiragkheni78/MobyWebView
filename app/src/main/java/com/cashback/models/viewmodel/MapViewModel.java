@@ -151,7 +151,7 @@ public class MapViewModel extends ViewModel {
 
         LatLng loPosition = new LatLng(loMapMarker.getLatitude(), loMapMarker.getLongitude());
         String lsTitle = loMapMarker.getAdName();
-        String lsSnippet = loMapMarker.getProductName() + "\t\t₹" + loMapMarker.getTotalReward();
+        String lsSnippet = loMapMarker.getProductName() + "\t\t₹" + loMapMarker.getQuizReward();
         BitmapDescriptor loPinIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE);
 
         if (loMapMarker.getAdType().contains(Constants.AdType.BANK_OFFER.getValue())) {

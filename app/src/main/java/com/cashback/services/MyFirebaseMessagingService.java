@@ -20,6 +20,7 @@ import com.cashback.activities.HomeActivity;
 import com.cashback.models.request.SyncTokenRequest;
 import com.cashback.models.response.SyncTokenResponse;
 import com.cashback.utils.APIClient;
+import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
@@ -44,9 +45,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
 
     public class NotificationType {
-        public static final int OFFER_LIST = 1;
-        public static final int ACTIVITY_LIST = 3;
-        public static final int MESSAGE_LIST = 5;
+        public static final int OFFER_LIST = 0;
+        public static final int MESSAGE_LIST = 1;
+        public static final int ACTIVITY_LIST = 2;
+        public static final int PURCHASED = 21;
+        public static final int BILL_VERIFIED = 22;
+        public static final int CASH_BACK_PAID = 23;
+        public static final int COUPON_EXPIRING = 20;
     }
 
     @Override
@@ -100,19 +105,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (loJsonBody.has("location_id"))
                 llLocationID = loJsonBody.getLong("location_id");
 
-            if (loJsonBody.has("categoryId"))
-                liCategoryId = loJsonBody.getInt("categoryId");
+            if (loJsonBody.has("category_id"))
+                liCategoryId = loJsonBody.getInt("category_id");
 
-            if (loJsonBody.has("activityId"))
-                llActivityID = loJsonBody.getInt("activityId");
+            if (loJsonBody.has("activity_id"))
+                llActivityID = loJsonBody.getInt("activity_id");
 
-            if (loJsonBody.has("messageId"))
-                llMessageID = loJsonBody.getInt("messageId");
+            if (loJsonBody.has("message_id"))
+                llMessageID = loJsonBody.getInt("message_id");
 
 
             switch (liNotifyID) {
                 case NotificationType.OFFER_LIST:
-
                     loIntent = new Intent(this, HomeActivity.class);
                     loIntent.setAction(OFFER_LIST);
                     loIntent.putExtra(Constants.IntentKey.CATEGORY_ID, liCategoryId);
@@ -124,7 +128,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     break;
 
                 case NotificationType.ACTIVITY_LIST:
+                case NotificationType.COUPON_EXPIRING:
+                case NotificationType.PURCHASED:
+                case NotificationType.BILL_VERIFIED:
+                case NotificationType.CASH_BACK_PAID:
 
+                    if (liNotifyID == NotificationType.PURCHASED){
+                        AdGydeEvents.purchased(this, llAdID);
+                    }
                     loIntent = new Intent(this, HomeActivity.class);
                     loIntent.setAction(ACTIVITY_LIST);
                     loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityID);
@@ -134,10 +145,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     break;
 
                 case NotificationType.MESSAGE_LIST:
-
                     loIntent = new Intent(this, HomeActivity.class);
                     loIntent.setAction(MESSAGE_LIST);
                     loIntent.putExtra(Constants.IntentKey.MESSAGE_ID, llMessageID);
+                    loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,
+                            PendingIntent.FLAG_ONE_SHOT);
+                    break;
+
+                default:
+                    loIntent = new Intent(this, HomeActivity.class);
                     loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,
                             PendingIntent.FLAG_ONE_SHOT);

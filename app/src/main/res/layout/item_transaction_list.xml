@@ -27,14 +27,14 @@
                 style="@style/TvStandard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/tvQuizReward"
+                android:layout_toLeftOf="@+id/tvActivityDate"
                 android:text="Name"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvQuizReward"
+                android:id="@+id/tvCashbackUpto"
                 style="@style/TvStandard"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
@@ -42,7 +42,20 @@
                 android:text="Rs. 20"
                 android:textColor="@color/green"
                 android:textSize="14sp"
+                android:visibility="gone"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvActivityDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:text="2nd May 2017"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
 
         </RelativeLayout>
@@ -62,7 +75,7 @@
                  />
 
             <TextView
-                android:id="@+id/tvCashBackUpto"
+                android:id="@+id/tvQuizReward"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding_mini"
@@ -78,17 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/tvActivityDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_activity_adName"
-                android:layout_weight="1"
-                android:text="2nd May 2017"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/tvStatus"
@@ -96,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_activity_adName"
                 android:layout_weight="1"
-                android:gravity="right"
+
                 android:text="2nd May 2017"
                 android:textColor="@color/black"
                 android:textSize="12sp" />

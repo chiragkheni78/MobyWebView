@@ -39,6 +39,7 @@ import com.cashback.models.QuizAnswer;
 import com.cashback.models.viewmodel.QuizDetailsViewModel;
 import com.cashback.models.response.QuizDetailsResponse;
 import com.cashback.models.response.SubmitQuizResponse;
+import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.custom.MessageDialog;
@@ -325,6 +326,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
 
     private void submitQuizAnswer() {
         if (moQuizAnswerList != null & moQuizAnswerList.size() > 0) {
+            showProgressDialog();
             moQuizDetailsViewModel.submitQuizAnswer(getContext(), "",
                     moOffer.getAdID(),
                     moOffer.getLocationList().get(0).getLocationID(),
@@ -369,8 +371,8 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
     };
 
     private void handleQuizAnswerResponse(SubmitQuizResponse foJsonObject) {
-
         showSuccessMessage(foJsonObject);
+        AdGydeEvents.offerEngaged(getContext(), moOffer);
     }
 
 
@@ -488,6 +490,4 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             e.printStackTrace();
         }
     }
-
-
 }

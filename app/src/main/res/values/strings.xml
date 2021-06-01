@@ -3,6 +3,7 @@
 
 <!--messages-->
     <string name="validate_age">Please enter your age</string>
+    <string name="validate_gender">Please select your gender</string>
     <string name="validate_eWallet">Please select your eWallet</string>
     <string name="contact_support">Something went wrong, Please contact to support team.</string>
     <string name="share_message">The New Way To Shop Online…. MOBY CASHBACK, Highest payouts on Over 1000 Brands with Offers Upto 50% + EXTRA (5-30)% Moby Cashback! Use my referral link, Click XXXXXX</string>
@@ -16,9 +17,14 @@
     <string name="bill_uploaded">You have already uploaded bill for this Ad, Try other brands.</string>
     <string name="upload_bill_restrict">Please use your MOBY COUPON first, before you upload the bill.</string>
     <string name="coupon_expired">Expired</string>
+    <string name="empty_offer_list">There is no data found with this search terms\nPlease try with other brands.</string>
     <string name="empty_timeline">Your Timeline is empty!\nEngage with the Brands to earn money.</string>
     <string name="dont_forget_bill_upload">SHOP &amp; UPLOAD BILL TO VERIFY &amp; ENTER LUCKY DRAW (OPTIONAL). CREDIT IN YOUR XXXXXX APP WALLET IN XX DAYS.</string>
+
+    <string name="title_copy_to_clipboard">CashBack Activated !</string>
     <string name="msg_copy_to_clipboard">After you shop, we will verify\nyour purchase within 24 hrs,\nPayment (Delivery + XX Days)</string>
+
+
     <string name="mobile_no_mark_used">Mobile No. to Mark as Used</string>
     <string name="ask_store_cashier">Ask Store Cashier</string>
     <string name="coupon_code_conformation_msg">Register your transaction for us\nto credit you</string>
@@ -35,7 +41,7 @@
     <string name="status_sign_in_failed">Sign-in failed</string>
 
     <string name="text_verify_phone_no">Verify Phone Number</string>
-    <string name="msg_verify_phone_number">Please verify your phone with\n OTP to view the In-Store Rewards.</string>
+    <string name="msg_verify_phone_number">Verify Your Phone OTP\nTo View Offers In Real Time</string>
     <string name="multiple_device_title">Found Multiple Devices</string>
     <string name="multiple_device_msg">Your phone number is connected with multiple devices, so please select any one from them and make sure other device data will be removed permanently.</string>
 
@@ -63,12 +69,13 @@
     <string name="empty_wallet">Your Wallet is empty!\nEngage with the Brands to earn money.</string>
 
     <string name="back_from_timeline_title">DON"T LIKE YOUR COUPONS?</string>
-    <string name="back_from_timeline_message"><![CDATA[Search for your favorite brands,<br/>Win coupon, & Shop to Get upto<br/><br/>
+    <string name="back_from_timeline_message"><![CDATA[Search for your favorite brands,<br/>Win coupon, & Shop to Get upto<br/>
                   50% off + Extra MOBY Cashback<br/>Over & Above All Other Deals!<br/><br/>
-                  Like to Shop Offline? Try Map view<br/>(Need 1 Verified Online Purchase)<br/>Yellow Pins - Real time Card Offers,<br/>Red Pins - All In-Store Coupons<br/>Shown Nearby you, But Pan India!]]></string>
+                  Like to Shop Offline? Try Map view<br/>(Need 1 Verified Online Purchase)<br/><br/>Yellow Pins - Real time Card Offers,<br/>Red Pins - All In-Store Coupons<br/>Shown Nearby you, But Pan India!]]></string>
 
 
-    <string name="bank_offer_message">View Real Time In Store Coupons (Red)\nAnd Bank Card Offers (Yellow)\nWe have selected all major cards,\nyou may edit later in your Profile &amp;\nchange Range as Needed </string>
+    <string name="bank_offer_title">REAL TIME OFFERS NEAR YOU</string>
+    <string name="bank_offer_message">In Store Coupons (Red Pins)\nBank Card Offers (Yellow Pins)\n\nAll Major Cards Are Selected\nYou may edit later in your Profile\nthe Cards &amp; Range to see Offers</string>
 
 
 
@@ -104,8 +111,8 @@
 
     <string name="save_profile">Save Profile</string>
 
-    <string name="redeem_coupon">REDEEM COUPON</string>
-    <string name="offline_coupon">SEE OFFLINE OFFERS</string>
+    <string name="redeem_coupon">REDEEM COUPONS</string>
+    <string name="offline_coupon">OFFLINE STORE OFFERS</string>
     <string name="online_offers">BACK TO ONLINE OFFERS</string>
 
 

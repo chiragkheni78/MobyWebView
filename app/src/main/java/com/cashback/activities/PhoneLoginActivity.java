@@ -131,6 +131,7 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
     }
 
     private void sendOTP() {
+        Common.hideKeyboard(this);
         showProgressDialog();
         String lsMessage = Common.validatePhoneNumber(moBinding.etPhoneNo.getText().toString().trim());
         if (!lsMessage.isEmpty()) {
@@ -188,7 +189,7 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
                 moBinding.etPhoneNo.setText("");
                 moBinding.etPhoneNo.setEnabled(true);
                 moBinding.llOTPView.setVisibility(View.GONE);
-                moBinding.btnSendOTP.setVisibility(View.VISIBLE);
+                moBinding.flSendOTP.setVisibility(View.VISIBLE);
                 break;
             case STATE_CODE_SENT:
                 dismissProgressDialog();
@@ -196,7 +197,7 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
                 moBinding.etPhoneNo.setEnabled(false);
 
                 moBinding.llOTPView.setVisibility(View.VISIBLE);
-                moBinding.btnSendOTP.setVisibility(View.GONE);
+                moBinding.flSendOTP.setVisibility(View.GONE);
                 break;
             case STATE_VERIFY_FAILED:
                 dismissProgressDialog();

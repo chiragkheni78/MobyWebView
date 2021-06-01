@@ -106,7 +106,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                 Category loCategory = moCategoryList.get(liPosition);
                 if (loCategory.getCategoryId() == fiCategoryID) {
                     selectedItem = liPosition;
-
                     break;
                 }
             }
@@ -117,6 +116,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public void notifyList(ArrayList<Category> foCategoryList) {
         moCategoryList = foCategoryList;
         notifyDataSetChanged();
+    }
+
+    public int getSelectedPosition() {
+        return selectedItem;
     }
 
 }

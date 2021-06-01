@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/NormalLayout"
     android:id="@+id/llRoot"
+    style="@style/NormalLayout"
     android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/padding_standard"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/padding_standard">
 
         <ImageView
             android:id="@+id/ivLogo"
@@ -25,7 +25,7 @@
         android:layout_toLeftOf="@+id/ivExpandList"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/padding_micro">
+        android:padding="@dimen/padding_mini">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:layout_toLeftOf="@+id/btnAdDetails"
+                    android:layout_toLeftOf="@+id/llRight"
                     android:orientation="vertical">
 
                     <TextView
@@ -53,36 +53,52 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/tvBrandName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:singleLine="true"
-                            android:text="Brand Name"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tvBrandName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:singleLine="true"
+                        android:text="Brand Name"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/btnAdDetails"
-                    android:layout_width="@dimen/_70sdp"
-                    android:layout_height="@dimen/_40sdp"
+                <LinearLayout
+                    android:id="@+id/llRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/btn_primary"
-                    android:drawableRight="@drawable/ic_next_12"
-                    android:drawableTint="@color/white"
-                    android:gravity="center"
-                    android:text="@string/view_details"
-                    android:textColor="@color/white"
-                    android:paddingLeft="@dimen/padding_micro"
-                    android:textSize="@dimen/txt_xSmall"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btnAdDetails"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_27sdp"
+                        android:background="@drawable/btn_primary"
+                        android:drawableRight="@drawable/ic_next_12"
+                        android:drawableTint="@color/white"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/padding_nano"
+                        android:text="@string/view_details"
+                        android:textColor="@color/white"
+                        android:textSize="9sp" />
+
+                    <TextView
+                        android:id="@+id/tvLeft"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:singleLine="true"
+                        android:gravity="right"
+                        android:layout_gravity="bottom"
+                        android:text="5 Left"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
             </RelativeLayout>
 
             <LinearLayout
@@ -97,11 +113,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rect_grey"
+                    android:gravity="center_vertical"
                     android:paddingHorizontal="@dimen/_10sdp"
                     android:paddingVertical="@dimen/_5sdp"
                     android:text="Rs. 20"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

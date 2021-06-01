@@ -81,7 +81,7 @@ public class HomeViewModel extends ViewModel {
     }
 
 
-    public String getAdvertImage(Context foContext, ArrayList<Advertisement> foAdvertisementList) {
+    public int getAdvertPosition(Context foContext, ArrayList<Advertisement> foAdvertisementList) {
 
         if (foAdvertisementList.size() > 0) {
             String lsBannerURL;
@@ -99,9 +99,9 @@ public class HomeViewModel extends ViewModel {
 
             loSharedPreferenceManager.setAdvertBannerPosition(position);
 
-            return lsBannerURL;
+            return position;
         }
-        return null;
+        return 0;
     }
 
 

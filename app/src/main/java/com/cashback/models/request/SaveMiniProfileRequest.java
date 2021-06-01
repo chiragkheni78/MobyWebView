@@ -25,10 +25,14 @@ public class SaveMiniProfileRequest {
     @SerializedName("fiEWalletId")
     int eWalletId;
 
-    public SaveMiniProfileRequest(int age, String gender, int eWalletId) {
+    @SerializedName("fsUPILink")
+    String upiLink;
+
+    public SaveMiniProfileRequest(int age, String gender, int eWalletId, String upiLink) {
         this.age = age;
         this.gender = gender;
         this.eWalletId = eWalletId;
+        this.upiLink = upiLink;
     }
 
     @SerializedName("fsReferrerCode")
@@ -66,8 +70,12 @@ public class SaveMiniProfileRequest {
 
         if (age <= 0) {
             return Common.getDynamicText(foContext, "validate_age");
+        } else if (gender == null) {
+            return Common.getDynamicText(foContext, "validate_gender");
         } else if (eWalletId <= 0) {
             return Common.getDynamicText(foContext, "validate_eWallet");
+        } else if (eWalletId == 2 && (upiLink.isEmpty() || !Common.validateUPI(upiLink))) {
+            return Common.getDynamicText(foContext, "UPI_alert");
         } else if (Common.getDeviceUniqueId(foContext).isEmpty()) {
             return Common.getDynamicText(foContext, "contact_support");
         }

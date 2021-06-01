@@ -26,9 +26,9 @@ import com.cashback.databinding.FragmentOfferListBinding;
 import com.cashback.models.Ad;
 import com.cashback.models.Category;
 import com.cashback.models.OfferFilter;
-import com.cashback.models.viewmodel.OfferListViewModel;
-import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.response.FetchOffersResponse;
+import com.cashback.models.response.OfferFilterResponse;
+import com.cashback.models.viewmodel.OfferListViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 
@@ -47,6 +47,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     ArrayList<Category> moCategories = new ArrayList<>();
     ArrayList<Ad> moOfferList = new ArrayList<>();
     public static int miCategoryId = -1;
+    private long mlOfferID = 0, mlBannerID = 0;
 
     private int miCurrentPage = 1;
     private boolean isLastPage = false;
@@ -65,6 +66,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             super.onScrolled(recyclerView, dx, dy);
             int visibleItemCount = moLayoutManager.getChildCount();
             int totalItemCount = moLayoutManager.getItemCount();
+
             int firstVisibleItemPosition = moLayoutManager.findFirstVisibleItemPosition();
 
             if (!isLoading && !isLastPage) {
@@ -109,18 +111,22 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
         if (getArguments() != null) {
             miCategoryId = getArguments().getInt(Constants.IntentKey.CATEGORY_ID);
-            long llOfferId = getArguments().getLong(Constants.IntentKey.OFFER_ID);
+            mlOfferID = getArguments().getLong(Constants.IntentKey.OFFER_ID);
             long llLocationId = getArguments().getLong(Constants.IntentKey.LOCATION_ID);
+            mlBannerID = getArguments().getLong(Constants.IntentKey.BANNER_ID);
 
             if (miCategoryId > 0) {
                 // setSelection
                 moCategoryAdapter.updateCategoryByID(miCategoryId);
+                int liPosition = moCategoryAdapter.getSelectedPosition();
+                moBinding.rvCategory.scrollToPosition(liPosition);
             }
             fetchOffers();
 
-            if (llOfferId > 0 && llLocationId > 0) {
+
+            if (mlOfferID > 0 && llLocationId > 0) {
                 Intent loIntent = new Intent(getActivity(), OfferDetailsActivity.class);
-                loIntent.putExtra(Constants.IntentKey.OFFER_ID, llOfferId);
+                loIntent.putExtra(Constants.IntentKey.OFFER_ID, mlOfferID);
                 loIntent.putExtra(Constants.IntentKey.LOCATION_ID, llLocationId);
                 startActivity(loIntent);
             }
@@ -154,7 +160,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         isLoading = true;
 
         String lsSearchText = (moBinding.etSearch.getText().length() > 0) ? moBinding.etSearch.getText().toString().trim() : "";
-        OfferFilter loOfferFilter = new OfferFilter(lsSearchText, miCurrentPage, miCategoryId);
+        OfferFilter loOfferFilter = new OfferFilter(lsSearchText, miCurrentPage, miCategoryId, mlBannerID);
 
         moOfferListViewModel.fetchOffers(getActivity(),
                 "",
@@ -178,6 +184,10 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         moOfferList.addAll(loJsonObject.getOfferList());
                         moOfferListAdapter.notifyList(moOfferList);
 
+                        if (mlOfferID > 0 && miCurrentPage == 1){
+                            moOfferListAdapter.notifyFirstItem(mlOfferID);
+                        }
+
 //                        if (miCurrentPage > 1){
 //                            moBinding.rvOfferList.smoothScrollToPosition(scrollToPosition);
 //                        } else {
@@ -186,7 +196,9 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
                         if (isSearchButtonBlink)
                             Common.blinkAnimation(moBinding.floatingActionSearch);
-                    } else isLastPage = true;
+
+                    } else
+                        isLastPage = true;
                 }
             } else {
                 Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);

@@ -5,7 +5,7 @@
     android:id="@+id/llRoot"
     style="@style/RootLayout"
     android:background="@color/white"
-    android:visibility="gone"
+    android:visibility="visible"
     tools:context=".activities.ShortProfileActivity">
 
     <RelativeLayout
@@ -46,8 +46,9 @@
                         android:inputType="number"
                         android:maxLength="2"
                         android:minWidth="@dimen/_60sdp"
-                        android:padding="@dimen/padding_mini"
-                        android:textColor="@color/primary_text" />
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/txt_large"
+                        android:textStyle="bold" />
 
                     <TextView
                         style="@style/TvLarge"
@@ -106,7 +107,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/bg_radio_gender"
                             android:button="@null"
-                            android:checked="true"
+                            android:checked="false"
                             android:gravity="center"
                             android:text="MALE"
                             android:textColor="@drawable/color_radio_txt"
@@ -132,38 +133,50 @@
                     style="@style/NormalLayout"
                     android:layout_marginTop="@dimen/margin_view"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <RelativeLayout
-                        android:id="@+id/rlDonate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible">
+                        android:layout_marginTop="@dimen/_5sdp">
 
-                        <RelativeLayout
+                        <Spinner
+                            android:id="@+id/spinWallet"
                             android:layout_width="match_parent"
+                            android:layout_height="@dimen/_36sdp"
+                            android:background="@drawable/bg_white_blue"
+                            android:padding="8dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:layout_marginBottom="@dimen/_5sdp">
-
-                            <Spinner
-                                android:id="@+id/spinWallet"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_36sdp"
-                                android:background="@drawable/bg_white_blue"
-                                android:padding="8dp" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/padding_standard"
-                                android:src="@drawable/ic_arrow_drop_down" />
-                        </RelativeLayout>
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/padding_standard"
+                            android:src="@drawable/ic_arrow_drop_down" />
                     </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llUPI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/lblUPI"
+                            style="@style/TvProfileHint"
+                            android:text="@string/hint_upi_address" />
+
+                        <EditText
+                            android:id="@+id/etUpiID"
+                            style="@style/etStandard"
+                            android:hint="ENTER UPI ID"
+                            android:inputType="text" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <ImageView

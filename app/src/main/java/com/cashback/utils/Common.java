@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -20,8 +22,13 @@ import android.provider.Settings;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.ScaleXSpan;
+import android.text.style.StyleSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -324,6 +331,36 @@ public class Common {
         return word;
     }
 
+    public static Spannable getColorSpaceText(String fsText, int fiColor) {
+
+        float spacing = 8f;
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < fsText.length(); i++) {
+            builder.append(fsText.charAt(i));
+            if (i + 1 < fsText.length()) {
+                builder.append("\u00A0");
+            }
+        }
+        Spannable word = new SpannableString(builder.toString());
+
+        if (builder.toString().length() > 1) {
+            for (int i = 1; i < builder.toString().length(); i += 2) {
+                word.setSpan(new ScaleXSpan((spacing + 1) / 10), i, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        word.setSpan(new ForegroundColorSpan(fiColor), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+       return word;
+    }
+
+    public static Spannable getColorSizeText(String fsText, int fiColor) {
+        Spannable word = new SpannableString(fsText);
+        word.setSpan(new RelativeSizeSpan(1.4f), 0,word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        word.setSpan(new StyleSpan(Typeface.BOLD), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        word.setSpan(new ForegroundColorSpan(fiColor), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return word;
+    }
+
     public static boolean isLocationFromMockProvider(Context context, Location location) {
         boolean isMock = false;
         if (android.os.Build.VERSION.SDK_INT >= 18) {
@@ -458,9 +495,21 @@ public class Common {
         return matchFound;
     }
 
+    public static boolean validateUPI(String upi){
+        final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^(.+)@(.+)$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(upi);
+        return matcher.find();
+    }
+
     public static boolean isGPSEnabled(Context foContext) {
         LocationManager locManager = (LocationManager) foContext.getSystemService(Context.LOCATION_SERVICE);
         return locManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    public static Drawable getColorDrawable(Context foContext, int fiDrawable, int color) {
+        Drawable drawable = foContext.getResources().getDrawable(fiDrawable);
+        drawable.setColorFilter(foContext.getResources().getColor(color), PorterDuff.Mode.SRC_IN);
+        return drawable;
     }
 
 }

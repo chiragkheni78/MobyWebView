@@ -65,6 +65,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         moBinding.btnSaveProfile.setOnClickListener(this);
 
         if (AppGlobal.getFirebaseUser() == null) {
+            errorButtonPressed();
             moBinding.btnError.setOnClickListener(this);
             moBinding.llErrorMessage.setVisibility(View.VISIBLE);
             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "text_verify_phone_no"));
@@ -229,9 +230,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                 }
             });
         }
-
         setCardList();
-
     }
 
     private void setCardList() {

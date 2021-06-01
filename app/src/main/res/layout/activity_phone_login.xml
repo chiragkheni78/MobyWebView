@@ -32,24 +32,23 @@
                     android:id="@+id/llRoot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="@dimen/_22sdp"
-
-
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/TvLarge"
                         android:layout_marginBottom="@dimen/margin_view"
-                        android:text="@string/text_login_title"
+                        android:text="@string/msg_verify_phone_number"
                         android:textSize="@dimen/_18sdp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:textStyle="normal" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <TextView
@@ -73,6 +72,7 @@
                         android:text="On this mobile number"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="@dimen/_15sdp"
+                        android:visibility="gone"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -128,13 +128,14 @@
                         </LinearLayout>
 
                         <com.rey.material.widget.FrameLayout
+                            android:id="@+id/flSendOTP"
                             style="@style/NormalRippleLayout"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
                             android:background="@drawable/btn_blue"
                             android:layout_marginStart="@dimen/_16sdp"
                             android:layout_marginEnd="@dimen/_16sdp"
-                            android:layout_marginBottom="@dimen/_40sdp"
+                            android:layout_marginBottom="@dimen/_30sdp"
                             android:orientation="horizontal">
 
                             <com.cashback.utils.custom.ProgressWheel
@@ -181,7 +182,7 @@
                             android:layout_marginBottom="@dimen/margin_view"
                             android:text="OTP Verification"
                             android:textSize="@dimen/_18sdp"
-                            android:textStyle="bold" />
+                            android:textStyle="normal" />
 
                         <LinearLayout
                             style="@style/NormalLayout"

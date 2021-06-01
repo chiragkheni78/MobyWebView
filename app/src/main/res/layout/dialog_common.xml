@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/_320sdp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/_20sdp"
     android:orientation="vertical"
     app:cardCornerRadius="10dp">
 
@@ -40,13 +39,14 @@
 
             <TextView
                 android:id="@+id/tvMessage"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/_300sdp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:text="@string/msg_copy_to_clipboard"
                 android:letterSpacing="0.08"
                 android:lineSpacingExtra="@dimen/_3sdp"
+                android:minHeight="@dimen/_60sdp"
                 android:textColor="@color/secondary_text"
                 android:textSize="@dimen/_14sdp" />
 
@@ -57,12 +57,10 @@
             android:id="@+id/llBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|center"
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
+            <com.rey.material.widget.Button
                 android:id="@+id/btnOk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,7 +75,5 @@
                 android:visibility="visible" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

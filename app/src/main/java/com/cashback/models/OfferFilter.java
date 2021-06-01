@@ -22,10 +22,14 @@ public class OfferFilter {
     @SerializedName("fsPinColor")
     private String pinColors;
 
-    public OfferFilter(String searchString, int currentPage, int categoryId) {
+    @SerializedName("fiBannerId")
+    private long bannerID;
+
+    public OfferFilter(String searchString, int currentPage, int categoryId, long bannerID) {
         this.searchString = searchString;
         this.currentPage = currentPage;
         this.categoryId = categoryId;
+        this.bannerID = bannerID;
     }
 
     public void setSearchString(String searchString) {

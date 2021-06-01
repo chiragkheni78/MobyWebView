@@ -188,7 +188,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.colorPrimary);
         int rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
 
-        foTvQuizReward.setText(Common.getColorText("Quiz Cash ", Color.BLACK));
+        foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
         foTvQuizReward.append(Common.getColorText("Rs. " + foActivity.getQuizReward(), rewardColor));
     }
 

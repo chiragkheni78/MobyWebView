@@ -46,7 +46,7 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
         moOfferDetailsViewModel.fetchOfferDetailsStatus.observe(this, fetchOfferDetailsObserver);
 
         setToolbar();
-        moBinding.btnWinCoupon.setOnClickListener(this);
+        moBinding.llWinCoupon.setOnClickListener(this);
 
         if (getIntent() != null) {
             miOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
@@ -119,16 +119,18 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
 
                 if (offer.getEngagedFlag() == true) {
                     moBinding.btnWinCoupon.setText(Common.getDynamicText(getContext(), "action_already_engaged"));
-                    moBinding.btnWinCoupon.setBackgroundColor(ActivityCompat.getColor(getContext(), R.color.grey));
+                    moBinding.llWinCoupon.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.grey));
+                    moBinding.btnWinCoupon.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     moBinding.btnWinCoupon.setClickable(false);
                 } else {
                     moBinding.btnWinCoupon.setText(Common.getDynamicText(getContext(), "win_coupon"));
-                }
-
-                if (offer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-                    moBinding.llRoot.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_green));
-                } else if (offer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
-                    moBinding.llRoot.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_red));
+                    if (offer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
+                        moBinding.llRoot.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_green));
+                        moBinding.llWinCoupon.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green_primary));
+                    } else if (offer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
+                        moBinding.llRoot.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_red));
+                        moBinding.llWinCoupon.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                    }
                 }
                 moBinding.llRoot.setVisibility(View.VISIBLE);
             }
@@ -136,22 +138,22 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
 
         private void setOfferRewards(Ad offer) {
 
-            if (offer.getSecondReward() != 0) {
-                if (offer.getQuizReward() < offer.getNormalRewardAmount()) {
-                    moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " (C'Back)");
-                } else {
-                    moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " - ₹" + offer.getSecondReward() + " (C'Back)");
-                }
-            } else {
-                moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward());
-            }
+//            if (offer.getSecondReward() != 0) {
+//                if (offer.getQuizReward() < offer.getNormalRewardAmount()) {
+//                    moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " (C'Back)");
+//                } else {
+//                    moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " - ₹" + offer.getSecondReward() + " (C'Back)");
+//                }
+//            } else {
+                moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " (Max Cashback)");
+//            }
         }
     };
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnWinCoupon:
+            case R.id.llWinCoupon:
                 btnWinCouponPressed();
                 break;
             default:
@@ -160,7 +162,7 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void btnWinCouponPressed() {
-        if (moOffer != null) {
+        if (moOffer != null && !moOffer.getEngagedFlag()) {
             if (!isEngageLimitOver) {
                 Intent loIntent = new Intent(moContext, QuizDetailsActivity.class);
                 Bundle bundle = new Bundle();

@@ -134,7 +134,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            loadOfferListFragment(0, 0, 0);
+            loadOfferListFragment(0, 0, 0, 0);
         } else {
             loadMapViewFragment();
         }
@@ -194,12 +194,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         startActivity(loIntent);
     }
 
-    public void loadOfferListFragment(int fiCategoryId, long flOfferId, long flLocationId) {
+    public void loadOfferListFragment(int fiCategoryId, long flOfferId, long flLocationId, long flBannerId) {
         Bundle loBundle = new Bundle();
         Fragment loFragment = new OfferListFragment();
         loBundle.putInt(Constants.IntentKey.CATEGORY_ID, fiCategoryId);
         loBundle.putLong(Constants.IntentKey.OFFER_ID, flOfferId);
         loBundle.putLong(Constants.IntentKey.LOCATION_ID, flLocationId);
+        loBundle.putLong(Constants.IntentKey.BANNER_ID, flBannerId);
         loFragment.setArguments(loBundle);
         Common.replaceFragment(this, loFragment, Constants.FragmentTag.TAG_OFFER_LIST, false);
     }
@@ -245,6 +246,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void openOngoingDeal() {
         openAdvertisement(getString(R.string.ongoing_deals), Constants.AdvertScreenType.ONGOING_DEALS.getValue());
+        moBinding.toolbar.ivMobyIcon.clearAnimation();
         getPreferenceManager().setBlinkMobyIcon(false);
     }
 
@@ -305,7 +307,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     if (!AppGlobal.isDisplayRewardNote) {
                         showFirstDialog(foJsonObject.getFirstTimeAlertTitle(), foJsonObject.getFirstTimeAlertMsg(), foJsonObject.getAdvertisementList());
                     }else {
-                        loadOfferListFragment(0,0,0);
+
+                        int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
+                        int llOfferID = getIntent().getIntExtra(Constants.IntentKey.OFFER_ID, 0);
+                        int llBannerID = getIntent().getIntExtra(Constants.IntentKey.BANNER_ID, 0);
+
+                        loadOfferListFragment(liCategoryID,llOfferID,0, llBannerID);
                     }
                 }
             }
@@ -344,9 +351,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 loTvNote.setText(Common.getDynamicText(getContext(), "default_reward_note"));
             }
 
+            Advertisement loAdvertisement = null;
+
             ArrayList<Advertisement> loAdvertisementList = foAdvertisementList;
             if (loAdvertisementList != null && loAdvertisementList.size() > 0) {
-                String lsURL = moHomeViewModel.getAdvertImage(getContext(), loAdvertisementList);
+                int liPosition = moHomeViewModel.getAdvertPosition(getContext(), loAdvertisementList);
+                loAdvertisement = loAdvertisementList.get(liPosition);
+                String lsURL = loAdvertisement.getImageUrl();
                 if (lsURL != null) {
                     //Common.loadImage(loIvBanner, "https://res.cloudinary.com/demo/image/upload/sample.jpg", null, null);
 
@@ -366,12 +377,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 }
             });
 
+            Advertisement finalLoAdvertisement = loAdvertisement;
             loBtnFindMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     alertDialog.dismiss();
                     AppGlobal.isDisplayRewardNote = true;
-                    loadOfferListFragment(0, 0, 0);
+
+                    int liCategoryId = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getCategoryID();
+                    long llOfferID = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getAdID();
+                    long llBannerID = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getBannerID();
+
+                    loadOfferListFragment(liCategoryId, llOfferID, 0, llBannerID);
                 }
             });
         }
@@ -382,13 +399,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             String lsAction = getIntent().getAction();
             if (lsAction != null) {
                 switch (lsAction) {
-                    case OFFER_LIST:
-                        int liCategoryId = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
-                        long llOfferId = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
-                        long llLocationId = getIntent().getLongExtra(Constants.IntentKey.LOCATION_ID, 0);
-                        loadOfferListFragment(liCategoryId, llOfferId, llLocationId);
-                        break;
-
                     case ACTIVITY_LIST:
                         long llActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
                         openMyCoupons(llActivityId);
@@ -397,6 +407,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     case MESSAGE_LIST:
                         long llMessageId = getIntent().getLongExtra(Constants.IntentKey.MESSAGE_ID, 0);
                         openMessages(llMessageId);
+                        break;
+                    default:
+                    case OFFER_LIST:
+                        int liCategoryId = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
+                        long llOfferId = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
+                        long llLocationId = getIntent().getLongExtra(Constants.IntentKey.LOCATION_ID, 0);
+                        loadOfferListFragment(liCategoryId, llOfferId, llLocationId, 0);
                         break;
                 }
             }

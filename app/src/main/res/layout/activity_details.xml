@@ -8,38 +8,6 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_activity_details" />
 
-    <LinearLayout
-        android:id="@+id/llErrorMessage"
-        style="@style/RootLayout"
-        android:gravity="center"
-        android:paddingHorizontal="@dimen/padding_xxlarge"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/tvErrorTitle"
-            style="@style/TvXLarge"
-            android:text="@string/text_verify_phone_no"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvErrorMessage"
-            style="@style/TvLarge"
-            android:layout_marginTop="@dimen/margin_view"
-            android:gravity="center"
-            android:text="@string/msg_verify_phone_number" />
-
-        <com.rey.material.widget.Button
-            android:id="@+id/btnError"
-            style="@style/RippleBtnStandard"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/padding_xxlarge"
-            android:background="@drawable/btn_primary"
-            android:padding="@dimen/padding_micro"
-            android:text="Continue" />
-
-    </LinearLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
