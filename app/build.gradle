@@ -31,7 +31,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "BASE_URL", "\"http://mobyads.in/preprod-moby/v2-apis/\""
+            buildConfigField "String", "BASE_URL", "\"http://mobyads.in/moby/v2-apis/\""
             buildConfigField "String", "ADGYDE_APP_KEY", "\"K323933399337795\""
         }
 
@@ -40,7 +40,7 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "BASE_URL", "\"http://mobyads.in/preprod-moby/\""
+            buildConfigField "String", "BASE_URL", "\"http://mobyads.in/moby/\""
             buildConfigField "String", "ADGYDE_APP_KEY", "\"K323933399337795\""
         }
     }
