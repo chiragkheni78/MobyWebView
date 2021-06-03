@@ -13,107 +13,167 @@
         android:layout_gravity="bottom|center"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/padding_micro"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="8dp">
 
-            <TextView
-                android:id="@+id/tvTitle"
-                style="@style/TvStandard"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/tvActivityDate"
-                android:text="Name"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="@dimen/padding_micro"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvCashbackUpto"
-                style="@style/TvStandard"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="Rs. 20"
-                android:textColor="@color/green"
-                android:textSize="14sp"
-                android:visibility="gone"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvTitle"
+                    style="@style/TvStandard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tvActivityDate"
+                    android:text="Name"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvActivityDate"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvCashbackUpto"
+                    style="@style/TvStandard"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="Rs. 20"
+                    android:textColor="@color/green"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvActivityDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="2nd May 2017"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/llCashback"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_weight="1"
-                android:text="2nd May 2017"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cashback Upto"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvQuizReward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_mini"
+                    android:text="Rs. 20"
+                    android:textColor="@color/secondary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
 
-        </RelativeLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llCashback"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cashback Upto"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                 />
+                android:layout_marginTop="@dimen/_5sdp"
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/tvQuizReward"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_mini"
-                android:text="Rs. 20"
-                android:textColor="@color/secondary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_activity_adName"
+                    android:layout_weight="1"
 
+                    android:text="2nd May 2017"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_activity_adName"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Virtual Cash"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearItemTransactionStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="2">
+            android:orientation="horizontal"
+            android:padding="@dimen/_2sdp">
 
             <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_activity_adName"
+                android:id="@+id/tvItemTransactionTracked"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_weight="1"
-
-                android:text="2nd May 2017"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/tracked"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@android:color/transparent"/>
+
             <TextView
-                android:id="@+id/tvType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_activity_adName"
+                android:id="@+id/tvItemTransactionValidated"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_25sdp"
                 android:layout_weight="1"
-                android:gravity="right"
-                android:text="Virtual Cash"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/validated"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@android:color/transparent"/>
+
+            <TextView
+                android:id="@+id/tvItemTransactionCashPaid"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/_4sdp"
+                android:text="@string/cash_paid"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
         </LinearLayout>
+
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>

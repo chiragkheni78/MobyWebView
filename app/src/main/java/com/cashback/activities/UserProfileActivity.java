@@ -3,6 +3,7 @@ package com.cashback.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
@@ -34,6 +35,7 @@ import com.cashback.utils.Constants;
 import static android.view.View.GONE;
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
 
+@SuppressWarnings("All")
 public class UserProfileActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = UserProfileActivity.class.getSimpleName();
@@ -92,12 +94,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         setSupportActionBar(loToolbar);
 
         ImageButton loIbNavigation = loToolbar.findViewById(R.id.ibNavigation);
-        loIbNavigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        loIbNavigation.setOnClickListener(v -> onBackPressed());
 
         TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
         loTvToolbarTitle.setText(getString(R.string.my_profile));
@@ -123,19 +120,16 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         }
     };
 
-    Observer<SaveUserProfileResponse> saveProfileObserver = new Observer<SaveUserProfileResponse>() {
-        @Override
-        public void onChanged(SaveUserProfileResponse loJsonObject) {
-            if (!loJsonObject.isError()) {
-                Intent intent = new Intent(UserProfileActivity.this, HomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            } else {
-                Common.showErrorDialog(UserProfileActivity.this, loJsonObject.getMessage(), false);
-            }
-            Common.dismissProgressDialog(loProgressDialog);
+    Observer<SaveUserProfileResponse> saveProfileObserver = loJsonObject -> {
+        if (!loJsonObject.isError()) {
+            Intent intent = new Intent(UserProfileActivity.this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        } else {
+            Common.showErrorDialog(UserProfileActivity.this, loJsonObject.getMessage(), false);
         }
+        Common.dismissProgressDialog(loProgressDialog);
     };
 
     Observer<DeleteCardResponse> deleteCardObserver = new Observer<DeleteCardResponse>() {
@@ -196,6 +190,38 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             moEWalletAdapter = new EWalletAdapter(UserProfileActivity.this, moGetUserProfileResponse.getWalletList());
             moBinding.spinWallet.setAdapter(moEWalletAdapter);
             moBinding.spinWallet.setSelection(moUserProfileViewModel.getSelectedWalletPosition(moGetUserProfileResponse.getWalletList()));
+
+            moBinding.spinWallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                    if (position == 0) {
+                        //Paytm Wallet
+                        miPaymentMode = 1;
+                        moBinding.llUPI.setVisibility(View.GONE);
+                        moBinding.linearUserProfileBankAccount.setVisibility(View.GONE);
+                    } else if (position == 1) {
+                        //UPI
+                        miPaymentMode = 2;
+                        moBinding.llUPI.setVisibility(View.VISIBLE);
+                        moBinding.linearUserProfileBankAccount.setVisibility(View.GONE);
+                    } else if (position == 2) {
+                        //Future Pay Wallet
+                        miPaymentMode = 3;
+                        moBinding.llUPI.setVisibility(View.GONE);
+                        moBinding.linearUserProfileBankAccount.setVisibility(View.GONE);
+                    } else {
+                        //Bank Account
+                        miPaymentMode = 4;
+                        moBinding.llUPI.setVisibility(View.GONE);
+                        moBinding.linearUserProfileBankAccount.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    miPaymentMode = 1;
+                }
+            });
         }
 
         if (moGetUserProfileResponse.getBankOfferCategoryList() != null) {
@@ -206,6 +232,11 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
         if (moGetUserProfileResponse.getPaymentDetails() != null) {
             GetUserProfileResponse.PaymentDetails loPaymentDetails = moGetUserProfileResponse.getPaymentDetails();
+
+            moBinding.etUpiID.setText(loPaymentDetails.getUpiLink());
+            moBinding.etAccountNumber.setText(loPaymentDetails.getFsAccountNo());
+            moBinding.etIFSCCode.setText(loPaymentDetails.getFsIFSCCode());
+
             if (loPaymentDetails.getPaymentMode() == 1) {
                 moBinding.llUPI.setVisibility(GONE);
                 miPaymentMode = 1;
@@ -289,6 +320,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         String lsLastName = moBinding.etLastName.getText().toString();
         String lsEmail = moBinding.etEmail.getText().toString();
         String lsUPILink = moBinding.etUpiID.getText().toString();
+        String lsAccountNo = moBinding.etAccountNumber.getText().toString();
+        String lsIFSCCode = moBinding.etIFSCCode.getText().toString();
         String lsBirthDate = moGetUserProfileResponse.getUserDetails().getBirthDate();
 
         int liBankOfferRadius = moUserProfileViewModel.getBankOfferRadius(getRadioGroupSelectedPosition(moBinding.rgRange));
@@ -317,6 +350,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         loSaveUserProfileRequest.setTCAccepted(isTermsAccepted);
         loSaveUserProfileRequest.setPaymentMode(miPaymentMode);
         loSaveUserProfileRequest.setUpiLink(lsUPILink);
+        loSaveUserProfileRequest.setFsAccountNo(lsAccountNo);
+        loSaveUserProfileRequest.setFsIFSCCode(lsIFSCCode);
         loSaveUserProfileRequest.setBirthDate(lsBirthDate);
         loSaveUserProfileRequest.seteWalletId(eWalletId);
         moUserProfileViewModel.saveUserProfile(this, loSaveUserProfileRequest);
