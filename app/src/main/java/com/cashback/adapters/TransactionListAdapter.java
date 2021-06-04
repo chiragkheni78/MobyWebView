@@ -2,7 +2,6 @@ package com.cashback.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +14,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
-import com.cashback.activities.BillUploadActivity;
 import com.cashback.activities.CouponDetailsActivity;
 import com.cashback.activities.MyCouponsActivity;
-import com.cashback.models.Activity;
 import com.cashback.models.Transaction;
-import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
-
-import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
-import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
 @SuppressWarnings("All")
 public class TransactionListAdapter extends RecyclerView.Adapter<TransactionListAdapter.DataObjectHolder> {
@@ -45,7 +38,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView loTvTitle, loTvQuizReward, loTvActivityDate, loTvCashBackUpto, loTvStatus, loTvType;
         LinearLayout loLlCashback, lvTransactionStatus;
-        TextView tvStatusTracked, tvStatusValidated, tvStatusCashPaid;
+        TextView tvStatusTracked, tvStatusValidated, tvStatusCashPaid, tvItemTransactionCouponText, tvStatusRedirect;
 
         public DataObjectHolder(View foView) {
             super(foView);
@@ -61,6 +54,9 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             tvStatusTracked = foView.findViewById(R.id.tvItemTransactionTracked);
             tvStatusValidated = foView.findViewById(R.id.tvItemTransactionValidated);
             tvStatusCashPaid = foView.findViewById(R.id.tvItemTransactionCashPaid);
+
+            tvItemTransactionCouponText = foView.findViewById(R.id.tvItemTransactionCouponText);
+            tvStatusRedirect = foView.findViewById(R.id.tvStatusRedirect);
 
             loTvCashBackUpto.setOnClickListener(this);
             foView.setOnClickListener(this);
@@ -114,7 +110,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         foHolder.loTvQuizReward.setText("Rs. " + foTransaction.getQuizReward());
 
         if (foTransaction.isVirtualCash()) {
-            foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.secondary));
+            foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
         } else {
             foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
         }
@@ -149,28 +145,50 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
 
         if (foTransaction.getFiTrasactionStatus() == 100) {
             foHolder.lvTransactionStatus.setVisibility(View.GONE);
+
+            foHolder.loLlCashback.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent loIntent = new Intent(moContext, CouponDetailsActivity.class);
+                    loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, foTransaction.getActivityID());
+                    moContext.startActivity(loIntent);
+                }
+            });
+
         } else {
             foHolder.lvTransactionStatus.setVisibility(View.VISIBLE);
             if (foTransaction.getFiTrasactionStatus() == 0) {
+
+                foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_upto));
+                foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.virtual_cash)+")");
+
                 foHolder.tvStatusTracked.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
-                foHolder.tvStatusValidated.setBackgroundColor(ContextCompat.getColor(moContext, android.R.color.transparent));
-                foHolder.tvStatusCashPaid.setBackgroundColor(ContextCompat.getColor(moContext, android.R.color.transparent));
+                foHolder.tvStatusValidated.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
+                foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
 
                 foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
                 foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
                 foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
 
             } else if (foTransaction.getFiTrasactionStatus() == 1) {
+
+                foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
+                foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.pending_cash)+")");
+
                 foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
                 foHolder.tvStatusTracked.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
                 foHolder.tvStatusValidated.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
-                foHolder.tvStatusCashPaid.setBackgroundColor(ContextCompat.getColor(moContext, android.R.color.transparent));
+                foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
 
                 foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
                 foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
 
             } else {
+
+                foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
+                foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.cash_paid)+")");
+
                 foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 foHolder.tvStatusValidated.setPaintFlags(foHolder.tvStatusValidated.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
