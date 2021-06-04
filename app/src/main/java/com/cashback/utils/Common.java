@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -19,32 +18,21 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.ScaleXSpan;
 import android.text.style.StyleSpan;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-import androidx.databinding.BindingAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -52,9 +40,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cashback.BuildConfig;
 import com.cashback.R;
-import com.cashback.activities.ShortProfileActivity;
-import com.cashback.databinding.ActivityVideoViewBinding;
-import com.cashback.utils.custom.MessageDialog;
+import com.cashback.dialog.MessageDialog;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -62,8 +48,6 @@ import com.squareup.picasso.RequestCreator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -74,8 +58,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import retrofit2.Response;
-
-import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 
 public class Common {
 
@@ -510,6 +492,17 @@ public class Common {
         Drawable drawable = foContext.getResources().getDrawable(fiDrawable);
         drawable.setColorFilter(foContext.getResources().getColor(color), PorterDuff.Mode.SRC_IN);
         return drawable;
+    }
+
+    public static View.OnFocusChangeListener getFocusChangeListener(Activity foActivity){
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(foActivity);
+                }
+            }
+        };
     }
 
 }

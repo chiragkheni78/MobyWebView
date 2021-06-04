@@ -1,4 +1,4 @@
-package com.cashback.utils.custom;
+package com.cashback.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;

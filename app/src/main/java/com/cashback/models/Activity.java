@@ -205,6 +205,14 @@ public class Activity {
     public ArrayList<AdLocation> getLocationList() {
         return locationList;
     }
+
+    public void setCouponUsed(boolean couponUsed) {
+        isCouponUsed = couponUsed;
+    }
+
+    public void setBillUploaded(boolean billUploaded) {
+        isBillUploaded = billUploaded;
+    }
 }
 
 

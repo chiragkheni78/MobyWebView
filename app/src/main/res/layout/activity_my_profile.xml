@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include android:id="@+id/toolbar"
@@ -303,7 +304,7 @@
                 style="@style/NormalLayout"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/white"
-                android:paddingVertical="@dimen/padding_large">
+                android:paddingTop="@dimen/padding_large">
 
                 <TextView
                     android:id="@+id/tvCreditCardTitle"
@@ -324,6 +325,9 @@
                     android:id="@+id/rvBankCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fadeScrollbars="false"
+                    android:scrollbars="horizontal"
+                    tools:listitem="@layout/item_debit_card"
                     android:layout_marginTop="@dimen/margin_view" />
 
             </LinearLayout>

@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -43,12 +43,10 @@ import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
-import com.cashback.utils.custom.MessageDialog;
+import com.cashback.dialog.MessageDialog;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
-import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
-import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
 public class CouponDetailsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -258,8 +256,20 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.tvShopOnline.setText(Common.getDynamicText(getContext(), "btn_shop_in_store"));
         }
 
-        if (moActivity.getOfferDetails() != null && !moActivity.getOfferDetails().isEmpty())
-            moBinding.tvCouponDesc.setText(Html.fromHtml(moActivity.getOfferDetails()));
+        if (moActivity.getOfferDetails() != null && !moActivity.getOfferDetails().isEmpty()){
+            moBinding.tvWebView.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+            moBinding.tvWebView.getSettings().setJavaScriptEnabled(true);
+            moBinding.tvWebView.loadDataWithBaseURL(null,moActivity.getOfferDetails(),"text/html", "utf-8", null);
+        }
+//            moBinding.tvCouponDesc.setText(Html.fromHtml(moActivity.getOfferDetails()));
 
         moBinding.tvBillUpload.setText(Common.getDynamicText(getContext(), "dont_forget_bill_upload")
                 .replace("XXXXXX", moActivity.getWalletName()).replace("XX", String.valueOf(moActivity.getVirtualCashTransferDays())));
@@ -428,12 +438,17 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void openBillUploadActivity() {
         if (moActivity != null) {
-            Intent loIntent = new Intent(getContext(), BillUploadActivity.class);
-            loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivity.getActivityID());
-            loIntent.putExtra(ENGAGED_DATE, moActivity.getQuizEngageDateTime());
-            loIntent.putExtra(PIN_COLOR, moActivity.getPinColor());
-            startActivity(loIntent);
+            Intent intent = new Intent();
+            setResult(1, intent);
+            setResult(android.app.Activity.RESULT_OK, intent);
             finish();
+
+//            Intent loIntent = new Intent(getContext(), BillUploadActivity.class);
+//            loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivity.getActivityID());
+//            loIntent.putExtra(ENGAGED_DATE, moActivity.getQuizEngageDateTime());
+//            loIntent.putExtra(PIN_COLOR, moActivity.getPinColor());
+//            startActivity(loIntent);
+//            finish();
         }
     }
 

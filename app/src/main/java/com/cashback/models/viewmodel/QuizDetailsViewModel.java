@@ -1,7 +1,13 @@
 package com.cashback.models.viewmodel;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.util.Log;
 
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -22,6 +28,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuizDetailsViewModel extends ViewModel {
+
+    public static final int REQUEST_CAMERA = 908;
 
     public MutableLiveData<QuizDetailsResponse> fetchQuizDetailsStatus = new MutableLiveData<>();
 
@@ -101,5 +109,23 @@ public class QuizDetailsViewModel extends ViewModel {
                 submitQuizAnswerStatus.postValue(new SubmitQuizResponse(true, t.getMessage()));
             }
         });
+    }
+
+
+    public boolean isCameraPermissionGranted(Activity foContext) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (foContext.checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TTT", "Permission is granted2");
+                return true;
+            } else {
+                Log.v("TTT", "Permission is revoked2");
+                ActivityCompat.requestPermissions(foContext, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TTT", "Permission is granted2");
+            return true;
+        }
     }
 }

@@ -35,6 +35,7 @@
                     android:background="@null"
                     android:hint="Search shop"
                     android:maxLines="1"
+                    android:focusableInTouchMode="true"
                     android:padding="10dp"
                     android:textColor="@color/primary_text" />
 
@@ -45,6 +46,7 @@
                     android:layout_alignParentRight="true"
                     android:padding="10dp"
                     android:src="@drawable/ic_filter"
+                    android:visibility="gone"
                     app:tint="@color/colorPrimary"/>
 
             </RelativeLayout>

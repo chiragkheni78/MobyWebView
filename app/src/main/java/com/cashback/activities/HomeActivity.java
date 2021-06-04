@@ -309,8 +309,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     }else {
 
                         int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
-                        int llOfferID = getIntent().getIntExtra(Constants.IntentKey.OFFER_ID, 0);
-                        int llBannerID = getIntent().getIntExtra(Constants.IntentKey.BANNER_ID, 0);
+                        long llOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
+                        long llBannerID = getIntent().getLongExtra(Constants.IntentKey.BANNER_ID, 0);
 
                         loadOfferListFragment(liCategoryID,llOfferID,0, llBannerID);
                     }

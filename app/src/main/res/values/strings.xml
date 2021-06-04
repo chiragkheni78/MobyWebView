@@ -31,7 +31,7 @@
     <string name="validate_transaction_date">Please select your transaction date</string>
     <string name="validate_transaction_amount">Please enter transaction amount</string>
     <string name="camera_access_permission">App needs to access the Camera for capture photo.</string>
-    <string name="gallery_access_permission">App needs to access the file storage for view gallery.</string>
+    <string name="gallery_access_permission">App needs to access the file storage for pick photo.</string>
 
     <string name="text_login_title">Login with Mobile Number</string>
     <string name="text_login_msg">We will send you an</string>
@@ -59,7 +59,7 @@
     <string name="add_card_header_tv"><![CDATA[My CREDIT & DEBIT Cards]]></string>
     <string name="profile_non_required">(NO CARD NUMBER REQUIRED | NO CARD TRANSACTION REQUIRED | NO CARD CSV REQUIRED | DISCOVER YOUR CARD BENEFITS NEAR YOU!)</string>
     <string name="category_offer">Category offers I want to see</string>
-    <string name="bank_offer_with_in">I want to see bank offer Within</string>
+    <string name="bank_offer_with_in">I want to see BANK CARD OFFERS for</string>
     <string name="payment_transfer_setting">Payment Transfer Setting</string>
 
     <string name="UPI_alert">Please enter correct UPI ID.</string>

@@ -112,4 +112,7 @@ dependencies {
     // Location
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 
+    // Image slidder
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+
 }

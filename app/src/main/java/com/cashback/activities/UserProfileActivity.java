@@ -59,8 +59,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initializeContent() {
-        initViewModel();
         Common.hideKeyboard(this);
+        initViewModel();
         setToolbar();
         moBinding.btnSaveProfile.setOnClickListener(this);
 
@@ -72,7 +72,6 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number"));
         } else {
             loadView();
-
         }
     }
 

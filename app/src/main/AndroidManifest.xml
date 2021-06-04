@@ -50,26 +50,33 @@
 
         <activity
             android:name=".activities.HomeActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.OfferDetailsActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.BankOfferDetailsActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.QuizDetailsActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.ShortProfileActivity"
+            android:launchMode= "singleInstance"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.DashboardActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
@@ -80,6 +87,7 @@
         <activity
             android:name=".activities.CouponDetailsActivity"
             android:launchMode="singleInstance"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
@@ -89,18 +97,22 @@
 
         <activity
             android:name=".activities.MessageActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.MessageDetailActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.VideoViewActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.QrScannerActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
@@ -114,14 +126,17 @@
 
         <activity
             android:name=".activities.UserProfileActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.AdvertisementActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.WebViewActivity"
+            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <meta-data

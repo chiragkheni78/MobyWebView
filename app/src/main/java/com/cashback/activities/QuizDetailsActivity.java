@@ -4,8 +4,8 @@ package com.cashback.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -42,13 +42,13 @@ import com.cashback.models.response.SubmitQuizResponse;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
-import com.cashback.utils.custom.MessageDialog;
+import com.cashback.dialog.MessageDialog;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static android.view.View.GONE;
-import static com.cashback.utils.Constants.IntentKey.VIDEO_URL;
+import static com.cashback.models.viewmodel.QuizDetailsViewModel.REQUEST_CAMERA;
 
 public class QuizDetailsActivity extends BaseActivity implements View.OnClickListener, QuizOptionAdapter.OnOptionSelectListener {
 
@@ -252,11 +252,13 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void btnQRCodePressed() {
-        if (moQuizList.get(miCurrentQuestion).getOptionList() != null &&
-                moQuizList.get(miCurrentQuestion).getOptionList().size() > 0) {
+        if (moQuizDetailsViewModel.isCameraPermissionGranted(this)) {
+            if (moQuizList.get(miCurrentQuestion).getOptionList() != null &&
+                    moQuizList.get(miCurrentQuestion).getOptionList().size() > 0) {
 
-            Intent loIntent = new Intent(getContext(), QrScannerActivity.class);
-            startActivityForResult(loIntent, REQUEST_QR);
+                Intent loIntent = new Intent(getContext(), QrScannerActivity.class);
+                startActivityForResult(loIntent, REQUEST_QR);
+            }
         }
     }
 
@@ -292,6 +294,21 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
                     Common.openBrowser(getContext(), lsScannedText);
                 }
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CAMERA:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "permission granted...");
+                    btnQRCodePressed();
+                } else {
+                    Common.showErrorDialog(getContext(), "", false);
+                }
+                break;
         }
     }
 
