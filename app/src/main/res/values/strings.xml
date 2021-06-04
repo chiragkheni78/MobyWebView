@@ -53,8 +53,10 @@
     <string name="hint_dob">Date Of Birth</string>
     <string name="hint_phone_number">Phone Number</string>
     <string name="hint_email_address">Email Address</string>
-    <string name="hint_upi_address">UPI Address(Make sure this is correct.)</string>
+    <string name="hint_upi_address">UPI Address (Make sure this is correct.)</string>
     <string name="hint_e_wallet">Choose E-wallet for Cashback credit</string>
+    <string name="hint_bank_account_no">Account Number (Make sure this is correct.)</string>
+    <string name="hint_bank_account_ifsc">IFSC Code (Make sure this is correct.)</string>
 
     <string name="add_card_header_tv"><![CDATA[My CREDIT & DEBIT Cards]]></string>
     <string name="profile_non_required">(NO CARD NUMBER REQUIRED | NO CARD TRANSACTION REQUIRED | NO CARD CSV REQUIRED | DISCOVER YOUR CARD BENEFITS NEAR YOU!)</string>
@@ -63,6 +65,8 @@
     <string name="payment_transfer_setting">Payment Transfer Setting</string>
 
     <string name="UPI_alert">Please enter correct UPI ID.</string>
+    <string name="account_alert">Please enter correct Account number.</string>
+    <string name="ifsc_alert">Please enter correct IFSC code.</string>
     <string name="error_term_condition">Please accept Terms and Condition.</string>
     <string name="all_delete_card_validation">You can\'t delete all cards</string>
 
@@ -144,6 +148,12 @@
     <string name="navigation_drawer_close">close</string>
     <!--Firebase Settings-->
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="tracked">Tracked</string>
+    <string name="validated">Validated</string>
+    <string name="cash_paid">Cash Paid</string>
+    <string name="enter_bank_account_number">ENTER Bank Account Number</string>
+    <string name="enter_ifsc_code">ENTER IFSC Code</string>
+    <string name="enter_upi_id">ENTER UPI ID</string>
 
     <!--Timeline Sorting-->
     <string-array name="sort_by">

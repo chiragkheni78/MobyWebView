@@ -295,6 +295,80 @@
                                 android:src="@drawable/ic_arrow_drop_down" />
                         </RelativeLayout>
                     </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llUPI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/lblUPI"
+                            style="@style/TvProfileHint"
+                            android:text="@string/hint_upi_address" />
+
+                        <EditText
+                            android:id="@+id/etUpiID"
+                            style="@style/etStandard"
+                            android:hint="@string/enter_upi_id"
+                            android:inputType="text" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearUserProfileBankAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/llAccountNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_view"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/lblAccountNumber"
+                                style="@style/TvProfileHint"
+                                android:text="@string/hint_bank_account_no" />
+
+                            <EditText
+                                android:id="@+id/etAccountNumber"
+                                style="@style/etStandard"
+                                android:hint="@string/enter_bank_account_number"
+                                android:digits="0123456789"
+                                android:inputType="numberDecimal" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llIFSCCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_view"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/lblIFSCCode"
+                                style="@style/TvProfileHint"
+                                android:text="@string/hint_bank_account_ifsc" />
+
+                            <EditText
+                                android:id="@+id/etIFSCCode"
+                                style="@style/etStandard"
+                                android:hint="@string/enter_ifsc_code"
+                                android:inputType="text" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -459,7 +533,7 @@
                 style="@style/NormalLayout"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/white"
-
+                android:visibility="gone"
                 android:padding="@dimen/padding_standard">
 
                 <TextView
@@ -504,26 +578,6 @@
 
                     </RadioGroup>
 
-                    <LinearLayout
-                        android:id="@+id/llUPI"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_view"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/lblUPI"
-                            style="@style/TvProfileHint"
-                            android:text="@string/hint_upi_address" />
-
-                        <EditText
-                            android:id="@+id/etUpiID"
-                            style="@style/etStandard"
-                            android:hint="ENTER UPI ID"
-                            android:inputType="text" />
-
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
