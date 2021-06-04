@@ -51,6 +51,9 @@ public class Transaction {
     @SerializedName("fiTransactionAmount")
     int transactionAmount;
 
+    @SerializedName("fiTrasactionStatus")
+    int fiTrasactionStatus;
+
     public String getActivityType() {
         return activityType;
     }
@@ -109,6 +112,14 @@ public class Transaction {
 
     public int getTransactionAmount() {
         return transactionAmount;
+    }
+
+    public int getFiTrasactionStatus() {
+        return fiTrasactionStatus;
+    }
+
+    public void setFiTrasactionStatus(int fiTrasactionStatus) {
+        this.fiTrasactionStatus = fiTrasactionStatus;
     }
 }
 

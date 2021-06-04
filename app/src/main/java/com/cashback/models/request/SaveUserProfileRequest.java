@@ -43,6 +43,12 @@ public class SaveUserProfileRequest {
     @SerializedName("fsUPILink")
     String upiLink;
 
+    @SerializedName("fsAccountNo")
+    String fsAccountNo;
+
+    @SerializedName("fsIFSCCode")
+    String fsIFSCCode;
+
     @SerializedName("fbPrivacyChecked")
     boolean isTCAccepted;
 
@@ -119,6 +125,14 @@ public class SaveUserProfileRequest {
         this.referrer = referrer;
     }
 
+    public void setFsAccountNo(String fsAccountNo) {
+        this.fsAccountNo = fsAccountNo;
+    }
+
+    public void setFsIFSCCode(String fsIFSCCode) {
+        this.fsIFSCCode = fsIFSCCode;
+    }
+
     public String validateData(Context foContext) {
 
         if (birthDate.isEmpty()) {
@@ -129,6 +143,10 @@ public class SaveUserProfileRequest {
             return Common.getDynamicText(foContext, "contact_support");
         } else if (paymentMode == 2 && upiLink.isEmpty()) {
             return Common.getDynamicText(foContext, "UPI_alert");
+        } else if (paymentMode == 4 && fsAccountNo.isEmpty()) {
+            return Common.getDynamicText(foContext, "account_alert");
+        } else if (paymentMode == 4 && fsIFSCCode.isEmpty()) {
+            return Common.getDynamicText(foContext, "ifsc_alert");
         } else if (!isTCAccepted) {
             return Common.getDynamicText(foContext, "error_term_condition");
         }

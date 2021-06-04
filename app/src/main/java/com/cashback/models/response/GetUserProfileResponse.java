@@ -79,12 +79,34 @@ public class GetUserProfileResponse {
         @SerializedName("fsUPILink")
         private String upiLink;
 
+        @SerializedName("fsIFSCCode")
+        private String fsIFSCCode;
+
+        @SerializedName("fsAccountNo")
+        private String fsAccountNo;
+
         public int getPaymentMode() {
             return paymentMode;
         }
 
         public String getUpiLink() {
             return upiLink;
+        }
+
+        public String getFsIFSCCode() {
+            return fsIFSCCode;
+        }
+
+        public void setFsIFSCCode(String fsIFSCCode) {
+            this.fsIFSCCode = fsIFSCCode;
+        }
+
+        public String getFsAccountNo() {
+            return fsAccountNo;
+        }
+
+        public void setFsAccountNo(String fsAccountNo) {
+            this.fsAccountNo = fsAccountNo;
         }
     }
 }
