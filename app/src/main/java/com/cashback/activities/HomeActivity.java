@@ -367,29 +367,23 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 }
             } else loIvBanner.setVisibility(View.GONE);
 
-            loBtnShopNow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alertDialog.dismiss();
-                    AppGlobal.isDisplayRewardNote = true;
-                    Intent intent = new Intent(getContext(), MyCouponsActivity.class);
-                    startActivity(intent);
-                }
+            loBtnShopNow.setOnClickListener(view -> {
+                alertDialog.dismiss();
+                AppGlobal.isDisplayRewardNote = true;
+                Intent intent = new Intent(getContext(), MyCouponsActivity.class);
+                startActivity(intent);
             });
 
             Advertisement finalLoAdvertisement = loAdvertisement;
-            loBtnFindMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    alertDialog.dismiss();
-                    AppGlobal.isDisplayRewardNote = true;
+            loBtnFindMore.setOnClickListener(view -> {
+                alertDialog.dismiss();
+                AppGlobal.isDisplayRewardNote = true;
 
-                    int liCategoryId = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getCategoryID();
-                    long llOfferID = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getAdID();
-                    long llBannerID = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getBannerID();
+                int liCategoryId = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getCategoryID();
+                long llOfferID = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getAdID();
+                long llBannerID = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getBannerID();
 
-                    loadOfferListFragment(liCategoryId, llOfferID, 0, llBannerID);
-                }
+                loadOfferListFragment(liCategoryId, llOfferID, 0, llBannerID);
             });
         }
     }
