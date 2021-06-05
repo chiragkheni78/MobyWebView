@@ -172,13 +172,9 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerFragmentDialog loDialog = DatePickerFragmentDialog.newInstance(new DatePickerFragmentDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePickerFragmentDialog view, int year, int monthOfYear, int dayOfMonth) {
-                moBinding.tvDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                msTransactionDate = moBillUploadViewModel.formatTransactionDate(year, (monthOfYear + 1), dayOfMonth);
-            }
+        DatePickerFragmentDialog loDialog = DatePickerFragmentDialog.newInstance((view, year, monthOfYear, dayOfMonth) -> {
+            moBinding.tvDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+            msTransactionDate = moBillUploadViewModel.formatTransactionDate(year, (monthOfYear + 1), dayOfMonth);
         }, mYear, mMonth, mDay);
 
 
@@ -208,15 +204,12 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
             if (!loJsonObject.isError()) {
 
                 MessageDialog loDialog = new MessageDialog(getContext(), null, loJsonObject.getMessage(), null, false);
-                loDialog.setClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        loDialog.dismiss();
-                        Intent intent = new Intent();
-                        setResult(1, intent);
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
-                    }
+                loDialog.setClickListener(v -> {
+                    loDialog.dismiss();
+                    Intent intent = new Intent();
+                    setResult(1, intent);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                 });
                 loDialog.show();
 
@@ -232,16 +225,13 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
         }
     };
 
-    Observer<ActivityMarkAsUsedResponse> updateMarkAdUsedObserver = new Observer<ActivityMarkAsUsedResponse>() {
-        @Override
-        public void onChanged(ActivityMarkAsUsedResponse loJsonObject) {
-            if (!loJsonObject.isError()) {
-                LogV2.i(TAG, "GREEN: Register Bill: SUCCESS");
-            } else {
-                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
-            }
-            dismissProgressDialog();
+    Observer<ActivityMarkAsUsedResponse> updateMarkAdUsedObserver = loJsonObject -> {
+        if (!loJsonObject.isError()) {
+            LogV2.i(TAG, "GREEN: Register Bill: SUCCESS");
+        } else {
+            Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
         }
+        dismissProgressDialog();
     };
 
     /*
@@ -267,28 +257,17 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
             ImageView loIvClose = loDialog.findViewById(R.id.ivClose);
 
 
-            loBtnGallery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loDialog.dismiss();
-                    choosePhotoFromGallery();
-                }
+            loBtnGallery.setOnClickListener(view -> {
+                loDialog.dismiss();
+                choosePhotoFromGallery();
             });
 
-            loBtnCamera.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loDialog.dismiss();
-                    captureImage();
-                }
+            loBtnCamera.setOnClickListener(view -> {
+                loDialog.dismiss();
+                captureImage();
             });
 
-            loIvClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loDialog.dismiss();
-                }
-            });
+            loIvClose.setOnClickListener(view -> loDialog.dismiss());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -316,12 +295,13 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     public boolean isWriteStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 Log.v("TTT", "Permission is granted: WRITE_EXTERNAL_STORAGE");
                 return true;
             } else {
                 Log.v("TTT", "Permission is revoked: WRITE_EXTERNAL_STORAGE");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 22);
                 return false;
             }
         } else { //permission is automatically granted on sdk<23 upon installation
@@ -380,9 +360,14 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
 
     public void choosePhotoFromGallery() {
         if (isWriteStoragePermissionGranted()) {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+            /*Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, REQUEST_GALLERY_IMAGE);
+            startActivityForResult(galleryIntent, REQUEST_GALLERY_IMAGE);*/
+
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_PICK);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY_IMAGE);
         }
     }
 
@@ -395,8 +380,11 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
                     Uri foUri = data.getData();
 
                     String lsFilePath = Common.getRealPathFromURI(this, foUri);
-
-                    setImageView(lsFilePath);
+                    if (lsFilePath != null) {
+                        setImageView(lsFilePath);
+                    } else {
+                        Common.showErrorDialog(this, "File null", false);
+                    }
                 } else {
                     Common.showErrorDialog(this, "Unable to get Image", false);
                 }
@@ -409,7 +397,11 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
                             String path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
                             Uri foUri = Uri.parse(path);
                             String lsFilePath = Common.getRealPathFromURI(this, foUri);
-                            setImageView(lsFilePath);
+                            if (lsFilePath != null) {
+                                setImageView(lsFilePath);
+                            } else {
+                                Common.showErrorDialog(this, "File null", false);
+                            }
                         } else {
                             Common.showErrorDialog(this, "Unable to get Image", false);
                         }
