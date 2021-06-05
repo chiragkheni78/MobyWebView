@@ -117,7 +117,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             long llLocationId = getArguments().getLong(Constants.IntentKey.LOCATION_ID);
             mlBannerID = getArguments().getLong(Constants.IntentKey.BANNER_ID);
 
-            if (miCategoryId > 0) {
+            if (miCategoryId > 0 && moCategoryAdapter != null) {
                 // setSelection
                 moCategoryAdapter.updateCategoryByID(miCategoryId);
                 int liPosition = moCategoryAdapter.getSelectedPosition();

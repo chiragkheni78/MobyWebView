@@ -292,20 +292,22 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ACTIVITY_BILL_UPLOAD) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                moActivityList.get(miPosition).setBillUploaded(true);
-                moActivityList.get(miPosition).setCouponUsed(true);
-
-                moActivityListAdapter.notifyDataSetChanged();
+                if (miPosition > 0) {
+                    moActivityList.get(miPosition).setBillUploaded(true);
+                    moActivityList.get(miPosition).setCouponUsed(true);
+                    moActivityListAdapter.notifyDataSetChanged();
+                }
             }
         } else if (requestCode == REQUEST_COUPON_DETAILS) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-
-                String lsAction = data.getAction();
-                if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
-                    openBillUpload(miPosition);
-                } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)){
-                    moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
-                    moActivityListAdapter.notifyDataSetChanged();
+                if (miPosition > 0) {
+                    String lsAction = data.getAction();
+                    if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
+                        openBillUpload(miPosition);
+                    } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)) {
+                        moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
+                        moActivityListAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         }
