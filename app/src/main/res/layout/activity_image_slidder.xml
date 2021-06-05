@@ -34,6 +34,7 @@
                 android:padding="@dimen/padding_standard"
                 android:visibility="visible"
                 app:fillColor="@color/colorPrimary"
+                android:layout_marginBottom="@dimen/_40sdp"
                 app:pageColor="@color/white"
                 app:radius="5dp"
                 app:strokeWidth="-2dp" />

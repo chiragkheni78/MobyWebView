@@ -19,7 +19,7 @@ public class BaseFragment extends Fragment {
     ViewBinding binding;
     private SharedPreferenceManager moSharedPreferenceManager;
 
-    private ProgressDialog loProgressDialog;
+    ProgressDialog loProgressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

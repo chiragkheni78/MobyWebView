@@ -28,6 +28,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.databinding.ActivityHomeBinding;
+import com.cashback.fragments.FragmentHelp;
+import com.cashback.fragments.FragmentMyCoupons;
 import com.cashback.fragments.MapViewFragment;
 import com.cashback.fragments.OfferListFragment;
 import com.cashback.models.Advertisement;
@@ -64,6 +66,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         initializeContent();
     }
 
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+        if (fragment instanceof FragmentMyCoupons) {
+            ((FragmentMyCoupons) fragment).onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void initializeContent() {
 
         moHomeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -83,9 +95,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         moBinding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.itemCoupons:
-                        openMyCoupons(0);
+                        FragmentMyCoupons fragmentMyCoupons = new FragmentMyCoupons();
+                        Bundle bundle = new Bundle();
+                        bundle.putLong(Constants.IntentKey.ACTIVITY_ID, 0);
+                        fragmentMyCoupons.setArguments(bundle);
+                        Common.replaceFragment(HomeActivity.this, fragmentMyCoupons, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
+
+                        //openMyCoupons(0);
                         break;
                     case R.id.itemOffer:
                         loadOfferListFragment(0, 0, 0, 0);
@@ -97,7 +116,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         loadMapViewFragment();
                         break;
                     case R.id.itemHelp:
-                        openHelp();
+
+                        FragmentHelp fragmentHelp = new FragmentHelp();
+                        Bundle bundleHelp = new Bundle();
+                        bundleHelp.putString(Constants.IntentKey.SCREEN_TITLE, getString(R.string.help));
+                        bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.HELP_SCREEN.getValue());
+                        fragmentHelp.setArguments(bundleHelp);
+                        Common.replaceFragment(HomeActivity.this, fragmentHelp, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
+
+                        //openHelp();
                         break;
                 }
                 return false;
@@ -414,6 +441,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 long llBannerID = (finalLoAdvertisement == null) ? 0 : finalLoAdvertisement.getBannerID();
 
                 loadOfferListFragment(liCategoryId, llOfferID, 0, llBannerID);
+                moBinding.navigation.getMenu().getItem(1).setChecked(true);
             });
         }
     }
