@@ -115,12 +115,12 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
         }
 
-        if (foTransaction.getSecondReward() > 0) {
-            foHolder.loLlCashback.setVisibility(View.VISIBLE);
-            foHolder.loTvCashBackUpto.setText("₹ " + foTransaction.getSecondReward());
-        } else {
+        /*if (foTransaction.getSecondReward() > 0) {*/
+        foHolder.loLlCashback.setVisibility(View.VISIBLE);
+        foHolder.loTvCashBackUpto.setText("₹ " + foTransaction.getSecondReward());
+        /*} else {
             foHolder.loLlCashback.setVisibility(View.GONE);
-        }
+        }*/
 
         String lsType = moContext.getString(R.string.instant_cash);
         String lsStatus = "";
