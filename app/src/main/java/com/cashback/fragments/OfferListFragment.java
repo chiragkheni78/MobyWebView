@@ -36,7 +36,12 @@ import java.util.ArrayList;
 
 import static com.cashback.AppGlobal.isSearchButtonBlink;
 
+@SuppressWarnings("All")
 public class OfferListFragment extends BaseFragment implements View.OnClickListener {
+
+    public OfferListFragment() {
+
+    }
 
     FragmentOfferListBinding moBinding;
     OfferListViewModel moOfferListViewModel;

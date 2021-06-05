@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemCoupons"
+        android:enabled="true"
+        android:icon="@drawable/ic_offer"
+        android:title="@string/coupons"/>
+    <item
+        android:id="@+id/itemOffer"
+        android:enabled="true"
+        android:icon="@drawable/ic_offers"
+        android:title="@string/offers"/>
+    <item
+        android:id="@+id/itemNoItem"
+        android:enabled="true"/>
+    <item
+        android:id="@+id/itemNearBy"
+        android:enabled="true"
+        android:icon="@drawable/ic_location"
+        android:title="@string/nearBy"/>
+    <item
+        android:id="@+id/itemHelp"
+        android:enabled="true"
+        android:icon="@drawable/ic_help"
+        android:title="@string/labelHelp"/>
+</menu>

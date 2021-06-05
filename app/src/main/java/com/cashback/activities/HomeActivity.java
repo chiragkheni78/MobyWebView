@@ -33,12 +33,13 @@ import com.cashback.fragments.OfferListFragment;
 import com.cashback.models.Advertisement;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.viewmodel.HomeViewModel;
-import com.cashback.models.viewmodel.WebViewModel;
-import com.cashback.services.MyFirebaseMessagingService;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,7 @@ import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
 
+@SuppressWarnings("All")
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
@@ -73,6 +75,34 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         moBinding.toolbar.ibDashBoard.setOnClickListener(this);
         moBinding.toolbar.tvMyCoupon.setOnClickListener(this);
         moBinding.toolbar.rbList.setOnCheckedChangeListener(this);
+
+        moBinding.floatingMenuOption.setOnClickListener(view -> {
+            moBinding.drawerLayout.openDrawer(Gravity.LEFT); //OPEN Nav Drawer!
+        });
+
+        moBinding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.itemCoupons:
+                        openMyCoupons(0);
+                        break;
+                    case R.id.itemOffer:
+                        loadOfferListFragment(0, 0, 0, 0);
+                        break;
+                    case R.id.itemNoItem:
+
+                        break;
+                    case R.id.itemNearBy:
+                        loadMapViewFragment();
+                        break;
+                    case R.id.itemHelp:
+                        openHelp();
+                        break;
+                }
+                return false;
+            }
+        });
 
         getSettings();
     }
@@ -268,7 +298,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         @Override
         public void onChanged(GetSettingResponse loJsonObject) {
             if (!loJsonObject.isError()) {
-                if (!loJsonObject.isDeviceExist()){
+                if (!loJsonObject.isDeviceExist()) {
                     logout();
                     return;
                 }
@@ -286,13 +316,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void handleView(GetSettingResponse foJsonObject) {
 
-        if (getPreferenceManager().isBlinkMobyIcon()){
+        if (getPreferenceManager().isBlinkMobyIcon()) {
             Common.blinkAnimation(moBinding.toolbar.ivMobyIcon);
         }
 
-        if (getIntent() != null && getIntent().getAction() != null){
+        if (getIntent() != null && getIntent().getAction() != null) {
             String lsAction = getIntent().getAction();
-            if (lsAction.equalsIgnoreCase(MAP_SCREEN)){
+            if (lsAction.equalsIgnoreCase(MAP_SCREEN)) {
                 moBinding.toolbar.rbMap.setChecked(true);
             } else {
                 openNotifications();
@@ -306,13 +336,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 if (!getPreferenceManager().isMarketingAd()) {
                     if (!AppGlobal.isDisplayRewardNote) {
                         showFirstDialog(foJsonObject.getFirstTimeAlertTitle(), foJsonObject.getFirstTimeAlertMsg(), foJsonObject.getAdvertisementList());
-                    }else {
+                    } else {
 
                         int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
                         int llOfferID = getIntent().getIntExtra(Constants.IntentKey.OFFER_ID, 0);
                         int llBannerID = getIntent().getIntExtra(Constants.IntentKey.BANNER_ID, 0);
 
-                        loadOfferListFragment(liCategoryID,llOfferID,0, llBannerID);
+                        loadOfferListFragment(liCategoryID, llOfferID, 0, llBannerID);
                     }
                 }
             }
@@ -379,9 +409,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 alertDialog.dismiss();
                 AppGlobal.isDisplayRewardNote = true;
 
-                int liCategoryId = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getCategoryID();
-                long llOfferID = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getAdID();
-                long llBannerID = (finalLoAdvertisement == null)? 0 : finalLoAdvertisement.getBannerID();
+                int liCategoryId = (finalLoAdvertisement == null) ? 0 : finalLoAdvertisement.getCategoryID();
+                long llOfferID = (finalLoAdvertisement == null) ? 0 : finalLoAdvertisement.getAdID();
+                long llBannerID = (finalLoAdvertisement == null) ? 0 : finalLoAdvertisement.getBannerID();
 
                 loadOfferListFragment(liCategoryId, llOfferID, 0, llBannerID);
             });

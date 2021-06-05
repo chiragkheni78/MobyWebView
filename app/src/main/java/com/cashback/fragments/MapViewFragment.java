@@ -32,7 +32,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.BankOfferDetailsActivity;
-import com.cashback.activities.BillUploadActivity;
 import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.activities.PhoneLoginActivity;
 import com.cashback.databinding.FragmentMapViewBinding;
@@ -62,7 +61,12 @@ import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
 import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
 import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
 
+@SuppressWarnings("All")
 public class MapViewFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
+
+    public MapViewFragment() {
+
+    }
 
     private static final String TAG = MapViewFragment.class.getSimpleName();
     FragmentMapViewBinding moBinding;
