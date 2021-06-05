@@ -393,6 +393,7 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
             case REQUEST_GALLERY_IMAGE:
                 if (resultCode == RESULT_OK) {
                     Uri foUri = data.getData();
+
                     String lsFilePath = Common.getRealPathFromURI(this, foUri);
 
                     setImageView(lsFilePath);

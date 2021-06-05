@@ -19,7 +19,7 @@
     <string name="coupon_expired">Expired</string>
     <string name="empty_offer_list">There is no data found with this search terms\nPlease try with other brands.</string>
     <string name="empty_timeline">Your Timeline is empty!\nEngage with the Brands to earn money.</string>
-    <string name="dont_forget_bill_upload">SHOP &amp; UPLOAD BILL TO VERIFY &amp; ENTER LUCKY DRAW (OPTIONAL). CREDIT IN YOUR XXXXXX APP WALLET IN XX DAYS.</string>
+    <string name="dont_forget_bill_upload">CASHBACK PAID IN YOUR XXXXXX WALLET\nIN XX DAYS.</string>
 
     <string name="title_copy_to_clipboard">CashBack Activated !</string>
     <string name="msg_copy_to_clipboard">After you shop, we will verify\nyour purchase within 24 hrs,\nPayment (Delivery + XX Days)</string>
@@ -55,8 +55,8 @@
     <string name="hint_email_address">Email Address</string>
     <string name="hint_upi_address">UPI Address (Make sure this is correct.)</string>
     <string name="hint_e_wallet">Choose E-wallet for Cashback credit</string>
-    <string name="hint_bank_account_no">Account Number (Make sure this is correct.)</string>
-    <string name="hint_bank_account_ifsc">IFSC Code (Make sure this is correct.)</string>
+    <string name="hint_bank_account_no">Account Number</string>
+    <string name="hint_bank_account_ifsc">IFSC Code</string>
 
     <string name="add_card_header_tv"><![CDATA[My CREDIT & DEBIT Cards]]></string>
     <string name="profile_non_required">(NO CARD NUMBER REQUIRED | NO CARD TRANSACTION REQUIRED | NO CARD CSV REQUIRED | DISCOVER YOUR CARD BENEFITS NEAR YOU!)</string>
@@ -102,7 +102,7 @@
     <string name="register_bill">Register Bill</string>
     <string name="btn_shop_in_store">SHOP IN-STORE</string>
     <string name="btn_shop_online">SHOP ONLINE</string>
-    <string name="view_offer">View Offer</string>
+    <string name="view_offer">Get Offer</string>
 
     <string name="btn_upload_now">Register Now</string>
     <string name="btn_upload_later">Later</string>

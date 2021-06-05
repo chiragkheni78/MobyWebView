@@ -141,12 +141,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         setSupportActionBar(loToolbar);
         loToolbar.setBackgroundColor(Color.TRANSPARENT);
 
-        ImageButton loIbNavigation = loToolbar.findViewById(R.id.ibNavigation);
-        loIbNavigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        LinearLayout loIbNavigation = loToolbar.findViewById(R.id.llBack);
+        loIbNavigation.setOnClickListener(v -> {
                 onBackPressed();
-            }
         });
 
         TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
@@ -202,11 +199,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onItemClick(int position, View v) {
                 Coupon loCoupon = moActivity.getCouponList().get(position);
-                if (!loCoupon.getCouponName().isEmpty()) {
+                if (!loCoupon.getCouponLink().isEmpty()) {
                     Common.setClipboard(getContext(), loCoupon.getCouponName());
-                    dialogCopyToClipboard(loCoupon.getCouponName());
+                    dialogCopyToClipboard(loCoupon.getCouponLink());
                 } else {
-                    openDeepLink(loCoupon.getCouponLink());
+                    //openDeepLink(loCoupon.getCouponLink());
                 }
             }
         });
@@ -255,6 +252,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.tvBrand.setText(moActivity.getAdName() + " (InStore)");
             moBinding.tvShopOnline.setText(Common.getDynamicText(getContext(), "btn_shop_in_store"));
         }
+
+        moBinding.tvCoupon.setText(moActivity.getCouponCode());
 
         if (moActivity.getOfferDetails() != null && !moActivity.getOfferDetails().isEmpty()){
             moBinding.tvWebView.setOnTouchListener(new View.OnTouchListener() {
@@ -323,8 +322,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                             moBinding.tvMarkAsUsed.setClickable(true);
                             moBinding.tvMarkAsUsed.setEnabled(true);
                             byPassPhone();
+                            isShopOnlinePressed = true;
                         }
-                    }, 2000);
+                    }, 50);
                 }
             }
         }
@@ -332,7 +332,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void byPassPhone() {
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            moBinding.etMobileNumber.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().replace("+91", ""));
+            moBinding.etMobileNumber.setText(AppGlobal.getPhoneNumber().replace("+91", ""));
 
             //remove code when above code enable
 //            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
@@ -504,4 +504,14 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             dismissProgressDialog();
         }
     };
+
+    boolean isShopOnlinePressed = false;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isShopOnlinePressed){
+            finish();
+        }
+    }
 }

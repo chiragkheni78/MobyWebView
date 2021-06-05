@@ -46,6 +46,7 @@ import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -398,6 +399,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         openMyCoupons(llActivityId);
                         break;
 
+                    case WALLET_SCREEN:
+                        //long llActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
+                        openWallet();
+                        break;
                     case MESSAGE_LIST:
                         long llMessageId = getIntent().getLongExtra(Constants.IntentKey.MESSAGE_ID, 0);
                         openMessages(llMessageId);

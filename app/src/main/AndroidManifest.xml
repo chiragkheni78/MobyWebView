@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -50,43 +51,31 @@
 
         <activity
             android:name=".activities.HomeActivity"
-            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.OfferDetailsActivity"
-            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.BankOfferDetailsActivity"
-            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.QuizDetailsActivity"
-            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.ShortProfileActivity"
-            android:launchMode= "singleInstance"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activities.DashboardActivity"
-            android:launchMode= "singleInstance"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".activities.MyCouponsActivity"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.CouponDetailsActivity"
-            android:launchMode="singleInstance"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
@@ -126,17 +115,14 @@
 
         <activity
             android:name=".activities.UserProfileActivity"
-            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.AdvertisementActivity"
-            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.WebViewActivity"
-            android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <meta-data

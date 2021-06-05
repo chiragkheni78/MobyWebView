@@ -283,7 +283,6 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
         miPosition = fiPosition;
         Intent loIntent = new Intent(moContext, CouponDetailsActivity.class);
         loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(fiPosition).getActivityID());
-        moContext.startActivity(loIntent);
         startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
     }
 

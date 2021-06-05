@@ -40,6 +40,7 @@ public class Constants {
             public static final String OFFER_LIST = "OFFER_LIST";
             public static final String ACTIVITY_LIST = "ACTIVITY_LIST";
             public static final String MESSAGE_LIST = "MESSAGE_LIST";
+            public static final String WALLET_SCREEN = "WALLET_SCREEN";
         }
     }
 

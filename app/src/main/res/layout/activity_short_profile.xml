@@ -97,7 +97,7 @@
                             android:gravity="center"
                             android:text="FEMALE"
                             android:textColor="@drawable/color_radio_txt"
-                            android:textStyle="bold" />
+                            />
 
                         <RadioButton
                             android:id="@+id/rbList"
@@ -111,7 +111,7 @@
                             android:gravity="center"
                             android:text="MALE"
                             android:textColor="@drawable/color_radio_txt"
-                            android:textStyle="bold" />
+                            />
 
                     </RadioGroup>
                 </LinearLayout>

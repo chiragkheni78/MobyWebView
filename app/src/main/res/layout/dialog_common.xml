@@ -48,7 +48,7 @@
                 android:lineSpacingExtra="@dimen/_3sdp"
                 android:minHeight="@dimen/_60sdp"
                 android:textColor="@color/secondary_text"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_15sdp" />
 
         </LinearLayout>
 

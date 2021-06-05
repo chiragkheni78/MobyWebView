@@ -21,17 +21,33 @@
             android:textSize="@dimen/txt_large"
             android:textAllCaps="true"/>
 
-        <TextView
-            android:id="@+id/tvTitleEnd"
-            style="@style/TvToolBarTitle78"
-            android:layout_gravity="end|center"
-            android:layout_marginRight="@dimen/padding_mini"
-            android:visibility="gone" />
+        <LinearLayout
+            android:id="@+id/llBack"
+            style="@style/NormalLayout"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <com.rey.material.widget.ImageButton
-            android:id="@+id/ibNavigation"
-            style="@style/IbToolBarBack78"
-            android:tint="@color/colorPrimaryText" />
+            <com.rey.material.widget.ImageButton
+                android:id="@+id/ibNavigation"
+                style="@style/IbToolBarBack78"
+                android:visibility="gone"
+                android:tint="@color/colorPrimaryText" />
+
+            <TextView
+                android:id="@+id/tvTitleEnd"
+                style="@style/TvToolBarTitle78"
+                android:layout_gravity="center"
+                android:padding="@dimen/padding_standard"
+                android:textStyle="normal"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_arrow_back"
+                android:drawablePadding="@dimen/padding_mini"
+                android:visibility="visible"
+                android:text="Back"
+                />
+        </LinearLayout>
 
 <!--        <com.rey.material.widget.ImageButton-->
 <!--            android:id="@+id/ibDownload"-->
