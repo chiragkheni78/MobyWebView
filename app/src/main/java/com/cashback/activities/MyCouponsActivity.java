@@ -292,7 +292,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ACTIVITY_BILL_UPLOAD) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                if (miPosition > 0) {
+                if (miPosition > -1) {
                     moActivityList.get(miPosition).setBillUploaded(true);
                     moActivityList.get(miPosition).setCouponUsed(true);
                     moActivityListAdapter.notifyDataSetChanged();
@@ -300,7 +300,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
             }
         } else if (requestCode == REQUEST_COUPON_DETAILS) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                if (miPosition > 0) {
+                if (miPosition > -1) {
                     String lsAction = data.getAction();
                     if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
                         openBillUpload(miPosition);
