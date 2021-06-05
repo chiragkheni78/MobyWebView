@@ -109,7 +109,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             moBinding.rvTransactionList.setVisibility(View.VISIBLE);
         }
 
-       moBinding.tvWallet.setText("Credit In Your " + foJsonObject.getWalletName() + " Wallet");
+       moBinding.tvWallet.setText("Credit In Your " + foJsonObject.getWalletName());
         if (foJsonObject.isActivityCouponExist()){
             int liStart = getResources().getColor(R.color.red);
             int liEnd = getResources().getColor(R.color.blue);
