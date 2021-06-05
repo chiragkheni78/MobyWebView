@@ -306,7 +306,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (fsUrl != null && !fsUrl.isEmpty()) {
             Common.openBrowser(getContext(), fsUrl);
             moBinding.tvShopOnline.clearAnimation();
-
+            isShopOnlinePressed = true;
             callAPIBlinkShopOnline();
 
             if (moActivity.isBlinkShopOnline()) {
@@ -322,7 +322,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                             moBinding.tvMarkAsUsed.setClickable(true);
                             moBinding.tvMarkAsUsed.setEnabled(true);
                             byPassPhone();
-                            isShopOnlinePressed = true;
+
                         }
                     }, 50);
                 }
