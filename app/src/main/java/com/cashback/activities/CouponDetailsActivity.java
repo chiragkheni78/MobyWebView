@@ -439,6 +439,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void openBillUploadActivity() {
         if (moActivity != null) {
             Intent intent = new Intent();
+            intent.setAction(Constants.IntentKey.Action.OPEN_BILL_UPLOAD);
             setResult(1, intent);
             setResult(android.app.Activity.RESULT_OK, intent);
             finish();
@@ -511,6 +512,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     protected void onResume() {
         super.onResume();
         if (isShopOnlinePressed){
+            Intent intent = new Intent();
+            intent.setAction(Constants.IntentKey.Action.CLICK_SHOP_ONLINE);
+            setResult(1, intent);
+            setResult(android.app.Activity.RESULT_OK, intent);
             finish();
         }
     }

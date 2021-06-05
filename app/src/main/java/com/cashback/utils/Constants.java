@@ -41,6 +41,10 @@ public class Constants {
             public static final String ACTIVITY_LIST = "ACTIVITY_LIST";
             public static final String MESSAGE_LIST = "MESSAGE_LIST";
             public static final String WALLET_SCREEN = "WALLET_SCREEN";
+
+
+            public static final String OPEN_BILL_UPLOAD = "OPEN_BILL_UPLOAD";
+            public static final String CLICK_SHOP_ONLINE = "CLICK_SHOP_ONLINE";
         }
     }
 

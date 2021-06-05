@@ -222,7 +222,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
                 loBtnOfflineOffers.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (miTotalVerifiedBill == 0){
+                        if (miTotalVerifiedBill == 0) {
                             loTvError.setVisibility(View.VISIBLE);
                             return;
                         }
@@ -262,7 +262,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
     private void backToHome(String fsAction) {
         Intent loIntent = new Intent(getContext(), HomeActivity.class);
         loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (fsAction != null){
+        if (fsAction != null) {
             loIntent.setAction(fsAction);
         }
         startActivity(loIntent);
@@ -270,6 +270,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
     }
 
     private int miPosition = -1;
+
     public void openBillUpload(int fiPosition) {
         miPosition = fiPosition;
         Intent loIntent = new Intent(moContext, BillUploadActivity.class);
@@ -298,7 +299,14 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
             }
         } else if (requestCode == REQUEST_COUPON_DETAILS) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-               openBillUpload(miPosition);
+
+                String lsAction = data.getAction();
+                if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
+                    openBillUpload(miPosition);
+                } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)){
+                    moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
+                    moActivityListAdapter.notifyDataSetChanged();
+                }
             }
         }
     }
