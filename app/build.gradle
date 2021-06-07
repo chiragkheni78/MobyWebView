@@ -8,6 +8,21 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Volumes/Project/Project/Android/Git/Moby Cashback/keystore.jks')
+            storePassword 'moby123'
+            keyAlias 'moby'
+            keyPassword 'moby123'
+        }
+        debug {
+            storeFile file('/Volumes/Project/Project/Android/Git/Moby Cashback/keystore.jks')
+            storePassword 'moby123'
+            keyAlias 'moby'
+            keyPassword 'moby123'
+        }
+    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -20,10 +35,11 @@ android {
         applicationId "com.mobyads"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 113
+        versionCode 114
         versionName "2.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     android {

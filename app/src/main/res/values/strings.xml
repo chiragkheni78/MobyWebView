@@ -19,10 +19,11 @@
     <string name="coupon_expired">Expired</string>
     <string name="empty_offer_list">There is no data found with this search terms\nPlease try with other brands.</string>
     <string name="empty_timeline">Your Timeline is empty!\nEngage with the Brands to earn money.</string>
-    <string name="dont_forget_bill_upload">CASHBACK PAID IN YOUR XXXXXX WALLET\nIN XX DAYS.</string>
+    <string name="dont_forget_bill_upload">CASHBACK PAID IN YOUR\nXXXXXX WALLET IN XX DAYS.</string>
+    <string name="coupon_valid_for">COUPON VALID FOR XX DAYS.</string>
 
     <string name="title_copy_to_clipboard">CashBack Activated !</string>
-    <string name="msg_copy_to_clipboard">After you shop, we will verify\nyour purchase within 24 hrs,\nPayment (Delivery + XX Days)</string>
+    <string name="msg_copy_to_clipboard">AFTER YOU SHOP, we will verify\nyour purchase within 5 Min to 24 Hrs,\nPayment (Delivery + XX Days)</string>
 
 
     <string name="mobile_no_mark_used">Mobile No. to Mark as Used</string>

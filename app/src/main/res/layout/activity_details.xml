@@ -258,12 +258,13 @@
                     android:textColor="@color/white"
                     android:textSize="14dp"
                     android:textStyle="bold" />
+
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tvBillUpload"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:letterSpacing="0.08"
@@ -275,10 +276,11 @@
             <TextView
                 android:id="@+id/tvExpireDay"
                 android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
                 android:layout_height="38dp"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="COUPON VALID FOR XX DAYS"
+                android:text="coupon_valid_for"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
                 android:textStyle="bold"

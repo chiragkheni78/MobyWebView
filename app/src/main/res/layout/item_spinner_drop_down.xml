@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center_vertical"
-    android:paddingVertical="5dp"
-    android:paddingHorizontal="@dimen/_10sdp"
+    android:paddingVertical="@dimen/padding_micro"
+    android:paddingHorizontal="@dimen/padding_standard"
     android:textColor="@color/black"
-    android:textSize="14sp" />
+    android:textSize="@dimen/txt_large" />

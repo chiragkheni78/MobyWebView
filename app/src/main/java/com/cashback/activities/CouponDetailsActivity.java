@@ -274,6 +274,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 .replace("XXXXXX", moActivity.getWalletName()).replace("XX", String.valueOf(moActivity.getVirtualCashTransferDays())));
 
 
+        if (!moActivity.getRemainDay().isEmpty()){
+            moBinding.tvExpireDay.setVisibility(View.VISIBLE);
+            moBinding.tvExpireDay.setText(moActivity.getRemainDay());
+        }
+
         final String fsLink = (!moActivity.getShopOnlineLink().isEmpty())
                 ? moActivity.getShopOnlineLink()
                 : Common.getLinkifiedMyText(moActivity.getCouponDescription());
