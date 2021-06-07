@@ -20,6 +20,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -254,9 +257,33 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         foGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
         foGoogleMap.setMyLocationEnabled(true);
 
-        foGoogleMap.setOnMarkerClickListener(markerClickListener);
+        //foGoogleMap.setOnMarkerClickListener(markerClickListener);
         foGoogleMap.setOnCameraMoveListener(cameraMoveListener);
-        foGoogleMap.setInfoWindowAdapter(moInfoWindowAdapter);
+        //foGoogleMap.setInfoWindowAdapter(moInfoWindowAdapter);
+        foGoogleMap.setInfoWindowAdapter(new MyInfoWindow());
+        foGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(@NonNull @NotNull Marker marker) {
+                if (moMarkerMap != null && moMarkerMap.size() > 0
+                        && marker.getId() != null && moMarkerMap.containsKey(marker.getId())) {
+
+                    if (marker.getId() != null) {
+
+                        int liPosition = moMarkerMap.get(marker.getId());
+                        MapMarker loMapMarker = moMapViewModel.getMapMarkerList().get(liPosition);
+
+                        Intent loIntent = new Intent(getContext(), OfferDetailsActivity.class);
+
+                        if (loMapMarker.getAdType().contains(Constants.AdType.BANK_OFFER.getValue())) {
+                            loIntent = new Intent(getContext(), BankOfferDetailsActivity.class);
+                        }
+                        loIntent.putExtra(Constants.IntentKey.OFFER_ID, loMapMarker.getAdID());
+                        loIntent.putExtra(Constants.IntentKey.LOCATION_ID, loMapMarker.getLocationID());
+                        getActivity().startActivity(loIntent);
+                    }
+                }
+            }
+        });
         MapsInitializer.initialize(getActivity());
         moGoogleMap = foGoogleMap;
         moMarkerList = new ArrayList<>();
@@ -378,6 +405,50 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             }
         }
         updateMyLocationOnMap();
+    }
+
+    class MyInfoWindow implements GoogleMap.InfoWindowAdapter {
+
+        @Nullable
+        @org.jetbrains.annotations.Nullable
+        @Override
+        public View getInfoWindow(@NonNull @NotNull Marker marker) {
+            View myContentsView = getLayoutInflater().inflate(R.layout.item_map_custom_view, null);
+            TextView tvTitle = (TextView) myContentsView.findViewById(R.id.tvMarkerTitle);
+            TextView tvPrice = (TextView) myContentsView.findViewById(R.id.tvMarkerPrice);
+
+            ImageView imageBack = (ImageView) myContentsView.findViewById(R.id.imageMarkerBackground);
+            ImageView imagePin = (ImageView) myContentsView.findViewById(R.id.imageMarkerPin);
+
+            if (moMarkerMap != null && moMarkerMap.size() > 0
+                    && marker.getId() != null && moMarkerMap.containsKey(marker.getId())) {
+
+                int liPosition = moMarkerMap.get(marker.getId());
+                MapMarker loMapMarker = moMapViewModel.getMapMarkerList().get(liPosition);
+
+                if (loMapMarker.getAdType() == Constants.AdType.BANK_OFFER.getValue()) {
+                    imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_yellow));
+                    imagePin.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_yellow));
+                } else {
+                    imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_red));
+                    imagePin.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_red));
+                }
+            }
+
+            if (marker != null) {
+                tvTitle.setText(marker.getTitle());
+                tvPrice.setText(marker.getSnippet());
+            }
+
+            return myContentsView;
+        }
+
+        @Nullable
+        @org.jetbrains.annotations.Nullable
+        @Override
+        public View getInfoContents(@NonNull @NotNull Marker marker) {
+            return null;
+        }
     }
 
 }

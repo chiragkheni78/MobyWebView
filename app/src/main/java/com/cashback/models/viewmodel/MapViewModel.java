@@ -3,39 +3,27 @@ package com.cashback.models.viewmodel;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cashback.AppGlobal;
-import com.cashback.R;
 import com.cashback.models.Ad;
 import com.cashback.models.AdLocation;
 import com.cashback.models.MapMarker;
-import com.cashback.models.OfferFilter;
 import com.cashback.models.request.FetchOffersRequest;
-import com.cashback.models.request.MobileDeviceRequest;
-import com.cashback.models.request.ProceedDeviceRequest;
 import com.cashback.models.response.FetchOffersResponse;
-import com.cashback.models.response.MobileDeviceResponse;
-import com.cashback.models.response.ProceedDeviceResponse;
 import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -44,13 +32,11 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -63,6 +49,7 @@ import retrofit2.Response;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
+@SuppressWarnings("All")
 public class MapViewModel extends ViewModel {
 
     public static final String LOAD_MAP_VIEW = "loadMapView";
@@ -151,12 +138,14 @@ public class MapViewModel extends ViewModel {
 
         LatLng loPosition = new LatLng(loMapMarker.getLatitude(), loMapMarker.getLongitude());
         String lsTitle = loMapMarker.getAdName();
-        String lsSnippet = loMapMarker.getProductName() + "\t\t₹" + loMapMarker.getQuizReward();
+        String lsSnippet;//loMapMarker.getProductName() + "\t\t₹" + loMapMarker.getQuizReward();
         BitmapDescriptor loPinIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE);
 
         if (loMapMarker.getAdType().contains(Constants.AdType.BANK_OFFER.getValue())) {
             loPinIcon = BitmapDescriptorFactory.defaultMarker(62.0f);
+            lsSnippet = loMapMarker.getProductName();
         } else {
+            lsSnippet = "$ " + loMapMarker.getQuizReward();
             if (loMapMarker.isEngagedFlag()) {
                 loPinIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE); // Gray
             } else {
@@ -209,7 +198,7 @@ public class MapViewModel extends ViewModel {
     LocationRequest locationRequest;
     Location moCurrentLocation;
 
-    public LocationRequest getLocationRequest (Activity foContext) {
+    public LocationRequest getLocationRequest(Activity foContext) {
         if (locationRequest == null) {
             locationRequest = LocationRequest.create();
             locationRequest.setInterval(60000);
