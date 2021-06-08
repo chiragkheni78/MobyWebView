@@ -1,84 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="@dimen/_320sdp"
+    <RelativeLayout
+        android:layout_width="@dimen/_330sdp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@android:color/transparent"
-        android:orientation="vertical"
-        app:cardBackgroundColor="#5a89be"
-        app:cardCornerRadius="8dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:id="@+id/cardMainLogin"
+            android:layout_width="@dimen/_320sdp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
             android:orientation="vertical"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="2dp">
+            app:cardBackgroundColor="#5a89be"
+            app:cardCornerRadius="8dp">
 
-            <LinearLayout
-                style="@style/NormalLayout"
-                android:orientation="vertical">
-
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="2dp">
 
                 <LinearLayout
-                    android:id="@+id/llRoot"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_22sdp"
-                    android:gravity="center"
+                    style="@style/NormalLayout"
                     android:orientation="vertical">
 
-                    <TextView
-                        style="@style/TvLarge"
-                        android:layout_marginBottom="@dimen/margin_view"
-                        android:text="@string/msg_verify_phone_number"
-                        android:textSize="@dimen/_18sdp"
-                        android:gravity="center"
-                        android:textStyle="normal" />
 
                     <LinearLayout
+                        android:id="@+id/llRoot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_22sdp"
                         android:gravity="center"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
                         <TextView
                             style="@style/TvLarge"
-                            android:text="@string/text_login_msg"
+                            android:layout_marginBottom="@dimen/margin_view"
+                            android:gravity="center"
+                            android:text="@string/msg_verify_phone_number"
+                            android:textSize="@dimen/_18sdp"
+                            android:textStyle="normal" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                style="@style/TvLarge"
+                                android:text="@string/text_login_msg"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                style="@style/TvLarge"
+                                android:layout_marginStart="3dp"
+                                android:text="One Time Password"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/TvLarge"
+                            android:text="On this mobile number"
                             android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
-                        <TextView
-                            style="@style/TvLarge"
-                            android:layout_marginStart="3dp"
-                            android:text="One Time Password"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
+                        <LinearLayout
+                            android:id="@+id/ll_number_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="20dp"
+                                android:background="@drawable/rect_white_black"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="10dp">
+
+                                <TextView
+                                    android:id="@+id/tvCountryCode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:gravity="right"
+                                    android:text="+91"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="@dimen/padding_mini"
+                                    android:layout_marginEnd="@dimen/padding_mini"
+                                    android:background="@color/colorSecondaryText" />
+
+                                <EditText
+                                    android:id="@+id/etPhoneNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@null"
+                                    android:enabled="true"
+                                    android:gravity="left"
+                                    android:hint="@string/hint_mobile_no"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="phone"
+                                    android:maxLength="10"
+                                    android:maxLines="1"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <com.rey.material.widget.FrameLayout
+                                android:id="@+id/flSendOTP"
+                                style="@style/NormalRippleLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_marginStart="@dimen/_16sdp"
+                                android:layout_marginEnd="@dimen/_16sdp"
+                                android:layout_marginBottom="@dimen/_30sdp"
+                                android:background="@drawable/btn_blue"
+                                android:orientation="horizontal">
+
+                                <com.cashback.utils.custom.ProgressWheel
+                                    android:id="@+id/pwCommon"
+                                    android:layout_width="@dimen/_30sdp"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:layout_gravity="right|center_vertical"
+                                    android:layout_margin="@dimen/padding_micro"
+                                    android:visibility="gone"
+                                    app:matProg_barColor="@color/colorPrimary"
+                                    app:matProg_progressIndeterminate="true" />
+
+                                <com.rey.material.widget.Button
+                                    android:id="@+id/btnSendOTP"
+                                    style="@style/RippleBtnStandard"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:background="@color/transparent"
+                                    android:text="Send OTP"
+                                    android:textAllCaps="false"
+                                    android:textStyle="bold" />
+
+                            </com.rey.material.widget.FrameLayout>
+
+
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <TextView
-                        style="@style/TvLarge"
-                        android:text="On this mobile number"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="@dimen/_15sdp"
-                        android:visibility="gone"
-                        android:textStyle="bold" />
-
                     <LinearLayout
-                        android:id="@+id/ll_number_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/llOTPView"
+                        style="@style/NormalLayout"
                         android:orientation="vertical"
                         android:visibility="visible">
 
@@ -86,174 +184,110 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_margin="20dp"
-                            android:background="@drawable/rect_white_black"
                             android:gravity="center"
-                            android:orientation="horizontal"
-                            android:padding="10dp">
+                            android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tvCountryCode"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:gravity="right"
-                                android:text="+91"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
+                                style="@style/TvLarge"
+                                android:layout_marginBottom="@dimen/margin_view"
+                                android:text="OTP Verification"
+                                android:textSize="@dimen/_18sdp"
+                                android:textStyle="normal" />
 
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="@dimen/padding_mini"
-                                android:layout_marginEnd="@dimen/padding_mini"
-                                android:background="@color/colorSecondaryText" />
+                            <LinearLayout
+                                style="@style/NormalLayout"
+                                android:layout_marginBottom="@dimen/_30sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/padding_mini">
 
-                            <EditText
-                                android:id="@+id/etPhoneNo"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:enabled="true"
-                                android:gravity="left"
-                                android:hint="@string/hint_mobile_no"
-                                android:imeOptions="actionDone"
-                                android:inputType="phone"
-                                android:maxLength="10"
-                                android:maxLines="1"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+                                <com.cashback.utils.custom.otpview.OtpTextView
+                                    android:id="@+id/otp_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/colorPrimaryText"
+                                    app:bar_active_color="@color/white"
+                                    app:bar_enabled="false"
+                                    app:bar_error_color="@color/red"
+                                    app:bar_height="@dimen/_2sdp"
+                                    app:bar_inactive_color="@color/secondary"
+                                    app:bar_margin_bottom="0dp"
+                                    app:bar_success_color="@color/green"
+                                    app:box_margin="@dimen/_4sdp"
+                                    app:height="@dimen/_50sdp"
+                                    app:hide_otp="false"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:length="6"
+                                    app:otp=""
+                                    app:otp_box_background="@drawable/bg_white_blue"
+                                    app:width="@dimen/_40sdp" />
 
-                        <com.rey.material.widget.FrameLayout
-                            android:id="@+id/flSendOTP"
-                            style="@style/NormalRippleLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:background="@drawable/btn_blue"
-                            android:layout_marginStart="@dimen/_16sdp"
-                            android:layout_marginEnd="@dimen/_16sdp"
-                            android:layout_marginBottom="@dimen/_30sdp"
-                            android:orientation="horizontal">
+                            </LinearLayout>
 
-                            <com.cashback.utils.custom.ProgressWheel
-                                android:id="@+id/pwCommon"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:layout_gravity="right|center_vertical"
-                                android:layout_margin="@dimen/padding_micro"
-                                app:matProg_barColor="@color/colorPrimary"
-                                android:visibility="gone"
-                                app:matProg_progressIndeterminate="true" />
-
-                            <com.rey.material.widget.Button
-                                android:id="@+id/btnSendOTP"
+                            <Button
+                                android:id="@+id/btnVerifyOTP"
                                 style="@style/RippleBtnStandard"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_40sdp"
-                                android:text="Send OTP"
-                                android:background="@color/transparent"
+                                android:layout_marginStart="@dimen/_16sdp"
+                                android:layout_marginEnd="@dimen/_16sdp"
+                                android:layout_marginBottom="@dimen/_30sdp"
+                                android:background="@drawable/btn_primary"
+                                android:backgroundTint="#5a89be"
+                                android:text="Verify OTP"
                                 android:textAllCaps="false"
                                 android:textStyle="bold" />
 
-                        </com.rey.material.widget.FrameLayout>
+                            <TextView
+                                style="@style/TvLarge"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="Did't received OTP ?"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
 
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llOTPView"
-                    style="@style/NormalLayout"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/TvLarge"
-                            android:layout_marginBottom="@dimen/margin_view"
-                            android:text="OTP Verification"
-                            android:textSize="@dimen/_18sdp"
-                            android:textStyle="normal" />
-
-                        <LinearLayout
-                            style="@style/NormalLayout"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:paddingTop="@dimen/padding_mini"
-                            android:layout_marginBottom="@dimen/_30sdp">
-
-                            <com.cashback.utils.custom.otpview.OtpTextView
-                                android:id="@+id/otp_view"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/countTime"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/colorPrimaryText"
-                                app:bar_active_color="@color/white"
-                                app:bar_enabled="false"
-                                app:bar_error_color="@color/red"
-                                app:bar_height="@dimen/_2sdp"
-                                app:bar_inactive_color="@color/secondary"
-                                app:bar_margin_bottom="0dp"
-                                app:bar_success_color="@color/green"
-                                app:box_margin="@dimen/_4sdp"
-                                app:height="@dimen/_50sdp"
-                                app:hide_otp="false"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:length="6"
-                                app:otp=""
-                                app:otp_box_background="@drawable/bg_white_blue"
-                                app:width="@dimen/_40sdp" />
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:gravity="center"
+                                android:text="00:00"
+                                android:textColor="@android:color/background_dark"
+                                android:textSize="14sp" />
 
+                            <TextView
+                                android:id="@+id/tvResendCode"
+                                style="@style/TvLarge"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginBottom="@dimen/_30sdp"
+                                android:gravity="center"
+                                android:text="RESEND OTP"
+                                android:enabled="false"
+                                android:textColor="@color/primary"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold" />
                         </LinearLayout>
-
-                        <Button
-                            android:id="@+id/btnVerifyOTP"
-                            style="@style/RippleBtnStandard"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_marginStart="@dimen/_16sdp"
-                            android:layout_marginEnd="@dimen/_16sdp"
-                            android:layout_marginBottom="@dimen/_30sdp"
-                            android:background="@drawable/btn_primary"
-                            android:backgroundTint="#5a89be"
-                            android:text="Verify OTP"
-                            android:textAllCaps="false"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            style="@style/TvLarge"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Did't received OTP ?"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvResendCode"
-                            style="@style/TvLarge"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_30sdp"
-                            android:gravity="center"
-                            android:text="RESEND OTP"
-                            android:textColor="@color/primary"
-                            android:textSize="@dimen/_15sdp"
-                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
-    </androidx.cardview.widget.CardView>
-</RelativeLayout>
+
+
+
+        <ImageView
+            android:id="@+id/imageLoginClose"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:elevation="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_close_red"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

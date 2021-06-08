@@ -31,6 +31,7 @@
 
         <activity
             android:name=".activities.SplashActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/AppTheme.NoActionBar.Transparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,18 +52,22 @@
 
         <activity
             android:name=".activities.HomeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.OfferDetailsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.BankOfferDetailsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.QuizDetailsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
@@ -72,6 +77,7 @@
 
         <activity
             android:name=".activities.MyCouponsActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
@@ -81,48 +87,58 @@
 
         <activity
             android:name=".activities.BillUploadActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
         <activity
             android:name=".activities.MessageActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.MessageDetailActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.VideoViewActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.QrScannerActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode= "singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.PhoneLoginActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Translucent" />
 
         <activity
             android:name=".activities.WalletActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.UserProfileActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.AdvertisementActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.WebViewActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
 
         <meta-data
