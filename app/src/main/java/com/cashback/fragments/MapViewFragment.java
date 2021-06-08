@@ -42,6 +42,7 @@ import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.LogV2;
 import com.cashback.utils.custom.MessageDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -305,15 +306,19 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
             LatLng moCurrentLatLong = new LatLng(moCurrentLocation.getLatitude(), moCurrentLocation.getLongitude());
 
-            Bitmap ob = BitmapFactory.decodeResource(this.getResources(), R.drawable.ic_person_pin_white_36dp);
-            Bitmap obm = Bitmap.createBitmap(ob.getWidth(), ob.getHeight(), ob.getConfig());
-            Canvas canvas = new Canvas(obm);
-            Paint paint = new Paint();
-            paint.setColorFilter(new PorterDuffColorFilter(getResources().getColor(R.color.secondary), PorterDuff.Mode.SRC_ATOP));
-            canvas.drawBitmap(ob, 0f, 0f, paint);
-            moCurrentLocationMarker = moGoogleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(obm)).position(moCurrentLatLong).title("I'm here!"));
+            try {
+                Bitmap ob = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.ic_person_pin_white_36dp);
+                Bitmap obm = Bitmap.createBitmap(ob.getWidth(), ob.getHeight(), ob.getConfig());
+                Canvas canvas = new Canvas(obm);
+                Paint paint = new Paint();
+                paint.setColorFilter(new PorterDuffColorFilter(getResources().getColor(R.color.secondary), PorterDuff.Mode.SRC_ATOP));
+                canvas.drawBitmap(ob, 0f, 0f, paint);
+                moCurrentLocationMarker = moGoogleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(obm)).position(moCurrentLatLong).title("I'm here!"));
 
-            moGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(moCurrentLatLong, getPreferenceManager().getMapZoomLevel()));
+                moGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(moCurrentLatLong, getPreferenceManager().getMapZoomLevel()));
+            } catch (Exception e){
+                LogV2.logException(TAG, e);
+            }
         }
     }
 
@@ -388,23 +393,24 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
     };
 
     private void drawMarkers() {
-        if (moGoogleMap != null)
+        if (moGoogleMap != null) {
             moGoogleMap.clear();
-        if (moMarkerList != null && moMarkerList.size() > 0) {
-            moMarkerList.clear();
-        }
-        moMarkerMap = new HashMap<>();
-
-        ArrayList<MapMarker> loMarkerList = moMapViewModel.getMapMarkerList();
-
-        if (loMarkerList.size() > 0) {
-            for (int liPosition = 0; liPosition < loMarkerList.size(); liPosition++) {
-                Marker loMarker = moGoogleMap.addMarker(moMapViewModel.getMapMarkerByPosition(liPosition));
-                moMarkerMap.put(loMarker.getId(), liPosition);
-                moMarkerList.add(loMarker);
+            if (moMarkerList != null && moMarkerList.size() > 0) {
+                moMarkerList.clear();
             }
+            moMarkerMap = new HashMap<>();
+
+            ArrayList<MapMarker> loMarkerList = moMapViewModel.getMapMarkerList();
+
+            if (loMarkerList.size() > 0) {
+                for (int liPosition = 0; liPosition < loMarkerList.size(); liPosition++) {
+                    Marker loMarker = moGoogleMap.addMarker(moMapViewModel.getMapMarkerByPosition(liPosition));
+                    moMarkerMap.put(loMarker.getId(), liPosition);
+                    moMarkerList.add(loMarker);
+                }
+            }
+            updateMyLocationOnMap();
         }
-        updateMyLocationOnMap();
     }
 
     class MyInfoWindow implements GoogleMap.InfoWindowAdapter {

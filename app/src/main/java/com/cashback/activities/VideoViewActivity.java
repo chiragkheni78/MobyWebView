@@ -11,6 +11,7 @@ import android.webkit.WebViewClient;
 import androidx.annotation.Nullable;
 
 import com.cashback.databinding.ActivityVideoViewBinding;
+import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
 
 
@@ -30,8 +31,8 @@ public class VideoViewActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {
-            fsUrl = getIntent().getStringExtra("video_url");
-            adName = getIntent().getStringExtra("ad_name");
+            fsUrl = getIntent().getStringExtra(Constants.IntentKey.VIDEO_URL);
+            adName = getIntent().getStringExtra(Constants.IntentKey.SCREEN_TITLE);
 
             if (adName != null && !adName.isEmpty())
                 getSupportActionBar().setTitle(adName);

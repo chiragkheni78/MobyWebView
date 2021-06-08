@@ -4,7 +4,6 @@ package com.cashback.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -29,6 +28,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cashback.R;
+
 import com.cashback.databinding.ActivityBillUploadBinding;
 import com.cashback.models.response.ActivityMarkAsUsedResponse;
 import com.cashback.models.response.BillUploadResponse;
@@ -37,7 +37,7 @@ import com.cashback.models.viewmodel.BillUploadViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
-import com.cashback.utils.custom.MessageDialog;
+import com.cashback.dialog.MessageDialog;
 import com.shagi.materialdatepicker.date.DatePickerFragmentDialog;
 import com.squareup.picasso.Picasso;
 
@@ -48,6 +48,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static android.view.View.GONE;
+import static com.cashback.models.viewmodel.QuizDetailsViewModel.REQUEST_CAMERA;
 
 public class BillUploadActivity extends BaseActivity implements View.OnClickListener {
 
@@ -94,6 +95,13 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
             msEngagedDate = getIntent().getStringExtra(Constants.IntentKey.ENGAGED_DATE);
             msPinColor = getIntent().getStringExtra(Constants.IntentKey.PIN_COLOR);
 
+
+            Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+            moBinding.tvDate.setText(mDay + "-" + (mMonth + 1) + "-" + mYear);
+            msTransactionDate = moBillUploadViewModel.formatTransactionDate(mYear, (mMonth + 1), mDay);
         }
 
         moBinding.ivOne.setOnClickListener(this);
@@ -158,19 +166,15 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     }
 
     private void openDatePicker() {
+
         Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
-        DatePickerFragmentDialog loDialog = DatePickerFragmentDialog.newInstance(new DatePickerFragmentDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePickerFragmentDialog view, int year, int monthOfYear, int dayOfMonth) {
-                moBinding.tvDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                msTransactionDate = moBillUploadViewModel.formatTransactionDate(year, (monthOfYear + 1), dayOfMonth);
-            }
+        DatePickerFragmentDialog loDialog = DatePickerFragmentDialog.newInstance((view, year, monthOfYear, dayOfMonth) -> {
+            moBinding.tvDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+            msTransactionDate = moBillUploadViewModel.formatTransactionDate(year, (monthOfYear + 1), dayOfMonth);
         }, mYear, mMonth, mDay);
 
 
@@ -200,15 +204,12 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
             if (!loJsonObject.isError()) {
 
                 MessageDialog loDialog = new MessageDialog(getContext(), null, loJsonObject.getMessage(), null, false);
-                loDialog.setClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        loDialog.dismiss();
-                        Intent intent = new Intent(getContext(), BillUploadActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(intent);
-                        finish();
-                    }
+                loDialog.setClickListener(v -> {
+                    loDialog.dismiss();
+                    Intent intent = new Intent();
+                    setResult(1, intent);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                 });
                 loDialog.show();
 
@@ -224,16 +225,13 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
         }
     };
 
-    Observer<ActivityMarkAsUsedResponse> updateMarkAdUsedObserver = new Observer<ActivityMarkAsUsedResponse>() {
-        @Override
-        public void onChanged(ActivityMarkAsUsedResponse loJsonObject) {
-            if (!loJsonObject.isError()) {
-                LogV2.i(TAG, "GREEN: Register Bill: SUCCESS");
-            } else {
-                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
-            }
-            dismissProgressDialog();
+    Observer<ActivityMarkAsUsedResponse> updateMarkAdUsedObserver = loJsonObject -> {
+        if (!loJsonObject.isError()) {
+            LogV2.i(TAG, "GREEN: Register Bill: SUCCESS");
+        } else {
+            Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
         }
+        dismissProgressDialog();
     };
 
     /*
@@ -259,28 +257,17 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
             ImageView loIvClose = loDialog.findViewById(R.id.ivClose);
 
 
-            loBtnGallery.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loDialog.dismiss();
-                    choosePhotoFromGallery();
-                }
+            loBtnGallery.setOnClickListener(view -> {
+                loDialog.dismiss();
+                choosePhotoFromGallery();
             });
 
-            loBtnCamera.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loDialog.dismiss();
-                    captureImage();
-                }
+            loBtnCamera.setOnClickListener(view -> {
+                loDialog.dismiss();
+                captureImage();
             });
 
-            loIvClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loDialog.dismiss();
-                }
-            });
+            loIvClose.setOnClickListener(view -> loDialog.dismiss());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -295,7 +282,7 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
                 return true;
             } else {
                 Log.v("TTT", "Permission is revoked2");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 2);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA);
                 return false;
             }
         } else { //permission is automatically granted on sdk<23 upon installation
@@ -308,12 +295,13 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     public boolean isWriteStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 Log.v("TTT", "Permission is granted: WRITE_EXTERNAL_STORAGE");
                 return true;
             } else {
                 Log.v("TTT", "Permission is revoked: WRITE_EXTERNAL_STORAGE");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 22);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 22);
                 return false;
             }
         } else { //permission is automatically granted on sdk<23 upon installation
@@ -326,10 +314,14 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case 2:
+            case REQUEST_CAMERA:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d("TTT", "permission granted...");
-                    captureImage();
+                    if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                        captureImage();
+                    } else {
+                        openAlertDialog(1);
+                    }
                 } else {
                     openAlertDialog(0);
                 }
@@ -350,12 +342,6 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
         String lsMessage = (fiType == 1) ? getResources().getString(R.string.gallery_access_permission) : getResources().getString(R.string.camera_access_permission);
 
         MessageDialog loDialog = new MessageDialog(getContext(), null, lsMessage, null, false);
-        loDialog.setClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         loDialog.show();
     }
 
@@ -363,7 +349,7 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     private static final int REQUEST_GALLERY_IMAGE = 110;
 
     private void captureImage() {
-        if (isCameraPermissionGranted()) {
+        if (isCameraPermissionGranted() && isWriteStoragePermissionGranted()) {
 
             Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (pictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -374,9 +360,14 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
 
     public void choosePhotoFromGallery() {
         if (isWriteStoragePermissionGranted()) {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+            /*Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(galleryIntent, REQUEST_GALLERY_IMAGE);
+            startActivityForResult(galleryIntent, REQUEST_GALLERY_IMAGE);*/
+
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_PICK);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY_IMAGE);
         }
     }
 
@@ -387,9 +378,13 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
             case REQUEST_GALLERY_IMAGE:
                 if (resultCode == RESULT_OK) {
                     Uri foUri = data.getData();
-                    String lsFilePath = Common.getRealPathFromURI(this, foUri);
 
-                    setImageView(lsFilePath);
+                    String lsFilePath = Common.getRealPathFromURI(this, foUri);
+                    if (lsFilePath != null) {
+                        setImageView(lsFilePath);
+                    } else {
+                        Common.showErrorDialog(this, "File null", false);
+                    }
                 } else {
                     Common.showErrorDialog(this, "Unable to get Image", false);
                 }
@@ -402,7 +397,11 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
                             String path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
                             Uri foUri = Uri.parse(path);
                             String lsFilePath = Common.getRealPathFromURI(this, foUri);
-                            setImageView(lsFilePath);
+                            if (lsFilePath != null) {
+                                setImageView(lsFilePath);
+                            } else {
+                                Common.showErrorDialog(this, "File null", false);
+                            }
                         } else {
                             Common.showErrorDialog(this, "Unable to get Image", false);
                         }

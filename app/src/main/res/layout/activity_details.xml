@@ -41,32 +41,51 @@
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
-
-            <androidx.core.widget.NestedScrollView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_160sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@color/white">
+                android:background="@drawable/btn_primary"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:padding="@dimen/padding_micro"
+                android:layout_height="wrap_content">
 
-                <LinearLayout
+                <WebView
+                    android:id="@+id/tvWebView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:overScrollMode="never" />
 
-                    <TextView
-                        android:id="@+id/tvCouponDesc"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="Hello"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
 
-            </androidx.core.widget.NestedScrollView>
+<!--            <androidx.core.widget.NestedScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_160sdp"-->
+<!--                android:layout_marginTop="@dimen/_15sdp"-->
+<!--                android:background="@color/white"-->
+<!--                android:padding="@dimen/_8sdp">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvCouponDesc"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:gravity="center"-->
+<!--                        android:text="Hello"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="14sp" />-->
+
+<!--                </LinearLayout>-->
+
+<!--            </androidx.core.widget.NestedScrollView>-->
 
             <LinearLayout
                 android:id="@+id/llOffers"
@@ -208,6 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="15dp"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -238,12 +258,13 @@
                     android:textColor="@color/white"
                     android:textSize="14dp"
                     android:textStyle="bold" />
+
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tvBillUpload"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:letterSpacing="0.08"
@@ -255,10 +276,11 @@
             <TextView
                 android:id="@+id/tvExpireDay"
                 android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
                 android:layout_height="38dp"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="COUPON VALID FOR XX DAYS"
+                android:text="coupon_valid_for"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
                 android:textStyle="bold"

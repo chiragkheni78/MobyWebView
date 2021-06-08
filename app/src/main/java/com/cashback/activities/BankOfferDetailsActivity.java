@@ -104,6 +104,7 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
                 moBinding.tvDeal.setOnClickListener(BankOfferDetailsActivity.this);
                 if (!offer.getDescription().isEmpty())
                     moBinding.tvOfferDescription.setVisibility(View.VISIBLE);
+                moBinding.llRoot.setVisibility(View.VISIBLE);
             }
         }
     };

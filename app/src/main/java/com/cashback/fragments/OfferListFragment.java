@@ -113,6 +113,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         moOfferListAdapter = new OfferListAdapter(getActivity(), moOfferList);
         moBinding.rvOfferList.setAdapter(moOfferListAdapter);
 
+        moBinding.etSearch.setOnFocusChangeListener(Common.getFocusChangeListener(getActivity()));
+
 
         if (getArguments() != null) {
             miCategoryId = getArguments().getInt(Constants.IntentKey.CATEGORY_ID);
@@ -120,7 +122,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             long llLocationId = getArguments().getLong(Constants.IntentKey.LOCATION_ID);
             mlBannerID = getArguments().getLong(Constants.IntentKey.BANNER_ID);
 
-            if (miCategoryId > 0) {
+            if (miCategoryId > 0 && moCategoryAdapter != null) {
                 // setSelection
                 moCategoryAdapter.updateCategoryByID(miCategoryId);
                 int liPosition = moCategoryAdapter.getSelectedPosition();
@@ -184,7 +186,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             if (!loJsonObject.isError()) {
                 if (loJsonObject.getOfferList() != null) {
                     if (loJsonObject.getOfferList().size() > 0) {
-
+                        moBinding.rvOfferList.setVisibility(View.VISIBLE);
                         int scrollToPosition = moLayoutManager.getItemCount();
                         moOfferList.addAll(loJsonObject.getOfferList());
                         moOfferListAdapter.notifyList(moOfferList);
@@ -206,6 +208,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         isLastPage = true;
                 }
             } else {
+                moBinding.rvOfferList.setVisibility(View.GONE);
                 Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
             }
             isLoading = false;
@@ -265,6 +268,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             moBinding.floatingActionSearch.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
         } else {
             moBinding.rlSearch.setVisibility(View.GONE);
+            Common.hideKeyboard(getActivity());
             moBinding.floatingActionSearch.setImageDrawable(ActivityCompat.getDrawable(getActivity(), R.drawable.ic_search_white_24dp));
 
             ImageViewCompat.setImageTintList(
@@ -298,6 +302,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     private void refreshData() {
         if (moOfferList != null) moOfferList.clear();
         miCurrentPage = 1;
+        mlBannerID = 0;
+        mlOfferID = -1;
         isLastPage = false;
         moBinding.btnSearch.clearAnimation();
         fetchOffers();

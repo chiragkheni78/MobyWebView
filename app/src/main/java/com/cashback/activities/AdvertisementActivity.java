@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cashback.R;
+import com.cashback.adapters.AdvertAdapter;
 import com.cashback.adapters.ImageSliderAdapter;
 import com.cashback.databinding.ActivityImageSlidderBinding;
 import com.cashback.models.Advertisement;
@@ -19,6 +20,7 @@ import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.custom.CirclePageIndicator;
 import com.cashback.utils.custom.CircularViewPagerHandler;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 
@@ -88,13 +90,15 @@ public class AdvertisementActivity extends BaseActivity{
     };
 
     private void setImageSlider(ArrayList<Advertisement> foAdvertisementList) {
-        ImageSliderAdapter loSliderAdapter = new ImageSliderAdapter(getContext(), foAdvertisementList);
-        moBinding.vpAdvert.setAdapter(loSliderAdapter);
-        moBinding.vpAdvert.addOnPageChangeListener(new CircularViewPagerHandler(moBinding.vpAdvert));
-        moBinding.vpAdvert.addOnPageChangeListener(new CircularViewPagerHandler(moBinding.vpAdvert));
+//        ImageSliderAdapter loSliderAdapter = new ImageSliderAdapter(getContext(), foAdvertisementList);
+//        moBinding.vpAdvert.setAdapter(loSliderAdapter);
+//        moBinding.vpAdvert.addOnPageChangeListener(new CircularViewPagerHandler(moBinding.vpAdvert));
+//        moBinding.vpAdvert.addOnPageChangeListener(new CircularViewPagerHandler(moBinding.vpAdvert));
+//
+//        moBinding.indicator.setViewPager(moBinding.vpAdvert);
+//        moBinding.indicator.setVisibility(View.VISIBLE);
 
-        moBinding.indicator.setViewPager(moBinding.vpAdvert);
-        moBinding.indicator.setVisibility(View.VISIBLE);
+        moBinding.imageSlider.setSliderAdapter(new AdvertAdapter(getContext(), foAdvertisementList));
     }
 
 }

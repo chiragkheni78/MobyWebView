@@ -9,11 +9,10 @@
     app:cardBackgroundColor="@color/secondary"
     app:cardCornerRadius="10dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:orientation="vertical"
         android:padding="@dimen/_8sdp">
 
         <LinearLayout
@@ -86,6 +85,6 @@
                 android:visibility="visible" />
 
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -34,10 +35,15 @@ import com.cashback.utils.LogV2;
 import java.util.ArrayList;
 
 import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
+import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
+import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
 public class MyCouponsActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = MyCouponsActivity.class.getSimpleName();
+    public static final int REQUEST_ACTIVITY_BILL_UPLOAD = 786;
+    public static final int REQUEST_COUPON_DETAILS = 787;
+
     ActivityMyCouponsBinding moBinding;
     ActivityListViewModel moActivityListViewModel;
 
@@ -216,7 +222,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
                 loBtnOfflineOffers.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (miTotalVerifiedBill == 0){
+                        if (miTotalVerifiedBill == 0) {
                             loTvError.setVisibility(View.VISIBLE);
                             return;
                         }
@@ -256,10 +262,54 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
     private void backToHome(String fsAction) {
         Intent loIntent = new Intent(getContext(), HomeActivity.class);
         loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (fsAction != null){
+        if (fsAction != null) {
             loIntent.setAction(fsAction);
         }
         startActivity(loIntent);
         finish();
+    }
+
+    private int miPosition = -1;
+
+    public void openBillUpload(int fiPosition) {
+        miPosition = fiPosition;
+        Intent loIntent = new Intent(moContext, BillUploadActivity.class);
+        loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(fiPosition).getActivityID());
+        loIntent.putExtra(ENGAGED_DATE, moActivityList.get(fiPosition).getQuizEngageDateTime());
+        loIntent.putExtra(PIN_COLOR, moActivityList.get(fiPosition).getPinColor());
+        startActivityForResult(loIntent, REQUEST_ACTIVITY_BILL_UPLOAD);
+    }
+
+    public void openCouponDetails(int fiPosition) {
+        miPosition = fiPosition;
+        Intent loIntent = new Intent(moContext, CouponDetailsActivity.class);
+        loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(fiPosition).getActivityID());
+        startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ACTIVITY_BILL_UPLOAD) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+                if (miPosition > -1) {
+                    moActivityList.get(miPosition).setBillUploaded(true);
+                    moActivityList.get(miPosition).setCouponUsed(true);
+                    moActivityListAdapter.notifyDataSetChanged();
+                }
+            }
+        } else if (requestCode == REQUEST_COUPON_DETAILS) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+                if (miPosition > -1) {
+                    String lsAction = data.getAction();
+                    if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
+                        openBillUpload(miPosition);
+                    } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)) {
+                        moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
+                        moActivityListAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
     }
 }

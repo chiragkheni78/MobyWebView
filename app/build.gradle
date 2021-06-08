@@ -8,6 +8,21 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Volumes/Project/Project/Android/Git/Moby Cashback/keystore.jks')
+            storePassword 'moby123'
+            keyAlias 'moby'
+            keyPassword 'moby123'
+        }
+        debug {
+            storeFile file('/Volumes/Project/Project/Android/Git/Moby Cashback/keystore.jks')
+            storePassword 'moby123'
+            keyAlias 'moby'
+            keyPassword 'moby123'
+        }
+    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -20,10 +35,20 @@ android {
         applicationId "com.mobyads"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 112
-        versionName "1.0"
+        versionCode 114
+        versionName "2.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
+    }
+
+    android {
+        lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
+        }
     }
 
     buildTypes {
@@ -31,7 +56,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "String", "BASE_URL", "\"http://mobyads.in/moby/v2-apis/\""
+            buildConfigField "String", "BASE_URL", "\"http://mobyads.in/moby/\""
             buildConfigField "String", "ADGYDE_APP_KEY", "\"K323933399337795\""
         }
 
@@ -111,5 +136,8 @@ dependencies {
 
     // Location
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+
+    // Image slidder
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
 }

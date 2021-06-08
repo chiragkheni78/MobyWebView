@@ -148,33 +148,25 @@
                 android:layout_height="@dimen/_25sdp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:background="@color/green"
+                android:background="@drawable/border_black"
                 android:padding="@dimen/_4sdp"
                 android:text="@string/tracked"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="12sp" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="@dimen/_25sdp"
-                android:background="@android:color/transparent"/>
 
             <TextView
                 android:id="@+id/tvItemTransactionValidated"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_25sdp"
                 android:layout_weight="1"
+                android:layout_marginStart="-1dp"
+                android:layout_marginEnd="-1dp"
                 android:gravity="center"
                 android:background="@drawable/border_black"
                 android:padding="@dimen/_4sdp"
                 android:text="@string/validated"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="@dimen/_25sdp"
-                android:background="@android:color/transparent"/>
 
             <TextView
                 android:id="@+id/tvItemTransactionCashPaid"

@@ -39,6 +39,7 @@ import retrofit2.Response;
 import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -129,6 +130,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 case NotificationType.ACTIVITY_LIST:
                 case NotificationType.COUPON_EXPIRING:
+                    loIntent = new Intent(this, HomeActivity.class);
+                    loIntent.setAction(ACTIVITY_LIST);
+                    loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityID);
+                    loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,
+                            PendingIntent.FLAG_ONE_SHOT);
+                    break;
+
                 case NotificationType.PURCHASED:
                 case NotificationType.BILL_VERIFIED:
                 case NotificationType.CASH_BACK_PAID:
@@ -137,7 +146,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         AdGydeEvents.purchased(this, llAdID);
                     }
                     loIntent = new Intent(this, HomeActivity.class);
-                    loIntent.setAction(ACTIVITY_LIST);
+                    loIntent.setAction(WALLET_SCREEN);
                     loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityID);
                     loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,

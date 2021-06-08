@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -43,12 +43,10 @@ import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
-import com.cashback.utils.custom.MessageDialog;
+import com.cashback.dialog.MessageDialog;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
-import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
-import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
 public class CouponDetailsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -143,12 +141,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         setSupportActionBar(loToolbar);
         loToolbar.setBackgroundColor(Color.TRANSPARENT);
 
-        ImageButton loIbNavigation = loToolbar.findViewById(R.id.ibNavigation);
-        loIbNavigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        LinearLayout loIbNavigation = loToolbar.findViewById(R.id.llBack);
+        loIbNavigation.setOnClickListener(v -> {
                 onBackPressed();
-            }
         });
 
         TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
@@ -204,11 +199,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onItemClick(int position, View v) {
                 Coupon loCoupon = moActivity.getCouponList().get(position);
-                if (!loCoupon.getCouponName().isEmpty()) {
+                if (!loCoupon.getCouponLink().isEmpty()) {
                     Common.setClipboard(getContext(), loCoupon.getCouponName());
-                    dialogCopyToClipboard(loCoupon.getCouponName());
+                    dialogCopyToClipboard(loCoupon.getCouponLink());
                 } else {
-                    openDeepLink(loCoupon.getCouponLink());
+                    //openDeepLink(loCoupon.getCouponLink());
                 }
             }
         });
@@ -258,12 +253,31 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.tvShopOnline.setText(Common.getDynamicText(getContext(), "btn_shop_in_store"));
         }
 
-        if (moActivity.getOfferDetails() != null && !moActivity.getOfferDetails().isEmpty())
-            moBinding.tvCouponDesc.setText(Html.fromHtml(moActivity.getOfferDetails()));
+        moBinding.tvCoupon.setText(moActivity.getCouponCode());
+
+        if (moActivity.getOfferDetails() != null && !moActivity.getOfferDetails().isEmpty()){
+            moBinding.tvWebView.setOnTouchListener(new View.OnTouchListener() {
+                // Setting on Touch Listener for handling the touch inside ScrollView
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Disallow the touch request for parent scroll on touch of child view
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    return false;
+                }
+            });
+            moBinding.tvWebView.getSettings().setJavaScriptEnabled(true);
+            moBinding.tvWebView.loadDataWithBaseURL(null,moActivity.getOfferDetails(),"text/html", "utf-8", null);
+        }
+//            moBinding.tvCouponDesc.setText(Html.fromHtml(moActivity.getOfferDetails()));
 
         moBinding.tvBillUpload.setText(Common.getDynamicText(getContext(), "dont_forget_bill_upload")
                 .replace("XXXXXX", moActivity.getWalletName()).replace("XX", String.valueOf(moActivity.getVirtualCashTransferDays())));
 
+
+        if (!moActivity.getRemainDay().isEmpty()){
+            moBinding.tvExpireDay.setVisibility(View.VISIBLE);
+            moBinding.tvExpireDay.setText(moActivity.getRemainDay());
+        }
 
         final String fsLink = (!moActivity.getShopOnlineLink().isEmpty())
                 ? moActivity.getShopOnlineLink()
@@ -297,7 +311,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (fsUrl != null && !fsUrl.isEmpty()) {
             Common.openBrowser(getContext(), fsUrl);
             moBinding.tvShopOnline.clearAnimation();
-
+            isShopOnlinePressed = true;
             callAPIBlinkShopOnline();
 
             if (moActivity.isBlinkShopOnline()) {
@@ -313,8 +327,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                             moBinding.tvMarkAsUsed.setClickable(true);
                             moBinding.tvMarkAsUsed.setEnabled(true);
                             byPassPhone();
+
                         }
-                    }, 2000);
+                    }, 50);
                 }
             }
         }
@@ -322,7 +337,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void byPassPhone() {
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            moBinding.etMobileNumber.setText(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber().replace("+91", ""));
+            moBinding.etMobileNumber.setText(AppGlobal.getPhoneNumber().replace("+91", ""));
 
             //remove code when above code enable
 //            moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
@@ -428,12 +443,18 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void openBillUploadActivity() {
         if (moActivity != null) {
-            Intent loIntent = new Intent(getContext(), BillUploadActivity.class);
-            loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivity.getActivityID());
-            loIntent.putExtra(ENGAGED_DATE, moActivity.getQuizEngageDateTime());
-            loIntent.putExtra(PIN_COLOR, moActivity.getPinColor());
-            startActivity(loIntent);
+            Intent intent = new Intent();
+            intent.setAction(Constants.IntentKey.Action.OPEN_BILL_UPLOAD);
+            setResult(1, intent);
+            setResult(android.app.Activity.RESULT_OK, intent);
             finish();
+
+//            Intent loIntent = new Intent(getContext(), BillUploadActivity.class);
+//            loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivity.getActivityID());
+//            loIntent.putExtra(ENGAGED_DATE, moActivity.getQuizEngageDateTime());
+//            loIntent.putExtra(PIN_COLOR, moActivity.getPinColor());
+//            startActivity(loIntent);
+//            finish();
         }
     }
 
@@ -489,4 +510,18 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             dismissProgressDialog();
         }
     };
+
+    boolean isShopOnlinePressed = false;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isShopOnlinePressed){
+            Intent intent = new Intent();
+            intent.setAction(Constants.IntentKey.Action.CLICK_SHOP_ONLINE);
+            setResult(1, intent);
+            setResult(android.app.Activity.RESULT_OK, intent);
+            finish();
+        }
+    }
 }

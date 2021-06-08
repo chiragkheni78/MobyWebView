@@ -49,6 +49,7 @@ import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
 
 @SuppressWarnings("All")
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
@@ -366,8 +367,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     } else {
 
                         int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
-                        int llOfferID = getIntent().getIntExtra(Constants.IntentKey.OFFER_ID, 0);
-                        int llBannerID = getIntent().getIntExtra(Constants.IntentKey.BANNER_ID, 0);
+                        long llOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
+                        long llBannerID = getIntent().getLongExtra(Constants.IntentKey.BANNER_ID, 0);
 
                         loadOfferListFragment(liCategoryID, llOfferID, 0, llBannerID);
                     }
@@ -456,6 +457,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         openMyCoupons(llActivityId);
                         break;
 
+                    case WALLET_SCREEN:
+                        //long llActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
+                        openWallet();
+                        break;
                     case MESSAGE_LIST:
                         long llMessageId = getIntent().getLongExtra(Constants.IntentKey.MESSAGE_ID, 0);
                         openMessages(llMessageId);

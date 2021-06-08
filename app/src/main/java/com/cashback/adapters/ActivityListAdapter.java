@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cashback.R;
 import com.cashback.activities.BillUploadActivity;
 import com.cashback.activities.CouponDetailsActivity;
+import com.cashback.activities.MessageActivity;
+import com.cashback.activities.MyCouponsActivity;
 import com.cashback.models.Activity;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -63,9 +65,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             switch (foView.getId()) {
                 case R.id.tvCouponCode:
-                    Intent loIntent = new Intent(moContext, CouponDetailsActivity.class);
-                    loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(liPosition).getActivityID());
-                    moContext.startActivity(loIntent);
+                    ((MyCouponsActivity) moContext).openCouponDetails(liPosition);
                     break;
                 default:
                     handleRegisterBill(liPosition);
@@ -85,11 +85,13 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                         Common.showErrorDialog(moContext, Common.getDynamicText(moContext, "upload_bill_restrict"), false);
                     } else {
                         //Open BillUpload Screen
-                        Intent loIntent = new Intent(moContext, BillUploadActivity.class);
-                        loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, loActivity.getActivityID());
-                        loIntent.putExtra(ENGAGED_DATE, loActivity.getQuizEngageDateTime());
-                        loIntent.putExtra(PIN_COLOR, loActivity.getPinColor());
-                        moContext.startActivity(loIntent);
+//                        Intent loIntent = new Intent(moContext, BillUploadActivity.class);
+//                        loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, loActivity.getActivityID());
+//                        loIntent.putExtra(ENGAGED_DATE, loActivity.getQuizEngageDateTime());
+//                        loIntent.putExtra(PIN_COLOR, loActivity.getPinColor());
+//                        moContext.startActivity(loIntent);
+
+                        ((MyCouponsActivity) moContext).openBillUpload(fiPosition);
                     }
                 }
             }

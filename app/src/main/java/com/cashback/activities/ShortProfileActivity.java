@@ -24,7 +24,7 @@ import com.cashback.models.response.SaveMiniProfileResponse;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
-import com.rey.material.widget.Spinner;
+
 
 import java.util.ArrayList;
 
@@ -196,8 +196,4 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         }
         return gender;
     }
-
-
-
-
 }

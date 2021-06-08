@@ -61,8 +61,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initializeContent() {
-        initViewModel();
         Common.hideKeyboard(this);
+        initViewModel();
         setToolbar();
         moBinding.btnSaveProfile.setOnClickListener(this);
 
@@ -74,7 +74,6 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number"));
         } else {
             loadView();
-
         }
     }
 
@@ -132,9 +131,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         Common.dismissProgressDialog(loProgressDialog);
     };
 
-    Observer<DeleteCardResponse> deleteCardObserver = new Observer<DeleteCardResponse>() {
-        @Override
-        public void onChanged(DeleteCardResponse loJsonObject) {
+    Observer<DeleteCardResponse> deleteCardObserver = loJsonObject -> {
             if (!loJsonObject.isError()) {
                 moGetUserProfileResponse.getDebitCardList().remove(miDeletePosition);
                 miDeletePosition = -1;
@@ -143,7 +140,6 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                 Common.showErrorDialog(UserProfileActivity.this, loJsonObject.getMessage(), false);
             }
             Common.dismissProgressDialog(loProgressDialog);
-        }
     };
 
     @Override
