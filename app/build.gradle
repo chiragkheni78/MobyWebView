@@ -16,10 +16,10 @@ android {
             keyPassword 'moby123'
         }
         debug {
-            storeFile file('/Volumes/Project/Project/Android/Git/Moby Cashback/keystore.jks')
+            /*storeFile file('/Volumes/Project/Project/Android/Git/Moby Cashback/keystore.jks')
             storePassword 'moby123'
             keyAlias 'moby'
-            keyPassword 'moby123'
+            keyPassword 'moby123'*/
         }
     }
 

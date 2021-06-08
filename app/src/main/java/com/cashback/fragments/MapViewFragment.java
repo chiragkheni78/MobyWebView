@@ -36,6 +36,7 @@ import com.cashback.activities.BankOfferDetailsActivity;
 import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.activities.PhoneLoginActivity;
 import com.cashback.databinding.FragmentMapViewBinding;
+import com.cashback.dialog.MessageDialog;
 import com.cashback.models.Ad;
 import com.cashback.models.MapMarker;
 import com.cashback.models.response.FetchOffersResponse;
@@ -43,7 +44,6 @@ import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
-import com.cashback.utils.custom.MessageDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
@@ -432,7 +432,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                 int liPosition = moMarkerMap.get(marker.getId());
                 MapMarker loMapMarker = moMapViewModel.getMapMarkerList().get(liPosition);
 
-                if (loMapMarker.getAdType() == Constants.AdType.BANK_OFFER.getValue()) {
+                if (loMapMarker.getAdType().equalsIgnoreCase(Constants.AdType.BANK_OFFER.getValue())) {
                     imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_yellow));
                     imagePin.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_yellow));
                 } else {
