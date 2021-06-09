@@ -398,6 +398,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             TextView loTvTitle = alertDialog.findViewById(R.id.tv_cis_title);
             TextView loTvNote = alertDialog.findViewById(R.id.tv_cis_message);
             ImageView loIvBanner = alertDialog.findViewById(R.id.ivBanner);
+            ImageView imageMainClose = alertDialog.findViewById(R.id.imageMainClose);
 
             loTvTitle.setText(fsTitle);
             loBtnShopNow.setText(Common.getDynamicText(getContext(), "btn_redeem_coupon"));
@@ -430,6 +431,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 AppGlobal.isDisplayRewardNote = true;
                 Intent intent = new Intent(getContext(), MyCouponsActivity.class);
                 startActivity(intent);
+            });
+
+            imageMainClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loBtnFindMore.performClick();
+                }
             });
 
             Advertisement finalLoAdvertisement = loAdvertisement;

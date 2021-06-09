@@ -132,6 +132,13 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initContent();
+
+        if (isReloadEnable) {
+            moMapViewModel.checkGPSEnabled(getActivity());
+        } else {
+            if (moBinding.llErrorMessage.getVisibility() == View.VISIBLE)
+                loadView();
+        }
     }
 
     private void initContent() {
@@ -206,7 +213,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         }
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         if (isReloadEnable) {
@@ -215,7 +222,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             if (moBinding.llErrorMessage.getVisibility() == View.VISIBLE)
                 loadView();
         }
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
