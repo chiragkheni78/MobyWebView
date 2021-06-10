@@ -156,6 +156,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             moBinding.llErrorMessage.setVisibility(View.VISIBLE);
             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "disable_location"));
             moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "disable_location_msg"));
+            errorButtonPressed();
         } else {
             moBinding.llErrorMessage.setVisibility(View.GONE);
             setupMapView();
@@ -209,6 +210,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         } else if (!moMapViewModel.isLocationEnabled((getContext()))) {
             if (!moMapViewModel.checkGPSEnabled(getActivity())) {
                 isReloadEnable = true;
+                loadView();
             }
         }
     }
@@ -234,10 +236,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         }
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         switch (requestCode) {
             case MY_PERMISSIONS_LOCATION:
                 if (ContextCompat.checkSelfPermission(getContext(),

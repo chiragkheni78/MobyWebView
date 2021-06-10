@@ -114,6 +114,9 @@ public class FragmentHelp extends BaseFragment {
 
         moBinding.indicator.setViewPager(moBinding.vpAdvert);
         moBinding.indicator.setVisibility(View.VISIBLE);
+
+        moBinding.imageSlider.setVisibility(View.GONE);
+        moBinding.flSlider.setVisibility(View.VISIBLE);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.cashback.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -14,10 +13,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
-import com.cashback.activities.BillUploadActivity;
-import com.cashback.activities.CouponDetailsActivity;
-import com.cashback.activities.MessageActivity;
-import com.cashback.activities.MyCouponsActivity;
 import com.cashback.models.Activity;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -25,19 +20,24 @@ import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
 
-import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
-import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
-
+@SuppressWarnings("All")
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.DataObjectHolder> {
 
     private static String TAG = ActivityListAdapter.class.getSimpleName();
     private ArrayList<Activity> moActivityList;
     private Context moContext;
+    private OnCouponItemClick onCouponItemClick;
+
+    public interface OnCouponItemClick{
+        void openCouponDetails(int position);
+        void openBillUpload(int position);
+    }
 
 
-    public ActivityListAdapter(Context foContext, ArrayList<Activity> foActivityList) {
+    public ActivityListAdapter(Context foContext, ArrayList<Activity> foActivityList, OnCouponItemClick onCouponItemClick) {
         moActivityList = foActivityList;
         moContext = foContext;
+        this.onCouponItemClick = onCouponItemClick;
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -65,7 +65,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             switch (foView.getId()) {
                 case R.id.tvCouponCode:
-                    ((MyCouponsActivity) moContext).openCouponDetails(liPosition);
+                    if (onCouponItemClick != null) {
+                        onCouponItemClick.openCouponDetails(liPosition);
+                    }
                     break;
                 default:
                     handleRegisterBill(liPosition);
@@ -90,8 +92,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 //                        loIntent.putExtra(ENGAGED_DATE, loActivity.getQuizEngageDateTime());
 //                        loIntent.putExtra(PIN_COLOR, loActivity.getPinColor());
 //                        moContext.startActivity(loIntent);
-
-                        ((MyCouponsActivity) moContext).openBillUpload(fiPosition);
+                        if (onCouponItemClick != null) {
+                            onCouponItemClick.openBillUpload(fiPosition);
+                        }
                     }
                 }
             }
