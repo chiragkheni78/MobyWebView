@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cashback.adapters.AdvertAdapter;
 import com.cashback.adapters.ImageSliderAdapter;
 import com.cashback.databinding.ActivityImageSlidderBinding;
 import com.cashback.models.Advertisement;
@@ -107,7 +108,7 @@ public class FragmentHelp extends BaseFragment {
     };
 
     private void setImageSlider(ArrayList<Advertisement> foAdvertisementList) {
-        ImageSliderAdapter loSliderAdapter = new ImageSliderAdapter(getContext(), foAdvertisementList);
+        /*ImageSliderAdapter loSliderAdapter = new ImageSliderAdapter(getContext(), foAdvertisementList);
         moBinding.vpAdvert.setAdapter(loSliderAdapter);
         moBinding.vpAdvert.addOnPageChangeListener(new CircularViewPagerHandler(moBinding.vpAdvert));
         moBinding.vpAdvert.addOnPageChangeListener(new CircularViewPagerHandler(moBinding.vpAdvert));
@@ -116,7 +117,11 @@ public class FragmentHelp extends BaseFragment {
         moBinding.indicator.setVisibility(View.VISIBLE);
 
         moBinding.imageSlider.setVisibility(View.GONE);
-        moBinding.flSlider.setVisibility(View.VISIBLE);
+        moBinding.flSlider.setVisibility(View.VISIBLE);*/
+
+        moBinding.imageSlider.setVisibility(View.VISIBLE);
+        moBinding.flSlider.setVisibility(View.GONE);
+        moBinding.imageSlider.setSliderAdapter(new AdvertAdapter(getContext(), foAdvertisementList));
     }
 
 }

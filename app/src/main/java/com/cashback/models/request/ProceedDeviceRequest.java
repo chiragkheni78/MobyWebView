@@ -16,6 +16,9 @@ public class ProceedDeviceRequest {
     @SerializedName("fsDeviceId")
     private String deviceId;
 
+    @SerializedName("fsToken")
+    private String firebaseToken;
+
     @SerializedName("fiUserId")
     private long userID;
 
@@ -33,6 +36,10 @@ public class ProceedDeviceRequest {
 
     public void setUserID(long userID) {
         this.userID = userID;
+    }
+
+    public void setFirebaseToken(String firebaseToken) {
+        this.firebaseToken = firebaseToken;
     }
 
     public String validateData(Context foContext) {

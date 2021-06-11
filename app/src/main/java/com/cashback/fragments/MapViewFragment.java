@@ -64,6 +64,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
 import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
 import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
+import static com.cashback.models.viewmodel.MapViewModel.REQUEST_CHECK_SETTINGS;
 
 @SuppressWarnings("All")
 public class MapViewFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
@@ -134,7 +135,9 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         initContent();
 
         if (isReloadEnable) {
-            moMapViewModel.checkGPSEnabled(getActivity());
+            if (moMapViewModel.checkGPSEnabled(getActivity())) {
+                moMapViewModel.checkGPSEnable(getActivity());
+            }
         } else {
             if (moBinding.llErrorMessage.getVisibility() == View.VISIBLE)
                 loadView();
@@ -206,11 +209,12 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
         if (AppGlobal.getFirebaseUser() == null) {
             Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
-            startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
+            getActivity().startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
         } else if (!moMapViewModel.isLocationEnabled((getContext()))) {
             if (!moMapViewModel.checkGPSEnabled(getActivity())) {
-                isReloadEnable = true;
-                loadView();
+                moMapViewModel.checkGPSEnable(getActivity());
+                /*isReloadEnable = true;
+                loadView();*/
             }
         }
     }
@@ -229,7 +233,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PHONE_LOGIN) {
+        if (requestCode == REQUEST_PHONE_LOGIN || requestCode == REQUEST_CHECK_SETTINGS) {
             if (resultCode == RESULT_OK) {
                 loadView();
             }

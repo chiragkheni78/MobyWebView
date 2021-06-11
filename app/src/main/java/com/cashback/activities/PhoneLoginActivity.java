@@ -87,9 +87,18 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
                 resendOTP();
                 break;
             case R.id.imageLoginClose:
-                finish();
+                onBackPressed();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_CANCELED, intent);
+        finish();
     }
 
     private void startTime() {

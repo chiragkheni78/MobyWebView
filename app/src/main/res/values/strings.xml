@@ -23,7 +23,7 @@
     <string name="coupon_valid_for">COUPON VALID FOR XX DAYS.</string>
 
     <string name="title_copy_to_clipboard">CashBack Activated !</string>
-    <string name="msg_copy_to_clipboard">AFTER YOU SHOP, we will verify\nyour purchase within 5 Min to 24 Hrs,\nPayment (Delivery + XX Days)</string>
+    <string name="msg_copy_to_clipboard">AFTER YOU SHOP, We Will Send\nYour CashBack SMS in 5 Min - 24 Hrs\n\nCash Credit in XXXXX Wallet from\nDelivery Date + YY Days.\n\nONLY Amazon &amp; Flipkart, Register\nBill (Amount &amp; Date) in "My Coupons"</string>
 
 
     <string name="mobile_no_mark_used">Mobile No. to Mark as Used</string>

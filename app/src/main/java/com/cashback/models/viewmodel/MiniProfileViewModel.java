@@ -37,8 +37,7 @@ public class MiniProfileViewModel extends ViewModel {
         GetMiniProfileRequest loGetMiniProfileRequest = new GetMiniProfileRequest();
         loGetMiniProfileRequest.setAction(Constants.API.GET_MINI_PROFILE.getValue());
         loGetMiniProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
-        loGetMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getReferralCode());
-//        loGetMiniProfileRequest.setReferrer("OTHER");
+        loGetMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getAppDownloadCampaign());
         loGetMiniProfileRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loGetMiniProfileRequest.validateData(foContext);
@@ -112,8 +111,7 @@ public class MiniProfileViewModel extends ViewModel {
         SaveMiniProfileRequest loSaveMiniProfileRequest = new SaveMiniProfileRequest(fiAge, fsGender, fiEWalletId, fsUPIAddress);
         loSaveMiniProfileRequest.setAction(Constants.API.SAVE_MINI_PROFILE.getValue());
         loSaveMiniProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
-        loSaveMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getReferralCode());
-//        loSaveMiniProfileRequest.setReferrer("OTHER");
+        loSaveMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getAppDownloadCampaign());
         loSaveMiniProfileRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loSaveMiniProfileRequest.validateData(foContext);

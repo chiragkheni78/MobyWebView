@@ -174,16 +174,18 @@ public class MapViewModel extends ViewModel {
         return true;
     }
 
+    public void checkGPSEnable(Activity foContext) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                createLocationRequest(foContext);
+            }
+        }, 400);
+    }
+
     public boolean checkGPSEnabled(Activity foContext) {
         if (!Common.isGPSEnabled(foContext)) {
-            Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-//                    request location
-                    createLocationRequest(foContext);
-                }
-            }, 400);
             return false;
         } else {
             checkLocationPermission(foContext);

@@ -42,7 +42,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode, tvRegisterBill, tvExpireDay;
-        LinearLayout loLlRoot;
+        LinearLayout loLlRoot, loLllRegisterBill;
 
         public DataObjectHolder(View foView) {
             super(foView);
@@ -55,6 +55,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             tvExpireDay = foView.findViewById(R.id.tvExpireDay);
 
             loLlRoot = foView.findViewById(R.id.llTimeline);
+            loLllRegisterBill = foView.findViewById(R.id.llRegisterBill);
             foView.setOnClickListener(this);
             tvCouponCode.setOnClickListener(this);
         }
@@ -139,7 +140,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
         if (foActivity.getCouponCode() == null || foActivity.getCouponCode().isEmpty()) {
             foHolder.tvCouponCode.setVisibility(View.GONE);
-            foHolder.tvRegisterBill.setVisibility(View.GONE);
+            foHolder.loLllRegisterBill.setVisibility(View.GONE);
             foHolder.tvRegisterBill.setPaintFlags(0);
             foHolder.tvExpireDay.setVisibility(View.GONE);
         } else {
@@ -172,14 +173,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             }
 
             if (foActivity.isBillUploadEnable()) {
-                foHolder.tvRegisterBill.setVisibility(View.VISIBLE);
+                foHolder.loLllRegisterBill.setVisibility(View.VISIBLE);
                 foHolder.tvRegisterBill.setPaintFlags(0);
                 if (foActivity.isBillUploaded()) {
                     foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
                     foHolder.tvRegisterBill.setPaintFlags(foHolder.tvRegisterBill.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }
             } else {
-                foHolder.tvRegisterBill.setVisibility(View.GONE);
+                foHolder.loLllRegisterBill.setVisibility(View.GONE);
             }
             if (foActivity.isCouponExpired()) {
                 foHolder.tvExpireDay.setText(Common.getDynamicText(moContext, "coupon_expired"));

@@ -39,7 +39,7 @@ public class AppGlobal extends Application {
 
     private void configAdGyde() {
         AdGyde.init(this, Constants.ADGYDE_APP_KEY, "Organic");
-        AdGyde.setDebugEnabled(true);
+        AdGyde.setDebugEnabled(false);
     }
 
     public static FirebaseUser getFirebaseUser() {

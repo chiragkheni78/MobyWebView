@@ -171,6 +171,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void saveShortProfile() {
+        Common.hideKeyboard(this);
         int age = getAge();
         String lsGender = getGender();
 
@@ -191,7 +192,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         int idx = moBinding.rgGender.indexOfChild(radioButton);
 
         String gender = null;
-        if (idx > 0) {
+        if (idx > -1) {
             gender = (idx == 1) ? Constants.Gender.MALE.getValue() : Constants.Gender.FEMALE.getValue(); //1-Male & 2-Female
         }
         return gender;

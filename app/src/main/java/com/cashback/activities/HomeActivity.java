@@ -61,7 +61,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     ActivityHomeBinding moBinding;
 
     HomeViewModel moHomeViewModel;
-    private String stFrom= "";
+    private String stFrom = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         moBinding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(getContentView(moBinding));
 
-        if (getIntent() != null && getIntent().hasExtra(IS_FROM)){
+        if (getIntent() != null && getIntent().hasExtra(IS_FROM)) {
             stFrom = getIntent().getStringExtra(IS_FROM);
         }
 
@@ -100,6 +100,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
         if (fragment != null) {
+            if (fragment instanceof MapViewFragment) {
+                ((MapViewFragment) fragment).onActivityResult(requestCode, resultCode, data);
+            } else if (fragment instanceof FragmentMyCoupons) {
+                ((FragmentMyCoupons) fragment).onActivityResult(requestCode, resultCode, data);
+            } else if (fragment instanceof OfferListFragment) {
+                ((OfferListFragment) fragment).onActivityResult(requestCode, resultCode, data);
+            } else if (fragment instanceof FragmentHelp) {
+                ((FragmentHelp) fragment).onActivityResult(requestCode, resultCode, data);
+            }
             fragment.onActivityResult(requestCode, resultCode, data);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -176,7 +185,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             FragmentHelp fragmentHelp = new FragmentHelp();
             Bundle bundleHelp = new Bundle();
             bundleHelp.putString(Constants.IntentKey.SCREEN_TITLE, getString(R.string.help));
-            bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.HELP_SCREEN.getValue());
+            bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.ONGOING_DEALS.getValue());
             fragmentHelp.setArguments(bundleHelp);
             Common.replaceFragment(HomeActivity.this, fragmentHelp, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
         }

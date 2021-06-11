@@ -3,6 +3,8 @@ package com.cashback.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import static com.cashback.utils.Constants.DEFAULT_REFERRAL_CODE;
+
 public class SharedPreferenceManager {
 
     SharedPreferences moSharedPreferences;
@@ -137,9 +139,9 @@ public class SharedPreferenceManager {
 
     public String getAppDownloadCampaign() {
         if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(APP_DOWNLOAD_CAMPAIGN, "");
+            return moSharedPreferences.getString(APP_DOWNLOAD_CAMPAIGN, DEFAULT_REFERRAL_CODE);
         }
-        return "";
+        return DEFAULT_REFERRAL_CODE;
     }
     //END APP_DOWNLOAD_CAMPAIGN
 
