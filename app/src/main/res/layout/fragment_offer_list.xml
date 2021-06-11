@@ -13,66 +13,91 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
             android:id="@+id/rlSearch"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rect_white_black"
-            android:padding="0dp"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:cardCornerRadius="5dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toLeftOf="@+id/btnSearch">
+                android:layout_height="42dp"
+                android:padding="0dp"
+                android:visibility="visible">
 
-                <EditText
-                    android:id="@+id/etSearch"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toLeftOf="@+id/ivFilter"
-                    android:background="@null"
-                    android:hint="Search shop"
-                    android:maxLines="1"
-                    android:focusableInTouchMode="true"
-                    android:padding="10dp"
-                    android:textColor="@color/primary_text" />
+                    android:layout_toLeftOf="@+id/btnSearch">
+
+                    <EditText
+                        android:id="@+id/etSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toLeftOf="@+id/ivFilter"
+                        android:background="@null"
+                        android:focusableInTouchMode="true"
+                        android:hint="Search shop"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:textColor="@color/primary_text" />
+
+                    <ImageView
+                        android:id="@+id/ivFilter"
+                        android:layout_width="42dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_filter"
+                        android:visibility="gone"
+                        app:tint="@color/colorPrimary" />
+
+                </RelativeLayout>
 
                 <ImageView
-                    android:id="@+id/ivFilter"
-                    android:layout_width="42dp"
+                    android:id="@+id/btnSearch"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/ic_search_back"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_search" />
+
+                <!--<TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_filter"
+                    android:background="@drawable/ic_search_back"
+                    android:gravity="center"
+                    android:minWidth="@dimen/_70sdp"
+                    android:padding="8dp"
                     android:visibility="gone"
-                    app:tint="@color/colorPrimary"/>
+                    android:text="Search"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"
+                    android:tint="@color/primary" />-->
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/btnSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/ic_search_back"
-                android:gravity="center"
-                android:minWidth="@dimen/_70sdp"
-                android:padding="8dp"
-                android:text="Search"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                android:tint="@color/primary" />
-
-        </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/_5sdp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
             android:visibility="visible" />
 
         <View
@@ -91,7 +116,7 @@
             android:id="@+id/rvOfferList"
             style="@style/RecycleView78"
             android:visibility="visible"
-            tools:listitem="@layout/item_offer_list"/>
+            tools:listitem="@layout/item_offer_list" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_action_search"

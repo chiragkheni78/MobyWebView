@@ -64,6 +64,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
 import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
 import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
+import static com.cashback.models.viewmodel.MapViewModel.REQUEST_CHECK_SETTINGS;
 
 @SuppressWarnings("All")
 public class MapViewFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
@@ -132,6 +133,15 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initContent();
+
+        if (isReloadEnable) {
+            if (moMapViewModel.checkGPSEnabled(getActivity())) {
+                moMapViewModel.checkGPSEnable(getActivity());
+            }
+        } else {
+            if (moBinding.llErrorMessage.getVisibility() == View.VISIBLE)
+                loadView();
+        }
     }
 
     private void initContent() {
@@ -149,6 +159,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             moBinding.llErrorMessage.setVisibility(View.VISIBLE);
             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "disable_location"));
             moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "disable_location_msg"));
+            errorButtonPressed();
         } else {
             moBinding.llErrorMessage.setVisibility(View.GONE);
             setupMapView();
@@ -198,15 +209,17 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
         if (AppGlobal.getFirebaseUser() == null) {
             Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
-            startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
+            getActivity().startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
         } else if (!moMapViewModel.isLocationEnabled((getContext()))) {
             if (!moMapViewModel.checkGPSEnabled(getActivity())) {
-                isReloadEnable = true;
+                moMapViewModel.checkGPSEnable(getActivity());
+                /*isReloadEnable = true;
+                loadView();*/
             }
         }
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         if (isReloadEnable) {
@@ -215,22 +228,19 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             if (moBinding.llErrorMessage.getVisibility() == View.VISIBLE)
                 loadView();
         }
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PHONE_LOGIN) {
+        if (requestCode == REQUEST_PHONE_LOGIN || requestCode == REQUEST_CHECK_SETTINGS) {
             if (resultCode == RESULT_OK) {
                 loadView();
             }
         }
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         switch (requestCode) {
             case MY_PERMISSIONS_LOCATION:
                 if (ContextCompat.checkSelfPermission(getContext(),

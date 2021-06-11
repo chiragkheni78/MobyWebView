@@ -50,6 +50,7 @@ import java.util.concurrent.TimeUnit;
 import static android.view.View.GONE;
 import static com.cashback.models.viewmodel.QuizDetailsViewModel.REQUEST_CAMERA;
 
+@SuppressWarnings("All")
 public class QuizDetailsActivity extends BaseActivity implements View.OnClickListener, QuizOptionAdapter.OnOptionSelectListener {
 
     private static final String TAG = QuizDetailsActivity.class.getSimpleName();
@@ -486,11 +487,11 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
                 loBtnTimeline.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(moContext, MyCouponsActivity.class);
-                        intent.putExtra(Constants.IntentKey.OFFER_ID, moOffer.getAdID());
+                        Intent intent = new Intent(moContext, HomeActivity.class);
+                        intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
                         //intent.putExtra("foGiftCard", foGiftCard);
                         moContext.startActivity(intent);
-                        finish();
+                        finishAffinity();
                         moDialog.dismiss();
                     }
                 });

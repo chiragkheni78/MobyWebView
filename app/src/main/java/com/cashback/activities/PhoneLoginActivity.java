@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -25,7 +26,6 @@ import com.cashback.adapters.DeviceListAdapter;
 import com.cashback.databinding.ActivityPhoneLoginBinding;
 import com.cashback.models.Device;
 import com.cashback.models.PhoneObject;
-import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.MobileDeviceResponse;
 import com.cashback.models.response.ProceedDeviceResponse;
 import com.cashback.models.viewmodel.PhoneLoginViewModel;
@@ -37,12 +37,15 @@ import com.google.firebase.auth.PhoneAuthCredential;
 
 import java.util.ArrayList;
 
-
+@SuppressWarnings("All")
 public class PhoneLoginActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = PhoneLoginActivity.class.getSimpleName();
     ActivityPhoneLoginBinding moBinding;
     PhoneLoginViewModel moPhoneLoginViewModel;
+    CountDownTimer timer;
+    private static final long TIMER_MINUTE = 1000 * 60 * 1;
+    private int count = 60;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
         moBinding.btnSendOTP.setOnClickListener(this);
         moBinding.btnVerifyOTP.setOnClickListener(this);
         moBinding.tvResendCode.setOnClickListener(this);
+        moBinding.imageLoginClose.setOnClickListener(this);
         otpListener();
     }
 
@@ -82,7 +86,43 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
             case R.id.tvResendCode:
                 resendOTP();
                 break;
+            case R.id.imageLoginClose:
+                onBackPressed();
+                break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_CANCELED, intent);
+        finish();
+    }
+
+    private void startTime() {
+        moBinding.tvResendCode.setEnabled(false);
+        timer = new CountDownTimer(TIMER_MINUTE, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                String time = "";
+                if (("" + count).length() > 1) {
+                    time = count + "";
+                } else {
+                    time = "0" + time;
+                }
+                moBinding.countTime.setText("00:" + time);
+                count--;
+            }
+
+            @Override
+            public void onFinish() {
+                moBinding.countTime.setText("00:00");
+                count--;
+                moBinding.tvResendCode.setEnabled(true);
+            }
+        }.start();
     }
 
 
@@ -181,7 +221,6 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
     // [END on_start_check_user]
 
 
-
     private void updateUI(int uiState, FirebaseUser user, PhoneAuthCredential cred) {
         switch (uiState) {
             case STATE_INITIALIZED:
@@ -198,6 +237,9 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
 
                 moBinding.llOTPView.setVisibility(View.VISIBLE);
                 moBinding.flSendOTP.setVisibility(View.GONE);
+
+                startTime();
+
                 break;
             case STATE_VERIFY_FAILED:
                 dismissProgressDialog();
@@ -219,13 +261,15 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
             case STATE_SIGNIN_FAILED:
                 // No-op, handled by sign-in check
                 moBinding.otpView.setOTP("");
+                timer.cancel();
+
                 moBinding.tvResendCode.setVisibility(View.VISIBLE);
                 Snackbar.make(findViewById(android.R.id.content), R.string.status_sign_in_failed,
                         Snackbar.LENGTH_SHORT).show();
 
                 break;
             case STATE_SIGNIN_SUCCESS:
-                    checkConnectedDevices();
+                checkConnectedDevices();
                 break;
         }
     }

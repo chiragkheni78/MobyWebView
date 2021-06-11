@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:layout_collapseMode="parallax"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
@@ -31,7 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="#77000000"
                 android:padding="@dimen/padding_standard"
                 android:visibility="visible"
                 app:fillColor="@color/colorPrimary"
@@ -46,6 +45,7 @@
             android:id="@+id/imageSlider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="@dimen/_20sdp"
             app:sliderAnimationDuration="600"
             app:sliderAutoCycleDirection="back_and_forth"
             app:sliderAutoCycleEnabled="true"

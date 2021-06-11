@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -50,6 +52,7 @@ import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
+import static com.cashback.utils.Constants.IntentKey.IS_FROM;
 
 @SuppressWarnings("All")
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
@@ -58,12 +61,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     ActivityHomeBinding moBinding;
 
     HomeViewModel moHomeViewModel;
+    private String stFrom = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         moBinding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(getContentView(moBinding));
+
+        if (getIntent() != null && getIntent().hasExtra(IS_FROM)) {
+            stFrom = getIntent().getStringExtra(IS_FROM);
+        }
+
         initializeContent();
     }
 
@@ -74,6 +83,35 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             ((FragmentMyCoupons) fragment).onBackPressed();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+        if (fragment instanceof MapViewFragment) {
+            ((MapViewFragment) fragment).onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        Log.e("AppName", "Here is Location");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+        if (fragment != null) {
+            if (fragment instanceof MapViewFragment) {
+                ((MapViewFragment) fragment).onActivityResult(requestCode, resultCode, data);
+            } else if (fragment instanceof FragmentMyCoupons) {
+                ((FragmentMyCoupons) fragment).onActivityResult(requestCode, resultCode, data);
+            } else if (fragment instanceof OfferListFragment) {
+                ((OfferListFragment) fragment).onActivityResult(requestCode, resultCode, data);
+            } else if (fragment instanceof FragmentHelp) {
+                ((FragmentHelp) fragment).onActivityResult(requestCode, resultCode, data);
+            }
+            fragment.onActivityResult(requestCode, resultCode, data);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -93,37 +131,31 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             moBinding.drawerLayout.openDrawer(Gravity.LEFT); //OPEN Nav Drawer!
         });
 
+        if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {
+            moBinding.navigation.getMenu().getItem(0).setChecked(true);
+        } else {
+            moBinding.navigation.getMenu().getItem(1).setChecked(true);
+        }
         moBinding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.itemCoupons:
-                        FragmentMyCoupons fragmentMyCoupons = new FragmentMyCoupons();
-                        Bundle bundle = new Bundle();
-                        bundle.putLong(Constants.IntentKey.ACTIVITY_ID, 0);
-                        fragmentMyCoupons.setArguments(bundle);
-                        Common.replaceFragment(HomeActivity.this, fragmentMyCoupons, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
-
-                        //openMyCoupons(0);
+                        openNavigationBarFragments(0);
                         break;
                     case R.id.itemOffer:
-                        loadOfferListFragment(0, 0, 0, 0);
+                        openNavigationBarFragments(1);
                         break;
                     case R.id.itemNoItem:
 
                         break;
                     case R.id.itemNearBy:
-                        loadMapViewFragment();
+                        openNavigationBarFragments(3);
                         break;
                     case R.id.itemHelp:
 
-                        FragmentHelp fragmentHelp = new FragmentHelp();
-                        Bundle bundleHelp = new Bundle();
-                        bundleHelp.putString(Constants.IntentKey.SCREEN_TITLE, getString(R.string.help));
-                        bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.HELP_SCREEN.getValue());
-                        fragmentHelp.setArguments(bundleHelp);
-                        Common.replaceFragment(HomeActivity.this, fragmentHelp, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
+                        openNavigationBarFragments(4);
 
                         //openHelp();
                         break;
@@ -133,6 +165,30 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         });
 
         getSettings();
+    }
+
+    public void openNavigationBarFragments(int position) {
+        moBinding.navigation.getMenu().getItem(position).setChecked(true);
+        if (position == 0) {
+            FragmentMyCoupons fragmentMyCoupons = new FragmentMyCoupons();
+            Bundle bundle = new Bundle();
+            bundle.putLong(Constants.IntentKey.ACTIVITY_ID, 0);
+            fragmentMyCoupons.setArguments(bundle);
+            Common.replaceFragment(HomeActivity.this, fragmentMyCoupons, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
+        } else if (position == 1) {
+            loadOfferListFragment(0, 0, 0, 0);
+        } else if (position == 2) {
+
+        } else if (position == 3) {
+            loadMapViewFragment();
+        } else if (position == 4) {
+            FragmentHelp fragmentHelp = new FragmentHelp();
+            Bundle bundleHelp = new Bundle();
+            bundleHelp.putString(Constants.IntentKey.SCREEN_TITLE, getString(R.string.help));
+            bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.ONGOING_DEALS.getValue());
+            fragmentHelp.setArguments(bundleHelp);
+            Common.replaceFragment(HomeActivity.this, fragmentHelp, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
+        }
     }
 
     private void getSettings() {
@@ -214,10 +270,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         Intent loIntent = null;
         switch (item.getItemId()) {
             case R.id.nav_home:
-
+                openNavigationBarFragments(1);
                 break;
             case R.id.nav_my_coupons:
-                openMyCoupons(0);
+                //openMyCoupons(0);
+                openNavigationBarFragments(0);
+
                 break;
             case R.id.nav_ongoing_deals:
                 openOngoingDeal();
@@ -229,7 +287,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 openMessages(0);
                 break;
             case R.id.nav_help:
-                openHelp();
+//                openHelp();
+                openNavigationBarFragments(4);
                 break;
             case R.id.nav_profile:
                 openProfile();
@@ -261,6 +320,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         loBundle.putLong(Constants.IntentKey.BANNER_ID, flBannerId);
         loFragment.setArguments(loBundle);
         Common.replaceFragment(this, loFragment, Constants.FragmentTag.TAG_OFFER_LIST, false);
+        moBinding.navigation.getMenu().getItem(1).setChecked(true);
     }
 
     public void loadMapViewFragment() {
@@ -362,15 +422,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 //dialogUpdateApp(fsMessage, true, false);
             } else {
                 if (!getPreferenceManager().isMarketingAd()) {
-                    if (!AppGlobal.isDisplayRewardNote) {
-                        showFirstDialog(foJsonObject.getFirstTimeAlertTitle(), foJsonObject.getFirstTimeAlertMsg(), foJsonObject.getAdvertisementList());
+                    if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {
+                        openNavigationBarFragments(0);
                     } else {
+                        if (!AppGlobal.isDisplayRewardNote) {
+                            showFirstDialog(foJsonObject.getFirstTimeAlertTitle(), foJsonObject.getFirstTimeAlertMsg(), foJsonObject.getAdvertisementList());
+                        } else {
 
-                        int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
-                        long llOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
-                        long llBannerID = getIntent().getLongExtra(Constants.IntentKey.BANNER_ID, 0);
+                            int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
+                            long llOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
+                            long llBannerID = getIntent().getLongExtra(Constants.IntentKey.BANNER_ID, 0);
 
-                        loadOfferListFragment(liCategoryID, llOfferID, 0, llBannerID);
+                            loadOfferListFragment(liCategoryID, llOfferID, 0, llBannerID);
+                        }
                     }
                 }
             }
@@ -398,6 +462,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             TextView loTvTitle = alertDialog.findViewById(R.id.tv_cis_title);
             TextView loTvNote = alertDialog.findViewById(R.id.tv_cis_message);
             ImageView loIvBanner = alertDialog.findViewById(R.id.ivBanner);
+            ImageView imageMainClose = alertDialog.findViewById(R.id.imageMainClose);
 
             loTvTitle.setText(fsTitle);
             loBtnShopNow.setText(Common.getDynamicText(getContext(), "btn_redeem_coupon"));
@@ -428,8 +493,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             loBtnShopNow.setOnClickListener(view -> {
                 alertDialog.dismiss();
                 AppGlobal.isDisplayRewardNote = true;
-                Intent intent = new Intent(getContext(), MyCouponsActivity.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(getContext(), MyCouponsActivity.class);
+                startActivity(intent);*/
+                openNavigationBarFragments(1);
+            });
+
+            imageMainClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loBtnFindMore.performClick();
+                }
             });
 
             Advertisement finalLoAdvertisement = loAdvertisement;

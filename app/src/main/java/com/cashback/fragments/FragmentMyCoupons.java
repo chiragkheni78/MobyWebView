@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cashback.R;
 import com.cashback.activities.BaseActivity;
+import com.cashback.activities.BillUploadActivity;
 import com.cashback.activities.CouponDetailsActivity;
 import com.cashback.activities.HomeActivity;
 import com.cashback.adapters.ActivityListAdapter;
@@ -43,9 +44,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import static com.cashback.activities.MyCouponsActivity.REQUEST_ACTIVITY_BILL_UPLOAD;
+import static com.cashback.activities.MyCouponsActivity.REQUEST_COUPON_DETAILS;
 import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
+import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
+import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
-public class FragmentMyCoupons extends BaseFragment implements View.OnClickListener {
+@SuppressWarnings("All")
+public class FragmentMyCoupons extends BaseFragment implements View.OnClickListener, ActivityListAdapter.OnCouponItemClick {
 
     public FragmentMyCoupons() {
 
@@ -93,7 +99,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         setToolbar();
         moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         moBinding.rvActivityList.setLayoutManager(moLayoutManager);
-        moActivityListAdapter = new ActivityListAdapter(getContext(), moActivityList);
+        moActivityListAdapter = new ActivityListAdapter(getContext(), moActivityList, this);
         moBinding.rvActivityList.setAdapter(moActivityListAdapter);
         setFilterView();
         getActivityList();
@@ -247,7 +253,8 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
                             return;
                         }
                         moDialog.dismiss();
-                        backToHome(MAP_SCREEN);
+                        ((HomeActivity) getActivity()).openNavigationBarFragments(3);
+                        /*backToHome(MAP_SCREEN);*/
                     }
                 });
 
@@ -262,7 +269,9 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onClick(View view) {
                         moDialog.dismiss();
-                        backToHome(null);
+//                        backToHome(null);
+
+                        ((HomeActivity) getActivity()).openNavigationBarFragments(1);
                     }
                 });
 
@@ -287,5 +296,51 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         }
         startActivity(loIntent);*/
         //getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+    private int miPosition = -1;
+
+    @Override
+    public void openBillUpload(int fiPosition) {
+        miPosition = fiPosition;
+        Intent loIntent = new Intent(getActivity(), BillUploadActivity.class);
+        loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(fiPosition).getActivityID());
+        loIntent.putExtra(ENGAGED_DATE, moActivityList.get(fiPosition).getQuizEngageDateTime());
+        loIntent.putExtra(PIN_COLOR, moActivityList.get(fiPosition).getPinColor());
+        startActivityForResult(loIntent, REQUEST_ACTIVITY_BILL_UPLOAD);
+    }
+
+    @Override
+    public void openCouponDetails(int fiPosition) {
+        miPosition = fiPosition;
+        Intent loIntent = new Intent(getActivity(), CouponDetailsActivity.class);
+        loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(fiPosition).getActivityID());
+        startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ACTIVITY_BILL_UPLOAD) {
+            if (resultCode == getActivity().RESULT_OK) { // Activity.RESULT_OK
+                if (miPosition > -1) {
+                    moActivityList.get(miPosition).setBillUploaded(true);
+                    moActivityList.get(miPosition).setCouponUsed(true);
+                    moActivityListAdapter.notifyDataSetChanged();
+                }
+            }
+        } else if (requestCode == REQUEST_COUPON_DETAILS) {
+            if (resultCode == getActivity().RESULT_OK) { // Activity.RESULT_OK
+                if (miPosition > -1) {
+                    String lsAction = data.getAction();
+                    if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
+                        openBillUpload(miPosition);
+                    } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)) {
+                        moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
+                        moActivityListAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
     }
 }

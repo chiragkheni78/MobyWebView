@@ -1,112 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="@dimen/_5sdp"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/_5sdp">
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <LinearLayout
-            android:id="@+id/llRoot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#EFECE7"
-            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@color/white"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="@dimen/_5sdp">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_cis_title"
+                <LinearLayout
+                    android:id="@+id/llRoot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="#EFECE7"
                     android:gravity="center"
-                    android:letterSpacing="0.3"
-                    android:lineSpacingExtra="@dimen/_2sdp"
-                    android:text="CAUTION !"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_16sdp"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/tv_cis_message"
-                    style="@style/TvStandard"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:gravity="center"
-                    android:letterSpacing="0.1"
-                    android:lineSpacingExtra="@dimen/_2sdp"
-                    android:text="YOU GOT 1 FREE MOBY COUPONS\nUPTO 50% OFF AT STORE CHECKOUT\nAND\nEXTRA MOBY CASHBACK UPTO\nRS 2200 CREDIT TO E-WALLET\n"
-                    android:textColor="@color/colorPrimaryText"
-                    />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/ivBanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:src="@drawable/sample3"
-                    android:adjustViewBounds="true"
-                    android:visibility="visible" />
+                        <TextView
+                            android:id="@+id/tv_cis_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:gravity="center"
+                            android:letterSpacing="0.3"
+                            android:lineSpacingExtra="@dimen/_2sdp"
+                            android:text="CAUTION !"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="@dimen/_16sdp"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_cis_message"
+                            style="@style/TvStandard"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:gravity="center"
+                            android:letterSpacing="0.1"
+                            android:lineSpacingExtra="@dimen/_2sdp"
+                            android:text="YOU GOT 1 FREE MOBY COUPONS\nUPTO 50% OFF AT STORE CHECKOUT\nAND\nEXTRA MOBY CASHBACK UPTO\nRS 2200 CREDIT TO E-WALLET\n"
+                            android:textColor="@color/colorPrimaryText" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/ivBanner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/sample3"
+                            android:visibility="visible" />
 
-                <Button
-                    android:id="@+id/b_cis_ok"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_black_white"
-                    android:gravity="center"
-                    android:text="@string/btn_redeem_coupon"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/txt_standard"
-                    android:textStyle="bold" />
+                    </LinearLayout>
 
-                <Button
-                    android:id="@+id/b_cis_cancel"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_black_white"
-                    android:gravity="center"
-                    android:text="@string/btn_get_free_coupon"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/txt_standard"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
+                        <Button
+                            android:id="@+id/b_cis_ok"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_black_white"
+                            android:gravity="center"
+                            android:text="@string/btn_redeem_coupon"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_standard"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/b_cis_cancel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_black_white"
+                            android:gravity="center"
+                            android:text="@string/btn_get_free_coupon"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_standard"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
 
+        <ImageView
+            android:id="@+id/imageMainClose"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:elevation="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_close_red"/>
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

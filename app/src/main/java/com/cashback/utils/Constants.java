@@ -10,6 +10,7 @@ public class Constants {
     public static String ADGYDE_APP_KEY = BuildConfig.ADGYDE_APP_KEY;
 
     public static String IMAGE_BASE_URL = "https://mobyads.in/moby/";
+    public static String DEFAULT_REFERRAL_CODE = "";
 
 
     public class FragmentTag {
@@ -34,6 +35,8 @@ public class Constants {
         public static final String SCREEN_TITLE = "screenTitle";
         public static final String WEBVIEW_PAGE_NAME = "webviewURL";
         public static final String VIDEO_URL = "videoURL";
+        public static final String IS_FROM = "isFrom";
+        public static final String FROM_COUPON = "fromCoupon";
 
 
         public class Action {

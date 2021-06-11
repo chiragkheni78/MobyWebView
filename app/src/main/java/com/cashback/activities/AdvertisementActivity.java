@@ -98,6 +98,8 @@ public class AdvertisementActivity extends BaseActivity{
 //        moBinding.indicator.setViewPager(moBinding.vpAdvert);
 //        moBinding.indicator.setVisibility(View.VISIBLE);
 
+        moBinding.imageSlider.setVisibility(View.VISIBLE);
+        moBinding.flSlider.setVisibility(View.GONE);
         moBinding.imageSlider.setSliderAdapter(new AdvertAdapter(getContext(), foAdvertisementList));
     }
 

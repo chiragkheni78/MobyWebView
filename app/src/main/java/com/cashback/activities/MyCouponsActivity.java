@@ -38,7 +38,8 @@ import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
 import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
-public class MyCouponsActivity extends BaseActivity implements View.OnClickListener {
+@SuppressWarnings("All")
+public class MyCouponsActivity extends BaseActivity implements View.OnClickListener, ActivityListAdapter.OnCouponItemClick {
 
     private static final String TAG = MyCouponsActivity.class.getSimpleName();
     public static final int REQUEST_ACTIVITY_BILL_UPLOAD = 786;
@@ -72,7 +73,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
         setToolbar();
         moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         moBinding.rvActivityList.setLayoutManager(moLayoutManager);
-        moActivityListAdapter = new ActivityListAdapter(getContext(), moActivityList);
+        moActivityListAdapter = new ActivityListAdapter(getContext(), moActivityList, this);
         moBinding.rvActivityList.setAdapter(moActivityListAdapter);
         setFilterView();
         getActivityList();
@@ -271,6 +272,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
 
     private int miPosition = -1;
 
+    @Override
     public void openBillUpload(int fiPosition) {
         miPosition = fiPosition;
         Intent loIntent = new Intent(moContext, BillUploadActivity.class);
@@ -280,6 +282,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
         startActivityForResult(loIntent, REQUEST_ACTIVITY_BILL_UPLOAD);
     }
 
+    @Override
     public void openCouponDetails(int fiPosition) {
         miPosition = fiPosition;
         Intent loIntent = new Intent(moContext, CouponDetailsActivity.class);

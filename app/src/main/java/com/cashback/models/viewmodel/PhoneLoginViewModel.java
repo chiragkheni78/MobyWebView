@@ -20,6 +20,7 @@ import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
+import com.cashback.utils.SharedPreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,6 +44,7 @@ import static com.cashback.activities.PhoneLoginActivity.STATE_CODE_SENT;
 import static com.cashback.activities.PhoneLoginActivity.STATE_INITIALIZED;
 import static com.cashback.activities.PhoneLoginActivity.STATE_SIGNIN_FAILED;
 import static com.cashback.activities.PhoneLoginActivity.STATE_SIGNIN_SUCCESS;
+import static com.cashback.activities.PhoneLoginActivity.STATE_VERIFY_FAILED;
 import static com.cashback.activities.PhoneLoginActivity.STATE_VERIFY_SUCCESS;
 
 
@@ -86,7 +88,7 @@ public class PhoneLoginViewModel extends ViewModel {
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
                 }
-
+                updateUI(STATE_VERIFY_FAILED);
                 // Show a message and update the UI
             }
 
@@ -255,6 +257,11 @@ public class PhoneLoginViewModel extends ViewModel {
         loProceedDeviceRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
         loProceedDeviceRequest.setMobileNumber(AppGlobal.getPhoneNumber());
         loProceedDeviceRequest.setUserID(flUserID);
+
+        SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(foContext);
+        if (!loSharedPreferenceManager.getFcmToken().isEmpty())
+            loProceedDeviceRequest.setFirebaseToken(loSharedPreferenceManager.getFcmToken());
+        else loSharedPreferenceManager.setFcmTokenSynch(false);
 
         String lsMessage = loProceedDeviceRequest.validateData(foContext);
         if (lsMessage != null) {

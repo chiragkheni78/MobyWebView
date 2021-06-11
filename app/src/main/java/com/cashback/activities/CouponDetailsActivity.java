@@ -465,7 +465,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         } else {
             try {
                 String lsTitle = Common.getDynamicText(getContext(), "title_copy_to_clipboard");
-                String lsMessage = Common.getDynamicText(getContext(), "msg_copy_to_clipboard").replace("XX", String.valueOf(moActivity.getVirtualCashTransferDays()));
+                String lsMessage = Common.getDynamicText(getContext(), "msg_copy_to_clipboard")
+                        .replace("XXXXX", moActivity.getWalletName())
+                        .replace("YY", String.valueOf(moActivity.getVirtualCashTransferDays()));
                 MessageDialog loDialog = new MessageDialog(CouponDetailsActivity.this, lsTitle, lsMessage, null, false);
                 loDialog.setClickListener(new View.OnClickListener() {
                     @Override

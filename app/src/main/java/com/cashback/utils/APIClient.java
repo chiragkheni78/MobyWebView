@@ -1,6 +1,7 @@
 package com.cashback.utils;
 
 import com.cashback.AppGlobal;
+import com.cashback.BuildConfig;
 import com.cashback.interfaces.AppServices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,7 +26,11 @@ public class APIClient {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        if (BuildConfig.DEBUG) {
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        } else {
+            logging.setLevel(HttpLoggingInterceptor.Level.NONE);
+        }
 
         Gson gson = new GsonBuilder()
                 .setLenient()

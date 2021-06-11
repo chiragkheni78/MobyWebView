@@ -250,7 +250,6 @@
                     <EditText
                         android:id="@+id/etEmail"
                         style="@style/etStandard"
-                        android:focusable="false"
                         android:hint="@string/hint_email_address"
                         android:inputType="textPersonName" />
 
@@ -400,7 +399,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fadeScrollbars="false"
-                    android:scrollbars="horizontal"
+                    android:scrollbars="none"
                     tools:listitem="@layout/item_debit_card"
                     android:layout_marginTop="@dimen/margin_view" />
 

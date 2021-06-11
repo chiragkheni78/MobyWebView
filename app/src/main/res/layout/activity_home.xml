@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_round_menu_24"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
             app:backgroundTint="@color/colorPrimary"
             app:tint="@android:color/white" />
 

@@ -1,7 +1,6 @@
 package com.cashback.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -14,10 +13,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
-import com.cashback.activities.BillUploadActivity;
-import com.cashback.activities.CouponDetailsActivity;
-import com.cashback.activities.MessageActivity;
-import com.cashback.activities.MyCouponsActivity;
 import com.cashback.models.Activity;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -25,24 +20,29 @@ import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
 
-import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
-import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
-
+@SuppressWarnings("All")
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.DataObjectHolder> {
 
     private static String TAG = ActivityListAdapter.class.getSimpleName();
     private ArrayList<Activity> moActivityList;
     private Context moContext;
+    private OnCouponItemClick onCouponItemClick;
+
+    public interface OnCouponItemClick{
+        void openCouponDetails(int position);
+        void openBillUpload(int position);
+    }
 
 
-    public ActivityListAdapter(Context foContext, ArrayList<Activity> foActivityList) {
+    public ActivityListAdapter(Context foContext, ArrayList<Activity> foActivityList, OnCouponItemClick onCouponItemClick) {
         moActivityList = foActivityList;
         moContext = foContext;
+        this.onCouponItemClick = onCouponItemClick;
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode, tvRegisterBill, tvExpireDay;
-        LinearLayout loLlRoot;
+        LinearLayout loLlRoot, loLllRegisterBill;
 
         public DataObjectHolder(View foView) {
             super(foView);
@@ -55,6 +55,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             tvExpireDay = foView.findViewById(R.id.tvExpireDay);
 
             loLlRoot = foView.findViewById(R.id.llTimeline);
+            loLllRegisterBill = foView.findViewById(R.id.llRegisterBill);
             foView.setOnClickListener(this);
             tvCouponCode.setOnClickListener(this);
         }
@@ -65,7 +66,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             switch (foView.getId()) {
                 case R.id.tvCouponCode:
-                    ((MyCouponsActivity) moContext).openCouponDetails(liPosition);
+                    if (onCouponItemClick != null) {
+                        onCouponItemClick.openCouponDetails(liPosition);
+                    }
                     break;
                 default:
                     handleRegisterBill(liPosition);
@@ -90,8 +93,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 //                        loIntent.putExtra(ENGAGED_DATE, loActivity.getQuizEngageDateTime());
 //                        loIntent.putExtra(PIN_COLOR, loActivity.getPinColor());
 //                        moContext.startActivity(loIntent);
-
-                        ((MyCouponsActivity) moContext).openBillUpload(fiPosition);
+                        if (onCouponItemClick != null) {
+                            onCouponItemClick.openBillUpload(fiPosition);
+                        }
                     }
                 }
             }
@@ -136,7 +140,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
         if (foActivity.getCouponCode() == null || foActivity.getCouponCode().isEmpty()) {
             foHolder.tvCouponCode.setVisibility(View.GONE);
-            foHolder.tvRegisterBill.setVisibility(View.GONE);
+            foHolder.loLllRegisterBill.setVisibility(View.GONE);
             foHolder.tvRegisterBill.setPaintFlags(0);
             foHolder.tvExpireDay.setVisibility(View.GONE);
         } else {
@@ -169,14 +173,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             }
 
             if (foActivity.isBillUploadEnable()) {
-                foHolder.tvRegisterBill.setVisibility(View.VISIBLE);
+                foHolder.loLllRegisterBill.setVisibility(View.VISIBLE);
                 foHolder.tvRegisterBill.setPaintFlags(0);
                 if (foActivity.isBillUploaded()) {
                     foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
                     foHolder.tvRegisterBill.setPaintFlags(foHolder.tvRegisterBill.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }
             } else {
-                foHolder.tvRegisterBill.setVisibility(View.GONE);
+                foHolder.loLllRegisterBill.setVisibility(View.GONE);
             }
             if (foActivity.isCouponExpired()) {
                 foHolder.tvExpireDay.setText(Common.getDynamicText(moContext, "coupon_expired"));
