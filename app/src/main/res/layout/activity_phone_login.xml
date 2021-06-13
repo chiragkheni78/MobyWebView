@@ -17,7 +17,6 @@
             android:id="@+id/cardMainLogin"
             android:layout_width="@dimen/_320sdp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:orientation="vertical"
@@ -236,7 +235,7 @@
                                 android:layout_marginEnd="@dimen/_16sdp"
                                 android:layout_marginBottom="@dimen/_30sdp"
                                 android:background="@drawable/btn_primary"
-                                android:backgroundTint="#5a89be"
+                                android:backgroundTint="@color/secondary"
                                 android:text="Verify OTP"
                                 android:textAllCaps="false"
                                 android:textStyle="bold" />
@@ -282,8 +281,8 @@
 
         <ImageView
             android:id="@+id/imageLoginClose"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:elevation="@dimen/_10sdp"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_close_red"/>

@@ -6,7 +6,8 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_24"
-        android:title="Cashbacks" />
+        android:title="Cashbacks"
+        android:visible="false"/>
 
     <item
         android:id="@+id/nav_my_coupons"
@@ -29,14 +30,14 @@
         android:title="Messages" />
 
     <item
-        android:id="@+id/nav_help"
-        android:icon="@drawable/ic_help_24"
-        android:title="Help?" />
-
-    <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile_24"
         android:title="My Profile" />
+
+    <item
+        android:id="@+id/nav_help"
+        android:icon="@drawable/ic_help_24"
+        android:title="Help?" />
     <item
         android:id="@+id/nav_tc"
         android:icon="@drawable/ic_tc_24"
