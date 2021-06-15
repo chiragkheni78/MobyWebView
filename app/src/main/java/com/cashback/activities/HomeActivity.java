@@ -185,7 +185,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             FragmentHelp fragmentHelp = new FragmentHelp();
             Bundle bundleHelp = new Bundle();
             bundleHelp.putString(Constants.IntentKey.SCREEN_TITLE, getString(R.string.help));
-            bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.ONGOING_DEALS.getValue());
+            bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.HELP_SCREEN.getValue());
             fragmentHelp.setArguments(bundleHelp);
             Common.replaceFragment(HomeActivity.this, fragmentHelp, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
         }
