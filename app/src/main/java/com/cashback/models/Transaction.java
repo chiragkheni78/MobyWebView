@@ -114,7 +114,7 @@ public class Transaction {
         return transactionAmount;
     }
 
-    public int getFiTrasactionStatus() {
+    public int getTrasactionStatus() {
         return fiTrasactionStatus;
     }
 

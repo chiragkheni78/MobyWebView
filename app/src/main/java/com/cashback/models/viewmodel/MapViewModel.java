@@ -145,7 +145,7 @@ public class MapViewModel extends ViewModel {
             loPinIcon = BitmapDescriptorFactory.defaultMarker(62.0f);
             lsSnippet = loMapMarker.getProductName();
         } else {
-            lsSnippet = "$ " + loMapMarker.getQuizReward();
+            lsSnippet = "Rs. " + loMapMarker.getQuizReward();
             if (loMapMarker.isEngagedFlag()) {
                 loPinIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE); // Gray
             } else {

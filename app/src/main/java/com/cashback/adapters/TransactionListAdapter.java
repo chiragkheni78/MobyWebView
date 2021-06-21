@@ -143,7 +143,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         foHolder.loTvStatus.setText(lsStatus);
         foHolder.loTvType.setText(lsType);
 
-        if (foTransaction.getFiTrasactionStatus() == (-1)) {
+        if (foTransaction.getTrasactionStatus() == (-1)) {
 
             foHolder.loLlCashback.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -165,7 +165,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
 
-        } else if (foTransaction.getFiTrasactionStatus() == 0) {
+        } else if (foTransaction.getTrasactionStatus() == 0) {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_upto));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.virtual_cash)+")");
@@ -178,7 +178,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
 
-        } else if (foTransaction.getFiTrasactionStatus() == 1) {
+        } else if (foTransaction.getTrasactionStatus() == 1) {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.pending_cash)+")");
