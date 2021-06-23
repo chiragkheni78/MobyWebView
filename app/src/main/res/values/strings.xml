@@ -164,6 +164,8 @@
     <string name="nearBy">Near By</string>
     <string name="labelHelp">Help</string>
 
+    <string name="couponLoginMessage">You Need to Verify Your Mobile To Earn Cashback</string>
+
 
     <!--Timeline Sorting-->
     <string-array name="sort_by">

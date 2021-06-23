@@ -47,6 +47,7 @@ import com.cashback.dialog.MessageDialog;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
+import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
 
 public class CouponDetailsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -487,6 +488,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void openPhoneLogin(String fsUrl) {
         msURL = fsUrl;
             Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
+            loIntent.putExtra(SCREEN_TITLE, this.getResources().getString(R.string.couponLoginMessage));
             startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
     }
 

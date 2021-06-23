@@ -37,6 +37,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 
 import java.util.ArrayList;
 
+import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
+
 @SuppressWarnings("All")
 public class PhoneLoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -46,11 +48,21 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
     CountDownTimer timer;
     private static final long TIMER_MINUTE = 1000 * 60 * 1;
     private int count = 60;
+    String stTitle = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         moBinding = ActivityPhoneLoginBinding.inflate(getLayoutInflater());
+
+        if (getIntent() != null && getIntent().hasExtra(SCREEN_TITLE)) {
+            stTitle = getIntent().getStringExtra(SCREEN_TITLE);
+        }
+
+        if (stTitle != null && !stTitle.isEmpty()) {
+            moBinding.tvLoginTitle.setText(stTitle);
+        }
+
         setContentView(getContentView(moBinding));
         initializeContent();
     }

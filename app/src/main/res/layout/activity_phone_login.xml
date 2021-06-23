@@ -46,6 +46,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvLoginTitle"
                             style="@style/TvLarge"
                             android:layout_marginBottom="@dimen/margin_view"
                             android:gravity="center"
@@ -244,7 +245,7 @@
                                 style="@style/TvLarge"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="Did't received OTP ?"
+                                android:text="Didn't Receive OTP?"
                                 android:textColor="@color/colorSecondaryText"
                                 android:textSize="@dimen/_15sdp"
                                 android:textStyle="bold" />
