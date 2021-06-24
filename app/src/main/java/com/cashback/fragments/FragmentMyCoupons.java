@@ -307,7 +307,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(fiPosition).getActivityID());
         loIntent.putExtra(ENGAGED_DATE, moActivityList.get(fiPosition).getQuizEngageDateTime());
         loIntent.putExtra(PIN_COLOR, moActivityList.get(fiPosition).getPinColor());
-        startActivityForResult(loIntent, REQUEST_ACTIVITY_BILL_UPLOAD);
+        getActivity().startActivityForResult(loIntent, REQUEST_ACTIVITY_BILL_UPLOAD);
     }
 
     @Override
@@ -315,7 +315,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         miPosition = fiPosition;
         Intent loIntent = new Intent(getActivity(), CouponDetailsActivity.class);
         loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, moActivityList.get(fiPosition).getActivityID());
-        startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
+        getActivity().startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
     }
 
     @Override
