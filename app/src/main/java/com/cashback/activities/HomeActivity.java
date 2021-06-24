@@ -77,6 +77,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Common.stOfferShow = true;
+    }
+
+    @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
         if (fragment instanceof FragmentMyCoupons) {
@@ -132,9 +138,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         });
 
         if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {
-            moBinding.navigation.getMenu().getItem(0).setChecked(true);
-        } else {
             moBinding.navigation.getMenu().getItem(1).setChecked(true);
+        } else {
+            moBinding.navigation.getMenu().getItem(0).setChecked(true);
         }
         moBinding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -142,20 +148,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.itemCoupons:
-                        openNavigationBarFragments(0);
+                        openNavigationBarFragments(R.id.itemCoupons);
                         break;
                     case R.id.itemOffer:
-                        openNavigationBarFragments(1);
+                        openNavigationBarFragments(R.id.itemOffer);
                         break;
-                    case R.id.itemNoItem:
 
-                        break;
                     case R.id.itemNearBy:
-                        openNavigationBarFragments(3);
+                        openNavigationBarFragments(R.id.itemNearBy);
                         break;
                     case R.id.itemHelp:
 
-                        openNavigationBarFragments(4);
+                        openNavigationBarFragments(R.id.itemHelp);
 
                         //openHelp();
                         break;
@@ -168,20 +172,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void openNavigationBarFragments(int position) {
-        moBinding.navigation.getMenu().getItem(position).setChecked(true);
-        if (position == 0) {
+        moBinding.navigation.getMenu().findItem(position).setChecked(true);
+        if (position == R.id.itemCoupons) {
             FragmentMyCoupons fragmentMyCoupons = new FragmentMyCoupons();
             Bundle bundle = new Bundle();
             bundle.putLong(Constants.IntentKey.ACTIVITY_ID, 0);
             fragmentMyCoupons.setArguments(bundle);
             Common.replaceFragment(HomeActivity.this, fragmentMyCoupons, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
-        } else if (position == 1) {
+        } else if (position == R.id.itemOffer) {
             loadOfferListFragment(0, 0, 0, 0);
-        } else if (position == 2) {
-
-        } else if (position == 3) {
+        } else if (position == R.id.itemNearBy) {
             loadMapViewFragment();
-        } else if (position == 4) {
+        } else if (position == R.id.itemHelp) {
             FragmentHelp fragmentHelp = new FragmentHelp();
             Bundle bundleHelp = new Bundle();
             bundleHelp.putString(Constants.IntentKey.SCREEN_TITLE, getString(R.string.help));
@@ -270,11 +272,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         Intent loIntent = null;
         switch (item.getItemId()) {
             case R.id.nav_home:
-                openNavigationBarFragments(1);
+                openNavigationBarFragments(R.id.itemOffer);
                 break;
             case R.id.nav_my_coupons:
                 //openMyCoupons(0);
-                openNavigationBarFragments(0);
+                openNavigationBarFragments(R.id.itemCoupons);
 
                 break;
             case R.id.nav_ongoing_deals:
@@ -288,7 +290,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.nav_help:
 //                openHelp();
-                openNavigationBarFragments(4);
+                openNavigationBarFragments(R.id.itemHelp);
                 break;
             case R.id.nav_profile:
                 openProfile();
@@ -320,7 +322,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         loBundle.putLong(Constants.IntentKey.BANNER_ID, flBannerId);
         loFragment.setArguments(loBundle);
         Common.replaceFragment(this, loFragment, Constants.FragmentTag.TAG_OFFER_LIST, false);
-        moBinding.navigation.getMenu().getItem(1).setChecked(true);
+        moBinding.navigation.getMenu().getItem(0).setChecked(true);
     }
 
     public void loadMapViewFragment() {
@@ -423,7 +425,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             } else {
                 if (!getPreferenceManager().isMarketingAd()) {
                     if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {
-                        openNavigationBarFragments(0);
+                        openNavigationBarFragments(R.id.itemCoupons);
                     } else {
                         if (!AppGlobal.isDisplayRewardNote) {
                             showFirstDialog(foJsonObject.getFirstTimeAlertTitle(), foJsonObject.getFirstTimeAlertMsg(), foJsonObject.getAdvertisementList());
@@ -495,7 +497,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 AppGlobal.isDisplayRewardNote = true;
                 /*Intent intent = new Intent(getContext(), MyCouponsActivity.class);
                 startActivity(intent);*/
-                openNavigationBarFragments(1);
+                openNavigationBarFragments(R.id.itemOffer);
             });
 
             imageMainClose.setOnClickListener(new View.OnClickListener() {
@@ -515,7 +517,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 long llBannerID = (finalLoAdvertisement == null) ? 0 : finalLoAdvertisement.getBannerID();
 
                 loadOfferListFragment(liCategoryId, llOfferID, 0, llBannerID);
-                moBinding.navigation.getMenu().getItem(1).setChecked(true);
+                moBinding.navigation.getMenu().getItem(0).setChecked(true);
             });
         }
     }

@@ -103,7 +103,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     private void setBackground(DataObjectHolder foHolder, Ad loAdOffer) {
         if (loAdOffer.getAdID() == miOfferID){
             foHolder.loLlRoot.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.green_primary));
-            foHolder.loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, R.drawable.rect_white));
+            foHolder.loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, R.drawable.btn_white_coupon));
             foHolder.loBtnAdDetails.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
             foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
             foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));

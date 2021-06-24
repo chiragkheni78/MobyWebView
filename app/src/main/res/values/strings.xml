@@ -159,8 +159,8 @@
     <string name="cashback_rs">Cashback Rs</string>
     <string name="pending_cash">Pending Cash</string>
 
-    <string name="offers">Offers</string>
-    <string name="coupons">Coupons</string>
+    <string name="offers">My Offers</string>
+    <string name="coupons">My Coupons</string>
     <string name="nearBy">Near By</string>
     <string name="labelHelp">Help</string>
 

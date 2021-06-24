@@ -13,7 +13,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,11 +25,14 @@ import com.cashback.databinding.FragmentOfferListBinding;
 import com.cashback.models.Ad;
 import com.cashback.models.Category;
 import com.cashback.models.OfferFilter;
+import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.viewmodel.OfferListViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import java.util.ArrayList;
 
@@ -97,6 +99,52 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         initializeContent();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        showDealOfTheDayImage();
+    }
+
+    private void showDealOfTheDayImage() {
+        moBinding.cardDealOfTheDay.setVisibility(View.GONE);
+        DealOfTheDayResponse response = AppGlobal.getMoDealOfTheDayResponse();
+        if (response != null) {
+            if (Common.stOfferShow) {
+
+                RequestCreator loRequest = Picasso.get().load(response.getFsImage().replace("https", "http"));
+                loRequest.error(getResources().getDrawable(R.drawable.ic_moby_small))
+                        .placeholder(getResources().getDrawable(R.drawable.ic_moby_small))
+                        .into(moBinding.imageDealOfTheDay);
+
+                moBinding.cardDealOfTheDay.setVisibility(View.VISIBLE);
+
+                Common.stOfferShow = false;
+            }
+
+            moBinding.cardDealOfTheDay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDealOfTheDayImage();
+
+                    if (miCategoryId != response.getFiCategory()) {
+                        miCategoryId = response.getFiCategory();
+                        moBinding.etSearch.setText("");
+                    }
+
+                    miCategoryId = response.getFiCategory();
+                    mlBannerID = response.getFiBannerId();
+                    miCurrentPage = 1;
+
+                    if (moOfferList != null) moOfferList.clear();
+                    mlOfferID = -1;
+                    isLastPage = false;
+                    moBinding.btnSearch.clearAnimation();
+                    fetchOffers();
+                }
+            });
+        }
+    }
+
     private void initializeContent() {
         initViewModel();
 
@@ -108,8 +156,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
         moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         moBinding.rvOfferList.setLayoutManager(moLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(moBinding.rvOfferList.getContext(), moLayoutManager.getOrientation());
-        moBinding.rvOfferList.addItemDecoration(dividerItemDecoration);
+        /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(moBinding.rvOfferList.getContext(), moLayoutManager.getOrientation());
+        moBinding.rvOfferList.addItemDecoration(dividerItemDecoration);*/
         moOfferListAdapter = new OfferListAdapter(getActivity(), moOfferList);
         moBinding.rvOfferList.setAdapter(moOfferListAdapter);
 
@@ -292,6 +340,9 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     public void getAdsByCategory(int fiCategoryId) {
+
+        showDealOfTheDayImage();
+
         if (miCategoryId != fiCategoryId) {
             miCategoryId = fiCategoryId;
             moBinding.etSearch.setText("");

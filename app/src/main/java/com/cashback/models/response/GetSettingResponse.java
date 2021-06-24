@@ -59,6 +59,10 @@ public class GetSettingResponse {
     @SerializedName("fiOfferListPageSize")
     int offerListPageSize;
 
+
+    @SerializedName("foDealOfTheDays")
+    private ArrayList<DealOfTheDayResponse> foDealOfTheDays;
+
     public GetSettingResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
@@ -126,5 +130,13 @@ public class GetSettingResponse {
 
     public int getOfferListPageSize() {
         return offerListPageSize;
+    }
+
+    public ArrayList<DealOfTheDayResponse> getFoDealOfTheDays() {
+        return foDealOfTheDays;
+    }
+
+    public void setFoDealOfTheDays(ArrayList<DealOfTheDayResponse> foDealOfTheDays) {
+        this.foDealOfTheDays = foDealOfTheDays;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.adgyde.android.AdGyde;
 import com.cashback.models.Category;
+import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,7 @@ public class AppGlobal extends Application {
 
     public static Context moContext;
     public static ArrayList<Category> moCategories = new ArrayList<>();
+    public static DealOfTheDayResponse moDealOfTheDayResponse = new DealOfTheDayResponse();
 
     @Override
     public void onCreate() {
@@ -67,5 +69,13 @@ public class AppGlobal extends Application {
 
     public static void setCategories(ArrayList<Category> loCategories) {
         moCategories = loCategories;
+    }
+
+    public static DealOfTheDayResponse getMoDealOfTheDayResponse() {
+        return moDealOfTheDayResponse;
+    }
+
+    public static void setMoDealOfTheDayResponse(DealOfTheDayResponse moDealOfTheDayResponse) {
+        AppGlobal.moDealOfTheDayResponse = moDealOfTheDayResponse;
     }
 }
