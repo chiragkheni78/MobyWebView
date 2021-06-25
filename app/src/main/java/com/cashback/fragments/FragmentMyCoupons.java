@@ -216,14 +216,14 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         }
     }
 
-    public void onBackPressed() {
+    /*public void onBackPressed() {
         //super.onBackPressed();
         if (isPendingBillUpload) {
             showBackToCouponDialog();
         } else {
             backToHome(null);
         }
-    }
+    }*/
 
     private void showBackToCouponDialog() {
         try {

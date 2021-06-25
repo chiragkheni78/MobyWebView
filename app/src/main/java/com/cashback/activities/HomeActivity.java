@@ -2,6 +2,7 @@ package com.cashback.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +43,13 @@ import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -62,6 +71,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     HomeViewModel moHomeViewModel;
     private String stFrom = "";
+    private AppUpdateManager appUpdateManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +95,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
-        if (fragment instanceof FragmentMyCoupons) {
+        /*if (fragment instanceof FragmentMyCoupons) {
             ((FragmentMyCoupons) fragment).onBackPressed();
-        } else {
+        } else {*/
             super.onBackPressed();
-        }
+        /*}*/
     }
 
     @Override
@@ -118,7 +128,31 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             fragment.onActivityResult(requestCode, resultCode, data);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == 100) {
+                if (resultCode == RESULT_OK) {
+                    popupSnackbarForCompleteUpdate();
+                } else {
+                    Toast.makeText(moContext, "Update failed!", Toast.LENGTH_SHORT).show();
+                }
+            } else if (requestCode == 101) {
+                if (resultCode == RESULT_OK) {
+                    popupSnackbarForCompleteUpdate();
+                } else {
+                    Toast.makeText(moContext, "Update failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
+    }
+
+    private void popupSnackbarForCompleteUpdate() {
+        Snackbar snackbar =
+                Snackbar.make(findViewById(R.id.drawer_layout),
+                        "An update has just been downloaded.",
+                        Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("RESTART", view -> appUpdateManager.completeUpdate());
+        snackbar.setActionTextColor(
+                getResources().getColor(R.color.colorAccent));
+        snackbar.show();
     }
 
     private void initializeContent() {
@@ -145,7 +179,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         moBinding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                item.setChecked(true);
+                //item.setChecked(true);
                 switch (item.getItemId()) {
                     case R.id.itemCoupons:
                         openNavigationBarFragments(R.id.itemCoupons);
@@ -172,7 +206,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void openNavigationBarFragments(int position) {
-        moBinding.navigation.getMenu().findItem(position).setChecked(true);
+        if (position != R.id.itemNearBy) {
+            moBinding.navigation.getMenu().findItem(position).setChecked(true);
+        }
         if (position == R.id.itemCoupons) {
             FragmentMyCoupons fragmentMyCoupons = new FragmentMyCoupons();
             Bundle bundle = new Bundle();
@@ -182,7 +218,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         } else if (position == R.id.itemOffer) {
             loadOfferListFragment(0, 0, 0, 0);
         } else if (position == R.id.itemNearBy) {
-            loadMapViewFragment();
+            if (AppGlobal.getFiTotalBillVerified() > 0) {
+                moBinding.navigation.getMenu().findItem(position).setChecked(true);
+                loadMapViewFragment();
+            } else {
+                dialogOpenMapPopup();
+            }
         } else if (position == R.id.itemHelp) {
             FragmentHelp fragmentHelp = new FragmentHelp();
             Bundle bundleHelp = new Bundle();
@@ -191,6 +232,26 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             fragmentHelp.setArguments(bundleHelp);
             Common.replaceFragment(HomeActivity.this, fragmentHelp, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
         }
+    }
+
+    private void dialogOpenMapPopup() {
+        Dialog moDialog = new Dialog(getContext());
+        moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        moDialog.setContentView(R.layout.dialog_map_alert);
+        moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        moDialog.getWindow().setGravity(Gravity.CENTER);
+        moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        moDialog.setCancelable(false);
+        moDialog.show();
+
+        final Button loBtnLater = moDialog.findViewById(R.id.btnContinue);
+
+        loBtnLater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moDialog.dismiss();
+            }
+        });
     }
 
     private void getSettings() {
@@ -396,7 +457,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 getPreferenceManager().setQuizTimePeriod(loJsonObject.getQuizTimeInterval());
                 getPreferenceManager().setOfferListPageSize(loJsonObject.getOfferListPageSize());
                 handleView(loJsonObject);
-
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
             }
@@ -418,10 +478,48 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 openNotifications();
             }
         } else {
+            appUpdateManager = AppUpdateManagerFactory.create(this);
+            Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
             if (foJsonObject.getAppUpdate().getStatus() == 1) {
                 //showAlertTwoBtn(fsMessage, message);
+                //Flaxibale
+                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                            && appUpdateInfo.clientVersionStalenessDays() != null
+                            && appUpdateInfo.clientVersionStalenessDays() >= 2
+                            && appUpdateInfo.updatePriority() >= 4
+                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                        try {
+                            appUpdateManager.startUpdateFlowForResult(
+                                    appUpdateInfo,
+                                    AppUpdateType.FLEXIBLE,
+                                    HomeActivity.this,
+                                    101);
+                        } catch (IntentSender.SendIntentException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             } else if (foJsonObject.getAppUpdate().getStatus() == 2) {
                 //dialogUpdateApp(fsMessage, true, false);
+                //immediate
+                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                            && appUpdateInfo.updatePriority() >= 4
+                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                        try {
+                            appUpdateManager.startUpdateFlowForResult(
+                                    appUpdateInfo,
+                                    AppUpdateType.IMMEDIATE,
+                                    HomeActivity.this,
+                                    100);
+                        } catch (IntentSender.SendIntentException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
             } else {
                 if (!getPreferenceManager().isMarketingAd()) {
                     if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {

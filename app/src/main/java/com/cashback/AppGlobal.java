@@ -23,6 +23,16 @@ public class AppGlobal extends Application {
     public static ArrayList<Category> moCategories = new ArrayList<>();
     public static DealOfTheDayResponse moDealOfTheDayResponse = new DealOfTheDayResponse();
 
+    public static int getFiTotalBillVerified() {
+        return fiTotalBillVerified;
+    }
+
+    public static void setFiTotalBillVerified(int fiTotalBillVerified) {
+        AppGlobal.fiTotalBillVerified = fiTotalBillVerified;
+    }
+
+    public static int fiTotalBillVerified;
+
     @Override
     public void onCreate() {
         super.onCreate();

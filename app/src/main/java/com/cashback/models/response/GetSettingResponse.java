@@ -59,6 +59,9 @@ public class GetSettingResponse {
     @SerializedName("fiOfferListPageSize")
     int offerListPageSize;
 
+    @SerializedName("fiTotalBillVerified")
+    int fiTotalBillVerified;
+
 
     @SerializedName("foDealOfTheDays")
     private ArrayList<DealOfTheDayResponse> foDealOfTheDays;
@@ -138,5 +141,13 @@ public class GetSettingResponse {
 
     public void setFoDealOfTheDays(ArrayList<DealOfTheDayResponse> foDealOfTheDays) {
         this.foDealOfTheDays = foDealOfTheDays;
+    }
+
+    public int getFiTotalBillVerified() {
+        return fiTotalBillVerified;
+    }
+
+    public void setFiTotalBillVerified(int fiTotalBillVerified) {
+        this.fiTotalBillVerified = fiTotalBillVerified;
     }
 }
