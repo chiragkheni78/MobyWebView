@@ -13,9 +13,11 @@
         card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
+            android:id="@+id/cardItemActivityMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:background="@color/white"
             android:orientation="horizontal"
             android:padding="@dimen/padding_mini">
 
@@ -24,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/white"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -49,6 +50,7 @@
                         android:layout_below="@id/tvOfferName"
                         android:layout_centerVertical="true"
                         android:text="2nd May 2017"
+                        android:visibility="gone"
                         android:textColor="@color/secondary_text"
                         android:textSize="12sp" />
 
@@ -79,21 +81,48 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="5dp"
+                            android:visibility="gone"
                             android:gravity="right"
                             android:text="(Max Cashback On Used Coupon)"
                             android:textColor="@color/primary_text"
-                            android:textSize="8sp"
-                            android:visibility="visible" />
+                            android:textSize="8sp" />
 
                     </LinearLayout>
                 </RelativeLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llTest"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivLogo"
+                        android:layout_width="@dimen/_75sdp"
+                        android:layout_height="@dimen/_75sdp"
+                        android:src="@drawable/ic_moby_small"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/llCashback"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:orientation="horizontal">
 
@@ -123,75 +152,80 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
-            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rlBtns"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/llTest"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/llRegisterBill"
-                    style="@style/NormalLayout"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_toRightOf="@+id/tvCouponCode"
-                    android:gravity="bottom"
+                <RelativeLayout
+                    android:id="@+id/rlBtns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/llCashback"
                     android:orientation="horizontal">
 
+                    <LinearLayout
+                        android:id="@+id/llRegisterBill"
+                        style="@style/NormalLayout"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_toRightOf="@+id/tvCouponCode"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvRegisterBill"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rect_green_black"
+                            android:gravity="center"
+                            android:minWidth="@dimen/_85sdp"
+                            android:text="Register Bill"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvRequiredPayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/padding_micro"
+                            android:gravity="bottom"
+                            android:text="(Required For Payout)"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="8sp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+
                     <TextView
-                        android:id="@+id/tvRegisterBill"
+                        android:id="@+id/tvCouponCode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
                         android:background="@drawable/rect_green_black"
                         android:gravity="center"
-                        android:minWidth="@dimen/_85sdp"
-                        android:text="Register Bill"
+                        android:minWidth="@dimen/_95sdp"
+                        android:text="@string/view_coupon"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         android:visibility="visible" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_micro"
-                        android:gravity="bottom"
-                        android:text="(Required For Payout)"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="8sp"
-                        android:visibility="visible" />
-
-                </LinearLayout>
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/tvCouponCode"
+                    android:id="@+id/tvExpireDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:background="@drawable/rect_green_black"
-                    android:gravity="center"
-                    android:minWidth="@dimen/_95sdp"
-                    android:text="@string/view_coupon"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:layout_below="@+id/rlBtns"
+                    android:layout_marginLeft="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:minWidth="@dimen/_80sdp"
+                    android:text="@string/coupon_expired"
+                    android:textColor="@color/primary_text"
+                    android:textSize="10sp"
                     android:visibility="visible" />
-            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvExpireDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rlBtns"
-                android:layout_marginLeft="@dimen/_2sdp"
-                android:layout_marginTop="@dimen/_3sdp"
-                android:minWidth="@dimen/_80sdp"
-                android:text="@string/coupon_expired"
-                android:textColor="@color/primary_text"
-                android:textSize="10sp"
-                android:visibility="visible" />
+            </LinearLayout>
+
+            </LinearLayout>
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

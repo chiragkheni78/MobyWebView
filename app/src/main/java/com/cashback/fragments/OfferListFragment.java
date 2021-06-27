@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.widget.ImageViewCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -150,7 +151,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
         moBinding.btnSearch.setOnClickListener(this);
         moBinding.floatingActionSearch.setOnClickListener(this);
-        moBinding.rvOfferList.addOnScrollListener(recyclerViewOnScrollListener);
+        //moBinding.rvOfferList.addOnScrollListener(recyclerViewOnScrollListener);
 
         setCategoryView();
 
@@ -163,6 +164,21 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
         moBinding.etSearch.setOnFocusChangeListener(Common.getFocusChangeListener(getActivity()));
 
+        moBinding.nestedOfferList.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    if (!isLoading && !isLastPage) {
+                        /*if ((visibleItemCount + firstVisibleItemPosition) >= (totalItemCount - 10)
+                                && firstVisibleItemPosition >= 0) {*/
+                            miCurrentPage = miCurrentPage + 1;
+                            fetchOffers();
+                        /*}*/
+                    }
+                }
+            }
+        });
 
         if (getArguments() != null) {
             miCategoryId = getArguments().getInt(Constants.IntentKey.CATEGORY_ID);

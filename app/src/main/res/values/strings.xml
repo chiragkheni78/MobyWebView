@@ -165,7 +165,8 @@
     <string name="labelHelp">Help</string>
 
     <string name="couponLoginMessage">You Need to Verify Your Mobile To Earn Cashback</string>
-    <string name="mapPopupText">Like to Shop Offline? Try Map View<br/> (Need 1 Verified Online Purchase)</string>
+    <string name="mapPopupText">Like to Shop Offline? Try Map View</string>
+    <string name="mapPopupText1">(Need 1 Verified Online Purchase)</string>
     <string name="mapPopupTextOne">Real Time Card Offers</string>
     <string name="mapPopupTextTwo">Coupons for Stores Nearby</string>
     <string name="continueLabel">Continue</string>

@@ -75,6 +75,8 @@ public class Constants {
         PROCEED_DEVICE("proceedWithDevice"),
         GET_USER_TRANSACTION("getUserTransaction"),
         GET_ADVERT_IMAGES("getAdvertisementImage"),
+        GET_LOAD_WEBVIEW("loadWebView"),
+        GET_LOAD_WEBVIEW_FAQ("faqs"),
         LOAD_WEB_VIEW_DATA("loadWebView"),
         GET_USER_DETAILS("getUserDetails"),
         SAVE_USER_DETAILS("saveFullProfile"),

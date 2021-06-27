@@ -27,6 +27,9 @@ public class Activity {
     @SerializedName("fsCouponCode")
     String couponCode;
 
+    @SerializedName("fsAdLogo")
+    String fsAdLogo;
+
     @SerializedName("fbIsCouponExpired")
     boolean isCouponExpired;
 
@@ -141,6 +144,14 @@ public class Activity {
 
     public String getRemainDay() {
         return remainDay;
+    }
+
+    public String getFsAdLogo() {
+        return fsAdLogo;
+    }
+
+    public void setFsAdLogo(String fsAdLogo) {
+        this.fsAdLogo = fsAdLogo;
     }
 
     @SerializedName("fsWalletName")

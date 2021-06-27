@@ -245,6 +245,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         moDialog.show();
 
         final Button loBtnLater = moDialog.findViewById(R.id.btnContinue);
+        TextView tvMapDialogText = moDialog.findViewById(R.id.tvMapPopupText1);
+
+        Common.blinkAnimation(tvMapDialogText);
 
         loBtnLater.setOnClickListener(new View.OnClickListener() {
             @Override
