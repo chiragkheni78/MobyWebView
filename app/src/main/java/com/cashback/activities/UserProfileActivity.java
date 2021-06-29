@@ -212,7 +212,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         }
 
         if (moGetUserProfileResponse.getWalletList() != null) {
-            moEWalletAdapter = new EWalletAdapter(UserProfileActivity.this, moGetUserProfileResponse.getWalletList());
+            moEWalletAdapter = new EWalletAdapter(UserProfileActivity.this, moGetUserProfileResponse.getWalletList(), "Profile");
             moBinding.spinWallet.setAdapter(moEWalletAdapter);
             moBinding.spinWallet.setSelection(moUserProfileViewModel.getSelectedWalletPosition(moGetUserProfileResponse.getWalletList()));
 

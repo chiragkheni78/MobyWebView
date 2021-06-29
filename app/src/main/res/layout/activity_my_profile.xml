@@ -54,11 +54,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="visible"
-                tools:visibility="gone"
+                tools:visibility="visible"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -296,7 +296,7 @@
                                     android:id="@+id/spinWallet"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_36sdp"
-                                    android:background="@drawable/bg_white_blue"
+                                    android:background="@drawable/bg_white_line"
                                     android:padding="8dp" />
 
                                 <ImageView
@@ -391,22 +391,22 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="visible"
-                tools:visibility="gone"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:id="@+id/llCreditCard"
                     style="@style/NormalLayout"
                     android:background="@color/white"
-                    android:paddingTop="@dimen/padding_large">
+                    android:paddingTop="@dimen/padding_standard">
 
                     <TextView
                         android:id="@+id/tvCreditCardTitle"
                         style="@style/TvXLarge"
+                        android:textColor="@color/colorPrimary"
                         android:paddingHorizontal="@dimen/padding_standard"
                         android:text="@string/add_card_header_tv" />
 
@@ -417,7 +417,7 @@
                         android:lineSpacingMultiplier="1.2"
                         android:paddingHorizontal="@dimen/padding_standard"
                         android:text="@string/profile_non_required"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="@color/black" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvBankCard"
@@ -434,8 +434,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="visible"
@@ -447,10 +446,10 @@
                     android:background="@color/white"
                     android:padding="@dimen/padding_standard">
 
-
                     <TextView
                         android:id="@+id/tvCategoryOffer"
                         style="@style/TvXLarge"
+                        android:textColor="@color/colorPrimary"
                         android:text="@string/category_offer" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -466,8 +465,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="visible"
@@ -483,6 +481,7 @@
                     <TextView
                         android:id="@+id/lblRange"
                         style="@style/TvXLarge"
+                        android:textColor="@color/colorPrimary"
                         android:text="@string/bank_offer_with_in" />
 
 
@@ -502,7 +501,7 @@
                             android:layout_height="@dimen/_36sdp"
                             android:layout_marginRight="@dimen/padding_mini"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_radio_gender"
+                            android:background="@drawable/bg_radio_offer_profile"
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
@@ -517,7 +516,7 @@
                             android:layout_marginLeft="@dimen/padding_mini"
                             android:layout_marginRight="@dimen/padding_mini"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_radio_gender"
+                            android:background="@drawable/bg_radio_offer_profile"
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
@@ -532,7 +531,7 @@
                             android:layout_marginLeft="@dimen/padding_mini"
                             android:layout_marginRight="@dimen/padding_mini"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_radio_gender"
+                            android:background="@drawable/bg_radio_offer_profile"
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
@@ -547,7 +546,7 @@
                             android:layout_marginLeft="@dimen/padding_mini"
                             android:layout_marginRight="@dimen/padding_mini"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_radio_gender"
+                            android:background="@drawable/bg_radio_offer_profile"
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
@@ -561,7 +560,7 @@
                             android:layout_height="@dimen/_36sdp"
                             android:layout_marginLeft="@dimen/padding_mini"
                             android:layout_weight="1"
-                            android:background="@drawable/bg_radio_gender"
+                            android:background="@drawable/bg_radio_offer_profile"
                             android:button="@null"
                             android:checked="true"
                             android:gravity="center"
@@ -579,8 +578,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="gone"
@@ -644,7 +642,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 app:cardUseCompatPadding="true">
@@ -660,7 +658,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/padding_standard"
-                        android:buttonTint="@color/secondary"
+                        android:buttonTint="@color/colorPrimary"
                         android:checked="true"
                         android:fontFamily="sans-serif-condensed"
                         android:gravity="top"

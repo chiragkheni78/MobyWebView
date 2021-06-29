@@ -90,7 +90,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Common.stOfferShow = true;
+        //Common.stOfferShow = true;
     }
 
     @Override
@@ -406,7 +406,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void openTC() {
-        openWebView(getString(R.string.terms_condition), Constants.WebViewPage.TERMS_CONDITION.getValue());
+        //openWebView(getString(R.string.terms_condition), Constants.WebViewPage.TERMS_CONDITION.getValue());
+        Intent loIntent = new Intent(HomeActivity.this, WebViewSecondActivity.class);
+        loIntent.putExtra(Constants.IntentKey.SCREEN_TITLE, getString(R.string.terms_condition));
+        loIntent.putExtra(Constants.IntentKey.WEBVIEW_PAGE_NAME, "http://mobyads.in/moby/v2-apis/?fsAction=loadWebViewHtml&fsPage=tandc");
+        startActivity(loIntent);
     }
 
     private void openProfile() {

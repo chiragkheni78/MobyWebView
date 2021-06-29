@@ -44,13 +44,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode, tvRegisterBill, tvRequiredPayout, tvExpireDay;
+        TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode,
+                tvRegisterBill, tvRequiredPayout, tvExpireDay, lblReward;
         LinearLayout loLlRoot, loLllRegisterBill;
         ImageView ivLogo;
         RelativeLayout cardItemActivity;
 
         public DataObjectHolder(View foView) {
             super(foView);
+            lblReward = foView.findViewById(R.id.lblReward);
             tvRequiredPayout = foView.findViewById(R.id.tvRequiredPayout);
             cardItemActivity = foView.findViewById(R.id.cardItemActivityMain);
             loTvAdName = foView.findViewById(R.id.tvOfferName);
@@ -144,12 +146,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                     foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
                     foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
                     foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+                    foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
 
                     foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
                 } else {
                     foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
                     foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
                     foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                    foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
 
                     foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
                 }
@@ -157,6 +161,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
                 foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
                 foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
 
                 foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
             }

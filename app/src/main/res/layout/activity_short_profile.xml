@@ -13,7 +13,7 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp"
+        android:layout_margin="@dimen/_7sdp"
         android:background="@color/white"
         android:orientation="vertical"
         app:cardUseCompatPadding="true">
@@ -31,18 +31,16 @@
                     style="@style/NormalLayout"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/padding_large"
+                    android:paddingHorizontal="@dimen/padding_standard"
                     android:paddingVertical="@dimen/padding_standard">
 
                     <LinearLayout
                         style="@style/NormalLayout"
                         android:gravity="center"
-                        android:layout_marginTop="@dimen/_30sdp"
                         android:orientation="horizontal">
 
                         <TextView
                             style="@style/TvLarge"
-                            android:letterSpacing="0.1"
                             android:text="My Age is" />
 
                         <EditText
@@ -63,7 +61,6 @@
 
                         <TextView
                             style="@style/TvLarge"
-                            android:letterSpacing="0.1"
                             android:text="Years &amp; I" />
                     </LinearLayout>
 
@@ -75,7 +72,6 @@
 
                         <TextView
                             style="@style/TvLarge"
-                            android:letterSpacing="0.2"
                             android:text="Want to see Offers for" />
 
                     </LinearLayout>
@@ -99,10 +95,10 @@
                             <RadioButton
                                 android:id="@+id/rbMap"
                                 android:layout_width="0dp"
-                                android:layout_height="@dimen/_45sdp"
+                                android:layout_height="@dimen/_35sdp"
                                 android:layout_marginRight="@dimen/padding_mini"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_radio_gender"
+                                android:background="@drawable/bg_radio_gender_short_profile"
                                 android:button="@null"
                                 android:checked="false"
                                 android:gravity="center"
@@ -112,10 +108,10 @@
                             <RadioButton
                                 android:id="@+id/rbList"
                                 android:layout_width="0dp"
-                                android:layout_height="@dimen/_45sdp"
+                                android:layout_height="@dimen/_35sdp"
                                 android:layout_marginLeft="@dimen/padding_mini"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_radio_gender"
+                                android:background="@drawable/bg_radio_gender_short_profile"
                                 android:button="@null"
                                 android:checked="false"
                                 android:gravity="center"
@@ -133,7 +129,6 @@
 
                         <TextView
                             style="@style/TvLarge"
-                            android:letterSpacing="0.05"
                             android:text="@string/hint_e_wallet" />
 
                     </LinearLayout>
@@ -154,6 +149,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_36sdp"
                                 android:background="@drawable/bg_white_blue"
+                                android:gravity="center"
+                                android:textAlignment="center"
                                 android:padding="8dp" />
 
                             <ImageView
@@ -176,12 +173,14 @@
                             <TextView
                                 android:id="@+id/lblUPI"
                                 style="@style/TvProfileHint"
+                                android:gravity="center"
                                 android:text="@string/hint_upi_address" />
 
                             <EditText
                                 android:id="@+id/etUpiID"
                                 style="@style/etStandard"
                                 android:hint="ENTER UPI ID"
+                                android:gravity="center"
                                 android:inputType="text" />
 
                         </LinearLayout>
@@ -207,7 +206,7 @@
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/_20sdp"
+                android:paddingHorizontal="@dimen/padding_standard"
                 android:paddingVertical="@dimen/padding_standard">
 
                 <com.rey.material.widget.Button

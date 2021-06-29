@@ -59,10 +59,10 @@
     <string name="hint_bank_account_no">Account Number</string>
     <string name="hint_bank_account_ifsc">IFSC Code</string>
 
-    <string name="add_card_header_tv"><![CDATA[My CREDIT & DEBIT Cards]]></string>
+    <string name="add_card_header_tv"><![CDATA[My Credit & Debit Cards]]></string>
     <string name="profile_non_required">(NO CARD NUMBER REQUIRED | NO CARD TRANSACTION REQUIRED | NO CARD CSV REQUIRED | DISCOVER YOUR CARD BENEFITS NEAR YOU!)</string>
-    <string name="category_offer">Category offers I want to see</string>
-    <string name="bank_offer_with_in">I want to see BANK CARD OFFERS for</string>
+    <string name="category_offer">Card Offers Categories I want to see</string>
+    <string name="bank_offer_with_in">I want to see Bank Card Offer Within</string>
     <string name="payment_transfer_setting">Payment Transfer Setting</string>
 
     <string name="UPI_alert">Please enter correct UPI ID.</string>

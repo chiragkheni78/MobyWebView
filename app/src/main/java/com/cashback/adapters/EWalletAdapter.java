@@ -16,10 +16,17 @@ public class EWalletAdapter extends BaseAdapter {
 
     private Context moContext;
     private List<EWallet> moWalletList;
+    private String stFrom;
 
     public EWalletAdapter(Context foContext, List<EWallet> foWalletList) {
         moContext = foContext;
         moWalletList = foWalletList;
+    }
+
+    public EWalletAdapter(Context foContext, List<EWallet> foWalletList, String stFrom) {
+        moContext = foContext;
+        moWalletList = foWalletList;
+        this.stFrom = stFrom;
     }
 
     @Override
@@ -42,7 +49,11 @@ public class EWalletAdapter extends BaseAdapter {
 
         View loView = foView;
         LayoutInflater inflater = (LayoutInflater) moContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        loView = inflater.inflate(R.layout.row_spn, null);
+        if (stFrom.equalsIgnoreCase("Profile")) {
+            loView = inflater.inflate(R.layout.row_spn_profile, null);
+        } else {
+            loView = inflater.inflate(R.layout.row_spn, null);
+        }
 
         if (moWalletList.size() > 0) {
 
@@ -65,7 +76,11 @@ public class EWalletAdapter extends BaseAdapter {
     public View getDropDownView(int fiPosition, View foView, ViewGroup parent) {
         View loView = foView;
         LayoutInflater inflater = (LayoutInflater) moContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        loView = inflater.inflate(R.layout.row_spn_dropdown, null);
+        if (stFrom.equalsIgnoreCase("Profile")) {
+            loView = inflater.inflate(R.layout.row_spn_dropdown_profile, null);
+        } else {
+            loView = inflater.inflate(R.layout.row_spn_dropdown, null);
+        }
 
         if (moWalletList.size() > 0) {
             TextView moTvTitle = (TextView) loView.findViewById(R.id.tvRowTitle);

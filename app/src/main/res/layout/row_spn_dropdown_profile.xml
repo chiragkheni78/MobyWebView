@@ -9,6 +9,5 @@
     android:paddingRight="@dimen/padding_micro"
     android:paddingTop="@dimen/padding_micro"
     android:textDirection="locale"
-    android:gravity="center"
     android:textSize="@dimen/txt_large" />
 
