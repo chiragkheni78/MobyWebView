@@ -122,9 +122,17 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             }
         });
 
-        TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
+        /*TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
         loTvToolbarTitle.setText(moOffer.getAdName());
-        loTvToolbarTitle.setVisibility(View.VISIBLE);
+        loTvToolbarTitle.setVisibility(View.VISIBLE);*/
+
+        moBinding.tvOfferRewards.setText("₹" + moOffer.getQuizReward() + " (Max Cashback)");
+        if (moOffer.getBannerUrl() != null) {
+            Common.loadImage(moBinding.ivBanner, moOffer.getBannerUrl(), null, ActivityCompat.getDrawable(getContext(), R.drawable.iv_place_holder));
+        }
+        if (moOffer.getLogoUrl() != null) {
+            Common.loadImage(moBinding.ivLogo, moOffer.getLogoUrl(), null, null);
+        }
     }
 
     private void getQuizDetails() {
@@ -174,10 +182,10 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
 
         if (moOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())){
             foBinding.tvNumber.setTextColor(ActivityCompat.getColor(getContext(), R.color.colorPrimary));
-            foBinding.llQuestion.setBackground(ActivityCompat.getDrawable(getContext(), R.drawable.half_circle_light_red));
+//            foBinding.llQuestion.setBackground(ActivityCompat.getDrawable(getContext(), R.drawable.half_circle_light_red));
         } else if (moOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())){
             foBinding.tvNumber.setTextColor(ActivityCompat.getColor(getContext(), R.color.green_primary));
-            foBinding.llQuestion.setBackground(ActivityCompat.getDrawable(getContext(), R.drawable.half_circle_light_green));
+//            foBinding.llQuestion.setBackground(ActivityCompat.getDrawable(getContext(), R.drawable.half_circle_light_green));
         }
 
         if (quiz.getAnswerType().equalsIgnoreCase(Constants.AnswerType.BARCODE.getValue())) {
@@ -396,10 +404,10 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
 
     private void showTimer(boolean isShowTimer) {
         if (isShowTimer && !getPreferenceManager().isMarketingAd()) {
-            moBinding.toolbar.flTimer.setVisibility(View.VISIBLE);
+            moBinding.flTimer.setVisibility(View.VISIBLE);
             resetTimer();
         } else {
-            moBinding.toolbar.flTimer.setVisibility(GONE);
+            moBinding.flTimer.setVisibility(GONE);
             if (countDownTimer != null)
                 countDownTimer.cancel();
         }
@@ -410,16 +418,16 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
     private void resetTimer() {
         int liSeconds = getPreferenceManager().getQuizTimePeriod();
         if (liSeconds > 0) {
-            moBinding.toolbar.pbTimer.setMax(liSeconds);
-            moBinding.toolbar.pbTimer.setProgress(0);
+            moBinding.pbTimer.setMax(liSeconds);
+            moBinding.pbTimer.setProgress(0);
             // call to start the count down timer
             if (countDownTimer != null)
                 countDownTimer.cancel();
             countDownTimer = new CountDownTimer(liSeconds * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    moBinding.toolbar.tvTimer.setText(String.valueOf((int) (millisUntilFinished / 1000)));
-                    moBinding.toolbar.pbTimer.setProgress((int) (millisUntilFinished / 1000));
+                    moBinding.tvTimer.setText(String.valueOf((int) (millisUntilFinished / 1000)));
+                    moBinding.pbTimer.setProgress((int) (millisUntilFinished / 1000));
                 }
 
                 @Override
@@ -429,7 +437,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
 
             }.start();
             countDownTimer.start();
-        } else moBinding.toolbar.flTimer.setVisibility(GONE);
+        } else moBinding.flTimer.setVisibility(GONE);
     }
 
 

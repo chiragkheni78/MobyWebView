@@ -62,6 +62,7 @@ import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.IS_FROM;
+import static com.cashback.utils.Constants.IntentKey.adId;
 
 @SuppressWarnings("All")
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
@@ -172,7 +173,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         });
 
         if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {
-            moBinding.navigation.getMenu().getItem(1).setChecked(true);
+            moBinding.navigation.getMenu().getItem(3).setChecked(true);
         } else {
             moBinding.navigation.getMenu().getItem(0).setChecked(true);
         }

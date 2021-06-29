@@ -2,15 +2,22 @@ package com.cashback.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -58,6 +65,28 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         setContentView(getContentView(moBinding));
 
         initializeContent();
+
+        String terms = "I accept the Terms & Conditions.";
+        SpannableString ss = new SpannableString(terms);
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Intent loIntent = new Intent(UserProfileActivity.this, WebViewSecondActivity.class);
+                loIntent.putExtra(Constants.IntentKey.SCREEN_TITLE, "Terms & Conditions");
+                loIntent.putExtra(Constants.IntentKey.WEBVIEW_PAGE_NAME, "http://mobyads.in/moby/v2-apis/?fsAction=loadWebViewHtml&fsPage=tandc");
+                startActivity(loIntent);
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+                ds.setColor(ContextCompat.getColor(UserProfileActivity.this, R.color.colorPrimary));
+            }
+        };
+        int start = terms.indexOf("Terms");
+        ss.setSpan(clickableSpan, start, (terms.length()-1), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        moBinding.tvTerms.setText(ss);
+        moBinding.tvTerms.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void initializeContent() {

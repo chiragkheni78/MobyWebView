@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llRoot"
     style="@style/RootLayout"
-    android:visibility="gone"
+    android:visibility="visible"
     android:background="@color/light_yellow"
     tools:context=".activities.HomeActivity">
 

@@ -11,11 +11,16 @@
 
     <LinearLayout style="@style/RootLayout">
 
+        <WebView
+            android:id="@+id/webViewHelp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
        <androidx.recyclerview.widget.RecyclerView
            android:id="@+id/reyclerViewHelp"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
+           android:visibility="gone"
            tools:listitem="@layout/item_help"/>
 
     </LinearLayout>

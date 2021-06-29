@@ -5,7 +5,7 @@
     style="@style/ToolBar78"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
-    android:background="@color/secondary"
+    android:background="@color/colorBackground"
     app:popupTheme="@style/AppTheme.PopupOverlay">
 
     <FrameLayout
@@ -18,7 +18,7 @@
             android:id="@+id/tvToolbarTitle"
             style="@style/TvToolBarTitle78"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/txt_large"
+            android:textSize="@dimen/txt_xLarge"
             android:textAllCaps="true"/>
 
         <LinearLayout
@@ -45,7 +45,7 @@
                 android:drawableLeft="@drawable/ic_arrow_back"
                 android:drawablePadding="@dimen/padding_mini"
                 android:visibility="visible"
-                android:text="Back"
+                android:text=""
                 />
         </LinearLayout>
 

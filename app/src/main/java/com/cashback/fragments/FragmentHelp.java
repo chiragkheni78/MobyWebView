@@ -1,5 +1,6 @@
 package com.cashback.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.cashback.adapters.AdvertAdapter;
 import com.cashback.adapters.HelpListAdapter;
 import com.cashback.databinding.ActivityHelpBinding;
-import com.cashback.databinding.ActivityImageSlidderBinding;
-import com.cashback.models.Advertisement;
-import com.cashback.models.response.AdvertisementResponse;
 import com.cashback.models.response.HelpResponse;
 import com.cashback.models.viewmodel.HelpViewModel;
 import com.cashback.utils.Common;
@@ -56,20 +53,24 @@ public class FragmentHelp extends BaseFragment {
         initializeContent();
     }*/
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initializeContent() {
         Common.hideKeyboard(getActivity());
 
        initViewModel();
 
-       if (getArguments()!= null){
+       if (getArguments()!= null) {
            String msScreenType = getArguments().getString(Constants.IntentKey.ADVERT_SCREEN_TYPE);
            String lsTitle = getArguments().getString(Constants.IntentKey.SCREEN_TITLE);
 
-           showProgressDialog();
-           moProfileViewModel.fetAdvertList(getContext(), msScreenType);
+           //showProgressDialog();
+           //moProfileViewModel.fetAdvertList(getContext(), msScreenType);
 
            setToolbar(lsTitle);
        }
+
+       moBinding.webViewHelp.getSettings().setJavaScriptEnabled(true);
+       moBinding.webViewHelp.loadUrl("https://mobyads.in/moby/v2-apis/?fsAction=loadWebViewHtml&fsPage=faqs");
     }
 
     private void setToolbar(String fsTitle) {

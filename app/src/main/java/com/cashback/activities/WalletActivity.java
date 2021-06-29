@@ -3,6 +3,8 @@ package com.cashback.activities;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +54,15 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         moBinding.rvTransactionList.setAdapter(moTransactionListAdapter);
 
         getTransactionList();
+
+        moBinding.imageInfo.setOnClickListener(view -> {
+            new AlertDialog.Builder(WalletActivity.this)
+                    .setCancelable(true)
+                    .setTitle(getString(R.string.app_name))
+                    .setMessage(getString(R.string.info_message))
+                    .setPositiveButton("OK", (dialogInterface, i) -> dialogInterface.dismiss())
+                    .create().show();
+        });
 
     }
 
@@ -111,8 +122,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
        moBinding.tvWallet.setText("Credit In Your " + foJsonObject.getWalletName());
         if (foJsonObject.isActivityCouponExist()){
-            int liStart = getResources().getColor(R.color.red);
-            int liEnd = getResources().getColor(R.color.blue);
+            int liStart = getResources().getColor(R.color.white);
+            int liEnd = getResources().getColor(R.color.white);
             ObjectAnimator textColorAnim = ObjectAnimator.ofInt(moBinding.tvTimelineCoupon, "textColor", liEnd, liStart);
             textColorAnim.setDuration(1500);
             textColorAnim.setEvaluator(new ArgbEvaluator());

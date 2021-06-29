@@ -22,7 +22,7 @@ public class HelpListAdapter extends RecyclerView.Adapter<HelpListAdapter.DataOb
     private ArrayList<HelpResponse.HelpModel> moActivityList;
     private Context moContext;
 
-˚
+
     public HelpListAdapter(Context foContext, ArrayList<HelpResponse.HelpModel> foActivityList) {
         moActivityList = foActivityList;
         moContext = foContext;

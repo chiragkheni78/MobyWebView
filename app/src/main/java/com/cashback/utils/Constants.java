@@ -36,6 +36,7 @@ public class Constants {
         public static final String WEBVIEW_PAGE_NAME = "webviewURL";
         public static final String VIDEO_URL = "videoURL";
         public static final String IS_FROM = "isFrom";
+        public static final String adId = "adId";
         public static final String FROM_COUPON = "fromCoupon";
 
 

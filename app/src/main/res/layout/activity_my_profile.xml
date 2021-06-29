@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <include android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
     <LinearLayout
         android:id="@+id/llErrorMessage"
         style="@style/RootLayout"
         android:gravity="center"
-        android:visibility="gone"
-        android:paddingHorizontal="@dimen/padding_xxlarge">
+        android:paddingHorizontal="@dimen/padding_xxlarge"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvErrorTitle"
@@ -48,89 +51,453 @@
             style="@style/NormalLayout"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/llProfile"
-                style="@style/NormalLayout"
-                android:gravity="center_horizontal"
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="@dimen/padding_standard">
+                android:visibility="visible"
+                tools:visibility="gone"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
-                    android:id="@+id/llName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:id="@+id/llProfile"
+                    style="@style/NormalLayout"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_standard">
 
                     <LinearLayout
-                        android:id="@+id/llFName"
-                        android:layout_width="0dp"
+                        android:id="@+id/llName"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
+                        <LinearLayout
+                            android:id="@+id/llFName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/tvFirstName"
+                                style="@style/TvProfileHint"
+                                android:text="@string/hint_first_name" />
+
+                            <EditText
+                                android:id="@+id/etFirstName"
+                                style="@style/etStandard"
+                                android:hint="@string/hint_first_name"
+                                android:inputType="text" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="0dp" />
+
+                        <LinearLayout
+                            android:id="@+id/llLName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/tvLastName"
+                                style="@style/TvProfileHint"
+                                android:text="@string/hint_last_name" />
+
+                            <EditText
+                                android:id="@+id/etLastName"
+                                style="@style/etStandard"
+                                android:hint="@string/hint_last_name"
+                                android:inputType="text" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/NormalLayout"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <TextView
-                            android:id="@+id/tvFirstName"
+                            android:id="@+id/lblGender"
                             style="@style/TvProfileHint"
-                            android:text="@string/hint_first_name" />
+                            android:text="@string/hint_select_gender" />
+
+                        <RadioGroup
+                            android:id="@+id/rgGender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border_primary"
+                            android:layout_centerHorizontal="true"
+                            android:layout_toLeftOf="@+id/tvTimeline"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/rbMap"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_36sdp"
+                                android:layout_weight="1"
+                                android:layout_margin="1dp"
+                                android:background="@drawable/bg_radio_gender"
+                                android:button="@null"
+                                android:checked="false"
+                                android:gravity="center"
+                                android:text="FEMALE"
+                                android:textColor="@drawable/color_radio_txt"
+                                android:textStyle="bold" />
+
+                            <RadioButton
+                                android:id="@+id/rbList"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_36sdp"
+                                android:layout_weight="1"
+                                android:layout_margin="1dp"
+                                android:background="@drawable/bg_radio_gender"
+                                android:button="@null"
+                                android:checked="true"
+                                android:gravity="center"
+                                android:text="MALE"
+                                android:textColor="@drawable/color_radio_txt"
+                                android:textStyle="bold" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llDOB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblDOB"
+                            style="@style/TvProfileHint"
+                            android:text="@string/hint_dob" />
 
                         <EditText
-                            android:id="@+id/etFirstName"
+                            android:id="@+id/etDob"
                             style="@style/etStandard"
-                            android:hint="@string/hint_first_name"
+                            android:focusable="false"
+                            android:hint="dd-mm-yyyy"
                             android:inputType="text" />
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="@dimen/_10sdp"
-                        android:layout_height="0dp" />
-
                     <LinearLayout
-                        android:id="@+id/llLName"
-                        android:layout_width="0dp"
+                        android:id="@+id/llPhone"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:weightSum="2">
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvLastName"
+                            android:id="@+id/lblPhoneNumber"
                             style="@style/TvProfileHint"
-                            android:text="@string/hint_last_name" />
+                            android:text="@string/hint_phone_number" />
+
+                        <LinearLayout
+                            style="@style/NormalLayout"
+                            android:layout_gravity="center"
+                            android:background="@drawable/rect_grey_black"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/padding_standard">
+
+                            <TextView
+                                android:id="@+id/tvCountryCode"
+                                style="@style/TvStandard"
+                                android:background="@null"
+                                android:gravity="right"
+                                android:text="+91"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/padding_mini"
+                                android:layout_marginEnd="@dimen/padding_mini"
+                                android:background="@color/colorSecondaryText" />
+
+                            <EditText
+                                android:id="@+id/etPhoneNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:enabled="false"
+                                android:gravity="left"
+                                android:hint="@string/hint_mobile_no"
+                                android:imeOptions="actionDone"
+                                android:inputType="phone"
+                                android:maxLength="10"
+                                android:maxLines="1"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblEmail"
+                            style="@style/TvProfileHint"
+                            android:text="@string/hint_email_address" />
 
                         <EditText
-                            android:id="@+id/etLastName"
+                            android:id="@+id/etEmail"
                             style="@style/etStandard"
-                            android:hint="@string/hint_last_name"
-                            android:inputType="text" />
+                            android:hint="@string/hint_email_address"
+                            android:inputType="textPersonName" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llEWallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/lblEWallet"
+                            style="@style/TvProfileHint"
+                            android:letterSpacing="0.05"
+                            android:text="@string/hint_e_wallet" />
+
+                        <RelativeLayout
+                            android:id="@+id/rlEWallet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <Spinner
+                                    android:id="@+id/spinWallet"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_36sdp"
+                                    android:background="@drawable/bg_white_blue"
+                                    android:padding="8dp" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="@dimen/padding_standard"
+                                    android:src="@drawable/ic_arrow_drop_down" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llUPI"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_view"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/lblUPI"
+                                style="@style/TvProfileHint"
+                                android:text="@string/hint_upi_address" />
+
+                            <EditText
+                                android:id="@+id/etUpiID"
+                                style="@style/etStandard"
+                                android:hint="@string/enter_upi_id"
+                                android:inputType="text" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearUserProfileBankAccount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:id="@+id/llAccountNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_view"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+                                <TextView
+                                    android:id="@+id/lblAccountNumber"
+                                    style="@style/TvProfileHint"
+                                    android:text="@string/hint_bank_account_no" />
+
+                                <EditText
+                                    android:id="@+id/etAccountNumber"
+                                    style="@style/etStandard"
+                                    android:digits="0123456789"
+                                    android:hint="@string/enter_bank_account_number"
+                                    android:inputType="numberDecimal" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llIFSCCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_view"
+                                android:orientation="vertical"
+                                android:visibility="visible">
+
+                                <TextView
+                                    android:id="@+id/lblIFSCCode"
+                                    style="@style/TvProfileHint"
+                                    android:text="@string/hint_bank_account_ifsc" />
+
+                                <EditText
+                                    android:id="@+id/etIFSCCode"
+                                    style="@style/etStandard"
+                                    android:hint="@string/enter_ifsc_code"
+                                    android:inputType="text" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="gone"
+                app:cardUseCompatPadding="true">
+
                 <LinearLayout
+                    android:id="@+id/llCreditCard"
                     style="@style/NormalLayout"
-                    android:layout_marginTop="@dimen/margin_view"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:background="@color/white"
+                    android:paddingTop="@dimen/padding_large">
 
                     <TextView
-                        android:id="@+id/lblGender"
+                        android:id="@+id/tvCreditCardTitle"
+                        style="@style/TvXLarge"
+                        android:paddingHorizontal="@dimen/padding_standard"
+                        android:text="@string/add_card_header_tv" />
+
+                    <TextView
+                        android:id="@+id/tvCreditCardMessage"
                         style="@style/TvProfileHint"
-                        android:text="@string/hint_select_gender" />
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:lineSpacingMultiplier="1.2"
+                        android:paddingHorizontal="@dimen/padding_standard"
+                        android:text="@string/profile_non_required"
+                        android:textColor="@color/colorPrimary" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvBankCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:fadeScrollbars="false"
+                        android:scrollbars="none" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:id="@+id/llBankOfferCategory"
+                    style="@style/NormalLayout"
+                    android:background="@color/white"
+                    android:padding="@dimen/padding_standard">
+
+
+                    <TextView
+                        android:id="@+id/tvCategoryOffer"
+                        style="@style/TvXLarge"
+                        android:text="@string/category_offer" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvBankOfferCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_view" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:id="@+id/llRange"
+                    style="@style/NormalLayout"
+                    android:background="@color/white"
+
+                    android:padding="@dimen/padding_standard">
+
+                    <TextView
+                        android:id="@+id/lblRange"
+                        style="@style/TvXLarge"
+                        android:text="@string/bank_offer_with_in" />
+
 
                     <RadioGroup
-                        android:id="@+id/rgGender"
+                        android:id="@+id/rgRange"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/margin_view"
                         android:layout_toLeftOf="@+id/tvTimeline"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="5">
 
                         <RadioButton
-                            android:id="@+id/rbMap"
+                            android:id="@+id/rb250m"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/_36sdp"
                             android:layout_marginRight="@dimen/padding_mini"
@@ -139,12 +506,57 @@
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
-                            android:text="FEMALE"
+                            android:text="250M"
                             android:textColor="@drawable/color_radio_txt"
                             android:textStyle="bold" />
 
                         <RadioButton
-                            android:id="@+id/rbList"
+                            android:id="@+id/rb500m"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:layout_marginLeft="@dimen/padding_mini"
+                            android:layout_marginRight="@dimen/padding_mini"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_radio_gender"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="500M"
+                            android:textColor="@drawable/color_radio_txt"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rb1km"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:layout_marginLeft="@dimen/padding_mini"
+                            android:layout_marginRight="@dimen/padding_mini"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_radio_gender"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="1KM"
+                            android:textColor="@drawable/color_radio_txt"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rb2km"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_36sdp"
+                            android:layout_marginLeft="@dimen/padding_mini"
+                            android:layout_marginRight="@dimen/padding_mini"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_radio_gender"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="3KM"
+                            android:textColor="@drawable/color_radio_txt"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rb5km"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/_36sdp"
                             android:layout_marginLeft="@dimen/padding_mini"
@@ -153,447 +565,117 @@
                             android:button="@null"
                             android:checked="true"
                             android:gravity="center"
-                            android:text="MALE"
+                            android:text="5KM"
                             android:textColor="@drawable/color_radio_txt"
                             android:textStyle="bold" />
 
                     </RadioGroup>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llDOB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_view"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/lblDOB"
-                        style="@style/TvProfileHint"
-                        android:text="@string/hint_dob" />
-
-                    <EditText
-                        android:id="@+id/etDob"
-                        style="@style/etStandard"
-                        android:focusable="false"
-                        android:hint="dd-mm-yyyy"
-                        android:inputType="text" />
 
                 </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:cardUseCompatPadding="true">
+
                 <LinearLayout
-                    android:id="@+id/llPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_view"
-                    android:orientation="vertical">
+                    android:id="@+id/llPaymentMode"
+                    style="@style/NormalLayout"
+                    android:background="@color/white"
+                    android:padding="@dimen/padding_standard"
+                    android:visibility="gone">
 
                     <TextView
-                        android:id="@+id/lblPhoneNumber"
-                        style="@style/TvProfileHint"
-                        android:text="@string/hint_phone_number" />
+                        android:id="@+id/lblPaymentMode"
+                        style="@style/TvXLarge"
+                        android:text="@string/payment_transfer_setting" />
+
 
                     <LinearLayout
-                        style="@style/NormalLayout"
-                        android:layout_gravity="center"
-                        android:background="@drawable/rect_grey_black"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/padding_standard">
-
-                        <TextView
-                            android:id="@+id/tvCountryCode"
-                            style="@style/TvStandard"
-                            android:background="@null"
-                            android:gravity="right"
-                            android:text="+91"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/padding_mini"
-                            android:layout_marginEnd="@dimen/padding_mini"
-                            android:background="@color/colorSecondaryText" />
-
-                        <EditText
-                            android:id="@+id/etPhoneNo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:enabled="false"
-                            android:gravity="left"
-                            android:hint="@string/hint_mobile_no"
-                            android:imeOptions="actionDone"
-                            android:inputType="phone"
-                            android:maxLength="10"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_view"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/lblEmail"
-                        style="@style/TvProfileHint"
-                        android:text="@string/hint_email_address" />
-
-                    <EditText
-                        android:id="@+id/etEmail"
-                        style="@style/etStandard"
-                        android:hint="@string/hint_email_address"
-                        android:inputType="textPersonName" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llEWallet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_view"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/lblEWallet"
-                        style="@style/TvProfileHint"
-                        android:letterSpacing="0.05"
-                        android:text="@string/hint_e_wallet" />
-
-                    <RelativeLayout
-                        android:id="@+id/rlEWallet"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <Spinner
-                                android:id="@+id/spinWallet"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_36sdp"
-                                android:background="@drawable/bg_white_blue"
-                                android:padding="8dp" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="@dimen/padding_standard"
-                                android:src="@drawable/ic_arrow_drop_down" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llUPI"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_view"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/lblUPI"
-                            style="@style/TvProfileHint"
-                            android:text="@string/hint_upi_address" />
-
-                        <EditText
-                            android:id="@+id/etUpiID"
-                            style="@style/etStandard"
-                            android:hint="@string/enter_upi_id"
-                            android:inputType="text" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearUserProfileBankAccount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:orientation="vertical">
 
-                        <LinearLayout
-                            android:id="@+id/llAccountNumber"
+                        <RadioGroup
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_view"
-                            android:orientation="vertical"
-                            android:visibility="visible">
+                            android:orientation="horizontal"
+                            android:padding="1dp"
+                            android:weightSum="2">
 
-                            <TextView
-                                android:id="@+id/lblAccountNumber"
-                                style="@style/TvProfileHint"
-                                android:text="@string/hint_bank_account_no" />
+                            <RadioButton
+                                android:id="@+id/rbPaytm"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/secondary"
+                                android:checked="true"
+                                android:text="Paytm Mobile"
+                                android:textStyle="bold" />
 
-                            <EditText
-                                android:id="@+id/etAccountNumber"
-                                style="@style/etStandard"
-                                android:hint="@string/enter_bank_account_number"
-                                android:digits="0123456789"
-                                android:inputType="numberDecimal" />
+                            <RadioButton
+                                android:id="@+id/rbUPI"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/secondary"
+                                android:checked="false"
+                                android:drawablePadding="@dimen/_10sdp"
+                                android:text="UPI"
+                                android:textStyle="bold" />
 
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/llIFSCCode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_view"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <TextView
-                                android:id="@+id/lblIFSCCode"
-                                style="@style/TvProfileHint"
-                                android:text="@string/hint_bank_account_ifsc" />
-
-                            <EditText
-                                android:id="@+id/etIFSCCode"
-                                style="@style/etStandard"
-                                android:hint="@string/enter_ifsc_code"
-                                android:inputType="text" />
-
-                        </LinearLayout>
+                        </RadioGroup>
 
                     </LinearLayout>
-
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:id="@+id/llCreditCard"
-                style="@style/NormalLayout"
-                android:layout_marginTop="@dimen/_20sdp"
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
                 android:background="@color/white"
-                android:paddingTop="@dimen/padding_large">
-
-                <TextView
-                    android:id="@+id/tvCreditCardTitle"
-                    style="@style/TvXLarge"
-                    android:paddingHorizontal="@dimen/padding_standard"
-                    android:text="@string/add_card_header_tv" />
-
-                <TextView
-                    android:id="@+id/tvCreditCardMessage"
-                    style="@style/TvProfileHint"
-                    android:layout_marginTop="@dimen/margin_view"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingHorizontal="@dimen/padding_standard"
-                    android:text="@string/profile_non_required"
-                    android:textColor="@color/colorPrimary" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvBankCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fadeScrollbars="false"
-                    android:scrollbars="none"
-                    tools:listitem="@layout/item_debit_card"
-                    android:layout_marginTop="@dimen/margin_view" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llBankOfferCategory"
-                style="@style/NormalLayout"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@color/white"
-                android:padding="@dimen/padding_standard">
-
-
-                <TextView
-                    android:id="@+id/tvCategoryOffer"
-                    style="@style/TvXLarge"
-                    android:text="@string/category_offer" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvBankOfferCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_view" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llRange"
-                style="@style/NormalLayout"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@color/white"
-
-                android:padding="@dimen/padding_standard">
-
-                <TextView
-                    android:id="@+id/lblRange"
-                    style="@style/TvXLarge"
-                    android:text="@string/bank_offer_with_in" />
-
-
-                <RadioGroup
-                    android:id="@+id/rgRange"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/margin_view"
-                    android:layout_toLeftOf="@+id/tvTimeline"
-                    android:orientation="horizontal"
-                    android:weightSum="5">
-
-                    <RadioButton
-                        android:id="@+id/rb250m"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:layout_marginRight="@dimen/padding_mini"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_radio_gender"
-                        android:button="@null"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="250M"
-                        android:textColor="@drawable/color_radio_txt"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/rb500m"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:layout_marginLeft="@dimen/padding_mini"
-                        android:layout_marginRight="@dimen/padding_mini"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_radio_gender"
-                        android:button="@null"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="500M"
-                        android:textColor="@drawable/color_radio_txt"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/rb1km"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:layout_marginLeft="@dimen/padding_mini"
-                        android:layout_marginRight="@dimen/padding_mini"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_radio_gender"
-                        android:button="@null"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="1KM"
-                        android:textColor="@drawable/color_radio_txt"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/rb2km"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:layout_marginLeft="@dimen/padding_mini"
-                        android:layout_marginRight="@dimen/padding_mini"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_radio_gender"
-                        android:button="@null"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="3KM"
-                        android:textColor="@drawable/color_radio_txt"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/rb5km"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_36sdp"
-                        android:layout_marginLeft="@dimen/padding_mini"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_radio_gender"
-                        android:button="@null"
-                        android:checked="true"
-                        android:gravity="center"
-                        android:text="5KM"
-                        android:textColor="@drawable/color_radio_txt"
-                        android:textStyle="bold" />
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llPaymentMode"
-                style="@style/NormalLayout"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@color/white"
-                android:visibility="gone"
-                android:padding="@dimen/padding_standard">
-
-                <TextView
-                    android:id="@+id/lblPaymentMode"
-                    style="@style/TvXLarge"
-                    android:text="@string/payment_transfer_setting" />
-
+                android:orientation="vertical"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_view"
-                    android:orientation="vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
+                    <CheckBox
+                        android:id="@+id/cbTerms"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="1dp"
-                        android:weightSum="2">
+                        android:layout_margin="@dimen/padding_standard"
+                        android:buttonTint="@color/secondary"
+                        android:checked="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:gravity="top"
+                        android:padding="@dimen/padding_micro"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
-                        <RadioButton
-                            android:id="@+id/rbPaytm"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:text="Paytm Mobile"
-                            android:buttonTint="@color/secondary"
-                            android:textStyle="bold" />
-
-                        <RadioButton
-                            android:id="@+id/rbUPI"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:checked="false"
-                            android:buttonTint="@color/secondary"
-                            android:drawablePadding="@dimen/_10sdp"
-                            android:text="UPI"
-                            android:textStyle="bold" />
-
-                    </RadioGroup>
+                    <TextView
+                        android:id="@+id/tvTerms"
+                        style="@style/TvStandard"
+                        android:text="I accept the Terms &amp; Conditions." />
 
                 </LinearLayout>
-            </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/cbTerms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:checked="true"
-                android:fontFamily="sans-serif-condensed"
-                android:gravity="top"
-                android:buttonTint="@color/secondary"
-                android:padding="@dimen/padding_micro"
-                android:layout_margin="@dimen/padding_standard"
-                android:text="I accept the Terms &amp; Conditions."
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/llBottom"
