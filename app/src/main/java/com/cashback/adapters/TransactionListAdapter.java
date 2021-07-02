@@ -192,7 +192,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
 
-        } else if (foTransaction.getFiTrasactionStatus() == 3) {
+        } else if (foTransaction.getTrasactionStatus() == 3) {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.pending_cash)+")");

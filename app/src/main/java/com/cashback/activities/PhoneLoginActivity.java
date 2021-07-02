@@ -184,12 +184,12 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
 
     private void sendOTP() {
         Common.hideKeyboard(this);
-        showProgressDialog();
         String lsMessage = Common.validatePhoneNumber(moBinding.etPhoneNo.getText().toString().trim());
         if (!lsMessage.isEmpty()) {
             Snackbar.make(findViewById(android.R.id.content), lsMessage, Snackbar.LENGTH_SHORT).show();
             return;
         }
+        showProgressDialog();
         String lsPhoneNumber = moBinding.tvCountryCode.getText() + moBinding.etPhoneNo.getText().toString().trim();
         moPhoneLoginViewModel.startPhoneNumberVerification(this, lsPhoneNumber);
         moVerificationInProgress = true;
@@ -211,7 +211,6 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
             return;
         }
         String lsPhoneNumber = moBinding.tvCountryCode.getText() + moBinding.etPhoneNo.getText().toString().trim();
-
         moPhoneLoginViewModel.resendVerificationCode(this, lsPhoneNumber);
     }
 
