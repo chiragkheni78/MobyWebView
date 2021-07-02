@@ -36,6 +36,7 @@ public class Constants {
         public static final String WEBVIEW_PAGE_NAME = "webviewURL";
         public static final String VIDEO_URL = "videoURL";
         public static final String IS_FROM = "isFrom";
+        public static final String adId = "adId";
         public static final String FROM_COUPON = "fromCoupon";
 
 
@@ -75,6 +76,8 @@ public class Constants {
         PROCEED_DEVICE("proceedWithDevice"),
         GET_USER_TRANSACTION("getUserTransaction"),
         GET_ADVERT_IMAGES("getAdvertisementImage"),
+        GET_LOAD_WEBVIEW("loadWebView"),
+        GET_LOAD_WEBVIEW_FAQ("faqs"),
         LOAD_WEB_VIEW_DATA("loadWebView"),
         GET_USER_DETAILS("getUserDetails"),
         SAVE_USER_DETAILS("saveFullProfile"),

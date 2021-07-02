@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llRoot"
+    style="@style/RootLayout"
+    android:background="@color/white"
+    android:visibility="visible"
+    tools:context=".activities.HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/llQuestion"
+        style="@style/NormalLayout"
+        android:background="@drawable/half_circle_light_green"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_quiz" />
+
+
+        <LinearLayout
+            style="@style/RootLayout"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_mini">
+
+            <TextView
+                android:id="@+id/tvQuestion"
+                style="@style/TvLarge"
+                android:text="Shop via moby coupon to get all "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvNumber"
+                style="@style/TvStandard"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="1 of 3" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            style="@style/RootLayout"
+            android:layout_above="@+id/btnWinCoupon"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/_20sdp">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvQuizOptions"
+                style="@style/RecycleView78"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                tools:listitem="@layout/item_quiz_option" />
+
+
+            <LinearLayout
+                android:id="@+id/llOptionList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvYouTube"
+                    style="@style/NormalLayout"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_gravity="bottom|center"
+                    android:layout_margin="@dimen/padding_xnano"
+                    android:background="@drawable/rect_white"
+                    android:elevation="@dimen/_4sdp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/ivYoutube"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/padding_nano"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/iv_youtub" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvQRCode"
+                    style="@style/NormalLayout"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_gravity="bottom|center"
+                    android:layout_margin="@dimen/padding_xnano"
+                    android:background="@drawable/rect_white"
+                    android:elevation="@dimen/_4sdp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/ivQRCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/padding_nano"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/qr_code" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvTextAnswer"
+                    style="@style/NormalLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_margin="@dimen/padding_xnano"
+                    android:background="@drawable/rect_white"
+                    android:visibility="gone"
+                    android:elevation="@dimen/_8sdp">
+
+                    <EditText
+                        android:id="@+id/etTextAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/rect_white"
+                        android:hint="Enter your answer here"
+                        android:inputType="text"
+                        android:padding="8dp"
+                        android:textColor="@color/primary_text"
+                        android:textSize="16sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.rey.material.widget.Button
+            android:id="@+id/btnNext"
+            style="@style/RippleBtnStandard"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="@string/win_coupon"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

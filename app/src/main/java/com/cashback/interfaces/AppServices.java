@@ -10,6 +10,7 @@ import com.cashback.models.request.GetMiniProfileRequest;
 import com.cashback.models.request.GetSettingRequest;
 import com.cashback.models.request.ActivityListRequest;
 import com.cashback.models.request.GetUserProfileRequest;
+import com.cashback.models.request.HelpRequest;
 import com.cashback.models.request.MessageDetailsRequest;
 import com.cashback.models.request.MessageListRequest;
 import com.cashback.models.request.MobileDeviceRequest;
@@ -33,6 +34,7 @@ import com.cashback.models.response.DeleteCardResponse;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.response.ActivityListResponse;
 import com.cashback.models.response.GetUserProfileResponse;
+import com.cashback.models.response.HelpResponse;
 import com.cashback.models.response.MessageDetailsResponse;
 import com.cashback.models.response.MobileDeviceResponse;
 import com.cashback.models.response.OfferFilterResponse;
@@ -132,6 +134,9 @@ public interface AppServices {
 
     @POST("v2-apis/")
     Call<AdvertisementResponse> getAdvertList(@Body AdvertisementRequest foRequest);
+
+    @POST("v2-apis/")
+    Call<HelpResponse> getHelpList(@Body HelpRequest foRequest);
 
     @POST("v2-apis/")
     Call<WebViewDataResponse> loadWebViewData(@Body WebviewDataRequest foRequest);

@@ -8,10 +8,13 @@ public class Category {
     int categoryId;
     @SerializedName("fsCategoryName")
     String categoryName;
+    @SerializedName("fsCategoryImage")
+    String fsCategoryImage;
 
-    public Category(int categoryId, String categoryName) {
+    public Category(int categoryId, String categoryName, String fsCategoryImage) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
+        this.fsCategoryImage = fsCategoryImage;
     }
 
     public String getCategoryName() {
@@ -28,5 +31,13 @@ public class Category {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getFsCategoryImage() {
+        return fsCategoryImage;
+    }
+
+    public void setFsCategoryImage(String fsCategoryImage) {
+        this.fsCategoryImage = fsCategoryImage;
     }
 }

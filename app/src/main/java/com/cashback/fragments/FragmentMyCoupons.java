@@ -14,25 +14,21 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cashback.R;
-import com.cashback.activities.BaseActivity;
 import com.cashback.activities.BillUploadActivity;
 import com.cashback.activities.CouponDetailsActivity;
 import com.cashback.activities.HomeActivity;
 import com.cashback.adapters.ActivityListAdapter;
 import com.cashback.databinding.ActivityMyCouponsBinding;
-import com.cashback.databinding.FragmentOfferListBinding;
 import com.cashback.models.Activity;
 import com.cashback.models.response.ActivityListResponse;
 import com.cashback.models.viewmodel.ActivityListViewModel;
@@ -40,13 +36,10 @@ import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 import static com.cashback.activities.MyCouponsActivity.REQUEST_ACTIVITY_BILL_UPLOAD;
 import static com.cashback.activities.MyCouponsActivity.REQUEST_COUPON_DETAILS;
-import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
 import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
@@ -112,6 +105,12 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
                 getActivity().startActivity(loIntent);
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Common.stCouponId = "";
     }
 
     private void setToolbar() {
@@ -216,14 +215,14 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         }
     }
 
-    public void onBackPressed() {
+    /*public void onBackPressed() {
         //super.onBackPressed();
         if (isPendingBillUpload) {
             showBackToCouponDialog();
         } else {
             backToHome(null);
         }
-    }
+    }*/
 
     private void showBackToCouponDialog() {
         try {
@@ -318,9 +317,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         getActivity().startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ACTIVITY_BILL_UPLOAD) {
             if (resultCode == getActivity().RESULT_OK) { // Activity.RESULT_OK
                 if (miPosition > -1) {

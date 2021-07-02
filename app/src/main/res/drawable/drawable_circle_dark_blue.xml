@@ -4,6 +4,6 @@
     android:shape="ring"
     android:thickness="6dp"
     android:useLevel="false">
-    <solid android:color="@color/secondary" />
+    <solid android:color="@color/divider" />
 
 </shape>

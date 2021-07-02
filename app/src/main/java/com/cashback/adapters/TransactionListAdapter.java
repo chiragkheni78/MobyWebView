@@ -192,6 +192,22 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
 
+        } else if (foTransaction.getFiTrasactionStatus() == 3) {
+
+            foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
+            foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.pending_cash)+")");
+
+            foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+            foHolder.tvStatusTracked.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
+            foHolder.tvStatusValidated.setBackgroundColor(ContextCompat.getColor(moContext, R.color.colorPrimary));
+            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
+
+            foHolder.tvStatusValidated.setText(moContext.getResources().getString(R.string.rejected));
+
+            foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
+            foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
+
         } else {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));

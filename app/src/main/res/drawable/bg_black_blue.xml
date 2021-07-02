@@ -4,7 +4,7 @@
 
     android:thickness="1dp">
     <solid android:color="@color/black" />
-    <stroke android:color="@color/secondary" android:width="@dimen/_2sdp"/>
+    <!--<stroke android:color="@color/secondary" android:width="@dimen/_2sdp"/>-->
 
 
     <corners android:radius="3dp" />

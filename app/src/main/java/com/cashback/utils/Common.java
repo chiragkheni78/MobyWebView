@@ -61,6 +61,9 @@ import retrofit2.Response;
 
 public class Common {
 
+    public static boolean stOfferShow = true;
+    public static String stCouponId = "";
+
     private static final String TAG = Common.class.getSimpleName();
 
     public static String getDynamicText(Context foContext, String fsKey) {

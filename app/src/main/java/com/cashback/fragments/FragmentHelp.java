@@ -1,5 +1,6 @@
 package com.cashback.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,16 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.cashback.adapters.AdvertAdapter;
-import com.cashback.adapters.ImageSliderAdapter;
-import com.cashback.databinding.ActivityImageSlidderBinding;
-import com.cashback.models.Advertisement;
-import com.cashback.models.response.AdvertisementResponse;
-import com.cashback.models.viewmodel.AdvertisementViewModel;
+import com.cashback.adapters.HelpListAdapter;
+import com.cashback.databinding.ActivityHelpBinding;
+import com.cashback.models.response.HelpResponse;
+import com.cashback.models.viewmodel.HelpViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
-import com.cashback.utils.custom.CircularViewPagerHandler;
 
 import java.util.ArrayList;
 
@@ -28,14 +27,13 @@ public class FragmentHelp extends BaseFragment {
 
     }
 
-    private static final String TAG = FragmentHelp.class.getSimpleName();
-    ActivityImageSlidderBinding moBinding;
-    AdvertisementViewModel moProfileViewModel;
+    ActivityHelpBinding moBinding;
+    HelpViewModel moProfileViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        moBinding = ActivityImageSlidderBinding.inflate(inflater, container, false);
+        moBinding = ActivityHelpBinding.inflate(inflater, container, false);
         return getContentView(moBinding);
     }
 
@@ -55,73 +53,50 @@ public class FragmentHelp extends BaseFragment {
         initializeContent();
     }*/
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initializeContent() {
         Common.hideKeyboard(getActivity());
 
        initViewModel();
 
-       if (getArguments()!= null){
+       if (getArguments()!= null) {
            String msScreenType = getArguments().getString(Constants.IntentKey.ADVERT_SCREEN_TYPE);
            String lsTitle = getArguments().getString(Constants.IntentKey.SCREEN_TITLE);
 
-           showProgressDialog();
-           moProfileViewModel.fetAdvertList(getContext(), msScreenType);
+           //showProgressDialog();
+           //moProfileViewModel.fetAdvertList(getContext(), msScreenType);
 
            setToolbar(lsTitle);
        }
+
+       moBinding.webViewHelp.getSettings().setJavaScriptEnabled(true);
+       moBinding.webViewHelp.loadUrl("https://mobyads.in/moby/v2-apis/?fsAction=loadWebViewHtml&fsPage=faqs");
     }
 
     private void setToolbar(String fsTitle) {
 
         moBinding.toolbar.toolbar.setVisibility(View.GONE);
-
-        /*Toolbar loToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(loToolbar);
-
-        ImageButton loIbNavigation = loToolbar.findViewById(R.id.ibNavigation);
-        loIbNavigation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
-        loTvToolbarTitle.setText(fsTitle);*/
     }
 
     private void initViewModel() {
-        moProfileViewModel = new ViewModelProvider(this).get(AdvertisementViewModel.class);
+        moProfileViewModel = new ViewModelProvider(this).get(HelpViewModel.class);
         moProfileViewModel.advertListStatus.observe(getActivity(), advertImageObserver);
     }
 
-    Observer<AdvertisementResponse> advertImageObserver = new Observer<AdvertisementResponse>() {
-        @Override
-        public void onChanged(AdvertisementResponse loJsonObject) {
-            if (!loJsonObject.isError()) {
-                setImageSlider(loJsonObject.getAdvertisementList());
-            } else {
-                Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
-            }
-            Common.dismissProgressDialog(loProgressDialog);
+    Observer<HelpResponse> advertImageObserver = loJsonObject -> {
+        if (!loJsonObject.isError()) {
+            setImageSlider(loJsonObject.getFoFAQLists());
+        } else {
+            Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
         }
+        Common.dismissProgressDialog(loProgressDialog);
     };
 
-    private void setImageSlider(ArrayList<Advertisement> foAdvertisementList) {
-        /*ImageSliderAdapter loSliderAdapter = new ImageSliderAdapter(getContext(), foAdvertisementList);
-        moBinding.vpAdvert.setAdapter(loSliderAdapter);
-        moBinding.vpAdvert.addOnPageChangeListener(new CircularViewPagerHandler(moBinding.vpAdvert));
-        moBinding.vpAdvert.addOnPageChangeListener(new CircularViewPagerHandler(moBinding.vpAdvert));
-
-        moBinding.indicator.setViewPager(moBinding.vpAdvert);
-        moBinding.indicator.setVisibility(View.VISIBLE);
-
-        moBinding.imageSlider.setVisibility(View.GONE);
-        moBinding.flSlider.setVisibility(View.VISIBLE);*/
-
-        moBinding.imageSlider.setVisibility(View.VISIBLE);
-        moBinding.flSlider.setVisibility(View.GONE);
-        moBinding.imageSlider.setSliderAdapter(new AdvertAdapter(getContext(), foAdvertisementList));
+    private void setImageSlider(ArrayList<HelpResponse.HelpModel> foAdvertisementList) {
+        moBinding.reyclerViewHelp.setLayoutManager(new LinearLayoutManager(getActivity()));
+        moBinding.reyclerViewHelp.setAdapter(new HelpListAdapter(getActivity(), foAdvertisementList));
     }
+
+
 
 }

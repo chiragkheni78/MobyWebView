@@ -6,9 +6,12 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,11 +44,17 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode, tvRegisterBill, tvExpireDay;
+        TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode,
+                tvRegisterBill, tvRequiredPayout, tvExpireDay, lblReward;
         LinearLayout loLlRoot, loLllRegisterBill;
+        ImageView ivLogo;
+        RelativeLayout cardItemActivity;
 
         public DataObjectHolder(View foView) {
             super(foView);
+            lblReward = foView.findViewById(R.id.lblReward);
+            tvRequiredPayout = foView.findViewById(R.id.tvRequiredPayout);
+            cardItemActivity = foView.findViewById(R.id.cardItemActivityMain);
             loTvAdName = foView.findViewById(R.id.tvOfferName);
             loTvQuizReward = foView.findViewById(R.id.tvQuizReward);
             loTvDate = foView.findViewById(R.id.tvDate);
@@ -53,6 +62,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             tvCouponCode = foView.findViewById(R.id.tvCouponCode);
             tvRegisterBill = foView.findViewById(R.id.tvRegisterBill);
             tvExpireDay = foView.findViewById(R.id.tvExpireDay);
+            ivLogo = foView.findViewById(R.id.ivLogo);
 
             loLlRoot = foView.findViewById(R.id.llTimeline);
             loLllRegisterBill = foView.findViewById(R.id.llRegisterBill);
@@ -122,10 +132,40 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             foHolder.tvCouponCode.setText(Common.getDynamicText(moContext, "view_coupon"));
             foHolder.tvRegisterBill.setText(Common.getDynamicText(moContext, "register_bill"));
 
+            Common.loadImage(foHolder. ivLogo, loActivity.getFsAdLogo(),
+                    moContext.getResources().getDrawable(R.drawable.ic_moby_small),
+                    moContext.getResources().getDrawable(R.drawable.ic_moby_small));
+
             foHolder.tvCouponCode.setTag(fiPosition);
             foHolder.itemView.setTag(fiPosition);
 
             handleLogicalOperation(foHolder, loActivity);
+
+            if (Common.stCouponId != null && !Common.stCouponId.isEmpty()) {
+                if (Common.stCouponId.equalsIgnoreCase(""+ loActivity.getAdID())) {
+                    foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+                    foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+                    foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+                    foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+
+                    foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
+                } else {
+                    foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                    foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                    foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                    foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+
+                    foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
+                }
+            } else {
+                foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+
+                foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
+            }
+
         } catch (Exception e) {
             LogV2.logException(TAG, e);
         }
@@ -192,9 +232,25 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private void setQuizReward(TextView foTvQuizReward, Activity foActivity) {
         int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.colorPrimary);
-        int rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
 
-        foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
+        int rewardColor;
+        if (Common.stCouponId != null && !Common.stCouponId.isEmpty()) {
+            if (Common.stCouponId.equalsIgnoreCase("" + foActivity.getAdID())) {
+                foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.WHITE));
+                rewardColor = ActivityCompat.getColor(moContext, R.color.white);
+            } else {
+                foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
+                rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
+            }
+        } else {
+            foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
+            rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
+        }
+
+
+        //int rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
+
+        //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
         foTvQuizReward.append(Common.getColorText("Rs. " + foActivity.getQuizReward(), rewardColor));
     }
 

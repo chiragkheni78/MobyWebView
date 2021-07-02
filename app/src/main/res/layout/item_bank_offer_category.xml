@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/rb_toggle"
         android:drawablePadding="@dimen/_15sdp"
-        android:drawableTint="@color/secondary"
+        android:drawableTint="@color/colorPrimary"
         android:gravity="center_vertical"
         android:padding="@dimen/_5sdp"
         android:text="Device Name"

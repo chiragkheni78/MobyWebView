@@ -1,5 +1,6 @@
 package com.cashback.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -100,7 +101,18 @@ public class AdvertisementActivity extends BaseActivity{
 
         moBinding.imageSlider.setVisibility(View.VISIBLE);
         moBinding.flSlider.setVisibility(View.GONE);
-        moBinding.imageSlider.setSliderAdapter(new AdvertAdapter(getContext(), foAdvertisementList));
+        moBinding.imageSlider.setSliderAdapter(new AdvertAdapter(getContext(), foAdvertisementList, new AdvertAdapter.OnItemClick() {
+            @Override
+            public void onItemClick(Advertisement advertisement) {
+                Intent loIntent = new Intent(AdvertisementActivity.this, HomeActivity.class);
+                loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                loIntent.putExtra(Constants.IntentKey.OFFER_ID, advertisement.getAdID());
+                loIntent.putExtra(Constants.IntentKey.CATEGORY_ID, advertisement.getCategoryID());
+                loIntent.putExtra(Constants.IntentKey.BANNER_ID, advertisement.getBannerID());
+                startActivity(loIntent);
+                finish();
+            }
+        }));
     }
 
 }

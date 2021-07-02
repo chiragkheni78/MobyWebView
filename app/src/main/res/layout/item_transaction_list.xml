@@ -4,6 +4,8 @@
     android:id="@+id/cvRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
+    card_view:cardCornerRadius="@dimen/_5sdp"
     android:layout_marginHorizontal="@dimen/padding_micro"
     card_view:cardUseCompatPadding="true">
 
@@ -106,7 +108,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/padding_micro"
                 android:visibility="gone"
                 android:weightSum="2">
 

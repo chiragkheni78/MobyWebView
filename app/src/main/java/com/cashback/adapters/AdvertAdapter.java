@@ -1,6 +1,7 @@
 package com.cashback.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.ImageView;
 import androidx.core.app.ActivityCompat;
 
 import com.cashback.R;
+import com.cashback.activities.HomeActivity;
 import com.cashback.models.Advertisement;
 import com.cashback.utils.Common;
+import com.cashback.utils.Constants;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
 import java.util.ArrayList;
@@ -21,10 +24,16 @@ public class AdvertAdapter extends
 
     private Context context;
     private ArrayList<Advertisement> moAdvertList;
+    private OnItemClick advertisementListener;
 
-    public AdvertAdapter(Context context, ArrayList<Advertisement> foAdvertList) {
+    public interface OnItemClick{
+        void onItemClick(Advertisement advertisement);
+    }
+
+    public AdvertAdapter(Context context, ArrayList<Advertisement> foAdvertList, OnItemClick advertisementListener) {
         this.context = context;
         this.moAdvertList = foAdvertList;
+        this.advertisementListener = advertisementListener;
     }
 
     @Override
@@ -45,6 +54,11 @@ public class AdvertAdapter extends
 
         Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
 
+        viewHolder.ivBanner.setOnClickListener(view -> {
+            if (advertisementListener != null) {
+                advertisementListener.onItemClick(loAdvertisement);
+            }
+        });
     }
 
     @Override

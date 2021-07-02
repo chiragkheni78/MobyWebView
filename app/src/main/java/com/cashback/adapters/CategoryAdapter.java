@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cashback.R;
 import com.cashback.fragments.OfferListFragment;
 import com.cashback.models.Category;
+import com.cashback.utils.Common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +53,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.itemView.setTag(moCategoryList.get(position));
         holder.loTvCategoryName.setText(moCategoryList.get(position).getCategoryName());
 
-        holder.loLlCategory.setBackground(ActivityCompat.getDrawable(context, R.drawable.rect_white_black));
+//        holder.loLlCategory.setBackground(ActivityCompat.getDrawable(context, R.drawable.rect_white_black));
         holder.loTvCategoryName.setTextColor(ActivityCompat.getColor(context, R.color.black));
 
+        Common.loadImage(holder.ivLogo, moCategoryList.get(position).getFsCategoryImage(),
+                context.getResources().getDrawable(R.drawable.ic_moby_small),
+                context.getResources().getDrawable(R.drawable.ic_moby_small));
+
+
         if (selectedItem == position) {
-            holder.loLlCategory.setBackground(ActivityCompat.getDrawable(context, R.drawable.btn_blue));
-            holder.loTvCategoryName.setTextColor(ActivityCompat.getColor(context, R.color.white));
+//            holder.loLlCategory.setBackground(ActivityCompat.getDrawable(context, R.drawable.btn_blue));
+            holder.loTvCategoryName.setTextColor(ActivityCompat.getColor(context, R.color.colorPrimary));
         }
 
         holder.loLlCategory.setOnClickListener(new View.OnClickListener() {
@@ -83,11 +90,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
         public TextView loTvCategoryName;
         public LinearLayout loLlCategory;
+        public ImageView ivLogo;
 
         public MyViewHolder(View view) {
             super(view);
             loTvCategoryName = (TextView) view.findViewById(R.id.tvCategory);
             loLlCategory = (LinearLayout) view.findViewById(R.id.llCategory);
+            ivLogo = (ImageView) view.findViewById(R.id.ivLogo);
         }
     }
 
