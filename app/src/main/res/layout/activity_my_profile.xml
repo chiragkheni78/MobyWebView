@@ -154,8 +154,7 @@
                                 android:checked="false"
                                 android:gravity="center"
                                 android:text="FEMALE"
-                                android:textColor="@drawable/color_radio_txt"
-                                android:textStyle="bold" />
+                                android:textColor="@drawable/color_radio_txt" />
 
                             <RadioButton
                                 android:id="@+id/rbList"
@@ -168,8 +167,7 @@
                                 android:checked="true"
                                 android:gravity="center"
                                 android:text="MALE"
-                                android:textColor="@drawable/color_radio_txt"
-                                android:textStyle="bold" />
+                                android:textColor="@drawable/color_radio_txt" />
 
                         </RadioGroup>
                     </LinearLayout>

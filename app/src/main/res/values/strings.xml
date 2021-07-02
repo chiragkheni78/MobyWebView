@@ -157,6 +157,7 @@
     <string name="enter_upi_id">ENTER UPI ID</string>
     <string name="cashback_upto">Cashback Upto</string>
     <string name="cashback_rs">Cashback Rs</string>
+    <string name="rejected">Rejected</string>
     <string name="pending_cash">Pending Cash</string>
 
     <string name="offers">My Offers</string>

@@ -108,21 +108,20 @@
                         <LinearLayout
                             style="@style/RootLayout"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/margin_view"
                             android:background="@color/transparent"
                             android:gravity="center"
                             android:padding="@dimen/padding_standard">
 
                             <TextView
                                 android:id="@+id/tvTitle"
-                                style="@style/TvXLarge"
+                                style="@style/TvDxLarge"
                                 android:gravity="center"
                                 android:text="Title"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tvDesc2"
-                                style="@style/TvStandard"
+                                style="@style/TvLarge"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:gravity="center"
                                 android:text="Desc2"
@@ -131,7 +130,7 @@
 
                             <TextView
                                 android:id="@+id/tvDesc3"
-                                style="@style/TvLarge"
+                                style="@style/TvXLarge"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:gravity="center"
                                 android:text="Desc3"
@@ -140,7 +139,7 @@
 
                             <TextView
                                 android:id="@+id/tvDesc4"
-                                style="@style/TvStandard"
+                                style="@style/TvLarge"
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:gravity="center"
                                 android:text="Desc4" />

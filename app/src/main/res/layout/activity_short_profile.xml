@@ -66,7 +66,6 @@
 
                     <LinearLayout
                         style="@style/NormalLayout"
-                        android:layout_marginTop="@dimen/padding_mini"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -135,7 +134,6 @@
 
                     <LinearLayout
                         style="@style/NormalLayout"
-                        android:layout_marginTop="@dimen/margin_view"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -191,7 +189,7 @@
                         android:id="@+id/ivBanner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_20sdp"
                         android:adjustViewBounds="true"
                         android:src="@drawable/sample3"

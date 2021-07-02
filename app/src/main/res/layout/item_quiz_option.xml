@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cvCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="@dimen/padding_mini"
-    android:background="@drawable/rect_white"
-    app:cardElevation="@dimen/_4sdp">
+    android:layout_margin="@dimen/padding_mini">
 
     <RadioButton
         android:id="@+id/tvOption"
         style="@style/TvLarge"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
         android:button="@null"
         android:gravity="center"
@@ -20,4 +19,4 @@
         android:background="@drawable/bg_radio_multi_choice"
         android:text="Category"
         android:textColor="@drawable/text_color_multi_choice" />
-</androidx.cardview.widget.CardView>
+</LinearLayout>

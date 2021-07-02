@@ -75,8 +75,9 @@
                 <LinearLayout
                     style="@style/NormalLayout"
                     android:layout_width="0dp"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/padding_mini"
+                    android:layout_gravity="top"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
+                    android:paddingTop="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -109,7 +110,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="right|center_vertical"
                         android:layout_margin="@dimen/padding_micro"
-                        android:background="@drawable/round_blue">
+                        android:background="@drawable/round_gray">
 
                         <ProgressBar
                             android:id="@+id/pbTimer"
@@ -184,7 +185,7 @@
                     style="@style/RecycleView78"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:listitem="@layout/item_quiz_option" />
 
 

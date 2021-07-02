@@ -16,7 +16,7 @@ public class EWalletAdapter extends BaseAdapter {
 
     private Context moContext;
     private List<EWallet> moWalletList;
-    private String stFrom;
+    private String stFrom = "";
 
     public EWalletAdapter(Context foContext, List<EWallet> foWalletList) {
         moContext = foContext;

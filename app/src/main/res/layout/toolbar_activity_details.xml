@@ -19,6 +19,9 @@
             style="@style/TvToolBarTitle78"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/txt_xLarge"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_gravity="bottom|center_horizontal"
             android:textAllCaps="true"/>
 
         <LinearLayout
