@@ -26,6 +26,11 @@ public class AppGlobal extends Application {
         super.onCreate();
         moContext = this;
         configAdGyde();
+        setDefaultReferrer();
+    }
+
+    private void setDefaultReferrer() {
+        getPreferenceManager().setAppDownloadCampaign(Constants.DEFAULT_REFERRAL_CODE);
     }
 
     public static Context getInstance() {
@@ -38,8 +43,8 @@ public class AppGlobal extends Application {
     }
 
     private void configAdGyde() {
-        AdGyde.init(this, Constants.ADGYDE_APP_KEY, "Organic");
-        AdGyde.setDebugEnabled(false);
+//        AdGyde.init(this, Constants.ADGYDE_APP_KEY, "Organic");
+//        AdGyde.setDebugEnabled(false);
     }
 
     public static FirebaseUser getFirebaseUser() {

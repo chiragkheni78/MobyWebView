@@ -139,9 +139,9 @@ public class SharedPreferenceManager {
 
     public String getAppDownloadCampaign() {
         if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(APP_DOWNLOAD_CAMPAIGN, DEFAULT_REFERRAL_CODE);
+            return moSharedPreferences.getString(APP_DOWNLOAD_CAMPAIGN, "");
         }
-        return DEFAULT_REFERRAL_CODE;
+        return "";
     }
     //END APP_DOWNLOAD_CAMPAIGN
 
