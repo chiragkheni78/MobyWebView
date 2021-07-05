@@ -21,8 +21,7 @@
             android:textSize="@dimen/txt_xLarge"
             android:maxLines="1"
             android:paddingHorizontal="@dimen/_10sdp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:textAllCaps="true"/>
+            android:layout_gravity="bottom|center_horizontal"/>
 
         <LinearLayout
             android:id="@+id/llBack"

@@ -142,9 +142,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     }
 
     private void setLogo(ImageView loIvLogo, Ad foAdOffer) {
-        Common.loadImage(loIvLogo, foAdOffer.getLogoUrl(),
-                moContext.getResources().getDrawable(R.drawable.ic_moby_small),
-                moContext.getResources().getDrawable(R.drawable.ic_moby_small));
+        Common.loadImage(loIvLogo, foAdOffer.getLogoUrl(), null, null);
     }
 
     private void setOfferLabel(TextView foTvCashBackOffer, Ad foAdOffer) {

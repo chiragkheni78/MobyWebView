@@ -336,6 +336,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         // Handle navigation view item clicks here.
         Intent loIntent = null;
         switch (item.getItemId()) {
+            case R.id.nav_Share:
+                shareApp();
+                break;
             case R.id.nav_home:
                 openNavigationBarFragments(R.id.itemOffer);
                 break;

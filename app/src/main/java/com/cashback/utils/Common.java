@@ -364,7 +364,7 @@ public class Common {
 
     public static void blinkAnimation(View foView) {
         Animation anim = new AlphaAnimation(1, 0);
-        anim.setDuration(500); //You can manage the blinking time with this parameter
+        anim.setDuration(800); //You can manage the blinking time with this parameter
         anim.setStartOffset(20);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);

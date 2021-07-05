@@ -42,6 +42,7 @@
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
+                app:cardCornerRadius="@dimen/_5sdp"
                 app:cardUseCompatPadding="true">
 
                 <TextView
@@ -64,9 +65,11 @@
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
+                app:cardCornerRadius="@dimen/_5sdp"
+                tools:visibility="visible"
                 app:cardUseCompatPadding="true">
 
-                <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/padding_micro"
@@ -78,6 +81,7 @@
                         android:layout_height="0dp"
                         android:overScrollMode="never"
                         android:background="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -113,20 +117,24 @@
 
             <!--            </androidx.core.widget.NestedScrollView>-->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/llOffers"
+            <!--<androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:visibility="gone"
-                app:cardUseCompatPadding="true">
+                app:cardCornerRadius="@dimen/_5sdp"
+                android:visibility="visible"
+                app:cardUseCompatPadding="true">-->
 
                 <LinearLayout
+                    android:id="@+id/llOffers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -171,13 +179,12 @@
                                 android:id="@+id/rvCoupon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_above="@+id/llBottom"
-                                android:layout_marginTop="8dp" />
+                                android:layout_marginTop="5dp" />
                         </LinearLayout>
                     </androidx.core.widget.NestedScrollView>
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            <!--</androidx.cardview.widget.CardView>-->
 
             <Button
                 android:id="@+id/tvShopOnline"
@@ -189,7 +196,7 @@
                 android:gravity="center"
                 android:text="SHOP ONLINE"
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -319,8 +326,7 @@
                 android:gravity="center"
                 android:text="coupon_valid_for"
                 android:textColor="@color/primary"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:textSize="14sp"
                 android:visibility="gone" />
 
         </LinearLayout>
