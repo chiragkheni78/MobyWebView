@@ -23,7 +23,7 @@
     <string name="coupon_valid_for">COUPON VALID FOR XX DAYS.</string>
 
     <string name="title_copy_to_clipboard">CashBack Activated !</string>
-    <string name="msg_copy_to_clipboard">AFTER YOU SHOP, We Will Send\nYour CashBack SMS in 5 Min - 24 Hrs\n\nCash Credit in XXXXX Wallet from\nDelivery Date + YY Days.\n\nONLY Amazon &amp; Flipkart, Register\nBill (Amount &amp; Date) in "My Coupons"</string>
+    <string name="msg_copy_to_clipboard">AFTER YOU SHOP, We Will Send\nYour CashBack SMS in 5 Min - 24 Hrs\n\nCash Credit in XXXXX from\nDelivery Date + YY Days.\n\nONLY Amazon &amp; Flipkart, Register\nBill (Amount &amp; Date) in "My Coupons"</string>
 
 
     <string name="mobile_no_mark_used">Mobile No. to Mark as Used</string>
@@ -42,7 +42,9 @@
     <string name="status_sign_in_failed">Sign-in failed</string>
 
     <string name="text_verify_phone_no">Verify Phone Number</string>
-    <string name="msg_verify_phone_number">Verify Your Phone OTP\nTo View Offers In Real Time</string>
+    <string name="msg_verify_phone_number">Verify Your Phone OTP\nTo Edit Your Profile</string>
+    <string name="msg_verify_phone_number_map">Verify Your Phone OTP\nTo View Bank Offers &amp; Physical Store Offers In Real Time</string>
+    <string name="msg_verify_phone_number_coupon">Verify Your Phone OTP\nTo Create Your A/c for CashBacks</string>
     <string name="multiple_device_title">Found Multiple Devices</string>
     <string name="multiple_device_msg">Your phone number is connected with multiple devices, so please select any one from them and make sure other device data will be removed permanently.</string>
 
@@ -97,9 +99,9 @@
     <string name="submit_quiz">Submit Quiz</string>
     <string name="next_question">Next Question</string>
 
-    <string name="btn_redeem_coupon">Redeem Coupons</string>
-    <string name="btn_get_free_coupon">Get Free Coupons</string>
-    <string name="view_coupon">View Coupon</string>
+    <string name="btn_redeem_coupon">Use My\nCoupons</string>
+    <string name="btn_get_free_coupon">Win Free\nCoupons</string>
+    <string name="view_coupon">View &amp; Shop</string>
     <string name="register_bill">Register Bill</string>
     <string name="btn_shop_in_store">SHOP IN-STORE</string>
     <string name="btn_shop_online">SHOP ONLINE</string>
@@ -165,12 +167,11 @@
     <string name="nearBy">Near By</string>
     <string name="labelHelp">Help</string>
 
-    <string name="couponLoginMessage">You Need to Verify Your Mobile To Earn Cashback</string>
     <string name="mapPopupText">Like to Shop Offline? Try Map View</string>
     <string name="mapPopupText1">(Need 1 Verified Online Purchase)</string>
     <string name="mapPopupTextOne">Real Time Card Offers</string>
     <string name="mapPopupTextTwo">Coupons for Stores Nearby</string>
-    <string name="continueLabel">Continue</string>
+    <string name="continueLabel">Continue To Shop</string>
     <string name="info_message"><![CDATA[To convert your Virtual cash into Real cash credit into your chosen wallet you need to click via your Coupons & Shop. Our Cashbacks are always EXACT & EXTRA over any discounts you avail from the brand, & you don’t require codes for them.]]></string>
 
 

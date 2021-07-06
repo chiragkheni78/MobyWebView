@@ -9,8 +9,8 @@
     <dimen name="margin_root">@dimen/_16sdp</dimen>
     <dimen name="margin_view">@dimen/_10sdp</dimen>
 
-    <dimen name="design_bottom_navigation_text_size" tools:override="true">12sp</dimen>
-    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">12sp</dimen>
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>
 
     <dimen name="padding_xxxlarge">@dimen/_50sdp</dimen>
     <dimen name="padding_xxlarge">@dimen/_40sdp</dimen>

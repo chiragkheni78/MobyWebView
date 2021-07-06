@@ -7,7 +7,9 @@
 
     <LinearLayout
         style="@style/RootLayout"
-        android:layout_margin="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_15sdp"
         android:background="@drawable/corner_rect_white_splash"
         android:gravity="center"
         android:padding="@dimen/_15sdp">

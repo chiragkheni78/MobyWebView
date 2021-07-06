@@ -229,11 +229,11 @@
 
     <style name="etStandard">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/_36sdp</item>
+        <item name="android:layout_height">@dimen/_30sdp</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:textSize">@dimen/txt_small</item>
         <item name="android:background">@drawable/bg_white_line</item>
-        <item name="android:paddingVertical">@dimen/padding_mini</item>
+        <item name="android:paddingVertical">@dimen/padding_micro</item>
         <item name="android:maxLines">1</item>
     </style>
 

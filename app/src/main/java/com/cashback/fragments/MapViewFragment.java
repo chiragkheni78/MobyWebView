@@ -65,6 +65,7 @@ import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
 import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
 import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
 import static com.cashback.models.viewmodel.MapViewModel.REQUEST_CHECK_SETTINGS;
+import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
 
 @SuppressWarnings("All")
 public class MapViewFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
@@ -209,6 +210,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
         if (AppGlobal.getFirebaseUser() == null) {
             Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
+            loIntent.putExtra(SCREEN_TITLE, this.getResources().getString(R.string.msg_verify_phone_number_map));
             getActivity().startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
         } else if (!moMapViewModel.isLocationEnabled((getContext()))) {
             if (!moMapViewModel.checkGPSEnabled(getActivity())) {

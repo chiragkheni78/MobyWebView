@@ -188,6 +188,7 @@
                             android:id="@+id/etDob"
                             style="@style/etStandard"
                             android:focusable="false"
+                            android:background="#E1E1E1"
                             android:hint="dd-mm-yyyy"
                             android:inputType="text" />
 
