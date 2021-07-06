@@ -4,6 +4,12 @@
     tools:showIn="navigation_view">
 
     <item
+        android:id="@+id/nav_Share"
+        android:icon="@drawable/ic_share_24"
+        android:title="Share App"
+        android:visible="true"/>
+
+    <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_24"
         android:title="Cashbacks"
@@ -16,7 +22,7 @@
 
     <item
         android:id="@+id/nav_ongoing_deals"
-        android:icon="@drawable/ic_my_coupon_24"
+        android:icon="@drawable/ic_offer"
         android:title="Ongoing Deals" />
 
     <item

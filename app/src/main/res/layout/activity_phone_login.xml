@@ -20,38 +20,65 @@
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:orientation="vertical"
-            app:cardBackgroundColor="#5a89be"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="8dp">
 
-            <androidx.cardview.widget.CardView
+            <!--<androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:orientation="vertical"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="2dp">
+                app:cardCornerRadius="2dp">-->
 
                 <LinearLayout
                     style="@style/NormalLayout"
                     android:orientation="vertical">
 
-
                     <LinearLayout
                         android:id="@+id/llRoot"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_22sdp"
                         android:gravity="center"
                         android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TvLarge"
+                                android:layout_marginStart="3dp"
+                                android:text="Verify Phone"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/_18sdp"
+                                android:layout_width="match_parent"
+                                android:padding="@dimen/_10sdp"
+                                android:gravity="center" />
+
+                            <ImageView
+                                android:id="@+id/imageLoginClose"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:elevation="@dimen/_10sdp"
+                                android:layout_alignParentEnd="true"
+                                android:src="@drawable/ic_close_login"/>
+
+                        </RelativeLayout>
 
                         <TextView
                             android:id="@+id/tvLoginTitle"
                             style="@style/TvLarge"
                             android:layout_marginBottom="@dimen/margin_view"
                             android:gravity="center"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:text="@string/msg_verify_phone_number"
-                            android:textSize="@dimen/_18sdp"
+                            android:textSize="@dimen/_14sdp"
                             android:textStyle="normal" />
 
                         <LinearLayout
@@ -97,10 +124,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_margin="20dp"
-                                android:background="@drawable/rect_white_black"
+                                android:background="@drawable/bg_white_line"
                                 android:gravity="center"
                                 android:orientation="horizontal"
-                                android:padding="10dp">
+                                android:paddingVertical="10dp">
 
                                 <TextView
                                     android:id="@+id/tvCountryCode"
@@ -118,6 +145,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginStart="@dimen/padding_mini"
                                     android:layout_marginEnd="@dimen/padding_mini"
+                                    android:visibility="gone"
                                     android:background="@color/colorSecondaryText" />
 
                                 <EditText
@@ -127,6 +155,8 @@
                                     android:background="@null"
                                     android:enabled="true"
                                     android:gravity="left"
+                                    android:layout_marginStart="@dimen/padding_mini"
+                                    android:layout_marginEnd="@dimen/padding_mini"
                                     android:hint="@string/hint_mobile_no"
                                     android:imeOptions="actionDone"
                                     android:inputType="phone"
@@ -142,10 +172,7 @@
                                 style="@style/NormalRippleLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_40sdp"
-                                android:layout_marginStart="@dimen/_16sdp"
-                                android:layout_marginEnd="@dimen/_16sdp"
-                                android:layout_marginBottom="@dimen/_30sdp"
-                                android:background="@drawable/btn_blue"
+                                android:background="@color/colorPrimary"
                                 android:orientation="horizontal">
 
                                 <com.cashback.utils.custom.ProgressWheel
@@ -178,7 +205,7 @@
                         android:id="@+id/llOTPView"
                         style="@style/NormalLayout"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -191,7 +218,10 @@
                                 style="@style/TvLarge"
                                 android:layout_marginBottom="@dimen/margin_view"
                                 android:text="OTP Verification"
+                                android:layout_marginTop="@dimen/_10sdp"
                                 android:textSize="@dimen/_18sdp"
+                                android:textColor="@color/colorPrimary"
+                                android:textAllCaps="true"
                                 android:textStyle="normal" />
 
                             <LinearLayout
@@ -236,7 +266,6 @@
                                 android:layout_marginEnd="@dimen/_16sdp"
                                 android:layout_marginBottom="@dimen/_30sdp"
                                 android:background="@drawable/btn_primary"
-                                android:backgroundTint="@color/secondary"
                                 android:text="Verify OTP"
                                 android:textAllCaps="false"
                                 android:textStyle="bold" />
@@ -275,18 +304,8 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            <!--</androidx.cardview.widget.CardView>-->
         </androidx.cardview.widget.CardView>
-
-
-
-        <ImageView
-            android:id="@+id/imageLoginClose"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:elevation="@dimen/_10sdp"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_close_red"/>
 
     </RelativeLayout>
 

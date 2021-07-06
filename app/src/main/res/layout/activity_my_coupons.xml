@@ -20,6 +20,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:background="@color/white"
+            app:cardCornerRadius="@dimen/_5sdp"
             android:orientation="vertical"
             app:cardUseCompatPadding="true">
 

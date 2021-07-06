@@ -147,8 +147,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 onBackPressed();
         });
 
-        TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
-        loTvToolbarTitle.setText(getString(R.string.my_coupon));
+        /*TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
+        loTvToolbarTitle.setText(getString(R.string.my_coupon));*/
     }
 
     private void getActivityDetails() {
@@ -488,7 +488,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void openPhoneLogin(String fsUrl) {
         msURL = fsUrl;
             Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
-            loIntent.putExtra(SCREEN_TITLE, this.getResources().getString(R.string.couponLoginMessage));
+            loIntent.putExtra(SCREEN_TITLE, this.getResources().getString(R.string.msg_verify_phone_number_coupon));
             startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
     }
 
