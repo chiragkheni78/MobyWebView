@@ -58,7 +58,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
         Common.loadImage(holder.ivLogo, moCategoryList.get(position).getFsCategoryImage(),
                 context.getResources().getDrawable(R.drawable.ic_moby_small),
-                context.getResources().getDrawable(R.drawable.ic_moby_small));
+                null);
 
 
         if (selectedItem == position) {

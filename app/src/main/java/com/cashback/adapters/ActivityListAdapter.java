@@ -151,7 +151,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                     foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
                 } else {
                     foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
-                    foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                    foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.red));
                     foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
                     foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
 
@@ -159,7 +159,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 }
             } else {
                 foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
-                foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.red));
                 foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
                 foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
 
@@ -173,7 +173,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private void handleLogicalOperation(DataObjectHolder foHolder, Activity foActivity) {
         if (foActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_green_black));
+            foHolder.tvRegisterBill.getBackground().setTint(moContext.getResources().getColor(R.color.gray0));
         } else {
             foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_red_black));
         }
@@ -203,17 +203,19 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 foHolder.tvCouponCode.setEnabled(true);
                 foHolder.tvCouponCode.setClickable(true);
                 foHolder.tvExpireDay.setVisibility(View.VISIBLE);
-                foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.twhite));
+                foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.black));
 
                 if (foActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())
                         && !foActivity.isBlinkShopOnline()) {
                     foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
+                    foHolder.tvRegisterBill.getBackground().setTint(moContext.getResources().getColor(R.color.green));
                     foHolder.tvCouponCode.clearAnimation();
                 }
             }
 
             if (foActivity.isBillUploadEnable()) {
                 foHolder.loLllRegisterBill.setVisibility(View.VISIBLE);
+                foHolder.tvRegisterBill.getBackground().setTint(moContext.getResources().getColor(R.color.green));
                 foHolder.tvRegisterBill.setPaintFlags(0);
                 if (foActivity.isBillUploaded()) {
                     foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
@@ -231,19 +233,19 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private void setQuizReward(TextView foTvQuizReward, Activity foActivity) {
-        int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.colorPrimary);
+        int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.secondary);
 
         int rewardColor;
         if (Common.stCouponId != null && !Common.stCouponId.isEmpty()) {
             if (Common.stCouponId.equalsIgnoreCase("" + foActivity.getAdID())) {
-                foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.WHITE));
+                //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.WHITE));
                 rewardColor = ActivityCompat.getColor(moContext, R.color.white);
             } else {
-                foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
+                //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
                 rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
             }
         } else {
-            foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
+            //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
             rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
         }
 
@@ -251,7 +253,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         //int rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
 
         //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
-        foTvQuizReward.append(Common.getColorText("Rs. " + foActivity.getQuizReward(), rewardColor));
+        foTvQuizReward.setText(Common.getColorText("Rs. " + foActivity.getQuizReward(), rewardColor));
     }
 
     private void setOfferLabel(TextView foTvCashbackAmount, Activity foActivity) {

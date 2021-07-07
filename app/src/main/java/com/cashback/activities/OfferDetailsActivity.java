@@ -126,7 +126,7 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
                     moBinding.btnWinCoupon.setText(Common.getDynamicText(getContext(), "win_coupon"));
                     if (offer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
                         moBinding.llRoot.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_green));
-                        moBinding.llWinCoupon.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green_primary));
+                        moBinding.llWinCoupon.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
                     } else if (offer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
                         moBinding.llRoot.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.light_red));
                         moBinding.llWinCoupon.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));

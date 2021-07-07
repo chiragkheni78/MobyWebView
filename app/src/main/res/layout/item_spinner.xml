@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/padding_standard"
     android:gravity="center_vertical"
+    android:layout_gravity="center_vertical"
     android:textColor="@color/white"
     android:id="@+id/tvRowTitle"
-    android:textSize="@dimen/txt_large" />
+    android:textSize="14sp" />

@@ -113,9 +113,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             if (Common.stOfferShow) {
 
                 RequestCreator loRequest = Picasso.get().load(response.getFsImage().replace("https", "http"));
-                loRequest.error(getResources().getDrawable(R.drawable.ic_moby_small))
-                        .placeholder(getResources().getDrawable(R.drawable.ic_moby_small))
-                        .into(moBinding.imageDealOfTheDay);
+                loRequest.into(moBinding.imageDealOfTheDay);
 
                 moBinding.cardDealOfTheDay.setVisibility(View.VISIBLE);
 

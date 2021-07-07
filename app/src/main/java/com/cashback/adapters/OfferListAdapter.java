@@ -110,13 +110,13 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 
             foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.black), null);
         } else {
-            foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.white), null);
-
             foHolder.loLlRoot.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
             foHolder.loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, R.drawable.btn_green));
             foHolder.loBtnAdDetails.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
             foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
             foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+
+            foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.white), null);
         }
     }
 

@@ -69,7 +69,6 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             if (moActivity != null) {
                 if (moActivity.getCouponType().equalsIgnoreCase("default")) {
                     String number = s.toString().trim();
-
                     if (FirebaseAuth.getInstance().getCurrentUser() != null &&
                             FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null) {
                         if (String.valueOf("+91" + number).equalsIgnoreCase(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
@@ -124,8 +123,6 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moBinding.tvCancel.setOnClickListener(this);
 
         setToolbar();
-
-
         loadCouponView();
     }
 

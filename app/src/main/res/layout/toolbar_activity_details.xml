@@ -18,8 +18,9 @@
             android:id="@+id/tvToolbarTitle"
             style="@style/TvToolBarTitle78"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/txt_xLarge"
+            android:textSize="@dimen/txt_dxLarge"
             android:maxLines="1"
+            android:text="Moby Coupon"
             android:paddingHorizontal="@dimen/_10sdp"
             android:layout_gravity="bottom|center_horizontal"/>
 

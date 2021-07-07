@@ -25,7 +25,7 @@
                 <ImageView
                     android:id="@+id/ivBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_180sdp"
+                    android:layout_height="@dimen/_160sdp"
                     android:background="@color/grey"
                     android:scaleType="centerCrop"
                     android:src="@drawable/iv_place_holder" />
@@ -117,6 +117,7 @@
                                 style="@style/TvDxLarge"
                                 android:gravity="center"
                                 android:text="Title"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -125,6 +126,7 @@
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:gravity="center"
                                 android:text="Desc2"
+                                android:textSize="16sp"
                                 android:textColor="@color/colorSecondaryText" />
 
 
@@ -134,6 +136,7 @@
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:gravity="center"
                                 android:text="Desc3"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
 
@@ -142,6 +145,7 @@
                                 style="@style/TvLarge"
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:gravity="center"
+                                android:textSize="16sp"
                                 android:text="Desc4" />
 
                         </LinearLayout>
@@ -166,7 +170,7 @@
                 android:drawableRight="@drawable/ic_right_24"
                 android:drawablePadding="@dimen/_15sdp"
                 android:gravity="center"
-                android:padding="@dimen/padding_standard"
+                android:padding="@dimen/padding_micro"
                 android:text="@string/win_coupon"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

@@ -5,11 +5,4 @@
         android:endColor="@color/green"
         android:startColor="@color/green" />
     <corners android:radius="5dp" />
-    <padding
-        android:bottom="5dp"
-        android:left="8dp"
-        android:right="8dp"
-        android:top="5dp" />
-    <stroke android:color="@color/black"
-        android:width="1dp"/>
 </shape>

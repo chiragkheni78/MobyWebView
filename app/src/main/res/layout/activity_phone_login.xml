@@ -78,7 +78,8 @@
                             android:gravity="center"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:text="@string/msg_verify_phone_number"
-                            android:textSize="@dimen/_14sdp"
+                            android:textSize="14sp"
+                            android:lineSpacingExtra="@dimen/_5sdp"
                             android:textStyle="normal" />
 
                         <LinearLayout
@@ -123,7 +124,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_margin="20dp"
+                                android:layout_margin="@dimen/_20sdp"
                                 android:background="@drawable/bg_white_line"
                                 android:gravity="center"
                                 android:orientation="horizontal"
@@ -155,7 +156,7 @@
                                     android:background="@null"
                                     android:enabled="true"
                                     android:gravity="left"
-                                    android:layout_marginStart="@dimen/padding_mini"
+                                    android:layout_marginStart="@dimen/padding_standard"
                                     android:layout_marginEnd="@dimen/padding_mini"
                                     android:hint="@string/hint_mobile_no"
                                     android:imeOptions="actionDone"
@@ -171,7 +172,7 @@
                                 android:id="@+id/flSendOTP"
                                 style="@style/NormalRippleLayout"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_40sdp"
+                                android:layout_height="@dimen/_50sdp"
                                 android:background="@color/colorPrimary"
                                 android:orientation="horizontal">
 
@@ -189,7 +190,7 @@
                                     android:id="@+id/btnSendOTP"
                                     style="@style/RippleBtnStandard"
                                     android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_40sdp"
+                                    android:layout_height="@dimen/_50sdp"
                                     android:background="@color/transparent"
                                     android:text="Send OTP"
                                     android:textAllCaps="false"
@@ -244,7 +245,7 @@
                                     app:bar_margin_bottom="0dp"
                                     app:bar_success_color="@color/green"
                                     app:box_margin="@dimen/_4sdp"
-                                    app:height="@dimen/_50sdp"
+                                    app:height="@dimen/_40sdp"
                                     app:hide_otp="false"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -252,6 +253,7 @@
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:length="6"
                                     app:otp=""
+                                    app:otp_text_size="16sp"
                                     app:otp_box_background="@drawable/bg_white_blue"
                                     app:width="@dimen/_40sdp" />
 

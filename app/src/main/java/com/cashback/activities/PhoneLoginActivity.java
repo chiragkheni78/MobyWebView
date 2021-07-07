@@ -218,6 +218,9 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
+        if (moBinding.etPhoneNo.length() > 0){
+            return;
+        }
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = moPhoneLoginViewModel.getCurrentUser();
         moPhoneLoginViewModel.updateUI(currentUser);

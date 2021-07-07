@@ -165,6 +165,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
         if (moQuizList != null) {
             setQuestion(getContext(), moQuizList, miCurrentQuestion, moBinding);
         }
+        moBinding.llRoot.setVisibility(View.VISIBLE);
     }
 
     private void setQuestion(Context context, ArrayList<Quiz> foQuizList, int fiCurrentQuestion, ActivityQuizDetailsBinding foBinding) {

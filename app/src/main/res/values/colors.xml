@@ -30,6 +30,7 @@
     <color name="grey">#a9a9a9</color>
     <color name="orange">#FFDF720E</color>
     <color name="gray3">#a8a8a8</color>
+    <color name="gray0">#efefef</color>
 
     <!--Custom Color-->
     <color name="yellow_primary">#FFEB3B</color>
