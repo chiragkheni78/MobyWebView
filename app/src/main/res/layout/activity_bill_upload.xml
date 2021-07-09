@@ -106,7 +106,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:background="@android:color/transparent"
                     android:hint="Enter Amount"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="16sp" />

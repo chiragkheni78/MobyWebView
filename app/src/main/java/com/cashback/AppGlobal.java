@@ -3,7 +3,6 @@ package com.cashback;
 import android.app.Application;
 import android.content.Context;
 
-import com.adgyde.android.AdGyde;
 import com.cashback.models.Category;
 import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.utils.Constants;
@@ -67,7 +66,7 @@ public class AppGlobal extends Application {
         if (FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null) {
             return FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
         } else {
-            return getPreferenceManager().getPhoneID();
+            return getPreferenceManager().getPhoneNumber();
         }
     }
 

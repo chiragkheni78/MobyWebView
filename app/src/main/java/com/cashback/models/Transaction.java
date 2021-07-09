@@ -24,6 +24,9 @@ public class Transaction {
     @SerializedName("fiQuizReward")
     int quizReward;
 
+    @SerializedName("fiRewardCashback")
+    int cashbackReward;
+
     @SerializedName("fiSecondReward")
     int secondReward;
 
@@ -114,12 +117,16 @@ public class Transaction {
         return transactionAmount;
     }
 
-    public int getTrasactionStatus() {
+    public int getTransactionStatus() {
         return fiTrasactionStatus;
     }
 
-    public void setFiTrasactionStatus(int fiTrasactionStatus) {
+    public void setTransactionStatus(int fiTrasactionStatus) {
         this.fiTrasactionStatus = fiTrasactionStatus;
+    }
+
+    public int getCashbackReward() {
+        return cashbackReward;
     }
 }
 

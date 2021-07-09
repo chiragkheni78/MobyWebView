@@ -42,9 +42,9 @@
     <string name="status_sign_in_failed">Sign-in failed</string>
 
     <string name="text_verify_phone_no">Verify Phone Number</string>
-    <string name="msg_verify_phone_number">Verify Your Phone OTP\nTo Edit Your Profile</string>
-    <string name="msg_verify_phone_number_map">Verify Your Phone OTP\nTo View Bank Offers &amp; Physical Store Offers In Real Time</string>
-    <string name="msg_verify_phone_number_coupon">Verify Your Phone OTP\nTo Create Your A/c for CashBacks</string>
+    <string name="msg_verify_phone_number">To Edit Your Profile</string>
+    <string name="msg_verify_phone_number_map">To View Bank Offers &amp; Physical Store\nOffers In Real Time</string>
+    <string name="msg_verify_phone_number_coupon">To Create Your A/c for CashBacks</string>
     <string name="multiple_device_title">Found Multiple Devices</string>
     <string name="multiple_device_msg">Your phone number is connected with multiple devices, so please select any one from them and make sure other device data will be removed permanently.</string>
 
@@ -62,7 +62,7 @@
     <string name="hint_bank_account_ifsc">IFSC Code</string>
 
     <string name="add_card_header_tv"><![CDATA[My Credit & Debit Cards]]></string>
-    <string name="profile_non_required">(NO CARD NUMBER REQUIRED | NO CARD TRANSACTION REQUIRED | NO CARD CSV REQUIRED | DISCOVER YOUR CARD BENEFITS NEAR YOU!)</string>
+    <string name="profile_non_required">No Card Number / No Transactions / No Card CSV / Required, Discover Your Card Offers &amp; Benefits Near You in Real Time.</string>
     <string name="category_offer">Card Offers Categories I want to see</string>
     <string name="bank_offer_with_in">I want to see Bank Card Offer Within</string>
     <string name="payment_transfer_setting">Payment Transfer Setting</string>

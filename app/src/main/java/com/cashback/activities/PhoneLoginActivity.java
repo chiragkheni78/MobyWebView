@@ -249,8 +249,8 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
                 // Code sent state, show the verification field, the
                 moBinding.etPhoneNo.setEnabled(false);
 
-                moBinding.llOTPView.setVisibility(View.VISIBLE);
                 moBinding.flSendOTP.setVisibility(View.GONE);
+                moBinding.llOTPView.setVisibility(View.VISIBLE);
 
                 startTime();
 

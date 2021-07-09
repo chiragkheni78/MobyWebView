@@ -38,8 +38,6 @@ import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
 
-import static com.cashback.activities.MyCouponsActivity.REQUEST_ACTIVITY_BILL_UPLOAD;
-import static com.cashback.activities.MyCouponsActivity.REQUEST_COUPON_DETAILS;
 import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
 import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 
@@ -51,6 +49,9 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
     }
 
     private static final String TAG = FragmentMyCoupons.class.getSimpleName();
+    public static final int REQUEST_ACTIVITY_BILL_UPLOAD = 786;
+    public static final int REQUEST_COUPON_DETAILS = 787;
+
     ActivityMyCouponsBinding moBinding;
     ActivityListViewModel moActivityListViewModel;
 
@@ -110,7 +111,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Common.stCouponId = "";
+        Common.msOfferId = "";
     }
 
     private void setToolbar() {

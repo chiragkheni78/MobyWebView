@@ -34,6 +34,8 @@ import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
 
+import static com.cashback.fragments.FragmentMyCoupons.REQUEST_ACTIVITY_BILL_UPLOAD;
+import static com.cashback.fragments.FragmentMyCoupons.REQUEST_COUPON_DETAILS;
 import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.ENGAGED_DATE;
 import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
@@ -42,8 +44,6 @@ import static com.cashback.utils.Constants.IntentKey.PIN_COLOR;
 public class MyCouponsActivity extends BaseActivity implements View.OnClickListener, ActivityListAdapter.OnCouponItemClick {
 
     private static final String TAG = MyCouponsActivity.class.getSimpleName();
-    public static final int REQUEST_ACTIVITY_BILL_UPLOAD = 786;
-    public static final int REQUEST_COUPON_DETAILS = 787;
 
     ActivityMyCouponsBinding moBinding;
     ActivityListViewModel moActivityListViewModel;
@@ -192,12 +192,13 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        if (isPendingBillUpload) {
-            showBackToCouponDialog();
-        } else {
-            backToHome(null);
-        }
+//        super.onBackPressed();
+//        if (isPendingBillUpload) {
+//            showBackToCouponDialog();
+//        } else {
+//            backToHome(null);
+//        }
+        backToHome(null);
     }
 
     private void showBackToCouponDialog() {

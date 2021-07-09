@@ -3,6 +3,7 @@ package com.cashback.activities;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,10 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.cashback.R;
 import com.cashback.adapters.TransactionListAdapter;
 import com.cashback.databinding.ActivityWalletBinding;
+import com.cashback.dialog.MessageDialog;
 import com.cashback.models.Transaction;
 import com.cashback.models.response.TransactionListResponse;
 import com.cashback.models.viewmodel.WalletViewModel;
 import com.cashback.utils.Common;
+import com.cashback.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -45,25 +48,16 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initializeContent() {
-       initViewModel();
+        initViewModel();
         setToolbar();
         moBinding.tvTimelineCoupon.setOnClickListener(this);
+        moBinding.imageInfo.setOnClickListener(this);
         moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         moBinding.rvTransactionList.setLayoutManager(moLayoutManager);
         moTransactionListAdapter = new TransactionListAdapter(getContext(), moTransactionList);
         moBinding.rvTransactionList.setAdapter(moTransactionListAdapter);
 
         getTransactionList();
-
-        moBinding.imageInfo.setOnClickListener(view -> {
-            new AlertDialog.Builder(WalletActivity.this)
-                    .setCancelable(true)
-                    .setTitle(getString(R.string.app_name))
-                    .setMessage(getString(R.string.info_message))
-                    .setPositiveButton("OK", (dialogInterface, i) -> dialogInterface.dismiss())
-                    .create().show();
-        });
-
     }
 
     private void initViewModel() {
@@ -112,7 +106,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         moTransactionList = foJsonObject.getTransactionList();
         moTransactionListAdapter.notifyList(moTransactionList);
 
-        if (foJsonObject.getTransactionList().size() == 0){
+        if (foJsonObject.getTransactionList().size() == 0) {
             moBinding.tvNoData.setVisibility(View.VISIBLE);
             moBinding.rvTransactionList.setVisibility(View.GONE);
         } else {
@@ -120,10 +114,11 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             moBinding.rvTransactionList.setVisibility(View.VISIBLE);
         }
 
-       moBinding.tvWallet.setText("Credit In Your " + foJsonObject.getWalletName());
-        if (foJsonObject.isActivityCouponExist()){
+        moBinding.tvWallet.setText("Credit In Your " + foJsonObject.getWalletName());
+        if (foJsonObject.isActivityCouponExist()) {
             int liStart = getResources().getColor(R.color.white);
-            int liEnd = getResources().getColor(R.color.white);
+            int liEnd = getResources().getColor(R.color.colorAccent);
+
             ObjectAnimator textColorAnim = ObjectAnimator.ofInt(moBinding.tvTimelineCoupon, "textColor", liEnd, liStart);
             textColorAnim.setDuration(1500);
             textColorAnim.setEvaluator(new ArgbEvaluator());
@@ -139,7 +134,11 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         if (moTransactionList.size() > 0) {
             for (Transaction loUTrans : moTransactionList) {
                 if (loUTrans.isVirtualCash()) {
-                    mlTotalVirtualCash = mlTotalVirtualCash + loUTrans.getQuizReward();
+                    if (loUTrans.getTransactionStatus() == 0 || loUTrans.getTransactionStatus() == -1) {
+                        mlTotalVirtualCash = mlTotalVirtualCash + loUTrans.getQuizReward();
+                    } else {
+                        mlTotalInstantCash = mlTotalInstantCash + loUTrans.getCashbackReward();
+                    }
                 } else {
                     mlTotalInstantCash = mlTotalInstantCash + loUTrans.getQuizReward();
                 }
@@ -153,9 +152,14 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvTimelineCoupon:
-                Intent loIntent = new Intent(WalletActivity.this, MyCouponsActivity.class);
-                //loIntent.setAction("Wallet-Screen");
-                startActivity(loIntent);
+                Intent intent = new Intent(moContext, HomeActivity.class);
+                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.Action.WALLET_SCREEN);
+                moContext.startActivity(intent);
+                ((Activity) moContext).finishAffinity();
+                break;
+            case R.id.imageInfo:
+                MessageDialog loDialog = new MessageDialog(this, getString(R.string.app_name), getString(R.string.info_message),  null, false);
+                loDialog.show();
                 break;
             default:
                 break;

@@ -1,5 +1,6 @@
 package com.cashback.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -15,8 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
 import com.cashback.activities.CouponDetailsActivity;
-import com.cashback.activities.MyCouponsActivity;
+import com.cashback.activities.HomeActivity;
 import com.cashback.models.Transaction;
+import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
 
@@ -70,12 +72,12 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
                 case R.id.tvCashbackUpto:
                     Transaction loUserTransaction = moTransactionList.get(liPosition);
                     long llAdId = loUserTransaction.getAdID();
-                    //boolean lbIsGiftCard = (!loUserTransaction.getMobyCoupon().isEmpty()) ? true : false;
+                    Common.msOfferId = "" + llAdId;
 
-                    Intent intent = new Intent(moContext, MyCouponsActivity.class);
-                    intent.putExtra(Constants.IntentKey.OFFER_ID, llAdId);
-                    //intent.putExtra("foGiftCard", lbIsGiftCard);
+                    Intent intent = new Intent(moContext, HomeActivity.class);
+                    intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.Action.WALLET_SCREEN);
                     moContext.startActivity(intent);
+                    ((Activity) moContext).finishAffinity();
                     break;
             }
         }
@@ -107,7 +109,13 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
 
         foHolder.loTvTitle.setText(foTransaction.getAdName());
         foHolder.loTvActivityDate.setText(foTransaction.getQuizEngageDateTime());
-        foHolder.loTvQuizReward.setText("Rs. " + foTransaction.getQuizReward());
+        //foHolder.loTvQuizReward.setText("Rs. " + foTransaction.getQuizReward());
+
+        if (foTransaction.getTransactionStatus() > 0) {
+            foHolder.loTvQuizReward.setText(String.valueOf(foTransaction.getCashbackReward()));
+        } else {
+            foHolder.loTvQuizReward.setText(String.valueOf(foTransaction.getQuizReward()));
+        }
 
         if (foTransaction.isVirtualCash()) {
             foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
@@ -143,7 +151,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         foHolder.loTvStatus.setText(lsStatus);
         foHolder.loTvType.setText(lsType);
 
-        if (foTransaction.getTrasactionStatus() == (-1)) {
+        if (foTransaction.getTransactionStatus() == (-1)) {
 
             foHolder.loLlCashback.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -165,7 +173,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
 
-        } else if (foTransaction.getTrasactionStatus() == 0) {
+        } else if (foTransaction.getTransactionStatus() == 0) {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_upto));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.virtual_cash)+")");
@@ -178,7 +186,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
 
-        } else if (foTransaction.getTrasactionStatus() == 1) {
+        } else if (foTransaction.getTransactionStatus() == 1) {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.pending_cash)+")");
@@ -192,7 +200,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
 
-        } else if (foTransaction.getTrasactionStatus() == 3) {
+        } else if (foTransaction.getTransactionStatus() == 3) {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.pending_cash)+")");

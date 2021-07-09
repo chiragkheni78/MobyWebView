@@ -180,7 +180,7 @@
     <!--Button Style-->
     <style name="RippleBtnStandard" parent="FlatWaveColorButtonRippleStyle">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/_40sdp</item>
         <item name="android:textSize">@dimen/txt_standard</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/colorPrimary</item>

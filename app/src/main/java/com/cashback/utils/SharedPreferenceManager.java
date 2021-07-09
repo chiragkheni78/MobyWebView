@@ -32,6 +32,8 @@ public class SharedPreferenceManager {
     private static final String IS_BLINK_MOBY_ICON = "isBlinkMobyIcon";
 
     private static final String PHONE_ID = "phoneID";
+    private static final String IS_BANK_OFFER_MESSAGE_SHOWN = "isBankOfferMessageShown";
+    private static final String IS_PHONE_VERIFIED = "isPhoneVerified";
 
 
     private static final String IS_PROFILE_SAVE = "is_profile_save";
@@ -281,9 +283,6 @@ public class SharedPreferenceManager {
     }
     //END IS_BLINK_MOBY_ICON
 
-
-    private static final String IS_BANK_OFFER_MESSAGE_SHOWN = "isBankOfferMessageShown";
-
     //START IS_BANK_OFFER_MESSAGE_SHOWN
     public void setBankOfferMessageShown(boolean fbIsBankOfferMessageShown) {
         if (moSharedPreferences != null) {
@@ -303,7 +302,7 @@ public class SharedPreferenceManager {
 
 
     //START PHONE_ID
-    public void setPhoneID(String fsPhoneID) {
+    public void setPhoneNumber(String fsPhoneID) {
         if (moSharedPreferences != null) {
             SharedPreferences.Editor loEditor = moSharedPreferences.edit();
             loEditor.putString(PHONE_ID, fsPhoneID);
@@ -311,310 +310,13 @@ public class SharedPreferenceManager {
         }
     }
 
-    public String getPhoneID() {
+    public String getPhoneNumber() {
         if (moSharedPreferences != null) {
             return moSharedPreferences.getString(PHONE_ID, "");
         }
         return "";
     }
     //END PHONE_ID
-
-//=====================================================
-
-
-
-    //START TERMS_CONDITION
-    public void setTermsAccepted(boolean fbIsAcceptedTC) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putBoolean(TERMS_CONDITION, fbIsAcceptedTC);
-            loEditor.commit();
-        }
-    }
-
-    public boolean isTermsAccepted() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getBoolean(TERMS_CONDITION, false);
-        }
-        return false;
-    }
-    //END TERMS_CONDITION
-
-
-    //START IS_PROFILE_SAVE
-    public void setProfileSave(boolean fbIsProfileSave) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putBoolean(IS_PROFILE_SAVE, fbIsProfileSave);
-            loEditor.commit();
-        }
-    }
-
-    public boolean isProfileSave() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getBoolean(IS_PROFILE_SAVE, false);
-        }
-        return false;
-    }
-    //END IS_PROFILE_SAVE
-
-    //START LANG_ID
-    public void setLanguageId(int fiLangId) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putInt(LANG_ID, fiLangId);
-            loEditor.commit();
-        }
-    }
-
-    public int getLanguageId() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getInt(LANG_ID, 1);
-        }
-        return 1;
-    }
-    //END LANG_ID
-
-    //START USER_ID
-    public void setUserId(int fiuserId) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putInt(USER_ID, fiuserId);
-            loEditor.commit();
-        }
-    }
-
-    public int getUserId() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getInt(USER_ID, 0);
-        }
-        return 0;
-    }
-    //END USER_ID
-
-    //START USER_ROLE
-    public void setUserRole(int fiUserRole) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putInt(USER_ROLE, fiUserRole);
-            loEditor.commit();
-        }
-    }
-
-    public int getUserRole() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getInt(USER_ROLE, 2);
-        }
-        return 2;
-    }
-    //END USER_ROLE
-
-    //START OAUTH
-    public void setAuth(String fsOauth) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(OAUTH, fsOauth);
-            loEditor.commit();
-        }
-    }
-
-    public String getAuth() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(OAUTH, "");
-        }
-        return "";
-    }
-    //END OAUTH
-
-    //START COUNTRY_ID
-    public void setCountryId(int fiId) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putInt(COUNTRY_ID, fiId);
-            loEditor.commit();
-        }
-    }
-
-    public int getCountryId() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getInt(COUNTRY_ID, 105);
-        }
-        return 105;
-    }
-    //END COUNTRY_ID
-
-    //START FIRST_NAME
-    public void setFirstName(String fsFirstName) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(FIRST_NAME, fsFirstName);
-            loEditor.commit();
-        }
-    }
-
-    public String getFirstName() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(FIRST_NAME, "");
-        }
-        return "";
-    }
-    //END FIRST_NAME
-
-    //START LAST_NAME
-    public void setLastName(String fsLastName) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(LAST_NAME, fsLastName);
-            loEditor.commit();
-        }
-    }
-
-    public String getLastName() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(LAST_NAME, "");
-        }
-        return "";
-    }
-    //END LAST_NAME
-
-
-    //START EMAIL
-    public void setEmail(String fsEmail) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(EMAIL, fsEmail);
-            loEditor.commit();
-        }
-    }
-
-    public String getEmail() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(EMAIL, "");
-        }
-        return "";
-    }
-    //END EMAIL
-
-
-    //START PHONE
-    public void setPhone(String fsPhone) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(PHONE, fsPhone);
-            loEditor.commit();
-        }
-    }
-
-    public String getPhone() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(PHONE, "");
-        }
-        return "";
-    }
-    //END PHONE
-
-    //START ADHAR_NUM
-    public void setAadhaar(String fsAadhaar) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(ADHAR_NUM, fsAadhaar);
-            loEditor.commit();
-        }
-    }
-
-    public String getAadhaar() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(ADHAR_NUM, "");
-        }
-        return "";
-    }
-    //END ADHAR_NUM
-
-    //START STATE_ID
-    public void setStateId(int fiStateId) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putInt(STATE_ID, fiStateId);
-            loEditor.commit();
-        }
-    }
-
-    public int getStateId() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getInt(STATE_ID, 0);
-        }
-        return 0;
-    }
-    //END STATE_ID
-
-    //START STATE_NAME
-    public void setStateName(String fsState) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(STATE_NAME, fsState);
-            loEditor.commit();
-        }
-    }
-
-    public String getStateName() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(STATE_NAME, "");
-        }
-        return "";
-    }
-    //END STATE_NAME
-
-    //START CITY_ID
-    public void setCityId(int fiCityId) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putInt(CITY_ID, fiCityId);
-            loEditor.commit();
-        }
-    }
-
-    public int getCityId() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getInt(CITY_ID, 0);
-        }
-        return 0;
-    }
-    //END CITY_ID
-
-    //START CITY_NAME
-    public void setCityName(String fsCity) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(CITY_NAME, fsCity);
-            loEditor.commit();
-        }
-    }
-
-    public String getCityName() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(CITY_NAME, "");
-        }
-        return "";
-    }
-    //END CITY_NAME
-
-    //START USER_PROFILE_PIC
-    public void setUserProfilePic(String fsUserProfilePic) {
-        if (moSharedPreferences != null) {
-            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putString(USER_PROFILE_PIC, fsUserProfilePic);
-            loEditor.commit();
-        }
-    }
-
-    public String getUserProfilePic() {
-        if (moSharedPreferences != null) {
-            return moSharedPreferences.getString(USER_PROFILE_PIC, "http://pronksiapartments.ee/wp-content/uploads/2015/10/placeholder-face-big.png");
-        }
-        return "http://pronksiapartments.ee/wp-content/uploads/2015/10/placeholder-face-big.png";
-    }
-    //END USER_PROFILE_PIC
-
 
     //START IS_FCM_SYNC
     public void setFcmTokenSynch(boolean fbIsSync) {
@@ -651,4 +353,20 @@ public class SharedPreferenceManager {
     }
     //END FCM_TOKEN
 
+    //START IS_PHONE_VERIFIED
+    public void setPhoneVerified(boolean fbIsBankOfferMessageShown) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putBoolean(IS_PHONE_VERIFIED, fbIsBankOfferMessageShown);
+            loEditor.commit();
+        }
+    }
+
+    public boolean isPhoneVerified() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getBoolean(IS_PHONE_VERIFIED, false);
+        }
+        return false;
+    }
+    //END IS_PHONE_VERIFIED
 }

@@ -32,26 +32,27 @@ public class BaseActivity extends AppCompatActivity {
         moContext = this;
     }
 
-    protected Context getContext(){
+    protected Context getContext() {
         return moContext;
     }
 
-    protected View getContentView(ViewBinding binding){
+    protected View getContentView(ViewBinding binding) {
         this.binding = binding;
         View view = binding.getRoot();
         return view;
     }
 
-    protected SharedPreferenceManager getPreferenceManager(){
-        return  moSharedPreferenceManager;
+    protected SharedPreferenceManager getPreferenceManager() {
+        return moSharedPreferenceManager;
     }
 
-    protected void showProgressDialog(){
+    protected void showProgressDialog() {
         loProgressDialog = Common.showProgressDialog(this);
     }
 
-    protected void dismissProgressDialog(){
-        Common.dismissProgressDialog(loProgressDialog);
+    protected void dismissProgressDialog() {
+        if (!isFinishing())
+            Common.dismissProgressDialog(loProgressDialog);
     }
 
 

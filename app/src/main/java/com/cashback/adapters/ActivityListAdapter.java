@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,8 +30,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     private Context moContext;
     private OnCouponItemClick onCouponItemClick;
 
-    public interface OnCouponItemClick{
+    public interface OnCouponItemClick {
         void openCouponDetails(int position);
+
         void openBillUpload(int position);
     }
 
@@ -132,7 +132,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             foHolder.tvCouponCode.setText(Common.getDynamicText(moContext, "view_coupon"));
             foHolder.tvRegisterBill.setText(Common.getDynamicText(moContext, "register_bill"));
 
-            Common.loadImage(foHolder. ivLogo, loActivity.getFsAdLogo(),
+            Common.loadImage(foHolder.ivLogo, loActivity.getFsAdLogo(),
                     moContext.getResources().getDrawable(R.drawable.ic_moby_small),
                     moContext.getResources().getDrawable(R.drawable.ic_moby_small));
 
@@ -141,13 +141,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             handleLogicalOperation(foHolder, loActivity);
 
-            if (Common.stCouponId != null && !Common.stCouponId.isEmpty()) {
-                if (Common.stCouponId.equalsIgnoreCase(""+ loActivity.getAdID())) {
+            if (Common.msOfferId != null && !Common.msOfferId.isEmpty()) {
+                if (Common.msOfferId.equalsIgnoreCase("" + loActivity.getAdID())) {
                     foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
                     foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
                     foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
                     foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
 
+                    foHolder.tvCouponCode.setBackground(moContext.getResources().getDrawable(R.drawable.btn_blue));
                     foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
                 } else {
                     foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
@@ -173,7 +174,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private void handleLogicalOperation(DataObjectHolder foHolder, Activity foActivity) {
         if (foActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            foHolder.tvRegisterBill.getBackground().setTint(moContext.getResources().getColor(R.color.gray0));
+            foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_grey));
         } else {
             foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_red_black));
         }
@@ -192,10 +193,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 foHolder.tvCouponCode.setClickable(false);
                 foHolder.tvExpireDay.setVisibility(View.GONE);
                 foHolder.tvCouponCode.clearAnimation();
-                if (!foActivity.isBillUploaded()) {
-                    foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
-                    foHolder.tvRegisterBill.setPaintFlags(0);
-                }
             } else {
                 Common.blinkAnimation(foHolder.tvCouponCode);
 
@@ -207,23 +204,36 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
                 if (foActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())
                         && !foActivity.isBlinkShopOnline()) {
-                    foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
-                    foHolder.tvRegisterBill.getBackground().setTint(moContext.getResources().getColor(R.color.green));
                     foHolder.tvCouponCode.clearAnimation();
                 }
             }
 
             if (foActivity.isBillUploadEnable()) {
-                foHolder.loLllRegisterBill.setVisibility(View.VISIBLE);
-                foHolder.tvRegisterBill.getBackground().setTint(moContext.getResources().getColor(R.color.green));
-                foHolder.tvRegisterBill.setPaintFlags(0);
-                if (foActivity.isBillUploaded()) {
-                    foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
-                    foHolder.tvRegisterBill.setPaintFlags(foHolder.tvRegisterBill.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                if (foActivity.isCouponUsed()) {
+                    foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_green_black));
+                    if (foActivity.isBillUploaded()) {
+                        foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
+                        foHolder.tvRegisterBill.setPaintFlags(foHolder.tvRegisterBill.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    } else {
+                        foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
+                        foHolder.tvRegisterBill.setPaintFlags(0);
+                    }
+                } else {
+                    if (foActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())
+                            && !foActivity.isBlinkShopOnline()) {
+                        foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.white));
+                        foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_green_black));
+                    } else {
+                        foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_grey));
+                        foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.black));
+                    }
                 }
+
+                foHolder.loLllRegisterBill.setVisibility(View.VISIBLE);
             } else {
                 foHolder.loLllRegisterBill.setVisibility(View.GONE);
             }
+
             if (foActivity.isCouponExpired()) {
                 foHolder.tvExpireDay.setText(Common.getDynamicText(moContext, "coupon_expired"));
                 foHolder.tvExpireDay.setTextColor(moContext.getResources().getColor(R.color.colorPrimary));
@@ -233,11 +243,11 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private void setQuizReward(TextView foTvQuizReward, Activity foActivity) {
-        int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.secondary);
+        int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.black);
 
         int rewardColor;
-        if (Common.stCouponId != null && !Common.stCouponId.isEmpty()) {
-            if (Common.stCouponId.equalsIgnoreCase("" + foActivity.getAdID())) {
+        if (Common.msOfferId != null && !Common.msOfferId.isEmpty()) {
+            if (Common.msOfferId.equalsIgnoreCase("" + foActivity.getAdID())) {
                 //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.WHITE));
                 rewardColor = ActivityCompat.getColor(moContext, R.color.white);
             } else {

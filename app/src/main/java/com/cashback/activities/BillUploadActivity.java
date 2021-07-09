@@ -194,7 +194,7 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
 
     private void uploadTransactionBill() {
         showProgressDialog();
-        int liTransactionAmount = moBinding.etAmount.getText().length() == 0 ? 0 : Integer.parseInt(moBinding.etAmount.getText().toString());
+        int liTransactionAmount = moBinding.etAmount.getText().length() == 0 ? 0 : (int) Double.parseDouble(moBinding.etAmount.getText().toString());
         moBillUploadViewModel.uploadTransactionBill(getContext(), "", miActivityId, msTransactionDate, liTransactionAmount, msBillImagePath_1, msBillImagePath_2);
     }
 

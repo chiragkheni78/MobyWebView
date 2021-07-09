@@ -108,7 +108,6 @@ public class HomeViewModel extends ViewModel {
         return 0;
     }
 
-
     private void updateToken(Context foContext) {
         SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(foContext);
         FirebaseMessaging.getInstance().getToken()

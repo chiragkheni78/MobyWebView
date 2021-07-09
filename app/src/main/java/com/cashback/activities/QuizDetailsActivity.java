@@ -496,7 +496,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
                 loBtnTimeline.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Common.stCouponId = "" + moOffer.getAdID();
+                        Common.msOfferId = "" + moOffer.getAdID();
                         Intent intent = new Intent(moContext, HomeActivity.class);
                         intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
                         //intent.putExtra("foGiftCard", foGiftCard);

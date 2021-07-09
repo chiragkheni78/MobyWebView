@@ -92,7 +92,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                         getPreferenceManager().setUserLogIn(true);
                         getPreferenceManager().setReferralCode(loUserDetails.getReferralCode());
                         getPreferenceManager().setReferralLink(loUserDetails.getReferralUrl());
-                        getPreferenceManager().setPhoneID(loUserDetails.getMobileNumber());
+                        getPreferenceManager().setPhoneNumber(loUserDetails.getMobileNumber());
                     }
 
                     Intent intent = new Intent(ShortProfileActivity.this, HomeActivity.class);

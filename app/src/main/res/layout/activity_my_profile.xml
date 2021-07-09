@@ -424,7 +424,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_view"
                         android:fadeScrollbars="false"
-                        android:scrollbars="none" />
+                        tools:listitem="@layout/item_debit_card"
+                        android:scrollbars="horizontal" />
 
                 </LinearLayout>
 

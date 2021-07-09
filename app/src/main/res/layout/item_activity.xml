@@ -72,7 +72,7 @@
                             android:drawablePadding="5dp"
                             android:gravity="right"
                             android:text="Rs. 500"
-                            android:textColor="@color/blue"
+                            android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:visibility="visible" />
@@ -171,7 +171,7 @@
 
                             <TextView
                                 android:id="@+id/tvCouponCode"
-                                style="@style/RippleBtnStandard"
+                                android:layout_height="wrap_content"
                                 android:layout_width="match_parent"
                                 android:background="@drawable/rect_primary"
                                 android:padding="@dimen/padding_micro"

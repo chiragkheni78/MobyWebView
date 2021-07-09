@@ -172,11 +172,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             moBinding.drawerLayout.openDrawer(Gravity.LEFT); //OPEN Nav Drawer!
         });
 
-        if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {
-            moBinding.navigation.getMenu().getItem(3).setChecked(true);
-        } else {
-            moBinding.navigation.getMenu().getItem(0).setChecked(true);
-        }
         moBinding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
@@ -193,9 +188,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         openNavigationBarFragments(R.id.itemNearBy);
                         break;
                     case R.id.itemHelp:
-
                         openNavigationBarFragments(R.id.itemHelp);
-
                         //openHelp();
                         break;
                 }
@@ -203,19 +196,23 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
 
-        getSettings();
+        if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON) || stFrom.equalsIgnoreCase(WALLET_SCREEN)) {
+            moBinding.navigation.getMenu().getItem(3).setChecked(true);
+            openMyCoupons(0);
+        } else {
+            getSettings();
+//            moBinding.navigation.getMenu().getItem(0).setChecked(true);
+        }
     }
 
     public void openNavigationBarFragments(int position) {
+
         if (position != R.id.itemNearBy) {
             moBinding.navigation.getMenu().findItem(position).setChecked(true);
         }
+
         if (position == R.id.itemCoupons) {
-            FragmentMyCoupons fragmentMyCoupons = new FragmentMyCoupons();
-            Bundle bundle = new Bundle();
-            bundle.putLong(Constants.IntentKey.ACTIVITY_ID, 0);
-            fragmentMyCoupons.setArguments(bundle);
-            Common.replaceFragment(HomeActivity.this, fragmentMyCoupons, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
+            openMyCoupons(0);
         } else if (position == R.id.itemOffer) {
             loadOfferListFragment(0, 0, 0, 0);
         } else if (position == R.id.itemNearBy) {
@@ -376,9 +373,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void openMyCoupons(long flActivityID) {
-        Intent loIntent = new Intent(this, MyCouponsActivity.class);
-        loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, flActivityID);
-        startActivity(loIntent);
+        FragmentMyCoupons fragmentMyCoupons = new FragmentMyCoupons();
+        Bundle bundle = new Bundle();
+        bundle.putLong(Constants.IntentKey.ACTIVITY_ID, flActivityID);
+        fragmentMyCoupons.setArguments(bundle);
+        Common.replaceFragment(HomeActivity.this, fragmentMyCoupons, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
     }
 
     public void loadOfferListFragment(int fiCategoryId, long flOfferId, long flLocationId, long flBannerId) {
@@ -606,7 +605,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 AppGlobal.isDisplayRewardNote = true;
                 /*Intent intent = new Intent(getContext(), MyCouponsActivity.class);
                 startActivity(intent);*/
-                openNavigationBarFragments(R.id.itemOffer);
+                openNavigationBarFragments(R.id.itemCoupons);
             });
 
             imageMainClose.setOnClickListener(new View.OnClickListener() {

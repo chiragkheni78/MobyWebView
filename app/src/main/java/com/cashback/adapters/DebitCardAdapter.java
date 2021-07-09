@@ -47,7 +47,7 @@ public class DebitCardAdapter extends RecyclerView.Adapter<DebitCardAdapter.MyVi
         try {
             try {
                 holder.loTvBankName.setText(list.get(position).getBankName());
-                holder.loTvProductName.setText(list.get(position).getCardProduct());
+//                holder.loTvProductName.setText(list.get(position).getCardProduct());
                 holder.loTvCardType.setText(list.get(position).getCardType());
             } catch (Exception e) {
                 e.printStackTrace();
