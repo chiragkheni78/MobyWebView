@@ -32,6 +32,7 @@ import com.cashback.models.viewmodel.PhoneLoginViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.custom.otpview.OTPListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 
@@ -283,6 +284,7 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
 
                 break;
             case STATE_SIGNIN_SUCCESS:
+                getPreferenceManager().setPhoneNumber(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
                 checkConnectedDevices();
                 break;
         }
@@ -316,15 +318,16 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
         @Override
         public void onChanged(ProceedDeviceResponse loJsonObject) {
             if (!loJsonObject.isError()) {
+                getPreferenceManager().setPhoneVerified(true);
+                FirebaseAuth.getInstance().signOut();
                 //All Done
                 Intent intent = new Intent();
-                setResult(1, intent);
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
             }
-            dismissProgressDialog();
+//            dismissProgressDialog();
         }
     };
 

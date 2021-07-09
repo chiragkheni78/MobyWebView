@@ -96,7 +96,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         setToolbar();
         moBinding.btnSaveProfile.setOnClickListener(this);
 
-        if (AppGlobal.getFirebaseUser() == null) {
+        if (!getPreferenceManager().isPhoneVerified()) {
             errorButtonPressed();
             moBinding.btnError.setOnClickListener(this);
             moBinding.llErrorMessage.setVisibility(View.VISIBLE);
@@ -185,7 +185,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void errorButtonPressed() {
-        if (AppGlobal.getFirebaseUser() == null) {
+        if (!getPreferenceManager().isPhoneVerified()) {
             Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
             loIntent.putExtra(SCREEN_TITLE, this.getResources().getString(R.string.msg_verify_phone_number));
             startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);

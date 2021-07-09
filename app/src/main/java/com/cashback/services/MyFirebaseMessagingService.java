@@ -70,7 +70,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.i(TAG, "Message data payload: " + remoteMessage.getData());
             SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(this);
-            if (loSharedPreferenceManager.getUserId() != 0) {
+            if (loSharedPreferenceManager.isUserLogin()) {
                 handleNotification(remoteMessage.getData());
             }
         }

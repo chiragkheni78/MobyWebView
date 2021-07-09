@@ -3,6 +3,7 @@ package com.cashback;
 import android.app.Application;
 import android.content.Context;
 
+import com.adgyde.android.AdGyde;
 import com.cashback.models.Category;
 import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.utils.Constants;
@@ -54,27 +55,16 @@ public class AppGlobal extends Application {
     }
 
     private void configAdGyde() {
-//        AdGyde.init(this, Constants.ADGYDE_APP_KEY, "Organic");
-//        AdGyde.setDebugEnabled(false);
-    }
-
-    public static FirebaseUser getFirebaseUser() {
-        return FirebaseAuth.getInstance().getCurrentUser();
+        AdGyde.init(this, Constants.ADGYDE_APP_KEY, "Organic");
+        AdGyde.setDebugEnabled(false);
     }
 
     public static String getPhoneNumber() {
-        if (FirebaseAuth.getInstance() != null && FirebaseAuth.getInstance().getCurrentUser() != null) {
-            return FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
-        } else {
-            return getPreferenceManager().getPhoneNumber();
-        }
+        return getPreferenceManager().getPhoneNumber();
     }
 
     public static void logOutUser() {
-        if (FirebaseAuth.getInstance() != null) {
-            getPreferenceManager().clear();
-            FirebaseAuth.getInstance().signOut();
-        }
+        getPreferenceManager().clear();
     }
 
     public static ArrayList<Category> getCategories() {

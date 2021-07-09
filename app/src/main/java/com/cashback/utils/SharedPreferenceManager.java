@@ -354,10 +354,10 @@ public class SharedPreferenceManager {
     //END FCM_TOKEN
 
     //START IS_PHONE_VERIFIED
-    public void setPhoneVerified(boolean fbIsBankOfferMessageShown) {
+    public void setPhoneVerified(boolean isPhoneVerified) {
         if (moSharedPreferences != null) {
             SharedPreferences.Editor loEditor = moSharedPreferences.edit();
-            loEditor.putBoolean(IS_PHONE_VERIFIED, fbIsBankOfferMessageShown);
+            loEditor.putBoolean(IS_PHONE_VERIFIED, isPhoneVerified);
             loEditor.commit();
         }
     }

@@ -172,11 +172,12 @@ public class PhoneLoginViewModel extends ViewModel {
     }
     // [END resend_verification]
 
-    public FirebaseUser getCurrentUser(){
+    public FirebaseUser getCurrentUser() {
         if (moAuth != null) {
             FirebaseUser currentUser = moAuth.getCurrentUser();
             return currentUser;
-        } return null;
+        }
+        return null;
     }
 
     public void signOut() {
@@ -230,13 +231,13 @@ public class PhoneLoginViewModel extends ViewModel {
                 Common.printReqRes(foResponse.body(), "getConnectedDeviceList", Common.LogType.RESPONSE);
                 if (foResponse.isSuccessful()) {
                     MobileDeviceResponse loJsonObject = foResponse.body();
-                    if (loJsonObject.getDevicesList() != null) {
+                    if (!loJsonObject.isError() && loJsonObject.getDevicesList() != null) {
                         if (loJsonObject.getDevicesList().size() == 1) {
                             //call another API
                             proceedDevice(foContext, loJsonObject.getDevicesList().get(0).getUserId());
-                        }
-                    }
-                    fetchConnectedDeviceStatus.postValue(loJsonObject);
+                        } else fetchConnectedDeviceStatus.postValue(loJsonObject);
+                    } else
+                        fetchConnectedDeviceStatus.postValue(loJsonObject);
                 } else {
                     String fsMessage = Common.getErrorMessage(foResponse);
                     fetchConnectedDeviceStatus.postValue(new MobileDeviceResponse(true, fsMessage));

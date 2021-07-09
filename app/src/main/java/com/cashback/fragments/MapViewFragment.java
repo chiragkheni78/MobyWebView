@@ -151,7 +151,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     private void loadView() {
-        if (AppGlobal.getFirebaseUser() == null) {
+        if (!getPreferenceManager().isPhoneVerified()) {
             errorButtonPressed();
             moBinding.llErrorMessage.setVisibility(View.VISIBLE);
             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "text_verify_phone_no"));
@@ -194,7 +194,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         if (moCurrentLocation != null) {
             showProgressDialog();
             moMapViewModel.fetchOffers(getActivity(),
-                    AppGlobal.getFirebaseUser().getPhoneNumber(),
+                    AppGlobal.getPhoneNumber(),
                     moCurrentLocation.getLatitude(),
                     moCurrentLocation.getLongitude(),
                     false,
@@ -208,7 +208,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
     private void errorButtonPressed() {
 
-        if (AppGlobal.getFirebaseUser() == null) {
+        if (!getPreferenceManager().isPhoneVerified()) {
             Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
             loIntent.putExtra(SCREEN_TITLE, this.getResources().getString(R.string.msg_verify_phone_number_map));
             getActivity().startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);

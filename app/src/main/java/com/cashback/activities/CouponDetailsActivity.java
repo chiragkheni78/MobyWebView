@@ -69,9 +69,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             if (moActivity != null) {
                 if (moActivity.getCouponType().equalsIgnoreCase("default")) {
                     String number = s.toString().trim();
-                    if (FirebaseAuth.getInstance().getCurrentUser() != null &&
-                            FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber() != null) {
-                        if (String.valueOf("+91" + number).equalsIgnoreCase(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber())) {
+                    if (getPreferenceManager().isPhoneVerified() &&
+                            getPreferenceManager().getPhoneNumber() != null) {
+                        if (String.valueOf("+91" + number).equalsIgnoreCase(AppGlobal.getPhoneNumber())) {
                             moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
                             moBinding.tvMarkAsUsed.setClickable(true);
                             moBinding.tvMarkAsUsed.setEnabled(true);
@@ -458,7 +458,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void dialogCopyToClipboard(String fsUrl) {
 
-        if (AppGlobal.getFirebaseUser() == null) {
+        if (!getPreferenceManager().isPhoneVerified()) {
             openPhoneLogin(fsUrl);
         } else {
             try {
