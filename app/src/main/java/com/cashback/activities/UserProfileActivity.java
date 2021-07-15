@@ -13,7 +13,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -23,7 +22,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.BankOfferCategoryAdapter;
 import com.cashback.adapters.DebitCardAdapter;
@@ -77,6 +75,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                 loIntent.putExtra(Constants.IntentKey.WEBVIEW_PAGE_NAME, "http://mobyads.in/moby/v2-apis/?fsAction=loadWebViewHtml&fsPage=tandc");
                 startActivity(loIntent);
             }
+
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
@@ -85,7 +84,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             }
         };
         int start = terms.indexOf("Terms");
-        ss.setSpan(clickableSpan, start, (terms.length()-1), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(clickableSpan, start, (terms.length() - 1), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         moBinding.tvTerms.setText(ss);
         moBinding.tvTerms.setMovementMethod(LinkMovementMethod.getInstance());
     }
@@ -162,21 +161,22 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     };
 
     Observer<DeleteCardResponse> deleteCardObserver = loJsonObject -> {
-            if (!loJsonObject.isError()) {
-                moGetUserProfileResponse.getDebitCardList().remove(miDeletePosition);
-                miDeletePosition = -1;
-                moDebitCardAdapter.notifyDataSetChanged();
-            } else {
-                Common.showErrorDialog(UserProfileActivity.this, loJsonObject.getMessage(), false);
-            }
-            Common.dismissProgressDialog(loProgressDialog);
+        if (!loJsonObject.isError()) {
+            moGetUserProfileResponse.getDebitCardList().remove(miDeletePosition);
+            miDeletePosition = -1;
+            moDebitCardAdapter.notifyDataSetChanged();
+        } else {
+            Common.showErrorDialog(UserProfileActivity.this, loJsonObject.getMessage(), false);
+        }
+        Common.dismissProgressDialog(loProgressDialog);
     };
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSaveProfile:
-                saveShortProfile();
+                if (moGetUserProfileResponse.getUserDetails() != null)
+                    saveUserProfile();
                 break;
             case R.id.btnError:
                 errorButtonPressed();
@@ -341,7 +341,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void saveShortProfile() {
+    private void saveUserProfile() {
 
         String lsFirstName = moBinding.etFirstName.getText().toString();
         String lsLastName = moBinding.etLastName.getText().toString();
@@ -349,6 +349,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         String lsUPILink = moBinding.etUpiID.getText().toString();
         String lsAccountNo = moBinding.etAccountNumber.getText().toString();
         String lsIFSCCode = moBinding.etIFSCCode.getText().toString();
+
         String lsBirthDate = moGetUserProfileResponse.getUserDetails().getBirthDate();
 
         int liBankOfferRadius = moUserProfileViewModel.getBankOfferRadius(getRadioGroupSelectedPosition(moBinding.rgRange));

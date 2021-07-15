@@ -54,9 +54,9 @@ public class HomeViewModel extends ViewModel {
                 if (foResponse.isSuccessful()) {
                     GetSettingResponse loJsonObject = foResponse.body();
                     AppGlobal.setCategories(loJsonObject.getCategoryList());
-                    AppGlobal.setFiTotalBillVerified(loJsonObject.getFiTotalBillVerified());
-                    if (loJsonObject.getFoDealOfTheDays() != null && loJsonObject.getFoDealOfTheDays().size()>0) {
-                        AppGlobal.setMoDealOfTheDayResponse(loJsonObject.getFoDealOfTheDays().get(0));
+                    AppGlobal.setTotalBillVerified(loJsonObject.getTotalBillVerified());
+                    if (loJsonObject.getDealsOfTheDay() != null && loJsonObject.getDealsOfTheDay().size()>0) {
+                        AppGlobal.setDealOfTheDayResponse(loJsonObject.getDealsOfTheDay().get(0));
                     }
                     getSettingStatus.postValue(loJsonObject);
                     updateToken(foContext);

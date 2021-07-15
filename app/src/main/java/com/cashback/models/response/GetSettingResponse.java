@@ -3,8 +3,6 @@ package com.cashback.models.response;
 import com.cashback.models.Advertisement;
 import com.cashback.models.AppUpdate;
 import com.cashback.models.Category;
-import com.cashback.models.EWallet;
-import com.cashback.models.UserDetails;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -53,6 +51,9 @@ public class GetSettingResponse {
     @SerializedName("fbIsDeviceExist")
     private boolean isDeviceExist;
 
+    @SerializedName("fbIsUserExist")
+    private boolean isUserExist;
+
     @SerializedName("foCategoryList")
     private ArrayList<Category> categoryList;
 
@@ -60,11 +61,11 @@ public class GetSettingResponse {
     int offerListPageSize;
 
     @SerializedName("fiTotalBillVerified")
-    int fiTotalBillVerified;
+    int totalBillVerified;
 
 
     @SerializedName("foDealOfTheDays")
-    private ArrayList<DealOfTheDayResponse> foDealOfTheDays;
+    private ArrayList<DealOfTheDayResponse> dealsOfTheDay;
 
     public GetSettingResponse(boolean isError, String message) {
         this.isError = isError;
@@ -135,19 +136,27 @@ public class GetSettingResponse {
         return offerListPageSize;
     }
 
-    public ArrayList<DealOfTheDayResponse> getFoDealOfTheDays() {
-        return foDealOfTheDays;
+    public ArrayList<DealOfTheDayResponse> getDealsOfTheDay() {
+        return dealsOfTheDay;
     }
 
-    public void setFoDealOfTheDays(ArrayList<DealOfTheDayResponse> foDealOfTheDays) {
-        this.foDealOfTheDays = foDealOfTheDays;
+    public void setDealsOfTheDay(ArrayList<DealOfTheDayResponse> foDealOfTheDays) {
+        this.dealsOfTheDay = foDealOfTheDays;
     }
 
-    public int getFiTotalBillVerified() {
-        return fiTotalBillVerified;
+    public int getTotalBillVerified() {
+        return totalBillVerified;
     }
 
-    public void setFiTotalBillVerified(int fiTotalBillVerified) {
-        this.fiTotalBillVerified = fiTotalBillVerified;
+    public void setTotalBillVerified(int fiTotalBillVerified) {
+        this.totalBillVerified = fiTotalBillVerified;
+    }
+
+    public boolean isUserExist() {
+        return isUserExist;
+    }
+
+    public void setUserExist(boolean userExist) {
+        isUserExist = userExist;
     }
 }

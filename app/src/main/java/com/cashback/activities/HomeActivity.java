@@ -53,6 +53,7 @@ import com.google.android.play.core.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -459,7 +460,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         @Override
         public void onChanged(GetSettingResponse loJsonObject) {
             if (!loJsonObject.isError()) {
-                if (!loJsonObject.isDeviceExist()) {
+                if (!loJsonObject.isDeviceExist() && !loJsonObject.isUserExist()) {
                     logout();
                     return;
                 }
@@ -494,41 +495,44 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             if (foJsonObject.getAppUpdate().getStatus() == 1) {
                 //showAlertTwoBtn(fsMessage, message);
                 //Flaxibale
-                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                            && appUpdateInfo.clientVersionStalenessDays() != null
-                            && appUpdateInfo.clientVersionStalenessDays() >= 2
-                            && appUpdateInfo.updatePriority() >= 4
-                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                        try {
-                            appUpdateManager.startUpdateFlowForResult(
-                                    appUpdateInfo,
-                                    AppUpdateType.FLEXIBLE,
-                                    HomeActivity.this,
-                                    101);
-                        } catch (IntentSender.SendIntentException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+//                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+//                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+//                            && appUpdateInfo.clientVersionStalenessDays() != null
+//                            && appUpdateInfo.clientVersionStalenessDays() >= 2
+//                            && appUpdateInfo.updatePriority() >= 4
+//                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+//                        try {
+//                            appUpdateManager.startUpdateFlowForResult(
+//                                    appUpdateInfo,
+//                                    AppUpdateType.FLEXIBLE,
+//                                    HomeActivity.this,
+//                                    101);
+//                        } catch (IntentSender.SendIntentException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+
+                showUpdateApp(foJsonObject);
             } else if (foJsonObject.getAppUpdate().getStatus() == 2) {
+                showUpdateApp(foJsonObject);
                 //dialogUpdateApp(fsMessage, true, false);
                 //immediate
-                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                            && appUpdateInfo.updatePriority() >= 4
-                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                        try {
-                            appUpdateManager.startUpdateFlowForResult(
-                                    appUpdateInfo,
-                                    AppUpdateType.IMMEDIATE,
-                                    HomeActivity.this,
-                                    100);
-                        } catch (IntentSender.SendIntentException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+//                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+//                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+//                            && appUpdateInfo.updatePriority() >= 4
+//                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+//                        try {
+//                            appUpdateManager.startUpdateFlowForResult(
+//                                    appUpdateInfo,
+//                                    AppUpdateType.IMMEDIATE,
+//                                    HomeActivity.this,
+//                                    100);
+//                        } catch (IntentSender.SendIntentException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
 
             } else {
                 if (!getPreferenceManager().isMarketingAd()) {
@@ -658,5 +662,43 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 }
             }
         }
+    }
+
+    private void showUpdateApp(GetSettingResponse foJsonObject) {
+        final Dialog mDialougeBox = new Dialog(this);
+        mDialougeBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialougeBox.setContentView(R.layout.dialog_update_app);
+        mDialougeBox.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        mDialougeBox.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialougeBox.getWindow().setGravity(Gravity.CENTER);
+        mDialougeBox.setCancelable(false);
+        mDialougeBox.show();
+
+        TextView tvUpdateMessage = mDialougeBox.findViewById(R.id.tvUpdateMessage);
+        tvUpdateMessage.setText(foJsonObject.getAppUpdate().getMessage());
+
+        TextView tvSkip = mDialougeBox.findViewById(R.id.tvSkip);
+        TextView updateApp = mDialougeBox.findViewById(R.id.updateApp);
+
+        if (foJsonObject.getAppUpdate().getStatus() == 2){
+            tvSkip.setVisibility(View.GONE);
+        }
+
+        tvSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialougeBox.hide();
+                // load data
+                showFirstDialog(foJsonObject.getFirstTimeAlertTitle(), foJsonObject.getFirstTimeAlertMsg(), foJsonObject.getAdvertisementList());
+            }
+        });
+
+        updateApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialougeBox.hide();
+                Common.redirectPlayStore(HomeActivity.this);
+            }
+        });
     }
 }

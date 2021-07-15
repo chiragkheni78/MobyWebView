@@ -108,7 +108,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     private void showDealOfTheDayImage() {
         moBinding.cardDealOfTheDay.setVisibility(View.GONE);
-        DealOfTheDayResponse response = AppGlobal.getMoDealOfTheDayResponse();
+        DealOfTheDayResponse response = AppGlobal.getDealOfTheDayResponse();
         if (response != null) {
             if (Common.stOfferShow) {
 

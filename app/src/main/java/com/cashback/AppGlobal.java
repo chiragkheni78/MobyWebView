@@ -21,13 +21,13 @@ public class AppGlobal extends Application {
 
     public static Context moContext;
     public static ArrayList<Category> moCategories = new ArrayList<>();
-    public static DealOfTheDayResponse moDealOfTheDayResponse = new DealOfTheDayResponse();
+    public static DealOfTheDayResponse moDealOfTheDayResponse;
 
     public static int getFiTotalBillVerified() {
         return fiTotalBillVerified;
     }
 
-    public static void setFiTotalBillVerified(int fiTotalBillVerified) {
+    public static void setTotalBillVerified(int fiTotalBillVerified) {
         AppGlobal.fiTotalBillVerified = fiTotalBillVerified;
     }
 
@@ -55,8 +55,10 @@ public class AppGlobal extends Application {
     }
 
     private void configAdGyde() {
-        AdGyde.init(this, Constants.ADGYDE_APP_KEY, "Organic");
-        AdGyde.setDebugEnabled(false);
+        if (!Constants.DEFAULT_REFERRAL_CODE.equalsIgnoreCase("SAMSUNG")) {
+            AdGyde.init(this, Constants.ADGYDE_APP_KEY, "Organic");
+            AdGyde.setDebugEnabled(false);
+        }
     }
 
     public static String getPhoneNumber() {
@@ -75,11 +77,11 @@ public class AppGlobal extends Application {
         moCategories = loCategories;
     }
 
-    public static DealOfTheDayResponse getMoDealOfTheDayResponse() {
+    public static DealOfTheDayResponse getDealOfTheDayResponse() {
         return moDealOfTheDayResponse;
     }
 
-    public static void setMoDealOfTheDayResponse(DealOfTheDayResponse moDealOfTheDayResponse) {
+    public static void setDealOfTheDayResponse(DealOfTheDayResponse moDealOfTheDayResponse) {
         AppGlobal.moDealOfTheDayResponse = moDealOfTheDayResponse;
     }
 }

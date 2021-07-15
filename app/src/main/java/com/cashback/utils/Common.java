@@ -3,6 +3,7 @@ package com.cashback.utils;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,9 +39,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.cashback.AppGlobal;
 import com.cashback.BuildConfig;
 import com.cashback.R;
 import com.cashback.dialog.MessageDialog;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -267,7 +271,7 @@ public class Common {
     }
 
     public static String getDeviceUniqueId(Context foContext) {
-        return Settings.Secure.getString(foContext.getContentResolver(),
+        return Settings.Secure.getString(AppGlobal.getInstance().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
     }
 
@@ -506,6 +510,29 @@ public class Common {
                 }
             }
         };
+    }
+
+    public static void redirectPlayStore(Activity foContext) {
+        final String appPackageName = foContext.getPackageName(); // getPackageName() from Context or Activity object
+        try {
+            if (isGooglePlayServicesAvailable(foContext))
+                foContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
+        foContext.finish();
+    }
+
+    public static boolean isGooglePlayServicesAvailable(Activity activity) {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int status = googleApiAvailability.isGooglePlayServicesAvailable(activity);
+        if (status != ConnectionResult.SUCCESS) {
+            if (googleApiAvailability.isUserResolvableError(status)) {
+                googleApiAvailability.getErrorDialog(activity, status, 2404).show();
+            }
+            return false;
+        }
+        return true;
     }
 
 }

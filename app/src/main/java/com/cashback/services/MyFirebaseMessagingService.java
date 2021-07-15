@@ -83,13 +83,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void handleNotification(Map<String, String> foData) {
 
-        String loBody = foData.get("body");
-        Log.d(TAG, loBody);
-
-        Intent loIntent = null;
-        PendingIntent loPendingIntent = null;
-
         try {
+            String loBody = foData.get("body");
+            Log.d(TAG, loBody);
+
+            Intent loIntent = null;
+            PendingIntent loPendingIntent = null;
+
             JSONObject loJsonBody = new JSONObject(loBody);
             int liNotifyID = 0;
             String lsTitle = loJsonBody.getString("title");
@@ -142,7 +142,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 case NotificationType.BILL_VERIFIED:
                 case NotificationType.CASH_BACK_PAID:
 
-                    if (liNotifyID == NotificationType.PURCHASED){
+                    if (liNotifyID == NotificationType.PURCHASED) {
                         AdGydeEvents.purchased(this, llAdID);
                     }
                     loIntent = new Intent(this, HomeActivity.class);
@@ -192,6 +192,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSmallIcon(R.drawable.ic_notification_small)
                         .setContentTitle(fsTitle)
                         .setContentText(fsMessage)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(fsMessage))
                         .setAutoCancel(true)
                         .setSound(loDefaultSoundUri)
                         .setContentIntent(foPendingIntent);
