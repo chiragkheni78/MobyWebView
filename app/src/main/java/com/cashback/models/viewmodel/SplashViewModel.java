@@ -46,7 +46,7 @@ public class SplashViewModel extends ViewModel {
 
     InstallReferrerClient referrerClient;
 
-    public void checkInstallReferrer(Context foContext){
+    public void checkInstallReferrer(Context foContext) {
 
         referrerClient = InstallReferrerClient.newBuilder(foContext).build();
 
@@ -79,54 +79,56 @@ public class SplashViewModel extends ViewModel {
 
     private void getReferralUser(Context foContext) throws RemoteException {
         SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(foContext);
-        ReferrerDetails response = referrerClient.getInstallReferrer();
-        String referrerData = response.getInstallReferrer();
-        Log.e(TAG, "Install referrer:" + response.getInstallReferrer());
+        if (referrerClient != null && referrerClient.isReady()) {
+            ReferrerDetails response = referrerClient.getInstallReferrer();
+            String referrerData = response.getInstallReferrer();
+            Log.e(TAG, "Install referrer:" + response.getInstallReferrer());
 
-        try {
-            HashMap<String, String> values = new HashMap<>();
-            if (referrerData != null) {
-                String referrers[] = referrerData.split("&");
+            try {
+                HashMap<String, String> values = new HashMap<>();
+                if (referrerData != null) {
+                    String referrers[] = referrerData.split("&");
 
-                for (String referrerValue : referrers) {
-                    String keyValue[] = referrerValue.split("=");
-                    values.put(URLDecoder.decode(keyValue[0], "UTF-8"), (keyValue.length > 1) ? URLDecoder.decode(keyValue[1], "UTF-8") : "");
+                    for (String referrerValue : referrers) {
+                        String keyValue[] = referrerValue.split("=");
+                        values.put(URLDecoder.decode(keyValue[0], "UTF-8"), (keyValue.length > 1) ? URLDecoder.decode(keyValue[1], "UTF-8") : "");
+                    }
+
+                    if (values.containsKey("utm_campaign")) {
+                        String lsCampaign = values.get("utm_campaign");
+                        Log.e(TAG, "UTM campaign:" + lsCampaign);
+                        if (!lsCampaign.isEmpty())
+                            loSharedPreferenceManager.setAppDownloadCampaign(lsCampaign);
+                    }
+
+                    if (values.containsKey("utm_medium")) {
+                        String lsMedium = values.get("utm_medium");
+                        Log.e(TAG, "UTM medium:" + lsMedium);
+                        loSharedPreferenceManager.setAppDownloadMedium(lsMedium);
+                    }
+
+                    if (values.containsKey("utm_source")) {
+                        String lsSource = values.get("utm_source");
+                        Log.e(TAG, "UTM source:" + lsSource);
+                        loSharedPreferenceManager.setAppDownloadSource(lsSource);
+                    }
                 }
+            } catch (Exception e) {
+                LogV2.logException(TAG, e);
+                Log.e(TAG, "UTM ERROR:" + e.getMessage());
+            } finally {
+                if (referrerClient != null)
+                    referrerClient.endConnection();
 
-                if (values.containsKey("utm_campaign")) {
-                    String lsCampaign = values.get("utm_campaign");
-                    Log.e(TAG, "UTM campaign:" + lsCampaign);
-                    if (!lsCampaign.isEmpty())
-                        loSharedPreferenceManager.setAppDownloadCampaign(lsCampaign);
+                if (loSharedPreferenceManager.getAppDownloadCampaign().isEmpty()) {
+                    String lsCampaignName = AdGyde.getCampaignName();
+                    if (!lsCampaignName.isEmpty()) {
+                        Log.e(TAG, "AdGyde:: UTM campaign:" + lsCampaignName);
+                        loSharedPreferenceManager.setAppDownloadCampaign(lsCampaignName);
+                    }
                 }
-
-                if (values.containsKey("utm_medium")) {
-                    String lsMedium = values.get("utm_medium");
-                    Log.e(TAG, "UTM medium:" + lsMedium);
-                    loSharedPreferenceManager.setAppDownloadMedium(lsMedium);
-                }
-
-                if (values.containsKey("utm_source")) {
-                    String lsSource = values.get("utm_source");
-                    Log.e(TAG, "UTM source:" + lsSource);
-                    loSharedPreferenceManager.setAppDownloadSource(lsSource);
-                }
+                Log.e(TAG, "UTM FINISH: " + loSharedPreferenceManager.getAppDownloadCampaign());
             }
-        } catch (Exception e) {
-            LogV2.logException(TAG, e);
-            Log.e(TAG, "UTM ERROR:" + e.getMessage());
-        } finally {
-            if (referrerClient != null)
-                referrerClient.endConnection();
-
-            if (loSharedPreferenceManager.getAppDownloadCampaign().isEmpty()) {
-                String lsCampaignName = AdGyde.getCampaignName();
-                if (!lsCampaignName.isEmpty()) {
-                    Log.e(TAG, "AdGyde:: UTM campaign:" + lsCampaignName);
-                    loSharedPreferenceManager.setAppDownloadCampaign(lsCampaignName);
-                }
-            }
-            Log.e(TAG, "UTM FINISH: " + loSharedPreferenceManager.getAppDownloadCampaign());
         }
     }
 

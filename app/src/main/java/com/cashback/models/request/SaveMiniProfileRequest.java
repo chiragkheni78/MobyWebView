@@ -38,6 +38,12 @@ public class SaveMiniProfileRequest {
     @SerializedName("fsReferrerCode")
     String referrer;
 
+    @SerializedName("fsUtmSource")
+    String source;
+
+    @SerializedName("fsUtmMedium")
+    String medium;
+
     public void setAction(String action) {
         this.action = action;
     }
@@ -60,6 +66,14 @@ public class SaveMiniProfileRequest {
 
     public void setReferrer(String referrer) {
         this.referrer = referrer;
+    }
+
+    public void setUtmSource(String source) {
+        this.source = source;
+    }
+
+    public void setUtmMedium(String medium) {
+        this.medium = medium;
     }
 
     public void setMobileNumber(String mobileNumber) {

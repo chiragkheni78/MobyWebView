@@ -271,7 +271,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 }
             } else {
                 moBinding.rvOfferList.setVisibility(View.GONE);
-                Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
+                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
             }
             isLoading = false;
             dismissProgressDialog();

@@ -112,6 +112,8 @@ public class MiniProfileViewModel extends ViewModel {
         loSaveMiniProfileRequest.setAction(Constants.API.SAVE_MINI_PROFILE.getValue());
         loSaveMiniProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
         loSaveMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getAppDownloadCampaign());
+        loSaveMiniProfileRequest.setUtmMedium(AppGlobal.getPreferenceManager().getAppDownloadMedium());
+        loSaveMiniProfileRequest.setUtmSource(AppGlobal.getPreferenceManager().getAppDownloadSource());
         loSaveMiniProfileRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
         String lsMessage = loSaveMiniProfileRequest.validateData(foContext);
@@ -125,6 +127,7 @@ public class MiniProfileViewModel extends ViewModel {
         Common.printReqRes(loRequest, "saveMiniProfile", Common.LogType.REQUEST);
 
         loRequest.enqueue(new Callback<SaveMiniProfileResponse>() {
+
             @Override
             public void onResponse(Call<SaveMiniProfileResponse> call, Response<SaveMiniProfileResponse> foResponse) {
                 Common.printReqRes(foResponse.body(), "saveMiniProfile", Common.LogType.RESPONSE);
