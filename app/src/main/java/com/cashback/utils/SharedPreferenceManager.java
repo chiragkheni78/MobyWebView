@@ -34,6 +34,8 @@ public class SharedPreferenceManager {
     private static final String PHONE_ID = "phoneID";
     private static final String IS_BANK_OFFER_MESSAGE_SHOWN = "isBankOfferMessageShown";
     private static final String IS_PHONE_VERIFIED = "isPhoneVerified";
+    private static final String IS_QUIZ_FLOW = "isQuizFlow";
+    private static final String SHARE_BANNER_URL = "shareBannerUrl";
 
 
     private static final String IS_PROFILE_SAVE = "is_profile_save";
@@ -369,4 +371,31 @@ public class SharedPreferenceManager {
         return false;
     }
     //END IS_PHONE_VERIFIED
+
+    //START SHARE_BANNER_URL
+    public void setShareBannerUrl(String[] foUrl) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < foUrl.length; i++) {
+                sb.append(foUrl[i]).append(",");
+            }
+
+            loEditor.putString(SHARE_BANNER_URL, sb.toString());
+            loEditor.commit();
+        }
+    }
+
+    public String[] getShareBannerUrl() {
+        if (moSharedPreferences != null) {
+            String lsUrls =  moSharedPreferences.getString(SHARE_BANNER_URL, "");
+            String[] foUrl = lsUrls.split(",");
+            return foUrl;
+        }
+        return null;
+    }
+    //END SHARE_BANNER_URL
+
+
 }

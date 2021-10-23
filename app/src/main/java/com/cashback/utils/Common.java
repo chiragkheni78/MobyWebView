@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -31,6 +33,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -134,7 +137,7 @@ public class Common {
 //            new AlertDialog.Builder(foContext).setMessage(lsMessage)
 //                    .setPositiveButton("Ok", null).show();
 //        }
-        MessageDialog loDialog = new MessageDialog(foContext, null, lsMessage,  null, isFinish);
+        MessageDialog loDialog = new MessageDialog(foContext, null, lsMessage, null, isFinish);
         loDialog.show();
 
     }
@@ -339,12 +342,12 @@ public class Common {
             }
         }
         word.setSpan(new ForegroundColorSpan(fiColor), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-       return word;
+        return word;
     }
 
     public static Spannable getColorSizeText(String fsText, int fiColor) {
         Spannable word = new SpannableString(fsText);
-        word.setSpan(new RelativeSizeSpan(1.4f), 0,word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        word.setSpan(new RelativeSizeSpan(1.4f), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         word.setSpan(new StyleSpan(Typeface.BOLD), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         word.setSpan(new ForegroundColorSpan(fiColor), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return word;
@@ -484,7 +487,7 @@ public class Common {
         return matchFound;
     }
 
-    public static boolean validateUPI(String upi){
+    public static boolean validateUPI(String upi) {
         final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^(.+)@(.+)$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(upi);
         return matcher.find();
@@ -501,7 +504,7 @@ public class Common {
         return drawable;
     }
 
-    public static View.OnFocusChangeListener getFocusChangeListener(Activity foActivity){
+    public static View.OnFocusChangeListener getFocusChangeListener(Activity foActivity) {
         return new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -533,6 +536,57 @@ public class Common {
             return false;
         }
         return true;
+    }
+
+    public static void openWhatsapp(Context foContext, String fsMessage) {
+        PackageManager pm= foContext.getPackageManager();
+        try {
+            Intent waIntent = new Intent(Intent.ACTION_SEND);
+            waIntent.setType("text/plain");
+            String text = fsMessage; // Replace with your own message.
+
+            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            //Check if package exists or not. If not then code
+            //in catch block will be called
+            waIntent.setPackage("com.whatsapp");
+
+            waIntent.putExtra(Intent.EXTRA_TEXT, text);
+            foContext.startActivity(Intent.createChooser(waIntent, "Share with"));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            Toast.makeText(foContext, "WhatsApp not Installed", Toast.LENGTH_SHORT).show();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void openMessenger(Context foContext, String fsMessage) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,fsMessage);
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage("com.facebook.orca");
+        try {
+            foContext.startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(foContext,"Facebook Messenger WhatsApp not Installed", Toast.LENGTH_LONG).show();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void openSMS(Context foContext, String fsMessage) {
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.setData(Uri.parse("sms:"));
+        sendIntent.putExtra("sms_body", fsMessage);
+        foContext.startActivity(sendIntent);
+    }
+
+    public static void openEmail(Context foContext, String fsMessage) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Moby Cashback");
+        intent.putExtra(Intent.EXTRA_TEXT, fsMessage);
+        foContext.startActivity(intent);
     }
 
 }

@@ -63,6 +63,11 @@ public class GetSettingResponse {
     @SerializedName("fiTotalBillVerified")
     int totalBillVerified;
 
+    @SerializedName("fbIsQuizFlow")
+    boolean isQuizFlow;
+
+    @SerializedName("foShareBanner")
+    String[] shareBanner;
 
     @SerializedName("foDealOfTheDays")
     private ArrayList<DealOfTheDayResponse> dealsOfTheDay;
@@ -158,5 +163,17 @@ public class GetSettingResponse {
 
     public void setUserExist(boolean userExist) {
         isUserExist = userExist;
+    }
+
+    public boolean isQuizFlow() {
+        return isQuizFlow;
+    }
+
+    public void setQuizFlow(boolean quizFlow) {
+        isQuizFlow = quizFlow;
+    }
+
+    public String[] getShareBanner() {
+        return shareBanner;
     }
 }

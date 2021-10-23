@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.AppGlobal;
 import com.cashback.R;
+import com.cashback.activities.CouponDetailsActivity;
+import com.cashback.activities.HomeActivity;
 import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.adapters.CategoryAdapter;
 import com.cashback.adapters.OfferListAdapter;
@@ -26,6 +28,7 @@ import com.cashback.databinding.FragmentOfferListBinding;
 import com.cashback.models.Ad;
 import com.cashback.models.Category;
 import com.cashback.models.OfferFilter;
+import com.cashback.models.response.BypassQuizResponse;
 import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.OfferFilterResponse;
@@ -38,9 +41,10 @@ import com.squareup.picasso.RequestCreator;
 import java.util.ArrayList;
 
 import static com.cashback.AppGlobal.isSearchButtonBlink;
+import static com.cashback.fragments.FragmentMyCoupons.REQUEST_COUPON_DETAILS;
 
 @SuppressWarnings("All")
-public class OfferListFragment extends BaseFragment implements View.OnClickListener {
+public class OfferListFragment extends BaseFragment implements View.OnClickListener, OfferListAdapter.OnAdItemClick {
 
     public OfferListFragment() {
 
@@ -157,7 +161,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         moBinding.rvOfferList.setLayoutManager(moLayoutManager);
         /*DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(moBinding.rvOfferList.getContext(), moLayoutManager.getOrientation());
         moBinding.rvOfferList.addItemDecoration(dividerItemDecoration);*/
-        moOfferListAdapter = new OfferListAdapter(getActivity(), moOfferList);
+        moOfferListAdapter = new OfferListAdapter(getActivity(), moOfferList, this);
         moBinding.rvOfferList.setAdapter(moOfferListAdapter);
 
         moBinding.etSearch.setOnFocusChangeListener(Common.getFocusChangeListener(getActivity()));
@@ -170,8 +174,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                     if (!isLoading && !isLastPage) {
                         /*if ((visibleItemCount + firstVisibleItemPosition) >= (totalItemCount - 10)
                                 && firstVisibleItemPosition >= 0) {*/
-                            miCurrentPage = miCurrentPage + 1;
-                            fetchOffers();
+                        miCurrentPage = miCurrentPage + 1;
+                        fetchOffers();
                         /*}*/
                     }
                 }
@@ -221,6 +225,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         moOfferListViewModel = new ViewModelProvider(this).get(OfferListViewModel.class);
 //        moOfferListViewModel.fetchCategoryStatus.observe(getActivity(), fetchCategoryObserver);
         moOfferListViewModel.fetchOffersStatus.observe(getActivity(), fetchOffersObserver);
+        moOfferListViewModel.bypassQuizStatus.observe(getActivity(), bypassQuizObserver);
     }
 
     private void fetchOffers() {
@@ -253,7 +258,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         moOfferList.addAll(loJsonObject.getOfferList());
                         moOfferListAdapter.notifyList(moOfferList);
 
-                        if (mlOfferID > 0 && miCurrentPage == 1){
+                        if (mlOfferID > 0 && miCurrentPage == 1) {
                             moOfferListAdapter.notifyFirstItem(mlOfferID);
                         }
 
@@ -374,4 +379,28 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         fetchOffers();
     }
 
+    long llTempAdId = -1;
+    @Override
+    public void submitQuiz(int position) {
+        showProgressDialog();
+        llTempAdId = moOfferList.get(position).getAdID();
+        moOfferListViewModel.bypassQuiz(getActivity(), llTempAdId);
+    }
+
+    Observer<BypassQuizResponse> bypassQuizObserver = new Observer<BypassQuizResponse>() {
+        @Override
+        public void onChanged(BypassQuizResponse loJsonObject) {
+            dismissProgressDialog();
+            if (!loJsonObject.isError()) {
+
+                Common.msOfferId = "" + llTempAdId;
+                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
+                startActivity(intent);
+                getActivity().finishAffinity();
+            } else {
+                Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
+            }
+        }
+    };
 }

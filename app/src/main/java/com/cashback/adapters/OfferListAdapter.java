@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
 import com.cashback.activities.OfferDetailsActivity;
+import com.cashback.activities.QuizDetailsActivity;
 import com.cashback.models.Ad;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
+import com.cashback.utils.SharedPreferenceManager;
 
 import java.util.ArrayList;
 
@@ -35,9 +38,15 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     private Context moContext;
 
     private long miOfferID;
-    public OfferListAdapter(Context foContext, ArrayList<Ad> foOfferList) {
+    private OnAdItemClick onAdItemClick;
+    public OfferListAdapter(Context foContext, ArrayList<Ad> foOfferList, OnAdItemClick onAdItemClick) {
         moOfferList = foOfferList;
         moContext = foContext;
+        this.onAdItemClick = onAdItemClick;
+    }
+
+    public interface OnAdItemClick {
+        void submitQuiz(int position);
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -63,12 +72,26 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
         public void onClick(View foView) {
             //if (foView.getId() == R.id.btnAdDetails) {
                 int liPosition = (int) foView.getTag();
-                Intent loIntent = new Intent(moContext, OfferDetailsActivity.class);
-                loIntent.putExtra(Constants.IntentKey.OFFER_ID, moOfferList.get(liPosition).getAdID());
-                if (moOfferList.get(liPosition).getLocationList().size() > 0)
-                    loIntent.putExtra(Constants.IntentKey.LOCATION_ID, moOfferList.get(liPosition).getLocationList().get(0).getLocationID());
-                moContext.startActivity(loIntent);
+//                Intent loIntent = new Intent(moContext, OfferDetailsActivity.class);
+//                loIntent.putExtra(Constants.IntentKey.OFFER_ID, moOfferList.get(liPosition).getAdID());
+//                if (moOfferList.get(liPosition).getLocationList().size() > 0)
+//                    loIntent.putExtra(Constants.IntentKey.LOCATION_ID, moOfferList.get(liPosition).getLocationList().get(0).getLocationID());
+//                moContext.startActivity(loIntent);
             //}
+
+            if (moOfferList.get(liPosition).isQuizFlow()){
+                Intent loIntent = new Intent(moContext, QuizDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.IntentKey.OFFER_OBJECT, moOfferList.get(liPosition));
+                loIntent.putExtras(bundle);
+                moContext.startActivity(loIntent);
+            } else {
+                //API Call
+                if (onAdItemClick != null) {
+                    onAdItemClick.submitQuiz(liPosition);
+                }
+            }
+
         }
     }
 

@@ -22,8 +22,8 @@
         android:icon="@drawable/ic_my_coupon"
         android:title="@string/coupons"/>
     <item
-        android:id="@+id/itemHelp"
+        android:id="@+id/itemShare"
         android:enabled="true"
-        android:icon="@drawable/ic_help"
-        android:title="@string/labelHelp"/>
+        android:icon="@drawable/ic_share_24"
+        android:title="@string/labelRefer"/>
 </menu>

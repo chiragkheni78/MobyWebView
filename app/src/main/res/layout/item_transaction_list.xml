@@ -64,8 +64,19 @@
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
-
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvApproxValidated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:gravity="right"
+                android:text="(Approx Till Validated)"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:id="@+id/llCashback"
@@ -98,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/padding_mini"
                     android:text="(Virtual Cash)"
+                    android:visibility="gone"
                     android:textColor="@color/secondary"
                     android:textSize="14sp"
                     android:textStyle="bold" />

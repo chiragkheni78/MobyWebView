@@ -17,6 +17,7 @@ public class Constants {
         public static final String TAG_MY_OFFER_LIST = "my_offer_list";
         public static final String TAG_OFFER_LIST = "offer_list";
         public static final String TAG_MAP_VIEW = "map_view";
+        public static final String TAG_SHARE = "share";
     }
 
     public class IntentKey {
@@ -82,6 +83,7 @@ public class Constants {
         GET_USER_DETAILS("getUserDetails"),
         SAVE_USER_DETAILS("saveFullProfile"),
         DELETE_USER_CARD("deleteUserCard"),
+        BYPASS_QUIZ("directSubmitQuiz"),
         ;
 
 

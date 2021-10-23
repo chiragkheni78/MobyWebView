@@ -15,12 +15,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
+import com.cashback.fragments.FragmentMyCoupons;
 import com.cashback.models.Activity;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
+
 
 @SuppressWarnings("All")
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.DataObjectHolder> {
@@ -150,6 +152,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
                     foHolder.tvCouponCode.setBackground(moContext.getResources().getDrawable(R.drawable.btn_blue));
                     foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
+                    onCouponItemClick.openCouponDetails(fiPosition);
                 } else {
                     foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
                     foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.red));
@@ -258,7 +261,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
             rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
         }
-
 
         //int rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
 

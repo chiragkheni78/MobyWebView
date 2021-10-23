@@ -114,7 +114,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             moBinding.rvTransactionList.setVisibility(View.VISIBLE);
         }
 
-        moBinding.tvWallet.setText("Credit In Your " + foJsonObject.getWalletName());
+        moBinding.tvWallet.setText("Credited In Your " + foJsonObject.getWalletName());
         if (foJsonObject.isActivityCouponExist()) {
             int liStart = getResources().getColor(R.color.white);
             int liEnd = getResources().getColor(R.color.colorAccent);
@@ -152,17 +152,27 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvTimelineCoupon:
-                Intent intent = new Intent(moContext, HomeActivity.class);
-                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.Action.WALLET_SCREEN);
-                moContext.startActivity(intent);
-                ((Activity) moContext).finishAffinity();
+                openCouponList();
                 break;
             case R.id.imageInfo:
-                MessageDialog loDialog = new MessageDialog(this, getString(R.string.app_name), getString(R.string.info_message),  null, false);
+                MessageDialog loDialog = new MessageDialog(this, null, getString(R.string.info_message), getString(R.string.btn_shop_now) , false);
+                loDialog.setClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openCouponList();
+                    }
+                });
                 loDialog.show();
                 break;
             default:
                 break;
         }
+    }
+
+    private void openCouponList() {
+        Intent intent = new Intent(moContext, HomeActivity.class);
+        intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.Action.WALLET_SCREEN);
+        moContext.startActivity(intent);
+        ((Activity) moContext).finishAffinity();
     }
 }

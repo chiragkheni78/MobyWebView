@@ -38,7 +38,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView loTvTitle, loTvQuizReward, loTvActivityDate, loTvCashBackUpto, loTvStatus, loTvType;
+        TextView loTvTitle, loTvQuizReward, loTvActivityDate, loTvCashBackUpto, loTvStatus, loTvType, loTvApproxValidated;
         LinearLayout loLlCashback, lvTransactionStatus;
         TextView tvStatusTracked, tvStatusValidated, tvStatusCashPaid, tvItemTransactionCouponText, tvStatusRedirect;
 
@@ -50,6 +50,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             loTvCashBackUpto = foView.findViewById(R.id.tvCashbackUpto);
             loTvStatus = foView.findViewById(R.id.tvStatus);
             loTvType = foView.findViewById(R.id.tvType);
+            loTvApproxValidated = foView.findViewById(R.id.tvApproxValidated);
             loLlCashback = foView.findViewById(R.id.llCashback);
 
             lvTransactionStatus = foView.findViewById(R.id.linearItemTransactionStatus);
@@ -151,6 +152,8 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         foHolder.loTvStatus.setText(lsStatus);
         foHolder.loTvType.setText(lsType);
 
+        foHolder.loTvApproxValidated.setVisibility(View.GONE);
+        // status
         if (foTransaction.getTransactionStatus() == (-1)) {
 
             foHolder.loLlCashback.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +176,10 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
 
+            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
+            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
+            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
+
         } else if (foTransaction.getTransactionStatus() == 0) {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_upto));
@@ -185,6 +192,12 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
+
+            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
+            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
+
+            foHolder.loTvApproxValidated.setVisibility(View.VISIBLE);
 
         } else if (foTransaction.getTransactionStatus() == 1) {
 
@@ -199,6 +212,10 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
 
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
+
+            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
 
         } else if (foTransaction.getTransactionStatus() == 3) {
 
@@ -216,6 +233,10 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
 
+            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
+
         } else {
 
             foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
@@ -224,7 +245,6 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             foHolder.tvStatusValidated.setPaintFlags(foHolder.tvStatusValidated.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-
             foHolder.tvStatusTracked.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
             foHolder.tvStatusValidated.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
             foHolder.tvStatusCashPaid.setBackgroundColor(ContextCompat.getColor(moContext, R.color.red));
@@ -232,6 +252,10 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.white));
+
+            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
         }
     }
 

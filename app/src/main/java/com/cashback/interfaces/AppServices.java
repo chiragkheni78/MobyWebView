@@ -4,6 +4,7 @@ package com.cashback.interfaces;
 import com.cashback.models.request.ActivityDetailsRequest;
 import com.cashback.models.request.ActivityMarkAsUsedRequest;
 import com.cashback.models.request.AdvertisementRequest;
+import com.cashback.models.request.BypassQuizRequest;
 import com.cashback.models.request.DeleteCardRequest;
 import com.cashback.models.request.FetchOffersRequest;
 import com.cashback.models.request.GetMiniProfileRequest;
@@ -30,6 +31,7 @@ import com.cashback.models.response.ActivityDetailsResponse;
 import com.cashback.models.response.ActivityMarkAsUsedResponse;
 import com.cashback.models.response.AdvertisementResponse;
 import com.cashback.models.response.BillUploadResponse;
+import com.cashback.models.response.BypassQuizResponse;
 import com.cashback.models.response.DeleteCardResponse;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.response.ActivityListResponse;
@@ -144,4 +146,6 @@ public interface AppServices {
     @POST("v2-apis/")
     Call<DeleteCardResponse> deleteCard(@Body DeleteCardRequest foRequest);
 
+    @POST("v2-apis/")
+    Call<BypassQuizResponse> bypassQuiz(@Body BypassQuizRequest foRequest);
 }

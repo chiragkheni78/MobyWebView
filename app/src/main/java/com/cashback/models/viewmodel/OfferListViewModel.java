@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel;
 
 import com.cashback.AppGlobal;
 import com.cashback.models.OfferFilter;
+import com.cashback.models.request.BypassQuizRequest;
 import com.cashback.models.request.FetchOffersRequest;
 import com.cashback.models.request.OfferFilterRequest;
+import com.cashback.models.response.BypassQuizResponse;
 import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.utils.APIClient;
@@ -94,6 +96,42 @@ public class OfferListViewModel extends ViewModel {
             public void onFailure(Call<OfferFilterResponse> call, Throwable t) {
                 Common.printReqRes(t, "getOfferFilter", Common.LogType.ERROR);
                 fetchCategoryStatus.postValue(new OfferFilterResponse(true, t.getMessage()));
+            }
+        });
+    }
+
+    public MutableLiveData<BypassQuizResponse> bypassQuizStatus = new MutableLiveData<>();
+
+    public void bypassQuiz(Context foContext, long llAdId) {
+
+        BypassQuizRequest loBypassQuizRequest = new BypassQuizRequest();
+        loBypassQuizRequest.setAction(Constants.API.BYPASS_QUIZ.getValue());
+        loBypassQuizRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
+        loBypassQuizRequest.setAdId(llAdId);
+        loBypassQuizRequest.setDeviceUniqueId(1);
+        loBypassQuizRequest.setMobileNumber(AppGlobal.getPhoneNumber());
+
+        //API Call
+        Call<BypassQuizResponse> loRequest = APIClient.getInterface().bypassQuiz(loBypassQuizRequest);
+        Common.printReqRes(loRequest, "bypassQuiz", Common.LogType.REQUEST);
+
+        loRequest.enqueue(new Callback<BypassQuizResponse>() {
+            @Override
+            public void onResponse(Call<BypassQuizResponse> call, Response<BypassQuizResponse> foResponse) {
+                Common.printReqRes(foResponse.body(), "bypassQuiz", Common.LogType.RESPONSE);
+                if (foResponse.isSuccessful()) {
+                    BypassQuizResponse loJsonObject = foResponse.body();
+                    bypassQuizStatus.postValue(loJsonObject);
+                } else {
+                    String fsMessage = Common.getErrorMessage(foResponse);
+                    bypassQuizStatus.postValue(new BypassQuizResponse(true, fsMessage));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BypassQuizResponse> call, Throwable t) {
+                Common.printReqRes(t, "bypassQuiz", Common.LogType.ERROR);
+                bypassQuizStatus.postValue(new BypassQuizResponse(true, t.getMessage()));
             }
         });
     }

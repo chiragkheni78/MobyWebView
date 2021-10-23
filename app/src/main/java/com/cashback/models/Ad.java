@@ -49,6 +49,9 @@ public class Ad implements Serializable {
     @SerializedName("fiOfferLeft")
     int offerLeft;
 
+    @SerializedName("fbIsQuizFlow")
+    boolean isQuizFlow;
+
     public long getAdID() {
         return adID;
     }
@@ -191,5 +194,9 @@ public class Ad implements Serializable {
 
     public String getBannerUrl() {
         return fsBannerURL;
+    }
+
+    public boolean isQuizFlow() {
+        return isQuizFlow;
     }
 }

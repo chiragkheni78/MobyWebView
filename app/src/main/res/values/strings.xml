@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Moby Cashback</string>
+    <string name="app_name">Moby</string>
 
 <!--messages-->
     <string name="validate_age">Please enter your age</string>
@@ -105,6 +105,7 @@
     <string name="register_bill">Register Bill</string>
     <string name="btn_shop_in_store">SHOP IN-STORE</string>
     <string name="btn_shop_online">SHOP ONLINE</string>
+    <string name="btn_shop_now">Shop Now</string>
     <string name="view_offer">Get Offer</string>
 
     <string name="btn_upload_now">Register Now</string>
@@ -123,9 +124,9 @@
     <string name="online_offers">BACK TO ONLINE OFFERS</string>
 
 
-    <string name="lbl_you_earned">YOU HAVE EARNED</string>
-    <string name="tv_instant_cash">Instant Cash Rewards</string>
-    <string name="tv_virtual_cash">Virtual Cash Credits</string>
+    <string name="lbl_you_earned">YOUR STATEMENT</string>
+    <string name="tv_instant_cash">Cash Rewards</string>
+    <string name="tv_virtual_cash">Virtual Cash</string>
     <string name="instant_cash">Cash Reward</string>
     <string name="virtual_cash">Virtual Cash</string>
     <string name="cash_back">Cash Back</string>
@@ -140,15 +141,20 @@
     <string name="message">Message</string>
     <string name="message_details">Message Details</string>
     <string name="ongoing_deals">Ongoing Deals</string>
-    <string name="help">Help?</string>
+    <string name="help">Need Help?</string>
     <string name="my_profile">My Profile</string>
     <string name="terms_condition">Moby T &amp; C</string>
+    <string name="refer_earn">Refer &amp; Earn</string>
 
 
     <!--other-->
     <string name="fab_content_desc">Search</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
+
+    <string name="referral_percent">I Get %1$s - Rs. %2$s</string>
+    <string name="referral_message">%1$s Billed %2$s Cashback Rs. %3$s</string>
+
     <!--Firebase Settings-->
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="tracked">Tracked</string>
@@ -166,13 +172,16 @@
     <string name="coupons">My Coupons</string>
     <string name="nearBy">Near By</string>
     <string name="labelHelp">Help</string>
+    <string name="labelRefer">Refer &amp; Earn</string>
 
     <string name="mapPopupText">Like to Shop Offline? Try Map View</string>
     <string name="mapPopupText1">(Need 1 Verified Online Purchase)</string>
     <string name="mapPopupTextOne">Real Time Card Offers</string>
     <string name="mapPopupTextTwo">Coupons for Stores Nearby</string>
     <string name="continueLabel">Continue To Shop</string>
-    <string name="info_message"><![CDATA[To convert your Virtual cash into Real cash credit into your chosen wallet you need to click via your Coupons & Shop. Our Cashbacks are always EXACT & EXTRA over any discounts you avail from the brand, & you don’t require codes for them.]]></string>
+    <string name="info_message"><![CDATA[Cashback & Rewards\non Coupons you have\nwon in "My Coupons"]]></string>
+
+    <string name="share_title">REFER TO YOUR FRIENDS &amp;\nEARN CASHBACK ON THEIR PURCHASE</string>
 
 
     <!--Timeline Sorting-->

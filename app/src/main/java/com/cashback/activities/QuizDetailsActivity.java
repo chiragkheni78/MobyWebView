@@ -461,61 +461,70 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void showSuccessMessage(SubmitQuizResponse foJsonObject) {
-        try {
-            if (!isFinishing()) {
-                final Dialog moDialog = new Dialog(getContext());
-                moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                moDialog.setContentView(R.layout.dialog_quiz_success);
 
-                TextView loTvTitle = moDialog.findViewById(R.id.tvTitle);
-                WebView loTvMessage = moDialog.findViewById(R.id.tvMessage);
-                loTvMessage.setBackgroundColor(0);
-                Button loBtnPlayQuiz = moDialog.findViewById(R.id.btnPlayQuiz);
-                Button loBtnTimeline = moDialog.findViewById(R.id.btnTimeline);
+        Common.msOfferId = "" + moOffer.getAdID();
+        Intent intent = new Intent(moContext, HomeActivity.class);
+        intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
+        //intent.putExtra("foGiftCard", foGiftCard);
+        moContext.startActivity(intent);
+        finishAffinity();
 
-                String lsTitle = foJsonObject.getSuccessMessage().getTitle();
-                String lsMessage = foJsonObject.getSuccessMessage().getMessage();
-                loTvTitle.setText(Html.fromHtml(lsTitle));
-                loTvMessage.getSettings().setJavaScriptEnabled(true);
-                loTvMessage.loadDataWithBaseURL(null,lsMessage,"text/html", "utf-8", null);
 
-                if (getPreferenceManager().isMarketingAd()) {
-                    loBtnTimeline.setVisibility(GONE);
-                }
-
-                loBtnPlayQuiz.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        moDialog.dismiss();
-                        Intent intent = new Intent(moContext, HomeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        moContext.startActivity(intent);
-                    }
-                });
-
-                loBtnTimeline.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Common.msOfferId = "" + moOffer.getAdID();
-                        Intent intent = new Intent(moContext, HomeActivity.class);
-                        intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
-                        //intent.putExtra("foGiftCard", foGiftCard);
-                        moContext.startActivity(intent);
-                        finishAffinity();
-                        moDialog.dismiss();
-                    }
-                });
-
-                if (moDialog.getWindow() != null) {
-                    moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                    moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    moDialog.getWindow().setGravity(Gravity.CENTER);
-                    moDialog.setCancelable(false);
-                    moDialog.show();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if (!isFinishing()) {
+//                final Dialog moDialog = new Dialog(getContext());
+//                moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                moDialog.setContentView(R.layout.dialog_quiz_success);
+//
+//                TextView loTvTitle = moDialog.findViewById(R.id.tvTitle);
+//                WebView loTvMessage = moDialog.findViewById(R.id.tvMessage);
+//                loTvMessage.setBackgroundColor(0);
+//                Button loBtnPlayQuiz = moDialog.findViewById(R.id.btnPlayQuiz);
+//                Button loBtnTimeline = moDialog.findViewById(R.id.btnTimeline);
+//
+//                String lsTitle = foJsonObject.getSuccessMessage().getTitle();
+//                String lsMessage = foJsonObject.getSuccessMessage().getMessage();
+//                loTvTitle.setText(Html.fromHtml(lsTitle));
+//                loTvMessage.getSettings().setJavaScriptEnabled(true);
+//                loTvMessage.loadDataWithBaseURL(null,lsMessage,"text/html", "utf-8", null);
+//
+//                if (getPreferenceManager().isMarketingAd()) {
+//                    loBtnTimeline.setVisibility(GONE);
+//                }
+//
+//                loBtnPlayQuiz.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        moDialog.dismiss();
+//                        Intent intent = new Intent(moContext, HomeActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        moContext.startActivity(intent);
+//                    }
+//                });
+//
+//                loBtnTimeline.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Common.msOfferId = "" + moOffer.getAdID();
+//                        Intent intent = new Intent(moContext, HomeActivity.class);
+//                        intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
+//                        //intent.putExtra("foGiftCard", foGiftCard);
+//                        moContext.startActivity(intent);
+//                        finishAffinity();
+//                        moDialog.dismiss();
+//                    }
+//                });
+//
+//                if (moDialog.getWindow() != null) {
+//                    moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+//                    moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    moDialog.getWindow().setGravity(Gravity.CENTER);
+//                    moDialog.setCancelable(false);
+//                    moDialog.show();
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }

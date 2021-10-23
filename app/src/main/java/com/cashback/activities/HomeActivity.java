@@ -36,6 +36,7 @@ import com.cashback.fragments.FragmentHelp;
 import com.cashback.fragments.FragmentMyCoupons;
 import com.cashback.fragments.MapViewFragment;
 import com.cashback.fragments.OfferListFragment;
+import com.cashback.fragments.ShareFragment;
 import com.cashback.models.Advertisement;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.viewmodel.HomeViewModel;
@@ -188,8 +189,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     case R.id.itemNearBy:
                         openNavigationBarFragments(R.id.itemNearBy);
                         break;
-                    case R.id.itemHelp:
-                        openNavigationBarFragments(R.id.itemHelp);
+                    case R.id.itemShare:
+                        openNavigationBarFragments(R.id.itemShare);
                         //openHelp();
                         break;
                 }
@@ -223,13 +224,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             } else {
                 dialogOpenMapPopup();
             }
-        } else if (position == R.id.itemHelp) {
-            FragmentHelp fragmentHelp = new FragmentHelp();
-            Bundle bundleHelp = new Bundle();
-            bundleHelp.putString(Constants.IntentKey.SCREEN_TITLE, getString(R.string.help));
-            bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.HELP_SCREEN.getValue());
-            fragmentHelp.setArguments(bundleHelp);
-            Common.replaceFragment(HomeActivity.this, fragmentHelp, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
+        } else if (position == R.id.itemShare) {
+            ShareFragment shareFragment = new ShareFragment();
+            Common.replaceFragment(HomeActivity.this, shareFragment, Constants.FragmentTag.TAG_SHARE, false);
         }
     }
 
@@ -302,7 +299,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 openOngoingDeal();
                 break;
             case R.id.ibShare:
-                shareApp();
+                openNavigationBarFragments(R.id.itemShare);
                 break;
             case R.id.tvMyCoupon:
                 openMyCoupons(0);
@@ -335,7 +332,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         Intent loIntent = null;
         switch (item.getItemId()) {
             case R.id.nav_Share:
-                shareApp();
+                openNavigationBarFragments(R.id.itemShare);
                 break;
             case R.id.nav_home:
                 openNavigationBarFragments(R.id.itemOffer);
@@ -345,9 +342,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 openNavigationBarFragments(R.id.itemCoupons);
 
                 break;
-            case R.id.nav_ongoing_deals:
-                openOngoingDeal();
-                break;
+////            case R.id.nav_ongoing_deals:
+////                openOngoingDeal();
+//                break;
             case R.id.nav_wallet:
                 openWallet();
                 break;
@@ -355,8 +352,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 openMessages(0);
                 break;
             case R.id.nav_help:
-//                openHelp();
-                openNavigationBarFragments(R.id.itemHelp);
+                openHelp();
+//                openNavigationBarFragments(R.id.itemHelp);
                 break;
             case R.id.nav_profile:
                 openProfile();
@@ -422,7 +419,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void openHelp() {
-        openAdvertisement(getString(R.string.help), Constants.AdvertScreenType.HELP_SCREEN.getValue());
+        Intent loIntent = new Intent(this, HelpActivity.class);
+        startActivity(loIntent);
+
+//        FragmentHelp fragmentHelp = new FragmentHelp();
+//        Bundle bundleHelp = new Bundle();
+//        bundleHelp.putString(Constants.IntentKey.SCREEN_TITLE, getString(R.string.help));
+//        bundleHelp.putString(Constants.IntentKey.ADVERT_SCREEN_TYPE, Constants.AdvertScreenType.HELP_SCREEN.getValue());
+//        fragmentHelp.setArguments(bundleHelp);
+//        Common.replaceFragment(HomeActivity.this, fragmentHelp, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
     }
 
     private void openMessages(long llMessageId) {
@@ -467,6 +472,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 getPreferenceManager().setMapZoomLevel(loJsonObject.getZoomLevel());
                 getPreferenceManager().setQuizTimePeriod(loJsonObject.getQuizTimeInterval());
                 getPreferenceManager().setOfferListPageSize(loJsonObject.getOfferListPageSize());
+                getPreferenceManager().setShareBannerUrl(loJsonObject.getShareBanner());
                 handleView(loJsonObject);
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);

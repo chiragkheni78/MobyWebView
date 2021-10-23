@@ -86,7 +86,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
-                        android:text="(Credit In Your XXXX Wallet)"
+                        android:text="(Credited In Your XXXX Wallet)"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                          />
@@ -108,7 +108,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
@@ -153,6 +153,7 @@
                         android:text="(Use Coupon, Convert To Cash)"
                         android:textColor="@color/white"
                         android:textSize="14sp"
+                        android:visibility="gone"
                         />
 
                 </LinearLayout>
