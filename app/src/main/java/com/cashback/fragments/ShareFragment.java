@@ -96,7 +96,6 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener{
     }
 
     private void setImageSlider(String[] foUrls) {
-        moBinding.imageSlider.setVisibility(View.VISIBLE);
         moBinding.imageSlider.setSliderAdapter(new ShareBannerAdapter(getContext(), foUrls));
     }
 }

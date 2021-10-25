@@ -61,7 +61,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             tvItemTransactionCouponText = foView.findViewById(R.id.tvItemTransactionCouponText);
             tvStatusRedirect = foView.findViewById(R.id.tvStatusRedirect);
 
-            loTvCashBackUpto.setOnClickListener(this);
+            //loTvCashBackUpto.setOnClickListener(this);
             foView.setOnClickListener(this);
         }
 
@@ -112,21 +112,35 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         foHolder.loTvActivityDate.setText(foTransaction.getQuizEngageDateTime());
         //foHolder.loTvQuizReward.setText("Rs. " + foTransaction.getQuizReward());
 
-        if (foTransaction.getTransactionStatus() > 0) {
-            foHolder.loTvQuizReward.setText(String.valueOf(foTransaction.getCashbackReward()));
-        } else {
-            foHolder.loTvQuizReward.setText(String.valueOf(foTransaction.getQuizReward()));
-        }
 
-        if (foTransaction.isVirtualCash()) {
-            foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
-        } else {
-            foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
-        }
+
+//        if (foTransaction.isVirtualCash()) {
+//            foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+//        } else {
+//            foHolder.loTvQuizReward.setTextColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
+//        }
 
         /*if (foTransaction.getSecondReward() > 0) {*/
         foHolder.loLlCashback.setVisibility(View.VISIBLE);
-        foHolder.loTvCashBackUpto.setText("₹ " + foTransaction.getSecondReward());
+
+        if (foTransaction.getActivityType().equalsIgnoreCase("MyCashReferral")){
+            foHolder.loTvCashBackUpto.setText(foTransaction.getCashbackLabel());
+
+            if (foTransaction.getTransactionStatus() == 0) {
+                foHolder.loTvApproxValidated.setVisibility(View.VISIBLE);
+            }
+
+        } else {
+            if (foTransaction.getTransactionStatus() > 0) {
+                foHolder.loTvCashBackUpto.setText("Cashback Rs. " + String.valueOf(foTransaction.getCashbackReward()));
+            } else {
+                foHolder.loTvCashBackUpto.setText("Cashback Rs. " + String.valueOf(foTransaction.getQuizReward()));
+            }
+        }
+
+        foHolder.tvItemTransactionCouponText.setText(foTransaction.getCashbackMsg());
+
+//        foHolder.loTvCashBackUpto.setText("₹ " + foTransaction.getSecondReward());
         /*} else {
             foHolder.loLlCashback.setVisibility(View.GONE);
         }*/
@@ -152,7 +166,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         foHolder.loTvStatus.setText(lsStatus);
         foHolder.loTvType.setText(lsType);
 
-        foHolder.loTvApproxValidated.setVisibility(View.GONE);
+
         // status
         if (foTransaction.getTransactionStatus() == (-1)) {
 
@@ -165,97 +179,82 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
                 }
             });
 
-            foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_upto));
+            //foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_upto));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.virtual_cash)+")");
 
-            foHolder.tvStatusTracked.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
-            foHolder.tvStatusValidated.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
-            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
+            foHolder.tvStatusTracked.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.bg_white_blue));
+            foHolder.tvStatusValidated.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.bg_white_blue));
+            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.bg_white_blue));
 
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
 
-            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
-            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
-            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
+
 
         } else if (foTransaction.getTransactionStatus() == 0) {
 
-            foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_upto));
+            //foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_upto));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.virtual_cash)+")");
 
-            foHolder.tvStatusTracked.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
-            foHolder.tvStatusValidated.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
-            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
+            foHolder.tvStatusTracked.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.btn_blue));
+            foHolder.tvStatusValidated.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.bg_white_blue));
+            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.bg_white_blue));
 
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.black));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.black));
 
-            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
-            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
-            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
-
-            foHolder.loTvApproxValidated.setVisibility(View.VISIBLE);
-
         } else if (foTransaction.getTransactionStatus() == 1) {
 
-            foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
+            //foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.pending_cash)+")");
 
-            foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//            foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-            foHolder.tvStatusTracked.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
-            foHolder.tvStatusValidated.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
-            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
+            foHolder.tvStatusTracked.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.btn_blue));
+            foHolder.tvStatusValidated.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.btn_blue));
+            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.bg_white_blue));
 
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
 
-            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
-            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
-            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
+            foHolder.tvStatusCashPaid.setText(foTransaction.getEstimatedPayDate());
 
         } else if (foTransaction.getTransactionStatus() == 3) {
 
-            foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
+            //foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.pending_cash)+")");
 
-            foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//            foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-            foHolder.tvStatusTracked.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
-            foHolder.tvStatusValidated.setBackgroundColor(ContextCompat.getColor(moContext, R.color.colorPrimary));
-            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.border_black));
+            foHolder.tvStatusTracked.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.btn_blue));
+            foHolder.tvStatusValidated.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.btn_red));
+            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.bg_white_blue));
 
             foHolder.tvStatusValidated.setText(moContext.getResources().getString(R.string.rejected));
+            foHolder.tvStatusCashPaid.setText("");
 
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
 
-            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
-            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
-            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pending, 0);
-
         } else {
 
-            foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
+            //foHolder.tvItemTransactionCouponText.setText(moContext.getResources().getString(R.string.cashback_rs));
             foHolder.tvStatusRedirect.setText("("+moContext.getResources().getString(R.string.cash_paid)+")");
 
-            foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            foHolder.tvStatusValidated.setPaintFlags(foHolder.tvStatusValidated.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//            foHolder.tvStatusTracked.setPaintFlags(foHolder.tvStatusTracked.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//            foHolder.tvStatusValidated.setPaintFlags(foHolder.tvStatusValidated.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-            foHolder.tvStatusTracked.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
-            foHolder.tvStatusValidated.setBackgroundColor(ContextCompat.getColor(moContext, R.color.green));
-            foHolder.tvStatusCashPaid.setBackgroundColor(ContextCompat.getColor(moContext, R.color.red));
+            foHolder.tvStatusTracked.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.btn_blue));
+            foHolder.tvStatusValidated.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.btn_blue));
+            foHolder.tvStatusCashPaid.setBackgroundDrawable(ContextCompat.getDrawable(moContext, R.drawable.btn_blue));
 
             foHolder.tvStatusTracked.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusValidated.setTextColor(ContextCompat.getColor(moContext, R.color.white));
             foHolder.tvStatusCashPaid.setTextColor(ContextCompat.getColor(moContext, R.color.white));
 
-            foHolder.tvStatusTracked.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
-            foHolder.tvStatusValidated.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
-            foHolder.tvStatusCashPaid.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_done, 0);
+            foHolder.tvStatusCashPaid.setText(foTransaction.getEstimatedPayDate());
         }
     }
 

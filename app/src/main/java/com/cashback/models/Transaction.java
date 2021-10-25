@@ -57,6 +57,15 @@ public class Transaction {
     @SerializedName("fiTrasactionStatus")
     int fiTrasactionStatus;
 
+    @SerializedName("fsCashbackLabel")
+    String cashbackLabel;
+
+    @SerializedName("fsWalletContent")
+    String cashbackMsg;
+
+    @SerializedName("fsEstimatePayDate")
+    String estimatedPayDate;
+
     public String getActivityType() {
         return activityType;
     }
@@ -127,6 +136,18 @@ public class Transaction {
 
     public int getCashbackReward() {
         return cashbackReward;
+    }
+
+    public String getCashbackLabel() {
+        return cashbackLabel;
+    }
+
+    public String getCashbackMsg() {
+        return cashbackMsg;
+    }
+
+    public String getEstimatedPayDate() {
+        return estimatedPayDate;
     }
 }
 

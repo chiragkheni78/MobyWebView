@@ -37,8 +37,8 @@ public class ShareBannerAdapter extends SliderViewAdapter<ShareBannerAdapter.Dat
 
         String lsImageUrl = moAdvertList[position];
 
-        Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
-        Drawable loError = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
+        Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
+        Drawable loError = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
 
         Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
 
