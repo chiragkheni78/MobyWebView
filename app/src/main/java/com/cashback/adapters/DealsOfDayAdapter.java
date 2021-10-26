@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.cashback.R;
 import com.cashback.models.Advertisement;
+import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.utils.Common;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.squareup.picasso.Picasso;
@@ -18,14 +19,21 @@ import com.squareup.picasso.RequestCreator;
 
 import java.util.ArrayList;
 
-public class ShareBannerAdapter extends SliderViewAdapter<ShareBannerAdapter.DataObjectHolder> {
+public class DealsOfDayAdapter extends
+        SliderViewAdapter<DealsOfDayAdapter.DataObjectHolder> {
 
     private Context context;
-    private String[]  moAdvertList;
+    private ArrayList<DealOfTheDayResponse> moAdvertList;
+    private OnItemClick advertisementListener;
 
-    public ShareBannerAdapter(Context context, String[] foBannerList) {
+    public interface OnItemClick{
+        void onItemClick(DealOfTheDayResponse advertisement);
+    }
+
+    public DealsOfDayAdapter(Context context, ArrayList<DealOfTheDayResponse> foAdvertList, OnItemClick advertisementListener) {
         this.context = context;
-        this.moAdvertList = foBannerList;
+        this.moAdvertList = foAdvertList;
+        this.advertisementListener = advertisementListener;
     }
 
     @Override
@@ -37,21 +45,28 @@ public class ShareBannerAdapter extends SliderViewAdapter<ShareBannerAdapter.Dat
     @Override
     public void onBindViewHolder(DataObjectHolder viewHolder, final int position) {
 
-        String lsImageUrl = moAdvertList[position];
+        DealOfTheDayResponse loAdvertisement = moAdvertList.get(position);
 
-        Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
-        Drawable loError = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
+        String lsImageUrl = loAdvertisement.getImage();
+
+        Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
+        Drawable loError = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
 
         RequestCreator loRequest = Picasso.get().load(lsImageUrl.replace("https", "http"));
         loRequest.into(viewHolder.ivBanner);
 
-//        Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
+        //Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
 
+        viewHolder.ivBanner.setOnClickListener(view -> {
+            if (advertisementListener != null) {
+                advertisementListener.onItemClick(loAdvertisement);
+            }
+        });
     }
 
     @Override
     public int getCount() {
-        return moAdvertList.length;
+        return moAdvertList.size();
     }
 
     class DataObjectHolder extends SliderViewAdapter.ViewHolder {

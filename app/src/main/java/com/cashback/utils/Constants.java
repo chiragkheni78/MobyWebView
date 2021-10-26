@@ -51,6 +51,7 @@ public class Constants {
 
             public static final String OPEN_BILL_UPLOAD = "OPEN_BILL_UPLOAD";
             public static final String CLICK_SHOP_ONLINE = "CLICK_SHOP_ONLINE";
+            public static final String BY_PASS_QUIZ = "BY_PASS_QUIZ";
         }
     }
 

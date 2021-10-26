@@ -69,7 +69,6 @@
                 android:padding="5dp"
                 android:text="OK"
                 android:textAllCaps="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:visibility="visible" />

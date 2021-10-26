@@ -19,13 +19,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.AppGlobal;
 import com.cashback.R;
+import com.cashback.activities.AdvertisementActivity;
 import com.cashback.activities.CouponDetailsActivity;
 import com.cashback.activities.HomeActivity;
 import com.cashback.activities.OfferDetailsActivity;
+import com.cashback.adapters.AdvertAdapter;
 import com.cashback.adapters.CategoryAdapter;
+import com.cashback.adapters.DealsOfDayAdapter;
 import com.cashback.adapters.OfferListAdapter;
 import com.cashback.databinding.FragmentOfferListBinding;
 import com.cashback.models.Ad;
+import com.cashback.models.Advertisement;
 import com.cashback.models.Category;
 import com.cashback.models.OfferFilter;
 import com.cashback.models.response.BypassQuizResponse;
@@ -41,7 +45,6 @@ import com.squareup.picasso.RequestCreator;
 import java.util.ArrayList;
 
 import static com.cashback.AppGlobal.isSearchButtonBlink;
-import static com.cashback.fragments.FragmentMyCoupons.REQUEST_COUPON_DETAILS;
 
 @SuppressWarnings("All")
 public class OfferListFragment extends BaseFragment implements View.OnClickListener, OfferListAdapter.OnAdItemClick {
@@ -112,12 +115,34 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     private void showDealOfTheDayImage() {
         moBinding.cardDealOfTheDay.setVisibility(View.GONE);
-        DealOfTheDayResponse response = AppGlobal.getDealOfTheDayResponse();
-        if (response != null) {
+        ArrayList<DealOfTheDayResponse> loDealList = AppGlobal.getDealOfTheDayResponse();
+        if (loDealList != null) {
             if (Common.stOfferShow) {
 
-                RequestCreator loRequest = Picasso.get().load(response.getFsImage().replace("https", "http"));
-                loRequest.into(moBinding.imageDealOfTheDay);
+                moBinding.imageSlider.setSliderAdapter(new DealsOfDayAdapter(getContext(), loDealList, new DealsOfDayAdapter.OnItemClick() {
+                    @Override
+                    public void onItemClick(DealOfTheDayResponse foDealList) {
+                        showDealOfTheDayImage();
+
+                        if (miCategoryId != foDealList.getCategory()) {
+                            miCategoryId = foDealList.getCategory();
+                            moBinding.etSearch.setText("");
+                        }
+
+                        miCategoryId = foDealList.getCategory();
+                        mlBannerID = foDealList.getBannerId();
+                        miCurrentPage = 1;
+
+                        if (moOfferList != null) moOfferList.clear();
+                        mlOfferID = -1;
+                        isLastPage = false;
+                        moBinding.btnSearch.clearAnimation();
+                        fetchOffers();
+                    }
+                }));
+
+//                RequestCreator loRequest = Picasso.get().load(loDealList.getImage().replace("https", "http"));
+//                loRequest.into(moBinding.imageDealOfTheDay);
 
                 moBinding.cardDealOfTheDay.setVisibility(View.VISIBLE);
 
@@ -127,22 +152,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             moBinding.cardDealOfTheDay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showDealOfTheDayImage();
 
-                    if (miCategoryId != response.getFiCategory()) {
-                        miCategoryId = response.getFiCategory();
-                        moBinding.etSearch.setText("");
-                    }
-
-                    miCategoryId = response.getFiCategory();
-                    mlBannerID = response.getFiBannerId();
-                    miCurrentPage = 1;
-
-                    if (moOfferList != null) moOfferList.clear();
-                    mlOfferID = -1;
-                    isLastPage = false;
-                    moBinding.btnSearch.clearAnimation();
-                    fetchOffers();
                 }
             });
         }
@@ -393,11 +403,17 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             dismissProgressDialog();
             if (!loJsonObject.isError()) {
 
-                Common.msOfferId = "" + llTempAdId;
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
-                startActivity(intent);
-                getActivity().finishAffinity();
+//                Common.msOfferId = "" + llTempAdId;
+//                Intent intent = new Intent(getActivity(), HomeActivity.class);
+//                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
+//                startActivity(intent);
+//                getActivity().finishAffinity();
+
+                Intent loIntent = new Intent(getActivity(), CouponDetailsActivity.class);
+                loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, loJsonObject.getActivityID());
+                loIntent.setAction(Constants.IntentKey.Action.BY_PASS_QUIZ);
+                getActivity().startActivity(loIntent);
+
             } else {
                 Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
             }

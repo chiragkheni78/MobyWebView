@@ -100,7 +100,7 @@
                     android:text="@string/cashback_upto"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvQuizReward"
@@ -177,7 +177,7 @@
                 android:text="@string/tracked"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/tvItemTransactionValidated"
@@ -192,7 +192,7 @@
                 android:text="@string/validated"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/tvItemTransactionCashPaid"
@@ -205,7 +205,7 @@
                 android:text="@string/cash_paid"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 

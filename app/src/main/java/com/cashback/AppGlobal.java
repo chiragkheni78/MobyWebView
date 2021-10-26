@@ -21,7 +21,7 @@ public class AppGlobal extends Application {
 
     public static Context moContext;
     public static ArrayList<Category> moCategories = new ArrayList<>();
-    public static DealOfTheDayResponse moDealOfTheDayResponse;
+    public static ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse;
 
     public static int getFiTotalBillVerified() {
         return fiTotalBillVerified;
@@ -77,11 +77,11 @@ public class AppGlobal extends Application {
         moCategories = loCategories;
     }
 
-    public static DealOfTheDayResponse getDealOfTheDayResponse() {
+    public static ArrayList<DealOfTheDayResponse> getDealOfTheDayResponse() {
         return moDealOfTheDayResponse;
     }
 
-    public static void setDealOfTheDayResponse(DealOfTheDayResponse moDealOfTheDayResponse) {
+    public static void setDealOfTheDayResponse(ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse) {
         AppGlobal.moDealOfTheDayResponse = moDealOfTheDayResponse;
     }
 }

@@ -525,4 +525,16 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             finish();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if(getIntent() != null && getIntent().getAction().equalsIgnoreCase(Constants.IntentKey.Action.BY_PASS_QUIZ)){
+            Intent intent = new Intent(CouponDetailsActivity.this, HomeActivity.class);
+            intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
+            startActivity(intent);
+            finishAffinity();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

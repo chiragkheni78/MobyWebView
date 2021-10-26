@@ -16,35 +16,35 @@ public class DealOfTheDayResponse {
     @SerializedName("fiAdId")
     private int fiAdId;
 
-    public int getFiBannerId() {
+    public int getBannerId() {
         return fiBannerId;
     }
 
-    public void setFiBannerId(int fiBannerId) {
+    public void setBannerId(int fiBannerId) {
         this.fiBannerId = fiBannerId;
     }
 
-    public String getFsImage() {
+    public String getImage() {
         return fsImage;
     }
 
-    public void setFsImage(String fsImage) {
+    public void setImage(String fsImage) {
         this.fsImage = fsImage;
     }
 
-    public int getFiCategory() {
+    public int getCategory() {
         return fiCategory;
     }
 
-    public void setFiCategory(int fiCategory) {
+    public void setCategory(int fiCategory) {
         this.fiCategory = fiCategory;
     }
 
-    public int getFiAdId() {
+    public int getAdId() {
         return fiAdId;
     }
 
-    public void setFiAdId(int fiAdId) {
+    public void setAdId(int fiAdId) {
         this.fiAdId = fiAdId;
     }
 }
