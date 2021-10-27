@@ -121,6 +121,13 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                             miCategoryId = loAdvertisement.getCategoryID();
                             mlOfferID = loAdvertisement.getAdID();
                             miBannerID = loAdvertisement.getBannerID();
+
+                            moBinding.ivBanner.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    moBinding.btnSaveProfile.performClick();
+                                }
+                            });
                         }
                     } else moBinding.ivBanner.setVisibility(View.GONE);
 

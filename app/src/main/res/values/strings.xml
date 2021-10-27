@@ -43,6 +43,7 @@
 
     <string name="text_verify_phone_no">Verify Phone Number</string>
     <string name="msg_verify_phone_number">To Edit Your Profile</string>
+    <string name="msg_verify_phone_number_refer">To Refer To Your Friends &amp; Family</string>
     <string name="msg_verify_phone_number_map">To View Bank Offers &amp; Physical Store\nOffers In Real Time</string>
     <string name="msg_verify_phone_number_coupon">To Create Your A/c for CashBacks</string>
     <string name="multiple_device_title">Found Multiple Devices</string>

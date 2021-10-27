@@ -1,5 +1,7 @@
 package com.cashback.adapters;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -53,7 +55,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
         TextView loTvAdName, loTvBrandName, loTvOffer, loTvLeft;
         Button loBtnAdDetails;
         ImageView loIvLogo;
-        LinearLayout loLlRoot;
+        LinearLayout loLlRoot, loLlFade;
 
         public DataObjectHolder(View foView) {
             super(foView);
@@ -64,6 +66,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             loBtnAdDetails = foView.findViewById(R.id.btnAdDetails);
             loIvLogo = foView.findViewById(R.id.ivLogo);
             loLlRoot = foView.findViewById(R.id.llRoot);
+            loLlFade = foView.findViewById(R.id.llFade);
             foView.setOnClickListener(this);
             loBtnAdDetails.setOnClickListener(this);
         }
@@ -125,22 +128,42 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 
     private void setBackground(DataObjectHolder foHolder, Ad loAdOffer) {
         if (loAdOffer.getAdID() == miOfferID){
-            foHolder.loLlRoot.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.green));
-            foHolder.loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, R.drawable.btn_white_coupon));
-            foHolder.loBtnAdDetails.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
-            foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
-            foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
-
-            foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.black), null);
+//            foHolder.loLlRoot.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.green));
+//            foHolder.loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, R.drawable.btn_white_coupon));
+//            foHolder.loBtnAdDetails.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+//            foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+//            foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+//
+//            foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.black), null);
+            setAnimations(foHolder.loLlFade);
         } else {
-            foHolder.loLlRoot.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
-            foHolder.loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, R.drawable.btn_green));
-            foHolder.loBtnAdDetails.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
-            foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
-            foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
 
-            foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.white), null);
         }
+        foHolder.loLlRoot.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
+        foHolder.loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, R.drawable.btn_green));
+        foHolder.loBtnAdDetails.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+        foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+        foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+
+        foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.white), null);
+    }
+
+    private void setAnimations(LinearLayout foLlFade) {
+        int colorFrom = moContext.getResources().getColor(R.color.white);
+        int colorTo = moContext.getResources().getColor(R.color.red);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(1500); // milliseconds
+        colorAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        colorAnimation.setRepeatMode(ValueAnimator.REVERSE);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                foLlFade.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
     }
 
     private void setButton(Button loBtnAdDetails, Ad foAdOffer) {

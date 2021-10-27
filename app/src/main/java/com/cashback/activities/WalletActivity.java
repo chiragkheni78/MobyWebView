@@ -126,10 +126,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             textColorAnim.setRepeatMode(ValueAnimator.REVERSE);
             textColorAnim.start();
         }
-        showTotalRewards();
+        showTotalRewards(foJsonObject);
     }
 
-    private void showTotalRewards() {
+    private void showTotalRewards(TransactionListResponse foJsonObject) {
         long mlTotalVirtualCash = 0, mlTotalInstantCash = 0;
         if (moTransactionList.size() > 0) {
             for (Transaction loUTrans : moTransactionList) {
@@ -144,8 +144,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 }
             }
         }
-        moBinding.tvInstantCash.setText("Rs. " + mlTotalInstantCash);
-        moBinding.tvVirtualCash.setText("Rs. " + mlTotalVirtualCash);
+        moBinding.tvInstantCash.setText("Rs. " + foJsonObject.getTotalCashAmount());
+        moBinding.tvVirtualCash.setText("Rs. " + foJsonObject.getTotalVirtualCash());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.cashback.adapters;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -48,7 +50,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode,
                 tvRegisterBill, tvRequiredPayout, tvExpireDay, lblReward;
-        LinearLayout loLlRoot, loLllRegisterBill;
+        LinearLayout loLlRoot, loLllRegisterBill, loLlFade;
         ImageView ivLogo;
         RelativeLayout cardItemActivity;
 
@@ -68,6 +70,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             loLlRoot = foView.findViewById(R.id.llTimeline);
             loLllRegisterBill = foView.findViewById(R.id.llRegisterBill);
+            loLlFade = foView.findViewById(R.id.llFade);
             foView.setOnClickListener(this);
             tvCouponCode.setOnClickListener(this);
         }
@@ -145,22 +148,23 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             if (Common.msOfferId != null && !Common.msOfferId.isEmpty()) {
                 if (Common.msOfferId.equalsIgnoreCase("" + loActivity.getAdID())) {
-                    foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
-                    foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
-                    foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
-                    foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
-
-                    foHolder.tvCouponCode.setBackground(moContext.getResources().getDrawable(R.drawable.btn_blue));
-                    foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
-                    onCouponItemClick.openCouponDetails(fiPosition);
+//                    foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+//                    foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+//                    foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+//                    foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
+//
+//                    foHolder.tvCouponCode.setBackground(moContext.getResources().getDrawable(R.drawable.btn_blue));
+//                    foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.colorPrimary));
+                    setAnimations(foHolder.loLlFade);
                 } else {
-                    foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
-                    foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.red));
-                    foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
-                    foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
 
-                    foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
                 }
+                foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.red));
+                foHolder.tvRequiredPayout.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+                foHolder.lblReward.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
+
+                foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
             } else {
                 foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
                 foHolder.tvExpireDay.setTextColor(ActivityCompat.getColor(moContext, R.color.red));
@@ -173,6 +177,24 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         } catch (Exception e) {
             LogV2.logException(TAG, e);
         }
+    }
+
+    private void setAnimations(LinearLayout foLlFade) {
+        int colorFrom = moContext.getResources().getColor(R.color.white);
+        int colorTo = moContext.getResources().getColor(R.color.red);
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(1500); // milliseconds
+        colorAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        colorAnimation.setRepeatMode(ValueAnimator.REVERSE);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                foLlFade.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+
+        });
+        colorAnimation.start();
     }
 
     private void handleLogicalOperation(DataObjectHolder foHolder, Activity foActivity) {
@@ -257,6 +279,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
                 rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
             }
+            rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
         } else {
             //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
             rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;

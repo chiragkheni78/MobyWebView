@@ -23,6 +23,20 @@ public class TransactionListResponse {
     @SerializedName("foTransactionList")
     private ArrayList<Transaction> transactionList;
 
+    @SerializedName("fiTotalVirtualCash")
+    int totalVirtualCash;
+
+    @SerializedName("fiTotalCashAmount")
+    int totalCashAmount;
+
+    public int getTotalVirtualCash() {
+        return totalVirtualCash;
+    }
+
+    public int getTotalCashAmount() {
+        return totalCashAmount;
+    }
+
     public boolean isError() {
         return isError;
     }

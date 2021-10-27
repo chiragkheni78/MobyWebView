@@ -66,6 +66,8 @@ public class Transaction {
     @SerializedName("fsEstimatePayDate")
     String estimatedPayDate;
 
+
+
     public String getActivityType() {
         return activityType;
     }

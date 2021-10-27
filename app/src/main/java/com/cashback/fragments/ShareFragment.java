@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.cashback.R;
 import com.cashback.activities.AdvertisementActivity;
 import com.cashback.activities.HomeActivity;
+import com.cashback.activities.PhoneLoginActivity;
 import com.cashback.adapters.AdvertAdapter;
 import com.cashback.adapters.HelpListAdapter;
 import com.cashback.adapters.ShareBannerAdapter;
@@ -31,7 +33,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ShareFragment extends BaseFragment implements View.OnClickListener{
+import static android.app.Activity.RESULT_OK;
+import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
+import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
+
+public class ShareFragment extends BaseFragment implements View.OnClickListener {
 
     public ShareFragment() {
 
@@ -79,7 +85,12 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        if (!getPreferenceManager().isPhoneVerified()) {
+            openPhoneLogin();
+            return;
+        }
+
+        switch (v.getId()) {
             case R.id.tvWhatsapp:
                 Common.openWhatsapp(getContext(), getMessage());
                 break;
@@ -97,5 +108,21 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener{
 
     private void setImageSlider(String[] foUrls) {
         moBinding.imageSlider.setSliderAdapter(new ShareBannerAdapter(getContext(), foUrls));
+    }
+
+    private void openPhoneLogin() {
+        Intent loIntent = new Intent(getContext(), PhoneLoginActivity.class);
+        loIntent.putExtra(SCREEN_TITLE, this.getResources().getString(R.string.msg_verify_phone_number));
+        startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_PHONE_LOGIN) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getContext(), "Phone Verified", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
