@@ -39,6 +39,8 @@ import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.viewmodel.OfferListViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
@@ -114,15 +116,17 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void showDealOfTheDayImage() {
-        moBinding.cardDealOfTheDay.setVisibility(View.GONE);
+        //moBinding.cardDealOfTheDay.setVisibility(View.GONE);
         ArrayList<DealOfTheDayResponse> loDealList = AppGlobal.getDealOfTheDayResponse();
-        if (loDealList != null) {
+        if (loDealList != null && loDealList.size() > 0) {
             if (Common.stOfferShow) {
-
+                moBinding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+                moBinding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                moBinding.imageSlider.startAutoCycle();
                 moBinding.imageSlider.setSliderAdapter(new DealsOfDayAdapter(getContext(), loDealList, new DealsOfDayAdapter.OnItemClick() {
                     @Override
                     public void onItemClick(DealOfTheDayResponse foDealList) {
-                        showDealOfTheDayImage();
+                        //showDealOfTheDayImage();
 
                         if (miCategoryId != foDealList.getCategory()) {
                             miCategoryId = foDealList.getCategory();
@@ -135,6 +139,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
                         if (moOfferList != null) moOfferList.clear();
                         mlOfferID = -1;
+                        moOfferListAdapter.notifyFirstItem(mlOfferID);
                         isLastPage = false;
                         moBinding.btnSearch.clearAnimation();
                         fetchOffers();
@@ -370,7 +375,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     public void getAdsByCategory(int fiCategoryId) {
 
-        showDealOfTheDayImage();
+        //showDealOfTheDayImage();
 
         if (miCategoryId != fiCategoryId) {
             miCategoryId = fiCategoryId;
@@ -384,6 +389,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         miCurrentPage = 1;
         mlBannerID = 0;
         mlOfferID = -1;
+        moOfferListAdapter.notifyFirstItem(mlOfferID);
         isLastPage = false;
         moBinding.btnSearch.clearAnimation();
         fetchOffers();

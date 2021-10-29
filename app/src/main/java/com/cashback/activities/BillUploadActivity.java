@@ -193,6 +193,10 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     }
 
     private void uploadTransactionBill() {
+        if (moBinding.cbUploadBill.isChecked() && (msBillImagePath_1 == null && msBillImagePath_2 == null)){
+            Common.showErrorDialog(getContext(), "Please upload bill", false);
+            return;
+        }
         showProgressDialog();
         int liTransactionAmount = moBinding.etAmount.getText().length() == 0 ? 0 : (int) Double.parseDouble(moBinding.etAmount.getText().toString());
         moBillUploadViewModel.uploadTransactionBill(getContext(), "", miActivityId, msTransactionDate, liTransactionAmount, msBillImagePath_1, msBillImagePath_2);

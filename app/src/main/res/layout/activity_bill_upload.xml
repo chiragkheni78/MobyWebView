@@ -181,7 +181,7 @@
             <LinearLayout
                 android:id="@+id/llBillUpload"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_75sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/margin_view"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/padding_mini"
@@ -200,7 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Click bill picture or\nChoose it from gallery"
+                        android:text="Click Screenshot Of Bill/Order Or Upload from Photo Gallery"
                         android:textAllCaps="false"
                         android:textColor="@color/black"
                         android:textSize="14sp"

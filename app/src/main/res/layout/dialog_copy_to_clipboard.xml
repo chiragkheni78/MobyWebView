@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_8sdp"
-                android:text="Cashback Activated !"
+                android:text="CASHBACK ACTIVATED"
                 android:letterSpacing="0.1"
                 android:lineSpacingExtra="@dimen/_3sdp"
                 android:textColor="@color/black"

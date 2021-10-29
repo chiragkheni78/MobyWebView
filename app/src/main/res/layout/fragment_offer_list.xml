@@ -131,17 +131,17 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:nestedScrollingEnabled="true"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <com.smarteist.autoimageslider.SliderView
                         android:id="@+id/imageSlider"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_168sdp"
-                        app:sliderAnimationDuration="800"
-                        app:sliderAutoCycleDirection="back_and_forth"
+                        app:sliderAnimationDuration="300"
+                        app:sliderAutoCycleDirection="right"
                         app:sliderAutoCycleEnabled="true"
-                        app:sliderIndicatorAnimationDuration="600"
+                        app:sliderIndicatorAnimationDuration="300"
                         app:sliderIndicatorGravity="center_horizontal|bottom"
                         app:sliderIndicatorMarginLeft="15dp"
                         app:sliderIndicatorMarginRight="15dp"
@@ -152,7 +152,7 @@
                         app:sliderIndicatorRadius="2dp"
                         app:sliderIndicatorSelectedColor="@color/colorPrimary"
                         app:sliderIndicatorUnselectedColor="@color/colorBackground"
-                        app:sliderScrollTimeInSec="10"
+                        app:sliderScrollTimeInSec="3"
                         app:sliderStartAutoCycle="true" />
 
                     <ImageView
