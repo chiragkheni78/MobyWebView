@@ -318,6 +318,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         getActivity().startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_ACTIVITY_BILL_UPLOAD) {
             if (resultCode == getActivity().RESULT_OK) { // Activity.RESULT_OK

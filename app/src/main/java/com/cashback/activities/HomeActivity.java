@@ -2,10 +2,10 @@ package com.cashback.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -48,13 +48,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
-import com.google.android.play.core.install.model.AppUpdateType;
-import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 
@@ -64,7 +61,6 @@ import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.IS_FROM;
-import static com.cashback.utils.Constants.IntentKey.adId;
 
 @SuppressWarnings("All")
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
@@ -101,7 +97,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         /*if (fragment instanceof FragmentMyCoupons) {
             ((FragmentMyCoupons) fragment).onBackPressed();
         } else {*/
-            super.onBackPressed();
+        super.onBackPressed();
         /*}*/
     }
 
@@ -124,11 +120,22 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             } else if (fragment instanceof FragmentMyCoupons) {
                 ((FragmentMyCoupons) fragment).onActivityResult(requestCode, resultCode, data);
             } else if (fragment instanceof OfferListFragment) {
-                ((OfferListFragment) fragment).onActivityResult(requestCode, resultCode, data);
+                if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+                    String lsAction = data.getAction();
+                    if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
+                        super.onActivityResult(requestCode, resultCode, data);
+                        openMyCoupons(0);
+                        SystemClock.sleep(500);
+                        fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+                        ((FragmentMyCoupons) fragment).onActivityResult(requestCode, resultCode, data);
+                    }
+                }
             } else if (fragment instanceof FragmentHelp) {
                 ((FragmentHelp) fragment).onActivityResult(requestCode, resultCode, data);
+            } else {
+                fragment.onActivityResult(requestCode, resultCode, data);
             }
-            fragment.onActivityResult(requestCode, resultCode, data);
+
         } else {
             super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == 100) {
@@ -375,7 +382,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         Bundle bundle = new Bundle();
         bundle.putLong(Constants.IntentKey.ACTIVITY_ID, flActivityID);
         fragmentMyCoupons.setArguments(bundle);
-        Common.replaceFragment(HomeActivity.this, fragmentMyCoupons, Constants.FragmentTag.TAG_MY_OFFER_LIST, false);
+        Common.replaceFragment(HomeActivity.this, fragmentMyCoupons, Constants.FragmentTag.TAG_MY_COUPON_LIST, false);
     }
 
     public void loadOfferListFragment(int fiCategoryId, long flOfferId, long flLocationId, long flBannerId) {
@@ -686,7 +693,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         TextView tvSkip = mDialougeBox.findViewById(R.id.tvSkip);
         TextView updateApp = mDialougeBox.findViewById(R.id.updateApp);
 
-        if (foJsonObject.getAppUpdate().getStatus() == 2){
+        if (foJsonObject.getAppUpdate().getStatus() == 2) {
             tvSkip.setVisibility(View.GONE);
         }
 

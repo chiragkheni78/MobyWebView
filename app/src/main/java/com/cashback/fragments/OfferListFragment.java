@@ -46,7 +46,9 @@ import com.squareup.picasso.RequestCreator;
 
 import java.util.ArrayList;
 
+import static com.cashback.AppGlobal.isDealBannerClosed;
 import static com.cashback.AppGlobal.isSearchButtonBlink;
+import static com.cashback.fragments.FragmentMyCoupons.REQUEST_COUPON_DETAILS;
 
 @SuppressWarnings("All")
 public class OfferListFragment extends BaseFragment implements View.OnClickListener, OfferListAdapter.OnAdItemClick {
@@ -116,10 +118,9 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void showDealOfTheDayImage() {
-        //moBinding.cardDealOfTheDay.setVisibility(View.GONE);
         ArrayList<DealOfTheDayResponse> loDealList = AppGlobal.getDealOfTheDayResponse();
         if (loDealList != null && loDealList.size() > 0) {
-            if (Common.stOfferShow) {
+            if (Common.stOfferShow && !AppGlobal.isDealBannerClosed) {
                 moBinding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
                 moBinding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
                 moBinding.imageSlider.startAutoCycle();
@@ -135,13 +136,21 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
                         miCategoryId = foDealList.getCategory();
                         mlBannerID = foDealList.getBannerId();
+                        mlOfferID = foDealList.getAdId();
                         miCurrentPage = 1;
-
-                        if (moOfferList != null) moOfferList.clear();
-                        mlOfferID = -1;
-                        moOfferListAdapter.notifyFirstItem(mlOfferID);
                         isLastPage = false;
+                        if (moOfferList != null) moOfferList.clear();
+
+                        Common.msOfferId = mlOfferID+"";
+                        moOfferListAdapter.notifyFirstItem(mlOfferID);
+
                         moBinding.btnSearch.clearAnimation();
+
+                        //update category selection
+                        moCategoryAdapter.updateCategoryByID(miCategoryId);
+                        int liPosition = moCategoryAdapter.getSelectedPosition();
+                        moBinding.rvCategory.scrollToPosition(liPosition);
+
                         fetchOffers();
                     }
                 }));
@@ -149,15 +158,16 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 //                RequestCreator loRequest = Picasso.get().load(loDealList.getImage().replace("https", "http"));
 //                loRequest.into(moBinding.imageDealOfTheDay);
 
-                moBinding.cardDealOfTheDay.setVisibility(View.VISIBLE);
+                moBinding.rlBanner.setVisibility(View.VISIBLE);
 
-                Common.stOfferShow = false;
+                //Common.stOfferShow = false;
             }
 
-            moBinding.cardDealOfTheDay.setOnClickListener(new View.OnClickListener() {
+            moBinding.imageMainClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    AppGlobal.isDealBannerClosed = true;
+                    moBinding.rlBanner.setVisibility(View.GONE);
                 }
             });
         }
@@ -418,7 +428,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 Intent loIntent = new Intent(getActivity(), CouponDetailsActivity.class);
                 loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, loJsonObject.getActivityID());
                 loIntent.setAction(Constants.IntentKey.Action.BY_PASS_QUIZ);
-                getActivity().startActivity(loIntent);
+                getActivity().startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
 
             } else {
                 Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);

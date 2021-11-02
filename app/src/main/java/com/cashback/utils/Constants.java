@@ -14,7 +14,7 @@ public class Constants {
 
 
     public class FragmentTag {
-        public static final String TAG_MY_OFFER_LIST = "my_offer_list";
+        public static final String TAG_MY_COUPON_LIST = "my_offer_list";
         public static final String TAG_OFFER_LIST = "offer_list";
         public static final String TAG_MAP_VIEW = "map_view";
         public static final String TAG_SHARE = "share";
@@ -86,8 +86,6 @@ public class Constants {
         DELETE_USER_CARD("deleteUserCard"),
         BYPASS_QUIZ("directSubmitQuiz"),
         ;
-
-
 
         private String type;
 

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     style="@style/ToolBar78"
+    android:background="@color/black"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
-    android:background="@color/colorBackground"
     app:popupTheme="@style/AppTheme.PopupOverlay">
 
     <FrameLayout
@@ -17,12 +17,12 @@
         <TextView
             android:id="@+id/tvToolbarTitle"
             style="@style/TvToolBarTitle78"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/txt_dxLarge"
+            android:layout_gravity="center"
             android:maxLines="1"
-            android:text="Moby Coupon"
             android:paddingHorizontal="@dimen/_10sdp"
-            android:layout_gravity="bottom|center_horizontal"/>
+            android:text="Moby Coupon"
+            android:textColor="@color/white"
+            android:textSize="@dimen/txt_dxLarge" />
 
         <LinearLayout
             android:id="@+id/llBack"
@@ -34,31 +34,31 @@
             <com.rey.material.widget.ImageButton
                 android:id="@+id/ibNavigation"
                 style="@style/IbToolBarBack78"
-                android:visibility="gone"
-                android:tint="@color/colorPrimaryText" />
+                android:tint="@color/colorPrimaryText"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tvTitleEnd"
                 style="@style/TvToolBarTitle78"
                 android:layout_gravity="center"
-                android:padding="@dimen/padding_standard"
-                android:textStyle="normal"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
                 android:drawableLeft="@drawable/ic_arrow_back"
                 android:drawablePadding="@dimen/padding_mini"
-                android:visibility="visible"
+                android:drawableTint="@color/white"
+                android:gravity="center_vertical"
+                android:padding="@dimen/padding_standard"
                 android:text=""
-                />
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                android:visibility="visible" />
         </LinearLayout>
 
-<!--        <com.rey.material.widget.ImageButton-->
-<!--            android:id="@+id/ibDownload"-->
-<!--            style="@style/IbToolBarBack78"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:visibility="gone"-->
-<!--            android:src="@drawable/ic_download_24px"-->
-<!--            android:tint="@color/white" />-->
+        <!--        <com.rey.material.widget.ImageButton-->
+        <!--            android:id="@+id/ibDownload"-->
+        <!--            style="@style/IbToolBarBack78"-->
+        <!--            android:layout_gravity="end"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:src="@drawable/ic_download_24px"-->
+        <!--            android:tint="@color/white" />-->
 
 
     </FrameLayout>
