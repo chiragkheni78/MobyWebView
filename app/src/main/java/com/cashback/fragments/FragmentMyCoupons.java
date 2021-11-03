@@ -103,7 +103,13 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
             if (llActivityId > 0) {
                 Intent loIntent = new Intent(getContext(), CouponDetailsActivity.class);
                 loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityId);
-                getActivity().startActivity(loIntent);
+
+                String lsAction = getArguments().getString(Constants.IntentKey.FUNCTION, null);
+                if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.BY_PASS_QUIZ)){
+                    loIntent.setAction(Constants.IntentKey.Action.BY_PASS_QUIZ);
+                    miPosition = 0;
+                }
+                getActivity().startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
             }
         }
     }
@@ -318,7 +324,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         getActivity().startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
     }
 
-    @Override
+
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_ACTIVITY_BILL_UPLOAD) {
             if (resultCode == getActivity().RESULT_OK) { // Activity.RESULT_OK
@@ -333,6 +339,11 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
                 if (miPosition > -1) {
                     String lsAction = data.getAction();
                     if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
+                        Activity loActivity = moActivityList.get(miPosition);
+                        if (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())){
+                            moActivityList.get(miPosition).setCouponUsed(true);
+                            moActivityListAdapter.notifyDataSetChanged();
+                        }
                         openBillUpload(miPosition);
                     } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)) {
                         moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink

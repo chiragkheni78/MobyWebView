@@ -48,6 +48,7 @@ import java.util.ArrayList;
 
 import static com.cashback.AppGlobal.isDealBannerClosed;
 import static com.cashback.AppGlobal.isSearchButtonBlink;
+import static com.cashback.AppGlobal.moContext;
 import static com.cashback.fragments.FragmentMyCoupons.REQUEST_COUPON_DETAILS;
 
 @SuppressWarnings("All")
@@ -424,15 +425,20 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 //                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
 //                startActivity(intent);
 //                getActivity().finishAffinity();
-
-                Intent loIntent = new Intent(getActivity(), CouponDetailsActivity.class);
-                loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, loJsonObject.getActivityID());
-                loIntent.setAction(Constants.IntentKey.Action.BY_PASS_QUIZ);
-                getActivity().startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
-
+                openMyCoupons(loJsonObject.getActivityID());
             } else {
                 Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
             }
         }
     };
+
+    private void openMyCoupons(long flActivityID) {
+        FragmentMyCoupons fragmentMyCoupons = new FragmentMyCoupons();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.IntentKey.FUNCTION, Constants.IntentKey.Action.BY_PASS_QUIZ);
+        bundle.putLong(Constants.IntentKey.ACTIVITY_ID, flActivityID);
+        fragmentMyCoupons.setArguments(bundle);
+        Common.replaceFragment(getActivity(), fragmentMyCoupons, Constants.FragmentTag.TAG_MY_COUPON_LIST, false);
+        ((HomeActivity)getActivity()).updateBottomMenu(3);
+    }
 }

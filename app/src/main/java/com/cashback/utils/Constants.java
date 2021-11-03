@@ -40,7 +40,7 @@ public class Constants {
         public static final String adId = "adId";
         public static final String FROM_COUPON = "fromCoupon";
 
-
+        public static final String FUNCTION = "function";
         public class Action {
             public static final String MAP_SCREEN = "MAP_SCREEN";
             public static final String OFFER_LIST = "OFFER_LIST";
@@ -52,6 +52,8 @@ public class Constants {
             public static final String OPEN_BILL_UPLOAD = "OPEN_BILL_UPLOAD";
             public static final String CLICK_SHOP_ONLINE = "CLICK_SHOP_ONLINE";
             public static final String BY_PASS_QUIZ = "BY_PASS_QUIZ";
+
+            public static final String OPEN_COUPON_DETAILS = "OPEN_COUPON_DETAILS";
         }
     }
 

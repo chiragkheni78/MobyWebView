@@ -120,16 +120,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             } else if (fragment instanceof FragmentMyCoupons) {
                 ((FragmentMyCoupons) fragment).onActivityResult(requestCode, resultCode, data);
             } else if (fragment instanceof OfferListFragment) {
-                if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-                    String lsAction = data.getAction();
-                    if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
-                        super.onActivityResult(requestCode, resultCode, data);
-                        openMyCoupons(0);
-                        SystemClock.sleep(500);
-                        fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
-                        ((FragmentMyCoupons) fragment).onActivityResult(requestCode, resultCode, data);
-                    }
-                }
+                ((OfferListFragment) fragment).onActivityResult(requestCode, resultCode, data);
             } else if (fragment instanceof FragmentHelp) {
                 ((FragmentHelp) fragment).onActivityResult(requestCode, resultCode, data);
             } else {
@@ -235,6 +226,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             ShareFragment shareFragment = new ShareFragment();
             Common.replaceFragment(HomeActivity.this, shareFragment, Constants.FragmentTag.TAG_SHARE, false);
         }
+    }
+
+    public void updateBottomMenu(int fiPosition){
+        moBinding.navigation.getMenu().getItem(fiPosition).setChecked(true);
     }
 
     private void dialogOpenMapPopup() {
