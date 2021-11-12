@@ -92,7 +92,7 @@
                                 android:paddingTop="@dimen/_5sdp">
 
                                 <TextView
-                                    android:id="@+id/tvToolbarTitle"
+                                    android:id="@+id/tvOfferName"
                                     style="@style/TvLarge"
                                     android:text="MOBY CASHBACK"
                                     android:textColor="@color/colorPrimaryText"
@@ -191,6 +191,7 @@
                                 style="@style/RecycleView78"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:overScrollMode="never"
                                 android:visibility="visible"
                                 tools:listitem="@layout/item_quiz_option" />
 

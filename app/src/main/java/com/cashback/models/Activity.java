@@ -181,6 +181,9 @@ public class Activity {
     @SerializedName("foLocationList")
     ArrayList<AdLocation> locationList;
 
+    @SerializedName("fiAdCouponType")
+    int adCouponType;
+
     public String getWalletName() {
         return walletName;
     }
@@ -223,6 +226,10 @@ public class Activity {
 
     public void setBillUploaded(boolean billUploaded) {
         isBillUploaded = billUploaded;
+    }
+
+    public int getAdCouponType() {
+        return adCouponType;
     }
 }
 

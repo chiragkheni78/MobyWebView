@@ -145,8 +145,14 @@ public class OfferDetailsActivity extends BaseActivity implements View.OnClickLi
 //                    moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " - ₹" + offer.getSecondReward() + " (C'Back)");
 //                }
 //            } else {
-                moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " (Max Cashback)");
+//                moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " (Max Cashback)");
 //            }
+
+            if (offer.getAdCouponType() == 1){
+                moBinding.tvOfferRewards.setText("(Answer To Win)");
+            } else {
+                moBinding.tvOfferRewards.setText("₹" + offer.getQuizReward() + " (Max Cashback)");
+            }
         }
     };
 

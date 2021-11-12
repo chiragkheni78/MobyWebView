@@ -122,16 +122,14 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             }
         });
 
-        /*TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
-        loTvToolbarTitle.setText(moOffer.getAdName());
-        loTvToolbarTitle.setVisibility(View.VISIBLE);*/
+        moBinding.tvOfferName.setText(moOffer.getAdName());
+        moBinding.tvOfferName.setVisibility(View.VISIBLE);
 
-        moBinding.tvOfferRewards.setText("₹" + moOffer.getQuizReward() + " (Max Cashback)");
-        if (moOffer.getBannerUrl() != null) {
-            Common.loadImage(moBinding.ivBanner, moOffer.getBannerUrl(), null, ActivityCompat.getDrawable(getContext(), R.drawable.iv_place_holder));
-        }
-        if (moOffer.getLogoUrl() != null) {
-            Common.loadImage(moBinding.ivLogo, moOffer.getLogoUrl(), null, null);
+
+        if (moOffer.getAdCouponType() == 1){
+            moBinding.tvOfferRewards.setText("(Answer To Win)");
+        } else {
+            moBinding.tvOfferRewards.setText("₹" + moOffer.getQuizReward() + " (Max Cashback)");
         }
     }
 
@@ -144,6 +142,15 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onChanged(QuizDetailsResponse loJsonObject) {
             if (!loJsonObject.isError()) {
+
+                if (loJsonObject.getBannerUrl() != null) {
+                    Common.loadImage(moBinding.ivBanner, loJsonObject.getBannerUrl(), null, ActivityCompat.getDrawable(getContext(), R.drawable.iv_place_holder));
+                }
+
+                if (loJsonObject.getLogoUrl() != null) {
+                    Common.loadImage(moBinding.ivLogo, loJsonObject.getLogoUrl(), null, null);
+                }
+
                 moQuizList = loJsonObject.getQuizList();
                 preDefineQuizAnswer();
                 setUpQuizDetailView();

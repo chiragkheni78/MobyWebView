@@ -272,6 +272,14 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.tvExactCashback.append(" - FROM US");
         }
 
+        if (moActivity.getFlatCashBack() == null || moActivity.getFlatCashBack().isEmpty() || moActivity.getAdCouponType() == 1){
+            moBinding.tvExactCashback.setVisibility(View.GONE);
+        }
+
+        if (moActivity.getDiscountUpTo() == null || moActivity.getDiscountUpTo().isEmpty()){
+            moBinding.tvDiscountUpto.setVisibility(View.GONE);
+        }
+
         moBinding.tvCoupon.setText(moActivity.getCouponCode());
 
         if (moActivity.getOfferDetails() != null && !moActivity.getOfferDetails().isEmpty()) {
@@ -292,6 +300,12 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moBinding.tvBillUpload.setText(Common.getDynamicText(getContext(), "dont_forget_bill_upload")
                 .replace("XXXXXX", moActivity.getWalletName()).replace("XX", String.valueOf(moActivity.getVirtualCashTransferDays())));
 
+
+        if (moActivity.getAdCouponType() == 1){
+            moBinding.tvBillUpload.setVisibility(View.GONE);
+        } else {
+            moBinding.tvBillUpload.setVisibility(View.VISIBLE);
+        }
 
         if (!moActivity.getRemainDay().isEmpty()) {
             moBinding.tvExpireDay.setVisibility(View.VISIBLE);
@@ -492,6 +506,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (!getPreferenceManager().isPhoneVerified()) {
             openPhoneLogin(fsUrl);
         } else {
+            if (moActivity.getAdCouponType() == 1){
+                openDeepLink(fsUrl);
+                return;
+            }
+
             try {
                 String lsTitle = Common.getDynamicText(getContext(), "title_copy_to_clipboard");
                 String lsMessage = Common.getDynamicText(getContext(), "msg_copy_to_clipboard")

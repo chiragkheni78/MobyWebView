@@ -52,6 +52,9 @@ public class Ad implements Serializable {
     @SerializedName("fbIsQuizFlow")
     boolean isQuizFlow;
 
+    @SerializedName("fiAdCouponType")
+    int adCouponType;
+
     public long getAdID() {
         return adID;
     }
@@ -198,5 +201,9 @@ public class Ad implements Serializable {
 
     public boolean isQuizFlow() {
         return isQuizFlow;
+    }
+
+    public int getAdCouponType() {
+        return adCouponType;
     }
 }

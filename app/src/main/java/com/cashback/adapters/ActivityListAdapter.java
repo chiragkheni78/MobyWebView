@@ -174,6 +174,12 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
             }
 
+            if (loActivity.getAdCouponType() == 1){
+                foHolder.lblReward.setVisibility(View.GONE);
+            } else {
+                foHolder.lblReward.setVisibility(View.VISIBLE);
+            }
+
         } catch (Exception e) {
             LogV2.logException(TAG, e);
         }

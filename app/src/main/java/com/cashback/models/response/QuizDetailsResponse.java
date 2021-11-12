@@ -17,6 +17,12 @@ public class QuizDetailsResponse {
     @SerializedName("foQuizList")
     private ArrayList<Quiz> quizList;
 
+    @SerializedName("fsAdLogo")
+    String logoUrl;
+
+    @SerializedName("fsAdBanner")
+    String fsBannerURL;
+
     public boolean isError() {
         return isError;
     }
@@ -32,6 +38,14 @@ public class QuizDetailsResponse {
     public QuizDetailsResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public String getBannerUrl() {
+        return fsBannerURL;
     }
 
 }
