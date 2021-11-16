@@ -75,8 +75,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                             moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
                             moBinding.tvMarkAsUsed.setClickable(true);
                             moBinding.tvMarkAsUsed.setEnabled(true);
-                            moBinding.llMarkAsRead.setVisibility(View.VISIBLE);
                             Common.blinkAnimation(moBinding.tvMarkAsUsed);
+
+                            if(moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue()))
+                                moBinding.llMarkAsRead.setVisibility(View.VISIBLE);
                         } else {
                             moBinding.tvMarkAsUsed.setTextColor(getResources().getColor(R.color.twhite));
                             moBinding.tvMarkAsUsed.setClickable(false);
