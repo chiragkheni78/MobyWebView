@@ -211,7 +211,6 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
                 loDialog.setClickListener(v -> {
                     loDialog.dismiss();
                     Intent intent = new Intent();
-                    setResult(1, intent);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 });
@@ -220,7 +219,7 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
                 if (msPinColor.equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
                     ActivityDetailsViewModel moActivityDetailsViewModel = new ViewModelProvider(BillUploadActivity.this).get(ActivityDetailsViewModel.class);
                     moActivityDetailsViewModel.updateMarkAsUsedStatus.observe(BillUploadActivity.this, updateMarkAdUsedObserver);
-                    moActivityDetailsViewModel.updateMarkAsUsed(getContext(), "", miActivityId);
+                    moActivityDetailsViewModel.updateMarkAsUsed(getContext(), "", miActivityId, 0);
                 }
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);

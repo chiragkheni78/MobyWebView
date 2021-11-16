@@ -3,6 +3,7 @@
 
 <!--messages-->
     <string name="validate_age">Please enter your age</string>
+    <string name="validate_phone">Please enter valid phone number</string>
     <string name="validate_gender">Please select your gender</string>
     <string name="validate_eWallet">Please select your eWallet</string>
     <string name="contact_support">Something went wrong, Please contact to support team.</string>
@@ -20,6 +21,7 @@
     <string name="empty_offer_list">There is no data found with this search terms\nPlease try with other brands.</string>
     <string name="empty_timeline">Your Timeline is empty!\nEngage with the Brands to earn money.</string>
     <string name="dont_forget_bill_upload">You will get Cashback in your\nXXXXXX in XX days.</string>
+    <string name="your_cashback_credit">Your Cashback XXX\nCredit After YY days.</string>
     <string name="coupon_valid_for">COUPON VALID FOR XX DAYS.</string>
 
     <string name="title_copy_to_clipboard">CashBack Activated !</string>
@@ -28,6 +30,7 @@
 
 
     <string name="mobile_no_mark_used">Mobile No. to Mark as Used</string>
+    <string name="btn_mark_coupon_used">Mark Coupon Used</string>
     <string name="ask_store_cashier">Ask Store Cashier</string>
     <string name="coupon_code_conformation_msg">Register your transaction for us\nto credit you</string>
     <string name="validate_transaction_date">Please select your transaction date</string>
@@ -38,6 +41,7 @@
     <string name="text_login_title">Login with Mobile Number</string>
     <string name="text_login_msg">We will send you an</string>
     <string name="hint_mobile_no">10 digit mobile number</string>
+    <string name="hint_bill_amount">Enter bill amount</string>
 
     <string name="status_verification_failed">Verification failed</string>
     <string name="status_sign_in_failed">Sign-in failed</string>
@@ -184,6 +188,10 @@
     <string name="info_message"><![CDATA[Cashback & Rewards\non Coupons you have\nwon in "My Coupons"]]></string>
 
     <string name="share_title">REFER TO YOUR FRIENDS &amp; FAMILY,\nEARN CASH WHENEVER THEY SHOP</string>
+
+    <string name="btn_use_coupon_store">Use Coupon @ Store</string>
+    <string name="btn_scan_moby_qr_code">Scan MOBY QR Code</string>
+    <string name="btn_view_coupon_code">View Coupon Code</string>
 
 
     <!--Timeline Sorting-->

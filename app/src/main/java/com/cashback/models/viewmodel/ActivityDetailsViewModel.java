@@ -1,7 +1,13 @@
 package com.cashback.models.viewmodel;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.util.Log;
 
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -64,9 +70,10 @@ public class ActivityDetailsViewModel extends ViewModel {
 
     public MutableLiveData<ActivityMarkAsUsedResponse> updateMarkAsUsedStatus = new MutableLiveData<>();
 
-    public void updateMarkAsUsed(Context foContext, String mobileNumber, long fiActivityID) {
+    public void updateMarkAsUsed(Context foContext, String mobileNumber, long fiActivityID, int fiBillAmount) {
         ActivityMarkAsUsedRequest loActivityMarkAsUsedRequest = new ActivityMarkAsUsedRequest(mobileNumber, fiActivityID);
         loActivityMarkAsUsedRequest.setAction(Constants.API.COUPON_MARK_AS_USED.getValue());
+        loActivityMarkAsUsedRequest.setAmount(fiBillAmount);
         loActivityMarkAsUsedRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
         loActivityMarkAsUsedRequest.setMobileNumber(AppGlobal.getPhoneNumber());
 
@@ -139,5 +146,24 @@ public class ActivityDetailsViewModel extends ViewModel {
                 updateShopOnlineBlinkStatus.postValue(new UpdateShopOnlineBlinkResponse(true, t.getMessage()));
             }
         });
+    }
+
+    public static final int REQUEST_CAMERA = 908;
+
+    public boolean isCameraPermissionGranted(Activity foContext) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (foContext.checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TTT", "Permission is granted2");
+                return true;
+            } else {
+                Log.v("TTT", "Permission is revoked2");
+                ActivityCompat.requestPermissions(foContext, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TTT", "Permission is granted2");
+            return true;
+        }
     }
 }

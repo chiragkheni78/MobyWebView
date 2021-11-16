@@ -70,7 +70,6 @@ public class QrScannerActivity extends BaseActivity {
                             LogV2.i("TTT", "Scan Result::: " + result.getText());
                             Intent intent = new Intent();
                             intent.putExtra(Constants.IntentKey.QR_DATA, result.getText().toString());
-                            setResult(1, intent);
                             setResult(Activity.RESULT_OK, intent);
                         }
                         finish();

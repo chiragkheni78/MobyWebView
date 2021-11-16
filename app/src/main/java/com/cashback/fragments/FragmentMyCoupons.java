@@ -342,9 +342,10 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
                         Activity loActivity = moActivityList.get(miPosition);
                         if (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())){
                             moActivityList.get(miPosition).setCouponUsed(true);
+                            moActivityList.get(miPosition).setBillUploaded(true);
                             moActivityListAdapter.notifyDataSetChanged();
                         }
-                        openBillUpload(miPosition);
+                        //openBillUpload(miPosition);
                     } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)) {
                         moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
                         moActivityListAdapter.notifyDataSetChanged();

@@ -19,6 +19,9 @@ public class ActivityMarkAsUsedRequest {
     @SerializedName("fiActivityId")
     private long activityID;
 
+    @SerializedName("fiAmount")
+    int amount;
+
     public ActivityMarkAsUsedRequest(String mobileNumber, long activityID) {
         this.mobileNumber = mobileNumber;
         this.activityID = activityID;
@@ -38,6 +41,10 @@ public class ActivityMarkAsUsedRequest {
 
     public void setActivityID(long activityID) {
         this.activityID = activityID;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public String validateData(Context foContext) {

@@ -184,6 +184,12 @@ public class Activity {
     @SerializedName("fiAdCouponType")
     int adCouponType;
 
+    @SerializedName("fiMarkIsUsedType")
+    int markAsUsedType;
+
+    @SerializedName("fsQrCodePasswordText")
+    String qrCodeText;
+
     public String getWalletName() {
         return walletName;
     }
@@ -230,6 +236,14 @@ public class Activity {
 
     public int getAdCouponType() {
         return adCouponType;
+    }
+
+    public int getMarkAsUsedType() {
+        return markAsUsedType;
+    }
+
+    public String getQrCodeText() {
+        return qrCodeText;
     }
 }
 
