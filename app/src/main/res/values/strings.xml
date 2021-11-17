@@ -95,7 +95,7 @@
 
     <!--buttons-->
     <string name="online_coupon">ONLINE\nCOUPON</string>
-    <string name="instore_coupon">INSTORE\nCOUPON</string>
+    <string name="instore_coupon">OFFLINE\nCOUPON</string>
     <string name="view_details">VIEW\nDETAILS</string>
     <string name="engaged">ENGAGED</string>
 

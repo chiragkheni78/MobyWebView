@@ -258,6 +258,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                         foHolder.tvRegisterBill.setBackground(moContext.getResources().getDrawable(R.drawable.rect_grey));
                         foHolder.tvRegisterBill.setTextColor(moContext.getResources().getColor(R.color.black));
                     }
+                    foHolder.tvRegisterBill.setPaintFlags(0);
                 }
 
                 foHolder.loLllRegisterBill.setVisibility(View.VISIBLE);

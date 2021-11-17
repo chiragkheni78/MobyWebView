@@ -3,9 +3,12 @@ package com.cashback.fragments;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -99,6 +102,17 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         }
     };
 
+    TextView.OnEditorActionListener moSerchListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchButtonPressed();
+                return true;
+            }
+            return false;
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -179,6 +193,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
         moBinding.btnSearch.setOnClickListener(this);
         moBinding.floatingActionSearch.setOnClickListener(this);
+        moBinding.etSearch.setOnEditorActionListener(moSerchListener);
         //moBinding.rvOfferList.addOnScrollListener(recyclerViewOnScrollListener);
 
         setCategoryView();

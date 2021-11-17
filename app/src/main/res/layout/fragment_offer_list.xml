@@ -48,6 +48,8 @@
                         android:focusableInTouchMode="true"
                         android:hint="Search shop"
                         android:maxLines="1"
+                        android:inputType="text"
+                        android:imeOptions="actionSearch"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="@dimen/_2sdp"
                         android:textColor="@color/primary_text"

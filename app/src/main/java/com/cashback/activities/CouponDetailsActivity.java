@@ -201,6 +201,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (!moActivity.isBlinkShopOnline()) {
             moBinding.tvMarkAsUsed.setVisibility(View.VISIBLE);
             setMarkAsUsedButton();
+        } else {
+            Common.blinkAnimation(moBinding.tvShopOffline);
         }
     }
 
@@ -292,7 +294,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             moBinding.tvBrand.setText(moActivity.getAdName() + " (Online)");
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
-            moBinding.tvBrand.setText(moActivity.getAdName() + " (InStore)");
+            moBinding.tvBrand.setText(moActivity.getAdName() + " (Offline)");
             moBinding.tvShopOnline.setText(Common.getDynamicText(getContext(), "btn_shop_in_store"));
 
             moBinding.tvDiscountUpto.append(" - AT STORE");
@@ -399,7 +401,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         moDialog.getWindow().setGravity(Gravity.CENTER);
         moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        moDialog.setCancelable(false);
+        moDialog.setCancelable(true);
         moDialog.show();
 
         final Button loBtnMarkAsUsed = moDialog.findViewById(R.id.btnMarkAsUsed);
@@ -437,7 +439,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         moDialog.getWindow().setGravity(Gravity.CENTER);
         moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        moDialog.setCancelable(false);
+        moDialog.setCancelable(true);
         moDialog.show();
 
         final Button loBtnMarkAsUsed = moDialog.findViewById(R.id.btnMarkAsUsed);
@@ -452,7 +454,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                     if (String.valueOf("+91" + number).equalsIgnoreCase(AppGlobal.getPhoneNumber())) {
                         loBtnMarkAsUsed.setTextColor(getResources().getColor(R.color.white));
                         loBtnMarkAsUsed.setClickable(true);
-                        moBinding.tvMarkAsUsed.setEnabled(true);
+                        loBtnMarkAsUsed.setEnabled(true);
                     } else {
                         loBtnMarkAsUsed.setTextColor(getResources().getColor(R.color.twhite));
                         loBtnMarkAsUsed.setClickable(false);
