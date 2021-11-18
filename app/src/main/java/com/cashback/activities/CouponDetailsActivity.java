@@ -235,7 +235,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             public void onItemClick(int position, View v) {
                 Coupon loCoupon = moActivity.getCouponList().get(position);
                 if (!loCoupon.getCouponLink().isEmpty()) {
-                    Common.setClipboard(getContext(), loCoupon.getCouponName());
+                    Common.setClipboard(getContext(), loCoupon.getCouponCode());
                     dialogCopyToClipboard(loCoupon.getCouponLink());
                     moBinding.tvShopOnline.clearAnimation();
                 } else {

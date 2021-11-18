@@ -10,6 +10,7 @@ import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.ArrayList;
 
@@ -38,8 +39,14 @@ public class AppGlobal extends Application {
     public void onCreate() {
         super.onCreate();
         moContext = this;
+        enableCrashlytics();
         configAdGyde();
         setDefaultReferrer();
+    }
+
+    private void enableCrashlytics() {
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
+        //enabled only for signed builds
     }
 
     private void setDefaultReferrer() {

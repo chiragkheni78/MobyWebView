@@ -185,15 +185,48 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/ivBanner"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvBanner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_20sdp"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/sample3"
-                        android:visibility="visible" />
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:nestedScrollingEnabled="true"
+                        android:visibility="visible"
+                        app:cardCornerRadius="@dimen/_5sdp">
+
+                        <com.smarteist.autoimageslider.SliderView
+                            android:id="@+id/imageSlider"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_320sdp"
+                            android:layout_gravity="center"
+                            app:sliderAnimationDuration="600"
+                            app:sliderAutoCycleDirection="back_and_forth"
+                            app:sliderAutoCycleEnabled="true"
+                            app:sliderIndicatorAnimationDuration="600"
+                            app:sliderIndicatorGravity="center_horizontal|bottom"
+                            app:sliderIndicatorMarginBottom="15dp"
+                            app:sliderIndicatorMarginLeft="15dp"
+                            app:sliderIndicatorMarginRight="15dp"
+                            app:sliderIndicatorMarginTop="15dp"
+                            app:sliderIndicatorOrientation="horizontal"
+                            app:sliderIndicatorPadding="3dp"
+                            app:sliderIndicatorRadius="2dp"
+                            app:sliderIndicatorSelectedColor="@color/colorPrimary"
+                            app:sliderIndicatorUnselectedColor="@color/colorBackground"
+                            app:sliderScrollTimeInSec="10"
+                            app:sliderStartAutoCycle="false" />
+                    </androidx.cardview.widget.CardView>
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/ivBanner"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="@dimen/_10sdp"-->
+<!--                        android:layout_marginBottom="@dimen/_20sdp"-->
+<!--                        android:adjustViewBounds="true"-->
+<!--                        android:src="@drawable/sample3"-->
+<!--                        android:visibility="visible" />-->
 
                 </LinearLayout>
             </ScrollView>

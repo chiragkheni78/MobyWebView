@@ -12,6 +12,9 @@ public class Coupon {
     @SerializedName("fsCouponLink")
     String couponLink;
 
+    @SerializedName("fsCouponCode")
+    String couponCode;
+
     @SerializedName("fsCouponDescription")
     String details;
 
@@ -25,5 +28,9 @@ public class Coupon {
 
     public String getDetails() {
         return details;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
     }
 }
