@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.AppGlobal;
 import com.cashback.R;
 
-import com.cashback.adapters.AdvertAdapter;
 import com.cashback.adapters.EWalletAdapter;
 import com.cashback.databinding.ActivityShortProfileBinding;
 import com.cashback.models.Advertisement;
@@ -59,9 +58,9 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         moBinding.spinWallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (moWalletList != null && moWalletList.size() > 0) {
+                if (moWalletList != null && moWalletList.size() > 0){
 
-                    if (moWalletList.get(position).getWalletId() == 2) {
+                    if (moWalletList.get(position).getWalletId() == 2){
                         moBinding.llUPI.setVisibility(View.VISIBLE);
                     } else moBinding.llUPI.setVisibility(View.GONE);
                 }
@@ -108,7 +107,30 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                         moBinding.spinWallet.setSelection(moMiniProfileViewModel.getSelectedWalletPosition(loJsonObject.getWalletList()));
                     }
 
-                    setImageSlider(loJsonObject.getAdvertisementList());
+                    Advertisement loAdvertisement = null;
+                    ArrayList<Advertisement> loAdvertisementList = loJsonObject.getAdvertisementList();
+                    if (loAdvertisementList != null && loAdvertisementList.size() > 0) {
+                        int liPosition = moMiniProfileViewModel.getAdvertPosition(getContext(), loAdvertisementList);
+                        loAdvertisement = loAdvertisementList.get(liPosition);
+
+                        String lsURL = loAdvertisement.getImageUrl();
+                        if (lsURL != null) {
+                            Common.loadImage(moBinding.ivBanner, lsURL, null, null);
+                            moBinding.ivBanner.setVisibility(View.VISIBLE);
+                            AppGlobal.isDisplayRewardNote = true;
+                            miCategoryId = loAdvertisement.getCategoryID();
+                            mlOfferID = loAdvertisement.getAdID();
+                            miBannerID = loAdvertisement.getBannerID();
+
+                            moBinding.ivBanner.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    moBinding.btnSaveProfile.performClick();
+                                }
+                            });
+                        }
+                    } else moBinding.ivBanner.setVisibility(View.GONE);
+
                     moBinding.llRoot.setVisibility(View.VISIBLE);
                 }
 
@@ -146,24 +168,6 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         }
     };
 
-    ArrayList<Advertisement> moAdvertisementList;
-
-    private void setImageSlider(ArrayList<Advertisement> foAdvertisementList) {
-        ArrayList<Advertisement> loAdvertisementList = foAdvertisementList;
-
-        if (loAdvertisementList != null && loAdvertisementList.size() > 0) {
-            moAdvertisementList = loAdvertisementList;
-            moBinding.cvBanner.setVisibility(View.VISIBLE);
-            AppGlobal.isDisplayRewardNote = true;
-            moBinding.imageSlider.setSliderAdapter(new AdvertAdapter(getContext(), loAdvertisementList, new AdvertAdapter.OnItemClick() {
-                @Override
-                public void onItemClick(Advertisement advertisement) {
-                    moBinding.btnSaveProfile.performClick();
-                }
-            }));
-        } else moBinding.cvBanner.setVisibility(View.GONE);
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -174,7 +178,6 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void saveShortProfile() {
-        setBannerCategory();
         Common.hideKeyboard(this);
         int age = getAge();
         String lsGender = getGender();
@@ -184,16 +187,6 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
 
         loProgressDialog = Common.showProgressDialog(ShortProfileActivity.this);
         moMiniProfileViewModel.saveProfile(this, age, lsGender, eWalletId, lsUPIAddress);
-    }
-
-    private void setBannerCategory() {
-        if (moAdvertisementList != null) {
-            int liPosition = moBinding.imageSlider.getCurrentPagePosition();
-            Advertisement loAdvertisement = moAdvertisementList.get(liPosition);
-            miCategoryId = loAdvertisement.getCategoryID();
-            mlOfferID = loAdvertisement.getAdID();
-            miBannerID = loAdvertisement.getBannerID();
-        }
     }
 
     private int getAge() {

@@ -25,7 +25,7 @@ public class AppGlobal extends Application {
     public static ArrayList<Category> moCategories = new ArrayList<>();
     public static ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse;
 
-    public static int getFiTotalBillVerified() {
+    public static int getTotalBillVerified() {
         return fiTotalBillVerified;
     }
 

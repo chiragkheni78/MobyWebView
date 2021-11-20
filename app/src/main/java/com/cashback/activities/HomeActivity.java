@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -216,7 +215,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         } else if (position == R.id.itemOffer) {
             loadOfferListFragment(0, 0, 0, 0);
         } else if (position == R.id.itemNearBy) {
-            if (AppGlobal.getFiTotalBillVerified() > 0) {
+            if (AppGlobal.getTotalBillVerified() > 0) {
                 moBinding.navigation.getMenu().findItem(position).setChecked(true);
                 loadMapViewFragment();
             } else {

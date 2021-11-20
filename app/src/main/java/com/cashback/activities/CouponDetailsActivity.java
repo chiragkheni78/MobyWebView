@@ -124,7 +124,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void setUpCouponView() {
 
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            setOnlineOfferListView();
+            setOnlineOfferListView(false);
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
             setOfflineOfferListView();
         }
@@ -200,10 +200,13 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moBinding.llOffline.setVisibility(View.VISIBLE);
         if (!moActivity.isBlinkShopOnline()) {
             moBinding.tvMarkAsUsed.setVisibility(View.VISIBLE);
+            setOnlineOfferListView(true);
             setMarkAsUsedButton();
         } else {
             Common.blinkAnimation(moBinding.tvShopOffline);
         }
+
+
     }
 
     private void setMarkAsUsedButton() {
@@ -213,16 +216,16 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 //        3 : Mark with coupon code on excel upload(With QR)
 //        4 : Mark with coupon code on excel upload(Without QR)
 
-        if (moActivity.getMarkAsUsedType() == 1){
+        if (moActivity.getMarkAsUsedType() == 1) {
             moBinding.tvMarkAsUsed.setText(getString(R.string.btn_use_coupon_store));
-        } else if (moActivity.getMarkAsUsedType() == 2 || moActivity.getMarkAsUsedType() == 3){
+        } else if (moActivity.getMarkAsUsedType() == 2 || moActivity.getMarkAsUsedType() == 3) {
             moBinding.tvMarkAsUsed.setText(getString(R.string.btn_scan_moby_qr_code));
-        } else if (moActivity.getMarkAsUsedType() == 4){
+        } else if (moActivity.getMarkAsUsedType() == 4) {
             moBinding.tvMarkAsUsed.setText(getString(R.string.btn_view_coupon_code));
         }
     }
 
-    private void setOnlineOfferListView() {
+    private void setOnlineOfferListView(boolean isOfflineCall) {
         //set online offer list
         int liOrientation = Common.getLayoutManagerOrientation(getResources().getConfiguration().orientation);
         final LinearLayoutManager loLayoutManager = new LinearLayoutManager(getContext(), liOrientation, false);
@@ -234,23 +237,31 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onItemClick(int position, View v) {
                 Coupon loCoupon = moActivity.getCouponList().get(position);
-                if (!loCoupon.getCouponLink().isEmpty()) {
-                    Common.setClipboard(getContext(), loCoupon.getCouponCode());
-                    dialogCopyToClipboard(loCoupon.getCouponLink());
-                    moBinding.tvShopOnline.clearAnimation();
+                if (!isOfflineCall) {
+                    if (!loCoupon.getCouponLink().isEmpty()) {
+                        Common.setClipboard(getContext(), loCoupon.getCouponCode());
+                        dialogCopyToClipboard(loCoupon.getCouponLink());
+                        moBinding.tvShopOnline.clearAnimation();
+                    } else {
+                        //openDeepLink(loCoupon.getCouponLink());
+                    }
                 } else {
-                    //openDeepLink(loCoupon.getCouponLink());
+                    //move to nearby store button
+                    moBinding.tvMarkAsUsed.performClick();
                 }
             }
         });
 
-        setShopOnlineLink();
+        //handle visibility in offline mode & online mode
+        if (!isOfflineCall) {
+            setShopOnlineLink();
+            //online component visible
+            moBinding.tvShopOnline.setVisibility(View.VISIBLE);
 
-        //offline component invisible
-        moBinding.llOffline.setVisibility(View.GONE);
+            //offline component invisible
+            moBinding.llOffline.setVisibility(View.GONE);
+        }
 
-        //online component visible
-        moBinding.tvShopOnline.setVisibility(View.VISIBLE);
         if (moActivity.getCouponList() != null && moActivity.getCouponList().size() > 0) {
             moBinding.llOnlineOffers.setVisibility(View.VISIBLE);
         }
@@ -317,6 +328,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.tvMarkAsUsed.setClickable(true);
             moBinding.tvMarkAsUsed.setEnabled(true);
             moBinding.tvMarkAsUsed.setVisibility(View.VISIBLE);
+
+            setOnlineOfferListView(true);
         }
     }
 
@@ -374,13 +387,13 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void dialogMarkAsUsed() {
         moBinding.tvMarkAsUsed.clearAnimation();
 
-        if (moActivity.getMarkAsUsedType() == 1){
+        if (moActivity.getMarkAsUsedType() == 1) {
             dialogMarkWithPhone();
-        } else if (moActivity.getMarkAsUsedType() == 2){
+        } else if (moActivity.getMarkAsUsedType() == 2) {
             openQRCode();
-        } else if (moActivity.getMarkAsUsedType() == 3){
+        } else if (moActivity.getMarkAsUsedType() == 3) {
             openQRCode();
-        } else if (moActivity.getMarkAsUsedType() == 4){
+        } else if (moActivity.getMarkAsUsedType() == 4) {
             dialogMarkWithCouponCode();
         }
     }
@@ -467,6 +480,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             public void afterTextChanged(Editable s) {
 
             }
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -478,7 +492,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             public void onClick(View v) {
 
                 int liBillAmount = loEtBillAmount.getText().length() == 0 ? 0 : (int) Double.parseDouble(loEtBillAmount.getText().toString());
-                String lsPhone = "+91"+ loEtPhone.getText().toString().trim();
+                String lsPhone = "+91" + loEtPhone.getText().toString().trim();
 
                 if (liBillAmount <= 0) {
                     Common.showErrorDialog(getContext(),
@@ -592,10 +606,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                     if (moActivity.getQrCodeText().isEmpty() || (!moActivity.getQrCodeText().equalsIgnoreCase(lsScannedText))) {
                         Common.showErrorDialog(getContext(), Common.getDynamicText(getContext(), "scanned_qr_is_not_correct"), false);
                     } else {
-                        if (moActivity.getMarkAsUsedType() == 2){
+                        if (moActivity.getMarkAsUsedType() == 2) {
                             dialogMarkWithPhone();
-                        } else if (moActivity.getMarkAsUsedType() == 3){
-                           dialogMarkWithCouponCode();
+                        } else if (moActivity.getMarkAsUsedType() == 3) {
+                            dialogMarkWithCouponCode();
                         }
                     }
                 }
