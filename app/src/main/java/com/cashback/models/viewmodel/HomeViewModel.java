@@ -58,6 +58,9 @@ public class HomeViewModel extends ViewModel {
                     if (loJsonObject.getDealsOfTheDay() != null && loJsonObject.getDealsOfTheDay().size()>0) {
                         AppGlobal.setDealOfTheDayResponse(loJsonObject.getDealsOfTheDay());
                     }
+                    if (loJsonObject.getShareScreenImages() != null && loJsonObject.getShareScreenImages().size()>0) {
+                        AppGlobal.setSharePageImages(loJsonObject.getShareScreenImages());
+                    }
                     getSettingStatus.postValue(loJsonObject);
                     updateToken(foContext);
                 } else {

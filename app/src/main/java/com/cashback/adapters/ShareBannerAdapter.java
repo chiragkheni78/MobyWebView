@@ -21,11 +21,20 @@ import java.util.ArrayList;
 public class ShareBannerAdapter extends SliderViewAdapter<ShareBannerAdapter.DataObjectHolder> {
 
     private Context context;
-    private String[]  moAdvertList;
+    //private String[] maAdvertList;
+    private AdvertAdapter.OnItemClick advertisementListener;
 
-    public ShareBannerAdapter(Context context, String[] foBannerList) {
+    public ShareBannerAdapter(Context context, String[] foBannerList, AdvertAdapter.OnItemClick advertisementListener) {
         this.context = context;
-        this.moAdvertList = foBannerList;
+        //this.maAdvertList = foBannerList;
+        this.advertisementListener = advertisementListener;
+    }
+
+    private ArrayList<Advertisement> moAdvertList;
+    public ShareBannerAdapter(Context context, ArrayList<Advertisement> foAdvertList, AdvertAdapter.OnItemClick advertisementListener) {
+        this.context = context;
+        this.moAdvertList = foAdvertList;
+        this.advertisementListener = advertisementListener;
     }
 
     @Override
@@ -37,7 +46,8 @@ public class ShareBannerAdapter extends SliderViewAdapter<ShareBannerAdapter.Dat
     @Override
     public void onBindViewHolder(DataObjectHolder viewHolder, final int position) {
 
-        String lsImageUrl = moAdvertList[position];
+        Advertisement loAdvertisement = moAdvertList.get(position);
+        String lsImageUrl = loAdvertisement.getImageUrl();
 
         Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
         Drawable loError = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
@@ -45,13 +55,17 @@ public class ShareBannerAdapter extends SliderViewAdapter<ShareBannerAdapter.Dat
         RequestCreator loRequest = Picasso.get().load(lsImageUrl.replace("https", "http"));
         loRequest.into(viewHolder.ivBanner);
 
-//        Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
-
+       // Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
+        viewHolder.ivBanner.setOnClickListener(view -> {
+            if (advertisementListener != null) {
+                advertisementListener.onItemClick(loAdvertisement);
+            }
+        });
     }
 
     @Override
     public int getCount() {
-        return moAdvertList.length;
+        return moAdvertList.size();
     }
 
     class DataObjectHolder extends SliderViewAdapter.ViewHolder {

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.adgyde.android.AdGyde;
+import com.cashback.models.Advertisement;
 import com.cashback.models.Category;
 import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.utils.Constants;
@@ -24,6 +25,7 @@ public class AppGlobal extends Application {
     public static Context moContext;
     public static ArrayList<Category> moCategories = new ArrayList<>();
     public static ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse;
+    public static ArrayList<Advertisement> moSharePageImages;
 
     public static int getTotalBillVerified() {
         return fiTotalBillVerified;
@@ -91,5 +93,13 @@ public class AppGlobal extends Application {
 
     public static void setDealOfTheDayResponse(ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse) {
         AppGlobal.moDealOfTheDayResponse = moDealOfTheDayResponse;
+    }
+
+    public static ArrayList<Advertisement> getSharePageImages() {
+        return moSharePageImages;
+    }
+
+    public static void setSharePageImages(ArrayList<Advertisement> foImageList) {
+        AppGlobal.moSharePageImages = foImageList;
     }
 }

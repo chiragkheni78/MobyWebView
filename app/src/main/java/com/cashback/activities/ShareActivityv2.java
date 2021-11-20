@@ -1,31 +1,20 @@
 package com.cashback.activities;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cashback.R;
-import com.cashback.adapters.MessageListAdapter;
-import com.cashback.databinding.ActivityMessageBinding;
 import com.cashback.databinding.ActivityReferEarnBinding;
-import com.cashback.models.Message;
-import com.cashback.models.response.MessageListResponse;
-import com.cashback.models.viewmodel.MessagesViewModel;
 import com.cashback.utils.Common;
 
-import java.util.ArrayList;
+public class ShareActivityv2 extends BaseActivity implements View.OnClickListener {
 
-public class ShareActivity extends BaseActivity implements View.OnClickListener {
-
-    private static final String TAG = ShareActivity.class.getSimpleName();
+    private static final String TAG = ShareActivityv2.class.getSimpleName();
 
     ActivityReferEarnBinding moBinding;
 

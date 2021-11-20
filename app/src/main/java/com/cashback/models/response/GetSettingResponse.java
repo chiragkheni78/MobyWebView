@@ -72,6 +72,9 @@ public class GetSettingResponse {
     @SerializedName("foDealOfTheDays")
     private ArrayList<DealOfTheDayResponse> dealsOfTheDay;
 
+    @SerializedName("foShareScreenImages")
+    private ArrayList<Advertisement> shareScreenImages;
+
     public GetSettingResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
@@ -175,5 +178,9 @@ public class GetSettingResponse {
 
     public String[] getShareBanner() {
         return shareBanner;
+    }
+
+    public ArrayList<Advertisement> getShareScreenImages() {
+        return shareScreenImages;
     }
 }

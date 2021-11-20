@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.AdvertisementActivity;
 import com.cashback.activities.HomeActivity;
@@ -66,10 +67,10 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         moBinding.tvSMS.setOnClickListener(this);
         moBinding.tvEmail.setOnClickListener(this);
 
-        String[] loURL = moSharedPreferenceManager.getShareBannerUrl();
-        if (loURL != null) {
-            setImageSlider(loURL);
-        }
+//        String[] loURL = moSharedPreferenceManager.getShareBannerUrl();
+//        if (loURL != null) {
+            setImageSlider();
+//        }
     }
 
     private String getMessage() {
@@ -106,8 +107,19 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         }
     }
 
-    private void setImageSlider(String[] foUrls) {
-        moBinding.imageSlider.setSliderAdapter(new ShareBannerAdapter(getContext(), foUrls));
+    private void setImageSlider() {
+        moBinding.imageSlider.setSliderAdapter(new ShareBannerAdapter(getContext(), AppGlobal.moSharePageImages, new AdvertAdapter.OnItemClick() {
+            @Override
+            public void onItemClick(Advertisement advertisement) {
+                Intent loIntent = new Intent(getActivity(), HomeActivity.class);
+                loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                loIntent.putExtra(Constants.IntentKey.OFFER_ID, advertisement.getAdID());
+                loIntent.putExtra(Constants.IntentKey.CATEGORY_ID, advertisement.getCategoryID());
+                loIntent.putExtra(Constants.IntentKey.BANNER_ID, advertisement.getBannerID());
+                startActivity(loIntent);
+                getActivity().finish();
+            }
+        }));
     }
 
     private void openPhoneLogin() {
