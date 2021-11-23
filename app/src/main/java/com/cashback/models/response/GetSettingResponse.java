@@ -75,6 +75,10 @@ public class GetSettingResponse {
     @SerializedName("foShareScreenImages")
     private ArrayList<Advertisement> shareScreenImages;
 
+    @SerializedName("flCoverageRadius")
+    private long courageRadius;
+
+
     public GetSettingResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
@@ -182,5 +186,9 @@ public class GetSettingResponse {
 
     public ArrayList<Advertisement> getShareScreenImages() {
         return shareScreenImages;
+    }
+
+    public long getCourageRadius() {
+        return courageRadius;
     }
 }

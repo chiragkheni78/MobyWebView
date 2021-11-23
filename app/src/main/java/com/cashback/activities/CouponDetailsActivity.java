@@ -182,13 +182,17 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         loStoreLocationAdapter.setOnItemClickListener(new AdLocationAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                AdLocation loLocation = moActivity.getLocationList().get(position);
-                String lsUrl = "http://maps.google.com/maps?daddr=" + loLocation.getLatitude() + "," + loLocation.getLongitude();
-                Common.openBrowser(getContext(), lsUrl);
+                if (!getPreferenceManager().isPhoneVerified()) {
+                    openPhoneLogin(null);
+                } else {
+                    AdLocation loLocation = moActivity.getLocationList().get(position);
+                    String lsUrl = "http://maps.google.com/maps?daddr=" + loLocation.getLatitude() + "," + loLocation.getLongitude();
+                    Common.openBrowser(getContext(), lsUrl);
 
-                callAPIBlinkShopOnline();
-                enableMarkAsUsed();
-                moBinding.tvShopOffline.clearAnimation();
+                    callAPIBlinkShopOnline();
+                    enableMarkAsUsed();
+                    moBinding.tvShopOffline.clearAnimation();
+                }
             }
         });
 
@@ -198,15 +202,14 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
         //offline component visible
         moBinding.llOffline.setVisibility(View.VISIBLE);
-        if (!moActivity.isBlinkShopOnline()) {
-            moBinding.tvMarkAsUsed.setVisibility(View.VISIBLE);
-            setOnlineOfferListView(true);
-            setMarkAsUsedButton();
-        } else {
-            Common.blinkAnimation(moBinding.tvShopOffline);
-        }
-
-
+        moBinding.tvMarkAsUsed.setVisibility(View.VISIBLE);
+//        if (!moActivity.isBlinkShopOnline()) {
+//
+//        } else {
+//            Common.blinkAnimation(moBinding.tvShopOffline);
+//        }
+        setMarkAsUsedButton();
+        setOnlineOfferListView(true);
     }
 
     private void setMarkAsUsedButton() {
@@ -385,7 +388,12 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     private void dialogMarkAsUsed() {
+
         moBinding.tvMarkAsUsed.clearAnimation();
+        if (!getPreferenceManager().isPhoneVerified()) {
+            openPhoneLogin(null);
+            return;
+        }
 
         if (moActivity.getMarkAsUsedType() == 1) {
             dialogMarkWithPhone();

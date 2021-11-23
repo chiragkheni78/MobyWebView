@@ -2,6 +2,7 @@ package com.cashback;
 
 import android.app.Application;
 import android.content.Context;
+import android.location.Location;
 
 import com.adgyde.android.AdGyde;
 import com.cashback.models.Advertisement;
@@ -26,6 +27,7 @@ public class AppGlobal extends Application {
     public static ArrayList<Category> moCategories = new ArrayList<>();
     public static ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse;
     public static ArrayList<Advertisement> moSharePageImages;
+    public static Location moLocation;
 
     public static int getTotalBillVerified() {
         return fiTotalBillVerified;
@@ -101,5 +103,13 @@ public class AppGlobal extends Application {
 
     public static void setSharePageImages(ArrayList<Advertisement> foImageList) {
         AppGlobal.moSharePageImages = foImageList;
+    }
+
+    public static Location getLocation() {
+        return moLocation;
+    }
+
+    public static void setLocation(Location location) {
+        AppGlobal.moLocation = location;
     }
 }

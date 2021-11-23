@@ -11,6 +11,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -55,6 +57,7 @@ import com.squareup.picasso.RequestCreator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -545,24 +548,89 @@ public class Common {
             waIntent.setPackage("com.whatsapp");
             waIntent.putExtra(Intent.EXTRA_TEXT, fsMessage);
             foContext.startActivity(Intent.createChooser(waIntent, "Share with"));
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(foContext,e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(foContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     public static void openMessenger(Context foContext, String fsMessage) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT,fsMessage);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, fsMessage);
         sendIntent.setType("text/plain");
         sendIntent.setPackage("com.facebook.orca");
         try {
             foContext.startActivity(sendIntent);
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(foContext,"Facebook Messenger WhatsApp not Installed", Toast.LENGTH_LONG).show();
-        } catch(Exception e){
+            Toast.makeText(foContext, "Facebook Messenger not Installed", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void openInstagram(Context foContext, String fsMessage, String imagePath) {
+        try {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+
+            File loFile = new File(imagePath);
+            Uri uri = Uri.fromFile(loFile);
+            sendIntent.setType("Image/*");
+            sendIntent.setType("text/html");
+            sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, fsMessage);
+            sendIntent.setPackage("com.instagram.android");
+            foContext.startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(foContext, "Instagram not Installed", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(foContext, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static void openFacebook(Context foContext, String fsMessage) {
+        try {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.setPackage("com.facebook.katana");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, fsMessage);
+            foContext.startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(foContext, "Facebook not Installed", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(foContext, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static void openTwitter(Context foContext, String fsMessage) {
+        try {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.setPackage("com.twitter.android");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, fsMessage);
+            foContext.startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(foContext, "Twitter not Installed", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(foContext, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static void openTelegram(Context foContext, String fsMessage) {
+        try {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.setPackage("org.telegram.messenger");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, fsMessage);
+            foContext.startActivity(sendIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(foContext, "Telegram not Installed", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(foContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -574,10 +642,15 @@ public class Common {
     }
 
     public static void openEmail(Context foContext, String fsMessage) {
-        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("mailto:"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_SUBJECT, "Moby Cashback");
         intent.putExtra(Intent.EXTRA_TEXT, fsMessage);
         foContext.startActivity(intent);
+    }
+
+    public static boolean isUserInRadius(Location foCurrentLocation, Location foStoreLocation, long coverageRadius) {
+        long distance = (long) foCurrentLocation.distanceTo(foStoreLocation);
+        return distance < coverageRadius;
     }
 
 }

@@ -3,6 +3,7 @@ package com.cashback.models.viewmodel;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -16,6 +17,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cashback.AppGlobal;
+import com.cashback.dialog.MessageDialog;
 import com.cashback.models.Ad;
 import com.cashback.models.AdLocation;
 import com.cashback.models.MapMarker;
@@ -174,7 +176,7 @@ public class MapViewModel extends ViewModel {
         return true;
     }
 
-    public void checkGPSEnable(Activity foContext) {
+    public void enableGPS(Activity foContext) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
@@ -237,15 +239,20 @@ public class MapViewModel extends ViewModel {
                 if (e instanceof ResolvableApiException) {
                     // Location settings are not satisfied, but this can be fixed
                     // by showing the user a dialog.
-                    try {
-                        // Show the dialog by calling startResolutionForResult(),
-                        // and check the result in onActivityResult().
-                        ResolvableApiException resolvable = (ResolvableApiException) e;
-                        resolvable.startResolutionForResult(foContext,
-                                REQUEST_CHECK_SETTINGS);
-                    } catch (IntentSender.SendIntentException sendEx) {
-                        // Ignore the error.
-                    }
+                    MessageDialog loDialog = new MessageDialog(foContext, null, "GPS location is required to show in-store offers", "Enable GPS", false);
+                    loDialog.setClickListener(v -> {
+                        loDialog.dismiss();
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            ResolvableApiException resolvable = (ResolvableApiException) e;
+                            resolvable.startResolutionForResult(foContext,
+                                    REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException sendEx) {
+                            // Ignore the error.
+                        }
+                    });
+                    loDialog.show();
                 }
             }
         });

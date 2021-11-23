@@ -26,7 +26,7 @@ public class Ad implements Serializable {
     boolean engagedFlag;
 
     @SerializedName("flCoverageRadius")
-    String coverageRadius;
+    long coverageRadius;
 
     @SerializedName("fsFlatCashBack")
     String flatCashBack;
@@ -75,7 +75,7 @@ public class Ad implements Serializable {
         return productName;
     }
 
-    public String getCoverageRadius() {
+    public long getCoverageRadius() {
         return coverageRadius;
     }
 

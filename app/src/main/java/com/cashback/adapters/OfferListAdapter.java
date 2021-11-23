@@ -3,12 +3,7 @@ package com.cashback.adapters;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +18,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
-import com.cashback.activities.OfferDetailsActivity;
-import com.cashback.activities.QuizDetailsActivity;
 import com.cashback.models.Ad;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
-import com.cashback.utils.SharedPreferenceManager;
 
 import java.util.ArrayList;
 
@@ -41,6 +33,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 
     private long miOfferID;
     private OnAdItemClick onAdItemClick;
+
     public OfferListAdapter(Context foContext, ArrayList<Ad> foOfferList, OnAdItemClick onAdItemClick) {
         moOfferList = foOfferList;
         moContext = foContext;
@@ -48,7 +41,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     }
 
     public interface OnAdItemClick {
-        void submitQuiz(int position);
+        void handleOfferDetails(int position);
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -73,28 +66,11 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 
         @Override
         public void onClick(View foView) {
-            //if (foView.getId() == R.id.btnAdDetails) {
-                int liPosition = (int) foView.getTag();
-//                Intent loIntent = new Intent(moContext, OfferDetailsActivity.class);
-//                loIntent.putExtra(Constants.IntentKey.OFFER_ID, moOfferList.get(liPosition).getAdID());
-//                if (moOfferList.get(liPosition).getLocationList().size() > 0)
-//                    loIntent.putExtra(Constants.IntentKey.LOCATION_ID, moOfferList.get(liPosition).getLocationList().get(0).getLocationID());
-//                moContext.startActivity(loIntent);
-            //}
 
-            if (moOfferList.get(liPosition).isQuizFlow()){
-                Intent loIntent = new Intent(moContext, QuizDetailsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constants.IntentKey.OFFER_OBJECT, moOfferList.get(liPosition));
-                loIntent.putExtras(bundle);
-                moContext.startActivity(loIntent);
-            } else {
-                //API Call
-                if (onAdItemClick != null) {
-                    onAdItemClick.submitQuiz(liPosition);
-                }
+            int liPosition = (int) foView.getTag();
+            if (onAdItemClick != null) {
+                onAdItemClick.handleOfferDetails(liPosition);
             }
-
         }
     }
 
@@ -127,7 +103,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     }
 
     private void setBackground(DataObjectHolder foHolder, Ad loAdOffer) {
-        if (loAdOffer.getAdID() == miOfferID){
+        if (loAdOffer.getAdID() == miOfferID) {
 //            foHolder.loLlRoot.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.green));
 //            foHolder.loBtnAdDetails.setBackground(ContextCompat.getDrawable(moContext, R.drawable.btn_white_coupon));
 //            foHolder.loBtnAdDetails.setTextColor(ActivityCompat.getColor(moContext, R.color.black));

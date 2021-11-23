@@ -1,8 +1,14 @@
 package com.cashback.fragments;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,29 +16,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.core.app.ActivityCompat;
 
 import com.cashback.AppGlobal;
 import com.cashback.R;
-import com.cashback.activities.AdvertisementActivity;
 import com.cashback.activities.HomeActivity;
 import com.cashback.activities.PhoneLoginActivity;
 import com.cashback.adapters.AdvertAdapter;
-import com.cashback.adapters.HelpListAdapter;
 import com.cashback.adapters.ShareBannerAdapter;
-import com.cashback.databinding.ActivityHelpBinding;
 import com.cashback.databinding.ActivityReferEarnBinding;
 import com.cashback.models.Advertisement;
-import com.cashback.models.response.HelpResponse;
-import com.cashback.models.viewmodel.HelpViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.HttpDownloadUtility;
+import com.cashback.utils.LogV2;
 import com.cashback.utils.SharedPreferenceManager;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
@@ -66,6 +66,10 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         moBinding.tvMessenger.setOnClickListener(this);
         moBinding.tvSMS.setOnClickListener(this);
         moBinding.tvEmail.setOnClickListener(this);
+        moBinding.tvFacebook.setOnClickListener(this);
+        moBinding.tvTwitter.setOnClickListener(this);
+        moBinding.tvTelegram.setOnClickListener(this);
+        moBinding.tvCopy.setOnClickListener(this);
 
 //        String[] loURL = moSharedPreferenceManager.getShareBannerUrl();
 //        if (loURL != null) {
@@ -104,10 +108,27 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
             case R.id.tvEmail:
                 Common.openEmail(getContext(), getMessage());
                 break;
+            case R.id.tvFacebook:
+                Common.openFacebook(getContext(), getMessage());
+                break;
+            case R.id.tvTwitter:
+//                if (AppGlobal.getSharePageImages() != null && AppGlobal.getSharePageImages().size()>0){
+//                    downloadImage(AppGlobal.getSharePageImages().get(0).getImageUrl());
+//                }
+                Common.openTwitter(getContext(), getMessage());
+                break;
+            case R.id.tvTelegram:
+                Common.openTelegram(getContext(), getMessage());
+                break;
+            case R.id.tvCopy:
+                Common.setClipboard(getContext(), getMessage());
+                Toast.makeText(getActivity(), "Copied", Toast.LENGTH_LONG).show();
+                break;
         }
     }
 
     private void setImageSlider() {
+
         moBinding.imageSlider.setSliderAdapter(new ShareBannerAdapter(getContext(), AppGlobal.moSharePageImages, new AdvertAdapter.OnItemClick() {
             @Override
             public void onItemClick(Advertisement advertisement) {
@@ -120,6 +141,10 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                 getActivity().finish();
             }
         }));
+
+        if (AppGlobal.moSharePageImages.size() < 2){
+            moBinding.imageSlider.setInfiniteAdapterEnabled(false);
+        }
     }
 
     private void openPhoneLogin() {
@@ -135,6 +160,79 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
             if (resultCode == RESULT_OK) {
                 Toast.makeText(getContext(), "Phone Verified", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    public void downloadImage(String fsUrl) {
+        if (isStoragePermissionGranted(getActivity())) {
+            new DownloadFileAsync(fsUrl).execute();
+        }
+    }
+
+    private class DownloadFileAsync extends AsyncTask<String, Void, String> {
+
+        String lsSaveDir = LogV2.PATH + "/Images/";
+        String lsImageUrl;
+        public DownloadFileAsync(String fsUrl) {
+            lsImageUrl = fsUrl;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                return HttpDownloadUtility.downloadFile(lsImageUrl, lsSaveDir, "share-image");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String fsDownloadedFile) {
+            super.onPostExecute(fsDownloadedFile);
+            dismissProgressDialog();
+            if (!TextUtils.isEmpty(fsDownloadedFile)) {
+                Common.openInstagram(getContext(), getMessage(), fsDownloadedFile);
+            }
+        }
+    }
+
+
+    public static final int REQUEST_FILE_ACCESS = 910;
+    public boolean isStoragePermissionGranted(Activity foContext) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (foContext.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TTT", "Permission is granted2");
+                return true;
+            } else {
+                Log.v("TTT", "Permission is revoked2");
+                ActivityCompat.requestPermissions(foContext, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_FILE_ACCESS);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TTT", "Permission is granted2");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_FILE_ACCESS:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    moBinding.tvTwitter.performClick();
+                } else {
+                    Common.showErrorDialog(getContext(), "", false);
+                }
+                break;
         }
     }
 }

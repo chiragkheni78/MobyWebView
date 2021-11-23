@@ -193,6 +193,8 @@
     <string name="btn_scan_moby_qr_code">Scan MOBY QR Code</string>
     <string name="btn_view_coupon_code">View Coupon Code</string>
 
+    <string name="alert_msg_out_range">You need to be Within %s Mtrs of the Ad pin to answer the Quiz and Get instant Cash/Gift.</string>
+
 
     <!--Timeline Sorting-->
     <string-array name="sort_by">

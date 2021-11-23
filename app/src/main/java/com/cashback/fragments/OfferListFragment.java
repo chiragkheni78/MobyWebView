@@ -2,6 +2,7 @@ package com.cashback.fragments;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,37 +23,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.AppGlobal;
 import com.cashback.R;
-import com.cashback.activities.AdvertisementActivity;
-import com.cashback.activities.CouponDetailsActivity;
 import com.cashback.activities.HomeActivity;
 import com.cashback.activities.OfferDetailsActivity;
-import com.cashback.adapters.AdvertAdapter;
+import com.cashback.activities.QuizDetailsActivity;
 import com.cashback.adapters.CategoryAdapter;
 import com.cashback.adapters.DealsOfDayAdapter;
 import com.cashback.adapters.OfferListAdapter;
 import com.cashback.databinding.FragmentOfferListBinding;
+import com.cashback.dialog.MessageDialog;
 import com.cashback.models.Ad;
-import com.cashback.models.Advertisement;
+import com.cashback.models.AdLocation;
 import com.cashback.models.Category;
 import com.cashback.models.OfferFilter;
 import com.cashback.models.response.BypassQuizResponse;
 import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.OfferFilterResponse;
+import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.models.viewmodel.OfferListViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
 
 import java.util.ArrayList;
 
-import static com.cashback.AppGlobal.isDealBannerClosed;
 import static com.cashback.AppGlobal.isSearchButtonBlink;
 import static com.cashback.AppGlobal.moContext;
-import static com.cashback.fragments.FragmentMyCoupons.REQUEST_COUPON_DETAILS;
+import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
+import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
 
 @SuppressWarnings("All")
 public class OfferListFragment extends BaseFragment implements View.OnClickListener, OfferListAdapter.OnAdItemClick {
@@ -61,8 +60,10 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     }
 
+    private static final String TAG = OfferListFragment.class.getSimpleName();
     FragmentOfferListBinding moBinding;
     OfferListViewModel moOfferListViewModel;
+    MapViewModel moMapViewModel;
 
     OfferListAdapter moOfferListAdapter;
     CategoryAdapter moCategoryAdapter;
@@ -156,7 +157,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         isLastPage = false;
                         if (moOfferList != null) moOfferList.clear();
 
-                        Common.msOfferId = mlOfferID+"";
+                        Common.msOfferId = mlOfferID + "";
                         moOfferListAdapter.notifyFirstItem(mlOfferID);
 
                         moBinding.btnSearch.clearAnimation();
@@ -267,6 +268,9 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 //        moOfferListViewModel.fetchCategoryStatus.observe(getActivity(), fetchCategoryObserver);
         moOfferListViewModel.fetchOffersStatus.observe(getActivity(), fetchOffersObserver);
         moOfferListViewModel.bypassQuizStatus.observe(getActivity(), bypassQuizObserver);
+
+        moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        moMapViewModel.functionCallStatus.observe(this, functionCallObserver);
     }
 
     private void fetchOffers() {
@@ -279,8 +283,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
         moOfferListViewModel.fetchOffers(getActivity(),
                 "",
-                0.0,
-                0.0,
+                AppGlobal.moLocation.getLatitude(),
+                AppGlobal.moLocation.getLongitude(),
                 false,
                 false,
                 Constants.OfferPage.OFFER_LIST.getValue(),
@@ -421,12 +425,59 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         fetchOffers();
     }
 
-    long llTempAdId = -1;
+    private int miPosition = -1;
+
     @Override
-    public void submitQuiz(int position) {
+    public void handleOfferDetails(int position) {
+        miPosition = position;
+        Ad loOffer = moOfferList.get(position);
+
+        if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
+            verifyLocation(loOffer);
+        } else {
+            if (loOffer.isQuizFlow()) {
+                openQuizDetails(loOffer);
+            } else callAPIByPassQuiz(loOffer);
+        }
+    }
+
+    private void openQuizDetails(Ad foOffer) {
+        Intent loIntent = new Intent(moContext, QuizDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.IntentKey.OFFER_OBJECT, foOffer);
+        loIntent.putExtras(bundle);
+        moContext.startActivity(loIntent);
+    }
+
+    private void callAPIByPassQuiz(Ad foOffer) {
         showProgressDialog();
-        llTempAdId = moOfferList.get(position).getAdID();
-        moOfferListViewModel.bypassQuiz(getActivity(), llTempAdId);
+        moOfferListViewModel.bypassQuiz(getActivity(), foOffer.getAdID());
+    }
+
+    private void verifyLocation(Ad loOffer) {
+        if (AppGlobal.moLocation != null) {
+            AdLocation adLocation = loOffer.getLocationList().get(0);
+            Location loAdLocation = new Location("shop");
+            loAdLocation.setLatitude(adLocation.getLatitude());
+            loAdLocation.setLongitude(adLocation.getLongitude());
+            if (Common.isUserInRadius(AppGlobal.getLocation(), loAdLocation, loOffer.getCoverageRadius())) {
+                if (loOffer.isQuizFlow()) {
+                    openQuizDetails(loOffer);
+                } else callAPIByPassQuiz(loOffer);
+            } else {
+                String lsMessage = Common.getDynamicText(getActivity(), "alert_msg_out_range")
+                        .replace("%s", String.valueOf(loOffer.getCoverageRadius()));
+                MessageDialog loDialog = new MessageDialog(getActivity(),
+                        null,
+                        lsMessage,
+                        null,
+                        false);
+                loDialog.show();
+            }
+        } else {
+            showProgressDialog();
+            checkPermissionStatus();
+        }
     }
 
     Observer<BypassQuizResponse> bypassQuizObserver = new Observer<BypassQuizResponse>() {
@@ -434,12 +485,6 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         public void onChanged(BypassQuizResponse loJsonObject) {
             dismissProgressDialog();
             if (!loJsonObject.isError()) {
-
-//                Common.msOfferId = "" + llTempAdId;
-//                Intent intent = new Intent(getActivity(), HomeActivity.class);
-//                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
-//                startActivity(intent);
-//                getActivity().finishAffinity();
                 openMyCoupons(loJsonObject.getActivityID());
             } else {
                 Common.showErrorDialog(getActivity(), loJsonObject.getMessage(), false);
@@ -454,6 +499,28 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         bundle.putLong(Constants.IntentKey.ACTIVITY_ID, flActivityID);
         fragmentMyCoupons.setArguments(bundle);
         Common.replaceFragment(getActivity(), fragmentMyCoupons, Constants.FragmentTag.TAG_MY_COUPON_LIST, false);
-        ((HomeActivity)getActivity()).updateBottomMenu(3);
+        ((HomeActivity) getActivity()).updateBottomMenu(3);
     }
+
+    private void checkPermissionStatus() {
+        if (!moMapViewModel.checkGPSEnabled(getActivity())) {
+            moMapViewModel.enableGPS(getActivity());
+        }
+    }
+
+    Observer<String> functionCallObserver = new Observer<String>() {
+        @Override
+        public void onChanged(String foFunctionName) {
+            switch (foFunctionName) {
+                case LOAD_MAP_VIEW:
+                    moMapViewModel.getLastKnownLocation(getActivity());
+                    break;
+                case FETCH_OFFERS:
+                    dismissProgressDialog();
+                    AppGlobal.moLocation = moMapViewModel.getCurrentLocation();
+                    handleOfferDetails(miPosition);
+                    break;
+            }
+        }
+    };
 }

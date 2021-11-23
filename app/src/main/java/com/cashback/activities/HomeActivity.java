@@ -1,9 +1,12 @@
 package com.cashback.activities;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -39,6 +43,7 @@ import com.cashback.fragments.ShareFragment;
 import com.cashback.models.Advertisement;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.viewmodel.HomeViewModel;
+import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -54,6 +59,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
+import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
+import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
 import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
 import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
@@ -68,6 +76,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     ActivityHomeBinding moBinding;
 
     HomeViewModel moHomeViewModel;
+    MapViewModel moMapViewModel;
+
     private String stFrom = "";
     private AppUpdateManager appUpdateManager;
 
@@ -103,9 +113,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
         if (fragment instanceof MapViewFragment) {
             ((MapViewFragment) fragment).onRequestPermissionsResult(requestCode, permissions, grantResults);
+        } else {
+            switch (requestCode) {
+                case MY_PERMISSIONS_LOCATION:
+                    if (ContextCompat.checkSelfPermission(getContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Log.e(TAG, "Permission Granted:: ACCESS_FINE_LOCATION");
+                        moMapViewModel.functionCallStatus.postValue(LOAD_MAP_VIEW);
+                    }
+                    break;
+            }
         }
         Log.e("AppName", "Here is Location");
     }
@@ -159,6 +180,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
         moHomeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         moHomeViewModel.getSettingStatus.observe(this, getSettingObserver);
+
+        moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        moMapViewModel.functionCallStatus.observe(this, functionCallObserver);
 
         setNavigationBar();
         moBinding.toolbar.ivMobyIcon.setOnClickListener(this);
@@ -227,7 +251,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    public void updateBottomMenu(int fiPosition){
+    public void updateBottomMenu(int fiPosition) {
         moBinding.navigation.getMenu().getItem(fiPosition).setChecked(true);
     }
 
@@ -500,65 +524,36 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
 
             if (foJsonObject.getAppUpdate().getStatus() == 1) {
-                //showAlertTwoBtn(fsMessage, message);
-                //Flaxibale
-//                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-//                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-//                            && appUpdateInfo.clientVersionStalenessDays() != null
-//                            && appUpdateInfo.clientVersionStalenessDays() >= 2
-//                            && appUpdateInfo.updatePriority() >= 4
-//                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-//                        try {
-//                            appUpdateManager.startUpdateFlowForResult(
-//                                    appUpdateInfo,
-//                                    AppUpdateType.FLEXIBLE,
-//                                    HomeActivity.this,
-//                                    101);
-//                        } catch (IntentSender.SendIntentException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-
                 showUpdateApp(foJsonObject);
             } else if (foJsonObject.getAppUpdate().getStatus() == 2) {
                 showUpdateApp(foJsonObject);
-                //dialogUpdateApp(fsMessage, true, false);
-                //immediate
-//                appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-//                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-//                            && appUpdateInfo.updatePriority() >= 4
-//                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-//                        try {
-//                            appUpdateManager.startUpdateFlowForResult(
-//                                    appUpdateInfo,
-//                                    AppUpdateType.IMMEDIATE,
-//                                    HomeActivity.this,
-//                                    100);
-//                        } catch (IntentSender.SendIntentException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-
             } else {
                 if (!getPreferenceManager().isMarketingAd()) {
                     if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {
                         openNavigationBarFragments(R.id.itemCoupons);
                     } else {
-                        if (!AppGlobal.isDisplayRewardNote) {
-                            showFirstDialog(foJsonObject.getFirstTimeAlertTitle(), foJsonObject.getFirstTimeAlertMsg(), foJsonObject.getAdvertisementList());
-                        } else {
-
-                            int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
-                            long llOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
-                            long llBannerID = getIntent().getLongExtra(Constants.IntentKey.BANNER_ID, 0);
-
-                            loadOfferListFragment(liCategoryID, llOfferID, 0, llBannerID);
-                        }
+                        mbIsLocationRequired = true;
+                        moJsonObject = foJsonObject;
+                        checkPermissionStatus();
                     }
                 }
             }
+        }
+    }
+
+    private boolean mbIsLocationRequired = false;
+    GetSettingResponse moJsonObject;
+
+    private void loadOffers() {
+
+        if (!AppGlobal.isDisplayRewardNote) {
+            showFirstDialog(moJsonObject.getFirstTimeAlertTitle(), moJsonObject.getFirstTimeAlertMsg(), moJsonObject.getAdvertisementList());
+        } else {
+
+            int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
+            long llOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
+            long llBannerID = getIntent().getLongExtra(Constants.IntentKey.BANNER_ID, 0);
+            loadOfferListFragment(liCategoryID, llOfferID, 0, llBannerID);
         }
     }
 
@@ -707,5 +702,38 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 Common.redirectPlayStore(HomeActivity.this);
             }
         });
+    }
+
+    private void checkPermissionStatus() {
+        if (!moMapViewModel.checkGPSEnabled(this)) {
+            moMapViewModel.enableGPS(this);
+        }
+    }
+
+    Observer<String> functionCallObserver = new Observer<String>() {
+        @Override
+        public void onChanged(String foFunctionName) {
+            switch (foFunctionName) {
+                case LOAD_MAP_VIEW:
+                    //all permission granted
+                    mbIsLocationRequired = false;
+                    showProgressDialog();
+                    moMapViewModel.getLastKnownLocation(HomeActivity.this);
+                    break;
+                case FETCH_OFFERS:
+                    dismissProgressDialog();
+                    AppGlobal.moLocation = moMapViewModel.getCurrentLocation();
+                    loadOffers();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mbIsLocationRequired) {
+            checkPermissionStatus();
+        }
     }
 }

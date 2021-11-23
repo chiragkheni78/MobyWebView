@@ -137,7 +137,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
         if (isReloadEnable) {
             if (moMapViewModel.checkGPSEnabled(getActivity())) {
-                moMapViewModel.checkGPSEnable(getActivity());
+                moMapViewModel.enableGPS(getActivity());
             }
         } else {
             if (moBinding.llErrorMessage.getVisibility() == View.VISIBLE)
@@ -214,7 +214,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             getActivity().startActivityForResult(loIntent, REQUEST_PHONE_LOGIN);
         } else if (!moMapViewModel.isLocationEnabled((getContext()))) {
             if (!moMapViewModel.checkGPSEnabled(getActivity())) {
-                moMapViewModel.checkGPSEnable(getActivity());
+                moMapViewModel.enableGPS(getActivity());
                 /*isReloadEnable = true;
                 loadView();*/
             }
@@ -253,7 +253,6 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                 break;
         }
     }
-
 
     private GoogleMap moGoogleMap;
     private List<Marker> moMarkerList;
