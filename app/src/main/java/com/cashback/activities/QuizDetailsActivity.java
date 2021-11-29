@@ -376,15 +376,6 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             } else {
                 if (loJsonObject.isMarketingAd())
                 {
-//                    Common.showErrorDialog(getContext(), loJsonObject.getMessage(), new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            dialog.cancel();
-//                            Intent intent = new Intent(getContext(), HomeActivity.class);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(intent);
-//                        }
-//                    });
-
                     MessageDialog loDialog = new MessageDialog(getContext(), null, loJsonObject.getMessage(), null, false);
                     loDialog.setClickListener(new View.OnClickListener() {
                         @Override
@@ -397,7 +388,21 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
                     });
                     loDialog.show();
                 } else {
-                    Common.showErrorDialog(getContext(), loJsonObject.getMessage(), true);
+                    if (loJsonObject.isByPass()) {
+                        MessageDialog loDialog = new MessageDialog(getContext(), null, loJsonObject.getMessage(), null, false);
+                        loDialog.setClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                loDialog.cancel();
+                                Intent intent = new Intent(getContext(), HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        });
+                        loDialog.show();
+                    }else {
+                        Common.showErrorDialog(getContext(), loJsonObject.getMessage(), true);
+                    }
                 }
             }
             dismissProgressDialog();

@@ -105,7 +105,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
                 loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityId);
 
                 String lsAction = getArguments().getString(Constants.IntentKey.FUNCTION, null);
-                if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.BY_PASS_QUIZ)){
+                if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.BY_PASS_QUIZ)) {
                     loIntent.setAction(Constants.IntentKey.Action.BY_PASS_QUIZ);
                     miPosition = 0;
                 }
@@ -234,60 +234,60 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
     private void showBackToCouponDialog() {
         try {
             //if (!isFinishing()) {
-                final Dialog moDialog = new Dialog(getActivity());
-                moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                moDialog.setContentView(R.layout.dialog_my_coupon_back);
+            final Dialog moDialog = new Dialog(getActivity());
+            moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            moDialog.setContentView(R.layout.dialog_my_coupon_back);
 
-                TextView loTvTitle = moDialog.findViewById(R.id.tvTitle);
-                TextView loTvMessage = moDialog.findViewById(R.id.tvMessage);
-                TextView loTvError = moDialog.findViewById(R.id.tvErrorMessage);
-                Button loBtnOfflineOffers = moDialog.findViewById(R.id.btnOfflineOffers);
-                Button loBtnRedeemCoupon = moDialog.findViewById(R.id.btnRedeemCoupon);
-                Button loBtnOnlineOffers = moDialog.findViewById(R.id.btnOnlineOffers);
+            TextView loTvTitle = moDialog.findViewById(R.id.tvTitle);
+            TextView loTvMessage = moDialog.findViewById(R.id.tvMessage);
+            TextView loTvError = moDialog.findViewById(R.id.tvErrorMessage);
+            Button loBtnOfflineOffers = moDialog.findViewById(R.id.btnOfflineOffers);
+            Button loBtnRedeemCoupon = moDialog.findViewById(R.id.btnRedeemCoupon);
+            Button loBtnOnlineOffers = moDialog.findViewById(R.id.btnOnlineOffers);
 
-                String lsTitle = Common.getDynamicText(getContext(), "back_from_timeline_title");
-                String lsMessage = Common.getDynamicText(getContext(), "back_from_timeline_message");
+            String lsTitle = Common.getDynamicText(getContext(), "back_from_timeline_title");
+            String lsMessage = Common.getDynamicText(getContext(), "back_from_timeline_message");
 
-                loTvTitle.setText(Html.fromHtml(lsTitle));
-                loTvMessage.setText(Html.fromHtml(lsMessage));
+            loTvTitle.setText(Html.fromHtml(lsTitle));
+            loTvMessage.setText(Html.fromHtml(lsMessage));
 
-                loBtnOfflineOffers.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (miTotalVerifiedBill == 0){
-                            loTvError.setVisibility(View.VISIBLE);
-                            return;
-                        }
-                        moDialog.dismiss();
-                        ((HomeActivity) getActivity()).openNavigationBarFragments(3);
-                        /*backToHome(MAP_SCREEN);*/
+            loBtnOfflineOffers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (miTotalVerifiedBill == 0) {
+                        loTvError.setVisibility(View.VISIBLE);
+                        return;
                     }
-                });
+                    moDialog.dismiss();
+                    ((HomeActivity) getActivity()).openNavigationBarFragments(3);
+                    /*backToHome(MAP_SCREEN);*/
+                }
+            });
 
-                loBtnRedeemCoupon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        moDialog.dismiss();
-                    }
-                });
+            loBtnRedeemCoupon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    moDialog.dismiss();
+                }
+            });
 
-                loBtnOnlineOffers.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        moDialog.dismiss();
+            loBtnOnlineOffers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    moDialog.dismiss();
 //                        backToHome(null);
 
-                        ((HomeActivity) getActivity()).openNavigationBarFragments(1);
-                    }
-                });
-
-                if (moDialog.getWindow() != null) {
-                    moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                    moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    moDialog.getWindow().setGravity(Gravity.CENTER);
-                    moDialog.setCancelable(false);
-                    moDialog.show();
+                    ((HomeActivity) getActivity()).openNavigationBarFragments(1);
                 }
+            });
+
+            if (moDialog.getWindow() != null) {
+                moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                moDialog.getWindow().setGravity(Gravity.CENTER);
+                moDialog.setCancelable(false);
+                moDialog.show();
+            }
             //}
         } catch (Exception e) {
             LogV2.logException(TAG, e);
@@ -340,15 +340,17 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
                     String lsAction = data.getAction();
                     if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
                         Activity loActivity = moActivityList.get(miPosition);
-                        if (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())){
+                        if (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
                             moActivityList.get(miPosition).setCouponUsed(true);
                             moActivityList.get(miPosition).setBillUploaded(true);
                             moActivityListAdapter.notifyDataSetChanged();
                         }
                         //openBillUpload(miPosition);
                     } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)) {
-                        moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
-                        moActivityListAdapter.notifyDataSetChanged();
+                        if (moActivityList != null && moActivityList.size() > 0) {
+                            moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
+                            moActivityListAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
             }

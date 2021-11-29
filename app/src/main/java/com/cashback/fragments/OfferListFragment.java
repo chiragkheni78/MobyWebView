@@ -283,8 +283,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
         moOfferListViewModel.fetchOffers(getActivity(),
                 "",
-                AppGlobal.moLocation.getLatitude(),
-                AppGlobal.moLocation.getLongitude(),
+                AppGlobal.getLocation() == null ? 0.0 : AppGlobal.getLocation().getLatitude(),
+                AppGlobal.getLocation() == null? 0.0 : AppGlobal.getLocation().getLongitude(),
                 false,
                 false,
                 Constants.OfferPage.OFFER_LIST.getValue(),
@@ -455,7 +455,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void verifyLocation(Ad loOffer) {
-        if (AppGlobal.moLocation != null) {
+        if (AppGlobal.getLocation() != null) {
             AdLocation adLocation = loOffer.getLocationList().get(0);
             Location loAdLocation = new Location("shop");
             loAdLocation.setLatitude(adLocation.getLatitude());
@@ -464,7 +464,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 if (loOffer.isQuizFlow()) {
                     openQuizDetails(loOffer);
                 } else callAPIByPassQuiz(loOffer);
-            } else {
+             } else {
                 String lsMessage = Common.getDynamicText(getActivity(), "alert_msg_out_range")
                         .replace("%s", String.valueOf(loOffer.getCoverageRadius()));
                 MessageDialog loDialog = new MessageDialog(getActivity(),
@@ -510,15 +510,17 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     Observer<String> functionCallObserver = new Observer<String>() {
         @Override
-        public void onChanged(String foFunctionName) {
-            switch (foFunctionName) {
+        public void onChanged(String fsFunctionName) {
+            switch (fsFunctionName) {
                 case LOAD_MAP_VIEW:
                     moMapViewModel.getLastKnownLocation(getActivity());
                     break;
                 case FETCH_OFFERS:
                     dismissProgressDialog();
-                    AppGlobal.moLocation = moMapViewModel.getCurrentLocation();
-                    handleOfferDetails(miPosition);
+                    if (moMapViewModel.getCurrentLocation() != null){
+                        AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
+                        handleOfferDetails(miPosition);
+                    }
                     break;
             }
         }

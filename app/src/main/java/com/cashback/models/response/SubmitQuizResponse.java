@@ -29,6 +29,9 @@ public class SubmitQuizResponse {
     @SerializedName("fsDisplayAdsMessage")
     SuccessMessage successMessage;
 
+    @SerializedName("fbIsGoBack")
+    private boolean isByPass;
+
     public boolean isError() {
         return isError;
     }
@@ -62,4 +65,7 @@ public class SubmitQuizResponse {
         this.message = message;
     }
 
+    public boolean isByPass() {
+        return isByPass;
+    }
 }

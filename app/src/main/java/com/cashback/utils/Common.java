@@ -206,14 +206,15 @@ public class Common {
         return null;
     }
 
-    public static ProgressDialog showProgressDialog(Context foContext) {
+    public static ProgressDialog showProgressDialog(Activity foContext) {
 
         ProgressDialog loDialog = null;
         try {
             loDialog = new ProgressDialog(foContext);
             loDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             loDialog.setCancelable(false);
-            loDialog.show();
+            if (!foContext.isFinishing())
+                loDialog.show();
             loDialog.setContentView(R.layout.progressbar);
         } catch (Exception e) {
             LogV2.logException(TAG, e);

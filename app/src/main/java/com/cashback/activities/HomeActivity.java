@@ -722,8 +722,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     break;
                 case FETCH_OFFERS:
                     dismissProgressDialog();
-                    AppGlobal.moLocation = moMapViewModel.getCurrentLocation();
-                    loadOffers();
+                    AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
+                    if(AppGlobal.getLocation() != null){
+                        loadOffers();
+                    } else {
+                        moMapViewModel.getLastKnownLocation(HomeActivity.this);
+                    }
                     break;
             }
         }

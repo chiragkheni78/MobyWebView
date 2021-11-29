@@ -47,7 +47,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void showProgressDialog() {
-        loProgressDialog = Common.showProgressDialog(this);
+        loProgressDialog = Common.showProgressDialog(BaseActivity.this);
     }
 
     protected void dismissProgressDialog() {
