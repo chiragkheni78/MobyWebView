@@ -281,14 +281,18 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         String lsSearchText = (moBinding.etSearch.getText().length() > 0) ? moBinding.etSearch.getText().toString().trim() : "";
         OfferFilter loOfferFilter = new OfferFilter(lsSearchText, miCurrentPage, miCategoryId, mlBannerID);
 
+        if (AppGlobal.getLocation() == null) {
+            AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
+        }
         moOfferListViewModel.fetchOffers(getActivity(),
                 "",
                 AppGlobal.getLocation() == null ? 0.0 : AppGlobal.getLocation().getLatitude(),
-                AppGlobal.getLocation() == null? 0.0 : AppGlobal.getLocation().getLongitude(),
+                AppGlobal.getLocation() == null ? 0.0 : AppGlobal.getLocation().getLongitude(),
                 false,
                 false,
                 Constants.OfferPage.OFFER_LIST.getValue(),
                 loOfferFilter);
+
     }
 
     Observer<FetchOffersResponse> fetchOffersObserver = new Observer<FetchOffersResponse>() {
@@ -465,7 +469,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 if (loOffer.isQuizFlow()) {
                     openQuizDetails(loOffer);
                 } else callAPIByPassQuiz(loOffer);
-             } else {
+            } else {
                 String lsMessage = Common.getDynamicText(getActivity(), "alert_msg_out_range")
                         .replace("%s", String.valueOf(loOffer.getCoverageRadius()));
                 MessageDialog loDialog = new MessageDialog(getActivity(),
@@ -518,7 +522,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                     break;
                 case FETCH_OFFERS:
                     dismissProgressDialog();
-                    if (moMapViewModel.getCurrentLocation() != null){
+                    if (moMapViewModel.getCurrentLocation() != null) {
                         AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
                         handleOfferDetails(miPosition);
                     }

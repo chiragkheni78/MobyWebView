@@ -338,19 +338,23 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
             if (resultCode == getActivity().RESULT_OK) { // Activity.RESULT_OK
                 if (miPosition > -1) {
                     String lsAction = data.getAction();
-                    if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
-                        Activity loActivity = moActivityList.get(miPosition);
-                        if (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
-                            moActivityList.get(miPosition).setCouponUsed(true);
-                            moActivityList.get(miPosition).setBillUploaded(true);
-                            moActivityListAdapter.notifyDataSetChanged();
+                    try { //else we can check position equal or less then to list
+                        if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.OPEN_BILL_UPLOAD)) {
+                            Activity loActivity = moActivityList.get(miPosition);
+                            if (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
+                                moActivityList.get(miPosition).setCouponUsed(true);
+                                moActivityList.get(miPosition).setBillUploaded(true);
+                                moActivityListAdapter.notifyDataSetChanged();
+                            }
+                            //openBillUpload(miPosition);
+                        } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)) {
+                            if (moActivityList != null && moActivityList.size() > 0) {
+                                moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
+                                moActivityListAdapter.notifyDataSetChanged();
+                            }
                         }
-                        //openBillUpload(miPosition);
-                    } else if (lsAction.equalsIgnoreCase(Constants.IntentKey.Action.CLICK_SHOP_ONLINE)) {
-                        if (moActivityList != null && moActivityList.size() > 0) {
-                            moActivityList.get(miPosition).setBlinkShopOnline(false); //disable blink
-                            moActivityListAdapter.notifyDataSetChanged();
-                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        e.printStackTrace();
                     }
                 }
             }

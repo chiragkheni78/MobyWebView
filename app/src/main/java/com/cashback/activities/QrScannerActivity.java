@@ -1,20 +1,15 @@
 package com.cashback.activities;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.budiyev.android.codescanner.CodeScanner;
-import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.cashback.databinding.ActivityQrScanBinding;
-import com.cashback.databinding.ActivityVideoViewBinding;
 import com.cashback.utils.Constants;
 import com.cashback.utils.LogV2;
 import com.google.zxing.Result;

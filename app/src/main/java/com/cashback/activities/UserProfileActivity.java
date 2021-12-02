@@ -161,7 +161,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     };
 
     Observer<DeleteCardResponse> deleteCardObserver = loJsonObject -> {
-        if (!loJsonObject.isError()) {
+        if (!loJsonObject.isError() && miDeletePosition > -1) {//miDeletePosition > -1 for fixed array index bound exce.
             moGetUserProfileResponse.getDebitCardList().remove(miDeletePosition);
             miDeletePosition = -1;
             moDebitCardAdapter.notifyDataSetChanged();

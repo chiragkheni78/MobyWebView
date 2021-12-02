@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -67,7 +68,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
     TextWatcher moTextChangeListener = new TextWatcher() {
 
         public void onTextChanged(CharSequence s, int start, int before,
-        int count) {
+                                  int count) {
             if (s.length() > 0) {
                 setAnswer(String.valueOf(s.toString()));
             } else {
@@ -96,16 +97,19 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
         moQuizDetailsViewModel.submitQuizAnswerStatus.observe(this, submitQuizAnswerObserver);
 
         if (getIntent() != null) {
-            moOffer = (Ad) getIntent().getExtras().getSerializable(Constants.IntentKey.OFFER_OBJECT);
+            try {
+                moOffer = (Ad) getIntent().getExtras().getSerializable(Constants.IntentKey.OFFER_OBJECT);
+                setToolbar();
+                moBinding.btnNext.setOnClickListener(this);
+                moBinding.cvQRCode.setOnClickListener(this);
+                moBinding.cvYouTube.setOnClickListener(this);
+                moBinding.btnNext.setOnClickListener(this);
+                moBinding.etTextAnswer.addTextChangedListener(moTextChangeListener);
 
-            setToolbar();
-            moBinding.btnNext.setOnClickListener(this);
-            moBinding.cvQRCode.setOnClickListener(this);
-            moBinding.cvYouTube.setOnClickListener(this);
-            moBinding.btnNext.setOnClickListener(this);
-            moBinding.etTextAnswer.addTextChangedListener(moTextChangeListener);
-
-            getQuizDetails();
+                getQuizDetails();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -122,11 +126,12 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             }
         });
 
-        moBinding.tvOfferName.setText(moOffer.getAdName());
+        if (moOffer != null && !TextUtils.isEmpty(moOffer.getAdName()))
+            moBinding.tvOfferName.setText(moOffer.getAdName());
         moBinding.tvOfferName.setVisibility(View.VISIBLE);
 
 
-        if (moOffer.getAdCouponType() == 1){
+        if (moOffer.getAdCouponType() == 1) {
             moBinding.tvOfferRewards.setText("(Answer To Win)");
         } else {
             moBinding.tvOfferRewards.setText("₹" + moOffer.getQuizReward() + " (Max Cashback)");
@@ -162,7 +167,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
     };
 
     private void preDefineQuizAnswer() {
-        for (Quiz loQuiz: moQuizList){
+        for (Quiz loQuiz : moQuizList) {
             QuizAnswer loQuizAnswer = new QuizAnswer(loQuiz.getQuizID(), 0, "");
             moQuizAnswerList.add(loQuizAnswer);
         }
@@ -188,10 +193,10 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
         foBinding.tvQuestion.setText(quiz.getQuestion());
         foBinding.tvNumber.setText((fiCurrentQuestion + 1) + " of " + foQuizList.size());
 
-        if (moOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())){
+        if (moOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
             foBinding.tvNumber.setTextColor(ActivityCompat.getColor(getContext(), R.color.colorPrimary));
 //            foBinding.llQuestion.setBackground(ActivityCompat.getDrawable(getContext(), R.drawable.half_circle_light_red));
-        } else if (moOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())){
+        } else if (moOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             foBinding.tvNumber.setTextColor(ActivityCompat.getColor(getContext(), R.color.green_primary));
 //            foBinding.llQuestion.setBackground(ActivityCompat.getDrawable(getContext(), R.drawable.half_circle_light_green));
         }
@@ -346,7 +351,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void btnNextPressed() {
-        if (moQuizAnswerList.size() > 0){
+        if (moQuizAnswerList.size() > 0) {
             moQuizAnswerList.get(miCurrentQuestion).setAnsInterval(getQuizInterval());
         }
 
@@ -374,8 +379,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             if (!loJsonObject.isError()) {
                 handleQuizAnswerResponse(loJsonObject);
             } else {
-                if (loJsonObject.isMarketingAd())
-                {
+                if (loJsonObject.isMarketingAd()) {
                     MessageDialog loDialog = new MessageDialog(getContext(), null, loJsonObject.getMessage(), null, false);
                     loDialog.setClickListener(new View.OnClickListener() {
                         @Override
@@ -400,7 +404,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
                             }
                         });
                         loDialog.show();
-                    }else {
+                    } else {
                         Common.showErrorDialog(getContext(), loJsonObject.getMessage(), true);
                     }
                 }

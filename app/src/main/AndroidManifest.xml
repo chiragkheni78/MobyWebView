@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!--Fail to connect to camera service-->
 
     <application
         android:name=".AppGlobal"
