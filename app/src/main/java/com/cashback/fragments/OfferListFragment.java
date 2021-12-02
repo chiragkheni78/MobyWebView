@@ -443,6 +443,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     private void openQuizDetails(Ad foOffer) {
         Intent loIntent = new Intent(moContext, QuizDetailsActivity.class);
+        loIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.IntentKey.OFFER_OBJECT, foOffer);
         loIntent.putExtras(bundle);
