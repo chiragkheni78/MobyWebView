@@ -56,9 +56,9 @@ public class AdGydeEvents {
         bundle.putLong("activityID", foActivity.getActivityID());
 
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("user_id", "SHOP_OTP");
+        params.put("user_id", "shopOnlineClicked");
         params.put("miscellaneous", bundle.toString());
-        AdGyde.onPermanentUnique("SHOP_OTP", params); //eventid, params
+        AdGyde.onPermanentUnique("shopOnlineClicked", params); //eventid, params
     }
 
     public static void purchased(Context foContext, long flOfferID) {
