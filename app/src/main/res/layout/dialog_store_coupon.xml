@@ -12,6 +12,7 @@
         android:id="@+id/llRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/secondary"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -50,10 +51,11 @@
                 android:id="@+id/etBillAmount"
                 style="@style/etStandard"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_36sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_standard"
                 android:background="@drawable/bg_white_blue"
                 android:gravity="center"
+                android:padding="@dimen/_10sdp"
                 android:hint="@string/hint_bill_amount"
                 android:imeOptions="actionDone"
                 android:inputType="number"
@@ -124,7 +126,7 @@
                 style="@style/RippleBtnStandard"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/padding_standard"
-                android:background="@color/secondary"
+                android:background="@color/black"
                 android:text="@string/btn_mark_coupon_used" />
 
         </LinearLayout>

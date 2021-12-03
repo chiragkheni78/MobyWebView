@@ -12,6 +12,7 @@
         android:id="@+id/llRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/secondary"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -89,7 +90,7 @@
                 style="@style/RippleBtnStandard"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/padding_standard"
-                android:background="@color/secondary"
+                android:background="@color/black"
                 android:text="@string/btn_mark_coupon_used" />
 
         </LinearLayout>

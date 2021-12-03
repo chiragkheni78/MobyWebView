@@ -62,7 +62,7 @@ public class AdLocationAdapter extends RecyclerView.Adapter<AdLocationAdapter.Da
     @Override
     public void onBindViewHolder(final DataObjectHolder foHolder, final int fiPosition) {
         AdLocation loStoreLocation = moStoreLocationList.get(fiPosition);
-        foHolder.loTvLocation.setText("NEARBY STORE " + (fiPosition + 1));
+        foHolder.loTvLocation.setText("Locate Nearby store " + (fiPosition + 1));
     }
 
     @Override

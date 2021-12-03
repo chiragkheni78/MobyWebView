@@ -22,6 +22,7 @@ public class AppGlobal extends Application {
     public static boolean isDisplayRewardNote = false;
     public static boolean isSearchButtonBlink = true;
     public static boolean isDealBannerClosed = false;
+    public static boolean isNewUser = false;
 
     public static Context moContext;
     public static ArrayList<Category> moCategories = new ArrayList<>();

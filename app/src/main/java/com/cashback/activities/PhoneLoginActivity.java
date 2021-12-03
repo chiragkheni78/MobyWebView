@@ -29,6 +29,7 @@ import com.cashback.models.PhoneObject;
 import com.cashback.models.response.MobileDeviceResponse;
 import com.cashback.models.response.ProceedDeviceResponse;
 import com.cashback.models.viewmodel.PhoneLoginViewModel;
+import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.custom.otpview.OTPListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -312,7 +313,6 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
         }
     };
 
-
     Observer<ProceedDeviceResponse> proceedDeviceObserver = new Observer<ProceedDeviceResponse>() {
 
         @Override
@@ -320,6 +320,7 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
             if (!loJsonObject.isError()) {
                 getPreferenceManager().setPhoneVerified(true);
                 FirebaseAuth.getInstance().signOut();
+                AdGydeEvents.otpVerified(PhoneLoginActivity.this);
                 //All Done
                 Intent intent = new Intent();
                 setResult(Activity.RESULT_OK, intent);

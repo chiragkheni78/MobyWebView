@@ -58,9 +58,9 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         moBinding.spinWallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (moWalletList != null && moWalletList.size() > 0){
+                if (moWalletList != null && moWalletList.size() > 0) {
 
-                    if (moWalletList.get(position).getWalletId() == 2){
+                    if (moWalletList.get(position).getWalletId() == 2) {
                         moBinding.llUPI.setVisibility(View.VISIBLE);
                     } else moBinding.llUPI.setVisibility(View.GONE);
                 }
@@ -151,7 +151,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                     getPreferenceManager().setReferralCode(loUserDetails.getReferralCode());
                     getPreferenceManager().setReferralLink(loUserDetails.getReferralUrl());
                 }
-
+                AppGlobal.isNewUser = true;
                 //Adgyde Event - OPEN_REGISTER
                 AdGydeEvents.saveProfile(getContext(), getAge(), getGender());
                 Intent loIntent = new Intent(ShortProfileActivity.this, HomeActivity.class);

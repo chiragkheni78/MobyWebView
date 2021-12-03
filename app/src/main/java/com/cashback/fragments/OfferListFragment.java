@@ -41,6 +41,7 @@ import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.OfferFilterResponse;
 import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.models.viewmodel.OfferListViewModel;
+import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -311,9 +312,10 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                             moOfferListAdapter.notifyFirstItem(mlOfferID);
                         }
 
-//                        if (miCurrentPage > 1){
-//                            moBinding.rvOfferList.smoothScrollToPosition(scrollToPosition);
-//                        } else {
+                        if (miCurrentPage == 1 && AppGlobal.isNewUser) {
+                            AdGydeEvents.offerLoaded(getActivity());
+                        }
+                        //else {
 //                            moBinding.rvOfferList.smoothScrollToPosition(0);
 //                        }
 

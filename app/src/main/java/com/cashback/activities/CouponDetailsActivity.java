@@ -3,11 +3,13 @@ package com.cashback.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,6 +44,7 @@ import com.cashback.utils.LogV2;
 import com.cashback.dialog.MessageDialog;
 
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
+import static com.cashback.models.viewmodel.ActivityDetailsViewModel.REQUEST_CAMERA;
 import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
 
 public class CouponDetailsActivity extends BaseActivity implements View.OnClickListener {
@@ -171,6 +174,19 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    private void storeLocationAdapterClick() {
+        AdLocation loLocation = moActivity.getLocationList().get(moPosition);
+        String lsUrl = "http://maps.google.com/maps?daddr=" + loLocation.getLatitude() + "," + loLocation.getLongitude();
+        Common.openBrowser(getContext(), lsUrl);
+
+        callAPIBlinkShopOnline();
+        enableMarkAsUsed();
+        moBinding.tvShopOffline.clearAnimation();
+    }
+
+    boolean isNearStoreClick = false;
+    int moPosition;
+
     private void setOfflineOfferListView() {
         //set offline location list
         int liOrientation2 = Common.getLayoutManagerOrientation(getResources().getConfiguration().orientation);
@@ -179,19 +195,16 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         AdLocationAdapter loStoreLocationAdapter = new AdLocationAdapter(getContext(), moActivity.getLocationList());
         moBinding.rvLocations.setAdapter(loStoreLocationAdapter);
 
+        moBinding.tvShopOffline.setVisibility(View.GONE);
         loStoreLocationAdapter.setOnItemClickListener(new AdLocationAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
+                isNearStoreClick = true;
                 if (!getPreferenceManager().isPhoneVerified()) {
                     openPhoneLogin(null);
                 } else {
-                    AdLocation loLocation = moActivity.getLocationList().get(position);
-                    String lsUrl = "http://maps.google.com/maps?daddr=" + loLocation.getLatitude() + "," + loLocation.getLongitude();
-                    Common.openBrowser(getContext(), lsUrl);
-
-                    callAPIBlinkShopOnline();
-                    enableMarkAsUsed();
-                    moBinding.tvShopOffline.clearAnimation();
+                    moPosition = position;
+                    storeLocationAdapterClick();
                 }
             }
         });
@@ -365,17 +378,25 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 dialogMarkAsUsed();
                 break;
             case R.id.tvShopOffline:
-                shopOfflinePressed();
+                shopOfflinePressed(false);
         }
     }
 
-    private void shopOfflinePressed() {
+    private void shopOfflinePressed(boolean isPerformClick) {
         if (!getPreferenceManager().isPhoneVerified()) {
             openPhoneLogin(null);
         } else {
             moBinding.llInStore.setVisibility(View.VISIBLE);
         }
         moBinding.tvShopOffline.clearAnimation();
+
+        if (isPerformClick) {
+            if (isNearStoreClick) {
+                storeLocationAdapterClick();
+            } else {
+                moBinding.tvMarkAsUsed.performClick();
+            }
+        }
     }
 
     private void shopOnlinePressed() {
@@ -412,6 +433,21 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (moActivityDetailsViewModel.isCameraPermissionGranted(this)) {
             Intent loIntent = new Intent(getContext(), QrScannerActivity.class);
             startActivityForResult(loIntent, REQUEST_QR);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CAMERA:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "permission granted...");
+                    moBinding.tvMarkAsUsed.performClick();
+                } //else {
+                // Common.showErrorDialog(getContext(), "", false);
+                // }
+                break;
         }
     }
 
@@ -551,6 +587,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (!getPreferenceManager().isPhoneVerified()) {
             openPhoneLogin(fsUrl);
         } else {
+            AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
             if (moActivity.getAdCouponType() == 1) { // only coupon then direct open link
                 openDeepLink(fsUrl);
                 return;
@@ -601,9 +638,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             if (resultCode == RESULT_OK) {
                 if (msURL != null) {
                     dialogCopyToClipboard(msURL);
-                    AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
                 } else {
-                    shopOfflinePressed();
+                    shopOfflinePressed(true);
                 }
             }
         }

@@ -549,7 +549,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         if (!AppGlobal.isDisplayRewardNote) {
             showFirstDialog(moJsonObject.getFirstTimeAlertTitle(), moJsonObject.getFirstTimeAlertMsg(), moJsonObject.getAdvertisementList());
         } else {
-
             int liCategoryID = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
             long llOfferID = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
             long llBannerID = getIntent().getLongExtra(Constants.IntentKey.BANNER_ID, 0);
@@ -723,7 +722,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 case FETCH_OFFERS:
                     dismissProgressDialog();
                     AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
-                    if(AppGlobal.getLocation() != null){
+                    if (AppGlobal.getLocation() != null) {
                         loadOffers();
                     } else {
                         moMapViewModel.getLastKnownLocation(HomeActivity.this);

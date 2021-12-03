@@ -9,6 +9,7 @@ import com.cashback.models.Activity;
 import com.cashback.models.Ad;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class AdGydeEvents {
 
@@ -72,4 +73,32 @@ public class AdGydeEvents {
         params.put("miscellaneous", bundle.toString());
         AdGyde.onPermanentUnique("USER_SHOPPED", params); //eventid, params
     }
+
+    public static void offerLoaded(Context foContext) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
+       // bundle.putLong("offerID", flOfferID);
+        // bundle.putString("offerName", foOffer.getAdName());
+
+        Map<String, String> loParams = new HashMap<>();
+        loParams.put("user_id", "offerLoaded");
+        loParams.put("miscellaneous", bundle.toString());
+        AdGyde.onPermanentUnique("offerLoaded", loParams);
+    }
+
+    public static void otpVerified(Context foContext) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
+        // bundle.putLong("offerID", flOfferID);
+        // bundle.putString("offerName", foOffer.getAdName());
+
+        Map<String, String> loParams = new HashMap<>();
+        loParams.put("user_id", "otpVerified");
+        loParams.put("miscellaneous", bundle.toString());
+        AdGyde.onPermanentUnique("otpVerified", loParams);
+    }
+
+
 }
