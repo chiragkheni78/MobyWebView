@@ -587,7 +587,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (!getPreferenceManager().isPhoneVerified()) {
             openPhoneLogin(fsUrl);
         } else {
-            AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
+            if (moActivity.isBlinkShopOnline()) {
+                AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
+            }
+
             if (moActivity.getAdCouponType() == 1) { // only coupon then direct open link
                 openDeepLink(fsUrl);
                 return;
