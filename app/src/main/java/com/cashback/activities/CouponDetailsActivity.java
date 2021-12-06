@@ -40,6 +40,7 @@ import com.cashback.models.viewmodel.ActivityDetailsViewModel;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 import com.cashback.dialog.MessageDialog;
 
@@ -52,7 +53,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private static final String TAG = CouponDetailsActivity.class.getSimpleName();
     ActivityDetailsBinding moBinding;
     ActivityDetailsViewModel moActivityDetailsViewModel;
-
+    private boolean mbShopOnlinePressed = false;
     private long miActivityId;
     Activity moActivity;
 
@@ -252,6 +253,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         loOfferAdapter.setOnItemClickListener(new CouponAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.GET_OFFER);
                 Coupon loCoupon = moActivity.getCouponList().get(position);
                 if (!isOfflineCall) {
                     if (!loCoupon.getCouponLink().isEmpty()) {
@@ -372,6 +376,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvShopOnline:
+                mbShopOnlinePressed = true;
                 shopOnlinePressed();
                 break;
             case R.id.tvMarkAsUsed:
@@ -400,6 +405,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     private void shopOnlinePressed() {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE);
+
         String lsLink = getShopOnlineLink();
 
         if (lsLink != null && !lsLink.isEmpty()) {
@@ -587,7 +596,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (!getPreferenceManager().isPhoneVerified()) {
             openPhoneLogin(fsUrl);
         } else {
-            AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
+            if (moActivity.isBlinkShopOnline()) {
+                AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
+            }
+
             if (moActivity.getAdCouponType() == 1) { // only coupon then direct open link
                 openDeepLink(fsUrl);
                 return;
@@ -636,6 +648,13 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PHONE_LOGIN) {
             if (resultCode == RESULT_OK) {
+                if (mbShopOnlinePressed) {
+                    mbShopOnlinePressed = false;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                    FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE_VERIFIED);
+
+                }
                 if (msURL != null) {
                     dialogCopyToClipboard(msURL);
                 } else {
@@ -677,6 +696,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         try {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE_BACK_PRESS);
+
             if (getIntent() != null && getIntent().getAction() != null && moActivity != null &&
                     getIntent().getAction().equalsIgnoreCase(Constants.IntentKey.Action.BY_PASS_QUIZ)) {
                 Common.msOfferId = "" + moActivity.getAdID(); //not possible to check long as null so add try catch for null pointer

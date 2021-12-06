@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.databinding.ActivityHelpBinding;
 import com.cashback.databinding.ActivityReferEarnBinding;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 
 public class HelpActivity extends BaseActivity {
 
@@ -34,6 +36,10 @@ public class HelpActivity extends BaseActivity {
     private void initializeContent() {
         Common.hideKeyboard(this);
         setToolbar();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        FirebaseEvents.FirebaseEvent(HelpActivity.this, bundle, FirebaseEvents.HELP_OPTION);
 
         moBinding.webViewHelp.getSettings().setJavaScriptEnabled(true);
         moBinding.webViewHelp.loadUrl("https://mobyads.in/moby/v2-apis/?fsAction=loadWebViewHtml&fsPage=faqs");

@@ -28,6 +28,7 @@ import com.cashback.databinding.ActivityReferEarnBinding;
 import com.cashback.models.Advertisement;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.HttpDownloadUtility;
 import com.cashback.utils.LogV2;
 import com.cashback.utils.SharedPreferenceManager;
@@ -73,7 +74,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
 //        String[] loURL = moSharedPreferenceManager.getShareBannerUrl();
 //        if (loURL != null) {
-            setImageSlider();
+        setImageSlider();
 //        }
     }
 
@@ -142,7 +143,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
             }
         }));
 
-        if (AppGlobal.moSharePageImages.size() < 2){
+        if (AppGlobal.moSharePageImages.size() < 2) {
             moBinding.imageSlider.setInfiniteAdapterEnabled(false);
         }
     }
@@ -158,6 +159,9 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PHONE_LOGIN) {
             if (resultCode == RESULT_OK) {
+                Bundle bundle = new Bundle();
+                bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.PHONE_VERIFIED_MY_CASH);
                 Toast.makeText(getContext(), "Phone Verified", Toast.LENGTH_SHORT).show();
             }
         }
@@ -173,6 +177,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
         String lsSaveDir = LogV2.PATH + "/Images/";
         String lsImageUrl;
+
         public DownloadFileAsync(String fsUrl) {
             lsImageUrl = fsUrl;
         }
@@ -205,6 +210,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
 
 
     public static final int REQUEST_FILE_ACCESS = 910;
+
     public boolean isStoragePermissionGranted(Activity foContext) {
         if (Build.VERSION.SDK_INT >= 23) {
             if (foContext.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)

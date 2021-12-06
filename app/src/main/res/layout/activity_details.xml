@@ -68,7 +68,7 @@
                     android:layout_margin="@dimen/padding_standard"
                     android:background="@drawable/rect_primary"
                     android:gravity="center"
-                    android:text="SHOP ONLINE"
+                    android:text="SHOP NOW"
                     android:textColor="@color/white"
                     android:visibility="gone"
                     android:textSize="14sp"

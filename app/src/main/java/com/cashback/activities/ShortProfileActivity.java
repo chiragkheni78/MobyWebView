@@ -24,6 +24,7 @@ import com.cashback.models.response.SaveMiniProfileResponse;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 
 
 import java.util.ArrayList;
@@ -126,6 +127,12 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                                 @Override
                                 public void onClick(View v) {
                                     moBinding.btnSaveProfile.performClick();
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                                    FirebaseEvents.FirebaseEvent(ShortProfileActivity.this,
+                                            bundle, FirebaseEvents.PICTURE_PRESS);
+
                                 }
                             });
                         }
@@ -151,6 +158,11 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                     getPreferenceManager().setReferralCode(loUserDetails.getReferralCode());
                     getPreferenceManager().setReferralLink(loUserDetails.getReferralUrl());
                 }
+
+                Bundle bundle = new Bundle();
+                bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                FirebaseEvents.FirebaseEvent(ShortProfileActivity.this, bundle, FirebaseEvents.REGISTER);
+
                 AppGlobal.isNewUser = true;
                 //Adgyde Event - OPEN_REGISTER
                 AdGydeEvents.saveProfile(getContext(), getAge(), getGender());

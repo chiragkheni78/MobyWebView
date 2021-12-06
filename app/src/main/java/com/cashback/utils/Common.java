@@ -21,6 +21,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Spannable;
@@ -440,6 +441,10 @@ public class Common {
     }
 
     public static void setClipboard(Context context, String text) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        FirebaseEvents.FirebaseEvent(context, bundle, FirebaseEvents.OPEN_COPY_TEXT_SHARE);
+
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(text);
@@ -544,6 +549,10 @@ public class Common {
 
     public static void openWhatsapp(Context foContext, String fsMessage) {
         try {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_WATSUP_SHARE);
+
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
             waIntent.setPackage("com.whatsapp");
@@ -556,6 +565,10 @@ public class Common {
     }
 
     public static void openMessenger(Context foContext, String fsMessage) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_MESSENGER_SHARE);
+
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, fsMessage);
@@ -572,6 +585,10 @@ public class Common {
 
     public static void openInstagram(Context foContext, String fsMessage, String imagePath) {
         try {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_INSTAGRAM_SHARE);
+
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
 
             File loFile = new File(imagePath);
@@ -592,6 +609,10 @@ public class Common {
 
     public static void openFacebook(Context foContext, String fsMessage) {
         try {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_FB_SHARE);
+
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
             sendIntent.setPackage("com.facebook.katana");
@@ -607,6 +628,10 @@ public class Common {
 
     public static void openTwitter(Context foContext, String fsMessage) {
         try {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_TWITTER_SHARE);
+
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
             sendIntent.setPackage("com.twitter.android");
@@ -622,6 +647,10 @@ public class Common {
 
     public static void openTelegram(Context foContext, String fsMessage) {
         try {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_TELEGRAM_SHARE);
+
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
             sendIntent.setPackage("org.telegram.messenger");

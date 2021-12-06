@@ -22,6 +22,7 @@ import com.cashback.models.response.StaticLabelsResponse;
 import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 import com.cashback.utils.SharedPreferenceManager;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -112,6 +113,9 @@ public class SplashViewModel extends ViewModel {
                         Log.e(TAG, "UTM source:" + lsSource);
                         loSharedPreferenceManager.setAppDownloadSource(lsSource);
                     }
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                    FirebaseEvents.FirebaseEvent(foContext.getApplicationContext(), bundle, FirebaseEvents.DOWNLOAD_USING_REFERRAL_CODE);
                 }
             } catch (Exception e) {
                 LogV2.logException(TAG, e);

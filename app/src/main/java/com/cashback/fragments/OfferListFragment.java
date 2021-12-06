@@ -1,5 +1,10 @@
 package com.cashback.fragments;
 
+import static com.cashback.AppGlobal.isSearchButtonBlink;
+import static com.cashback.AppGlobal.moContext;
+import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
+import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.location.Location;
@@ -44,15 +49,12 @@ import com.cashback.models.viewmodel.OfferListViewModel;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 
 import java.util.ArrayList;
-
-import static com.cashback.AppGlobal.isSearchButtonBlink;
-import static com.cashback.AppGlobal.moContext;
-import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
-import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
 
 @SuppressWarnings("All")
 public class OfferListFragment extends BaseFragment implements View.OnClickListener, OfferListAdapter.OnAdItemClick {
@@ -190,8 +192,15 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
+   // private FirebaseAnalytics mFirebaseAnalytics;
+
     private void initializeContent() {
         initViewModel();
+       /* mFirebaseAnalytics = FirebaseAnalytics.getInstance(getActivity());
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+        mFirebaseAnalytics.logEvent("Myevent", bundle);*/
 
         moBinding.btnSearch.setOnClickListener(this);
         moBinding.floatingActionSearch.setOnClickListener(this);
@@ -313,6 +322,10 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         }
 
                         if (miCurrentPage == 1 && AppGlobal.isNewUser) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                            FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.MAIN_OFFER_LOADED);
+
                             AdGydeEvents.offerLoaded(getActivity());
                         }
                         //else {
@@ -437,6 +450,12 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     public void handleOfferDetails(int position) {
         miPosition = position;
         Ad loOffer = moOfferList.get(position);
+
+        if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.SELECT_DEAL);
+        }
 
         if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
             verifyLocation(loOffer);
