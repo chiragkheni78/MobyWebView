@@ -43,6 +43,7 @@ import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -237,6 +238,9 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PHONE_LOGIN || requestCode == REQUEST_CHECK_SETTINGS) {
             if (resultCode == RESULT_OK) {
+                Bundle bundle = new Bundle();
+                bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.PHONE_VERIFIED_FOR_NEAR_ADS);
                 loadView();
             }
         }
@@ -327,7 +331,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                 moCurrentLocationMarker = moGoogleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(obm)).position(moCurrentLatLong).title("I'm here!"));
 
                 moGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(moCurrentLatLong, getPreferenceManager().getMapZoomLevel()));
-            } catch (Exception e){
+            } catch (Exception e) {
                 LogV2.logException(TAG, e);
             }
         }

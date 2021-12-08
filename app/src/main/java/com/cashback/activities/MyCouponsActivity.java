@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.ActivityListAdapter;
 import com.cashback.databinding.ActivityMyCouponsBinding;
@@ -30,6 +31,7 @@ import com.cashback.models.response.ActivityListResponse;
 import com.cashback.models.viewmodel.ActivityListViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 
 import java.util.ArrayList;
@@ -86,6 +88,9 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
                 moContext.startActivity(loIntent);
             }
         }
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        FirebaseEvents.FirebaseEvent(MyCouponsActivity.this, bundle, FirebaseEvents.MY_COUPON_PAGE);
     }
 
     private void setToolbar() {

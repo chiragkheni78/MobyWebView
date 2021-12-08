@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.BankOfferCategoryAdapter;
 import com.cashback.adapters.DebitCardAdapter;
@@ -36,6 +37,7 @@ import com.cashback.models.response.SaveUserProfileResponse;
 import com.cashback.models.viewmodel.UserProfileViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 
 import static android.view.View.GONE;
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
@@ -197,6 +199,9 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PHONE_LOGIN) {
             if (resultCode == RESULT_OK) {
+                Bundle bundle = new Bundle();
+                bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                FirebaseEvents.FirebaseEvent(UserProfileActivity.this, bundle, FirebaseEvents.USER_PROFILE_VERIFIED);
                 loadView();
             }
         }

@@ -31,6 +31,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.QuizOptionAdapter;
 import com.cashback.databinding.ActivityQuizDetailsBinding;
@@ -44,6 +45,7 @@ import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.dialog.MessageDialog;
+import com.cashback.utils.FirebaseEvents;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -356,6 +358,9 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
         }
 
         if (miCurrentQuestion == moQuizList.size() - 1) {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(QuizDetailsActivity.this, bundle, FirebaseEvents.SUBMIT_QUIZ);
             submitQuizAnswer();
         } else {
             miCurrentQuestion = miCurrentQuestion + 1;

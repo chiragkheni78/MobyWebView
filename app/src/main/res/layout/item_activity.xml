@@ -25,8 +25,8 @@
                 android:id="@+id/cardItemActivityMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:background="@color/white"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="@dimen/padding_mini">
 
@@ -185,6 +185,7 @@
                                     android:gravity="center"
                                     android:padding="@dimen/padding_micro"
                                     android:text="@string/view_coupon"
+                                    android:textAllCaps="true"
                                     android:textColor="@color/white"
                                     android:textSize="12sp"
                                     android:visibility="visible" />
@@ -223,6 +224,7 @@
                                     android:minWidth="@dimen/_85sdp"
                                     android:padding="@dimen/padding_micro"
                                     android:text="Register Bill"
+                                    android:textAllCaps="true"
                                     android:textColor="@color/white"
                                     android:textSize="12sp"
                                     android:visibility="visible" />
