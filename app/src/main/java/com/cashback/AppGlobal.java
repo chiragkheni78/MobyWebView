@@ -10,6 +10,7 @@ import com.cashback.models.Category;
 import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -50,6 +51,7 @@ public class AppGlobal extends Application {
     }
 
     private void enableCrashlytics() {
+        FirebaseAnalytics.getInstance(moContext);
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
         //enabled only for signed builds
     }
