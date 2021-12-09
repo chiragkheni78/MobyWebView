@@ -8,11 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
@@ -441,10 +437,6 @@ public class Common {
     }
 
     public static void setClipboard(Context context, String text) {
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.FirebaseEvent(context, bundle, FirebaseEvents.OPEN_COPY_TEXT_SHARE);
-
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(text);

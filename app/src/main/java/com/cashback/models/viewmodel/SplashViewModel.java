@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -29,9 +30,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
-import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URLDecoder;
@@ -96,7 +95,12 @@ public class SplashViewModel extends ViewModel {
                     }
 
                     if (values.containsKey("utm_campaign")) {
-                        String lsCampaign = values.get("utm_campaign");
+                        String lsCampaign = "";
+                        if ((TextUtils.isDigitsOnly(values.get("utm_campaign")) && (values.containsKey("cmp")))){
+                            lsCampaign = values.get("cmp");
+                        } else {
+                            lsCampaign = values.get("utm_campaign");
+                        }
                         Log.e(TAG, "UTM campaign:" + lsCampaign);
                         if (!lsCampaign.isEmpty())
                             loSharedPreferenceManager.setAppDownloadCampaign(lsCampaign);
@@ -113,6 +117,7 @@ public class SplashViewModel extends ViewModel {
                         Log.e(TAG, "UTM source:" + lsSource);
                         loSharedPreferenceManager.setAppDownloadSource(lsSource);
                     }
+
                     Bundle bundle = new Bundle();
                     bundle.putString("mobile", AppGlobal.getPhoneNumber());
                     FirebaseEvents.FirebaseEvent(foContext.getApplicationContext(), bundle, FirebaseEvents.DOWNLOAD_USING_REFERRAL_CODE);

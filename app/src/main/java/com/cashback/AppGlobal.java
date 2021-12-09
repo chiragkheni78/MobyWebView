@@ -39,19 +39,24 @@ public class AppGlobal extends Application {
         AppGlobal.fiTotalBillVerified = fiTotalBillVerified;
     }
 
+    private static FirebaseAnalytics moFirebaseAnalytics;
     public static int fiTotalBillVerified;
 
     @Override
     public void onCreate() {
         super.onCreate();
         moContext = this;
+        moFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         enableCrashlytics();
         configAdGyde();
         setDefaultReferrer();
     }
 
+    public static FirebaseAnalytics getFirebaseAnalytics() {
+        return moFirebaseAnalytics;
+    }
+
     private void enableCrashlytics() {
-        FirebaseAnalytics.getInstance(moContext);
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
         //enabled only for signed builds
     }
