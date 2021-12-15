@@ -199,6 +199,9 @@
     <string name="expiring_soon">Expiring Soon</string>
     <string name="category">Category</string>
     <string name="main_store">Main Store</string>
+    <string name="online_store">Online Store</string>
+    <string name="offline_store">Offline Store</string>
+    <string name="all_store">All Store</string>
 
 
     <!--Timeline Sorting-->
