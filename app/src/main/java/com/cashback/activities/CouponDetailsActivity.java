@@ -201,10 +201,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onItemClick(int position, View v) {
                 isNearStoreClick = true;
+                moPosition = position;
                 if (!getPreferenceManager().isPhoneVerified()) {
                     openPhoneLogin(null);
                 } else {
-                    moPosition = position;
                     storeLocationAdapterClick();
                 }
             }
