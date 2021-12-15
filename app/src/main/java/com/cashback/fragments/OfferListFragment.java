@@ -35,6 +35,7 @@ import com.cashback.adapters.CategoryAdapter;
 import com.cashback.adapters.DealsOfDayAdapter;
 import com.cashback.adapters.OfferListAdapter;
 import com.cashback.databinding.FragmentOfferListBinding;
+import com.cashback.dialog.BottomSheetDialog;
 import com.cashback.dialog.MessageDialog;
 import com.cashback.models.Ad;
 import com.cashback.models.AdLocation;
@@ -50,7 +51,6 @@ import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 
@@ -192,7 +192,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-   // private FirebaseAnalytics mFirebaseAnalytics;
+    // private FirebaseAnalytics mFirebaseAnalytics;
 
     private void initializeContent() {
         initViewModel();
@@ -381,7 +381,9 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 searchButtonPressed();
                 break;
             case R.id.floating_action_search:
-                floatingSearchPress();
+                //floatingSearchPress();
+                BottomSheetDialog bottomSheet = new BottomSheetDialog();
+                bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
                 break;
         }
     }

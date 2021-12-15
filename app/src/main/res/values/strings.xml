@@ -94,7 +94,7 @@
 
 
     <!--buttons-->
-    <string name="online_coupon">ONLINE\nCOUPON</string>
+    <string name="online_coupon">SELECT\nDEAL</string>
     <string name="instore_coupon">OFFLINE\nCOUPON</string>
     <string name="view_details">VIEW\nDETAILS</string>
     <string name="engaged">ENGAGED</string>
@@ -194,6 +194,11 @@
     <string name="btn_view_coupon_code">View Coupon Code</string>
 
     <string name="alert_msg_out_range">You need to be Within %s Mtrs of the Ad pin to answer the Quiz and Get instant Cash/Gift.</string>
+    <string name="apply_filter">Apply Filter</string>
+    <string name="biggest_sarvings">Biggest Sarvings</string>
+    <string name="expiring_soon">Expiring Soon</string>
+    <string name="category">Category</string>
+    <string name="main_store">Main Store</string>
 
 
     <!--Timeline Sorting-->

@@ -321,11 +321,12 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         //display cashback text
         moBinding.tvDiscountUpto.setText("UPTO " + moActivity.getDiscountUpTo() + " DISCOUNT");
         moBinding.tvExactCashback.setText("EXACT " + moActivity.getFlatCashBack() + " CASHBACK");
+        moBinding.tvMaxCashBack.setText("Max Cashback Rs. " + moActivity.getQuizReward() + "");
 
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            moBinding.tvBrand.setText(moActivity.getAdName() + " (Online)");
+            moBinding.tvBrand.setText(moActivity.getAdName());
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
-            moBinding.tvBrand.setText(moActivity.getAdName() + " (Offline)");
+            moBinding.tvBrand.setText(moActivity.getAdName());
             moBinding.tvShopOnline.setText(Common.getDynamicText(getContext(), "btn_shop_in_store"));
 
             moBinding.tvDiscountUpto.append(" - AT STORE");
