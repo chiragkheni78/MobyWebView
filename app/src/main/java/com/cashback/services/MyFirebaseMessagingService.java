@@ -9,11 +9,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.adgyde.android.AdGyde;
 import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.HomeActivity;
@@ -179,7 +181,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
-        sendRegistrationToServer(token);
+        if (!TextUtils.isEmpty(token)) {
+            AdGyde.onTokenRefresh(token);
+//            AppsFlyerLib.getInstance().updateServerUninstallToken(getApplicationContext(), token);
+            // Instance ID token to your app server.
+            sendRegistrationToServer(token);
+        }
     }
 
     private void sendNotification(String fsTitle, String fsMessage, PendingIntent foPendingIntent) {

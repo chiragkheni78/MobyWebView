@@ -21,9 +21,9 @@ public class AdGydeEvents {
         bundle.putString("gender", lsGender);
 
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("user_id", "OPEN_REGISTER");
+        params.put("user_id", "saveProfile");
         params.put("miscellaneous", bundle.toString());
-        AdGyde.onPermanentUnique("OPEN_REGISTER", params); //eventid,params
+        AdGyde.onPermanentUnique("saveProfile", params); //eventid,params
 
 
         if (lsGender.equalsIgnoreCase(Constants.Gender.MALE.getValue())) {
