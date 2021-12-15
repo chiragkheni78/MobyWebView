@@ -46,8 +46,8 @@ public class SplashActivity extends BaseActivity {
 
     private void initializeContent() {
         moSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
-        moSplashViewModel.checkInstallReferrer(getContext());
         moSplashViewModel.retrieveFirebaseDeepLink(this, getIntent());
+        moSplashViewModel.checkInstallReferrer(getContext());
 
         moSplashViewModel.fetchStaticLabels.observe(this, fetchStaticLabelsObserver);
         moSplashViewModel.fetchStaticLabelsList(getContext());

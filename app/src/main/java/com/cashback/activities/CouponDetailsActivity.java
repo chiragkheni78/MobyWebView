@@ -620,6 +620,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                     }
                 });
                 loDialog.show();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                FirebaseEvents.FirebaseEvent(getContext(), bundle, FirebaseEvents.OPEN_COPY_TEXT_SHARE);
             } catch (Exception e) {
                 LogV2.logException(TAG, e);
             }

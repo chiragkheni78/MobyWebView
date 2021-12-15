@@ -11,13 +11,15 @@ import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.ArrayList;
 
 public class AppGlobal extends Application {
 
-    public static FirebaseAnalytics firebaseAnalytics;
+
     public static boolean isDisplayRewardNote = false;
     public static boolean isSearchButtonBlink = true;
     public static boolean isDealBannerClosed = false;
@@ -37,20 +39,21 @@ public class AppGlobal extends Application {
         AppGlobal.fiTotalBillVerified = fiTotalBillVerified;
     }
 
+    private static FirebaseAnalytics moFirebaseAnalytics;
     public static int fiTotalBillVerified;
 
     @Override
     public void onCreate() {
         super.onCreate();
         moContext = this;
-        firebaseAnalytics = FirebaseAnalytics.getInstance(moContext);
+        moFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         enableCrashlytics();
         configAdGyde();
         setDefaultReferrer();
     }
 
     public static FirebaseAnalytics getFirebaseAnalytics() {
-        return firebaseAnalytics;
+        return moFirebaseAnalytics;
     }
 
     private void enableCrashlytics() {
