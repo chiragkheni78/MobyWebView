@@ -134,7 +134,7 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
                     imageClick();
                 break;
             case R.id.ivCloseFirst:
-                    deleteImage(1);
+                deleteImage(1);
                 break;
             case R.id.ivCloseSecond:
                 deleteImage(2);
@@ -143,16 +143,16 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     }
 
     private void deleteImage(int fiPosition) {
-       imageCounter--;
-       if (fiPosition == 1){
-           msBillImagePath_1 = null;
-           moBinding.ivOne.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_camera_24));
-           moBinding.ivCloseFirst.setVisibility(GONE);
-       } else {
-           msBillImagePath_2 = null;
-           moBinding.ivTwo.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_camera_24));
-           moBinding.ivCloseSecond.setVisibility(GONE);
-       }
+        imageCounter--;
+        if (fiPosition == 1) {
+            msBillImagePath_1 = null;
+            moBinding.ivOne.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_camera_24));
+            moBinding.ivCloseFirst.setVisibility(GONE);
+        } else {
+            msBillImagePath_2 = null;
+            moBinding.ivTwo.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_camera_24));
+            moBinding.ivCloseSecond.setVisibility(GONE);
+        }
     }
 
     private void imageClick() {
@@ -192,13 +192,17 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
     }
 
     private void uploadTransactionBill() {
-        if (moBinding.cbUploadBill.isChecked() && (msBillImagePath_1 == null && msBillImagePath_2 == null)){
+        if (!moBinding.cbUploadBill.isChecked()) {
+            Common.showErrorDialog(getContext(), "Bill Image must be compolsary", false);
+            return;
+        }
+        if (moBinding.cbUploadBill.isChecked() && (msBillImagePath_1 == null && msBillImagePath_2 == null)) {
             Common.showErrorDialog(getContext(), "Please upload bill", false);
             return;
         }
-        showProgressDialog();
-        int liTransactionAmount = moBinding.etAmount.getText().length() == 0 ? 0 : (int) Double.parseDouble(moBinding.etAmount.getText().toString());
-        moBillUploadViewModel.uploadTransactionBill(getContext(), "", miActivityId, msTransactionDate, liTransactionAmount, msBillImagePath_1, msBillImagePath_2);
+//        showProgressDialog();
+//        int liTransactionAmount = moBinding.etAmount.getText().length() == 0 ? 0 : (int) Double.parseDouble(moBinding.etAmount.getText().toString());
+//        moBillUploadViewModel.uploadTransactionBill(getContext(), "", miActivityId, msTransactionDate, liTransactionAmount, msBillImagePath_1, msBillImagePath_2);
     }
 
     Observer<BillUploadResponse> uploadBillObserver = new Observer<BillUploadResponse>() {

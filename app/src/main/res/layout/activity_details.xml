@@ -24,8 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/padding_large"
-                android:paddingHorizontal="@dimen/_5sdp">
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingBottom="@dimen/padding_large">
 
                 <TextView
                     android:id="@+id/tvBrand"
@@ -65,14 +65,26 @@
                     android:id="@+id/tvShopOnline"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_38sdp"
-                    android:layout_margin="@dimen/padding_standard"
+                    android:layout_marginHorizontal="@dimen/padding_standard"
+                    android:layout_marginTop="@dimen/padding_standard"
                     android:background="@drawable/rect_primary"
                     android:gravity="center"
                     android:text="SHOP NOW"
                     android:textColor="@color/white"
-                    android:visibility="gone"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvMaxCashBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/padding_nano"
+                    android:layout_marginBottom="@dimen/padding_standard"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -159,8 +171,8 @@
                         android:text="@string/btn_use_coupon_store"
                         android:textColor="@color/white"
                         android:textSize="14dp"
-                        android:visibility="visible"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="visible" />
 
                     <TextView
                         android:id="@+id/tvCheckAtStoreCashier"
@@ -170,10 +182,10 @@
                         android:gravity="center"
                         android:letterSpacing="0.08"
                         android:lineSpacingExtra="@dimen/_3sdp"
-                        android:visibility="gone"
                         android:text="(Check at Store Cashier)"
                         android:textColor="@color/colorPrimaryText"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 

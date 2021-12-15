@@ -25,7 +25,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class HomeViewModel extends ViewModel {
     private static final String TAG = HomeViewModel.class.getSimpleName();
 
@@ -53,6 +52,7 @@ public class HomeViewModel extends ViewModel {
                 Common.printReqRes(foResponse.body(), "getGlobalSetting", Common.LogType.RESPONSE);
                 if (foResponse.isSuccessful()) {
                     GetSettingResponse loJsonObject = foResponse.body();
+                    Log.d("TTT","Response..."+foResponse.body().toString());
                     AppGlobal.setCategories(loJsonObject.getCategoryList());
                     AppGlobal.setTotalBillVerified(loJsonObject.getTotalBillVerified());
                     if (loJsonObject.getDealsOfTheDay() != null && loJsonObject.getDealsOfTheDay().size()>0) {
