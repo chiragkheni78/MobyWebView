@@ -34,6 +34,7 @@ public class FirebaseEvents {
     public static String OPEN_TELEGRAM_SHARE = "open_telegram_share";
     public static String OPEN_COPY_TEXT_SHARE = "open_copy_text_share";
     public static String PHONE_VERIFIED_MY_CASH = "phone_verified_for_mycash";
+    public static String BILL_TRACKED = "bill_tracked";
 
     public static void FirebaseEvent(Context context, Bundle bundle, String eventName) {
         Log.d("TTT", "Event Fired..." + eventName);

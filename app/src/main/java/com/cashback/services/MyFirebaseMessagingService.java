@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
@@ -105,6 +106,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if (fbIsTrack) {
                     try {
                         AdGydeEvents.billTracked(getApplicationContext());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                        FirebaseEvents.FirebaseEvent(getApplicationContext(), bundle, FirebaseEvents.BILL_TRACKED);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
