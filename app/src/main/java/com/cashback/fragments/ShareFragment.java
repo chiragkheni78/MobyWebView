@@ -26,6 +26,7 @@ import com.cashback.adapters.AdvertAdapter;
 import com.cashback.adapters.ShareBannerAdapter;
 import com.cashback.databinding.ActivityReferEarnBinding;
 import com.cashback.models.Advertisement;
+import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
@@ -122,6 +123,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
                 Common.openTelegram(getContext(), getMessage());
                 break;
             case R.id.tvCopy:
+                AdGydeEvents.shareApp(getContext(), FirebaseEvents.OPEN_COPY_TEXT_SHARE);
                 Common.setClipboard(getContext(), getMessage());
                 Toast.makeText(getActivity(), "Copied", Toast.LENGTH_LONG).show();
                 break;

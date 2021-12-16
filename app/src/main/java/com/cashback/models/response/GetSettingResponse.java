@@ -57,6 +57,9 @@ public class GetSettingResponse {
     @SerializedName("foCategoryList")
     private ArrayList<Category> categoryList;
 
+    @SerializedName("foMainStore")
+    private ArrayList<Category> foMainStore;
+
     @SerializedName("fiOfferListPageSize")
     int offerListPageSize;
 
@@ -82,6 +85,10 @@ public class GetSettingResponse {
     public GetSettingResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
+    }
+
+    public ArrayList<Category> getFoMainStore() {
+        return foMainStore;
     }
 
     public boolean isError() {

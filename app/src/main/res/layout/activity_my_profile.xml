@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
@@ -48,6 +48,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/llProfileMain"
             style="@style/NormalLayout"
             android:orientation="vertical">
 
@@ -58,8 +59,8 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="visible"
-                tools:visibility="visible"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="true"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:id="@+id/llProfile"
@@ -137,9 +138,9 @@
                             android:id="@+id/rgGender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/border_primary"
                             android:layout_centerHorizontal="true"
                             android:layout_toLeftOf="@+id/tvTimeline"
+                            android:background="@drawable/border_primary"
                             android:orientation="horizontal"
                             android:weightSum="2">
 
@@ -147,8 +148,8 @@
                                 android:id="@+id/rbMap"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_36sdp"
-                                android:layout_weight="1"
                                 android:layout_margin="1dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/bg_radio_gender"
                                 android:button="@null"
                                 android:checked="false"
@@ -160,8 +161,8 @@
                                 android:id="@+id/rbList"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_36sdp"
-                                android:layout_weight="1"
                                 android:layout_margin="1dp"
+                                android:layout_weight="1"
                                 android:background="@drawable/bg_radio_gender"
                                 android:button="@null"
                                 android:checked="true"
@@ -187,8 +188,8 @@
                         <EditText
                             android:id="@+id/etDob"
                             style="@style/etStandard"
-                            android:focusable="false"
                             android:background="#E1E1E1"
+                            android:focusable="false"
                             android:hint="dd-mm-yyyy"
                             android:inputType="text" />
 
@@ -405,9 +406,9 @@
                     <TextView
                         android:id="@+id/tvCreditCardTitle"
                         style="@style/TvXLarge"
-                        android:textColor="@color/colorPrimary"
                         android:paddingHorizontal="@dimen/padding_standard"
-                        android:text="@string/add_card_header_tv" />
+                        android:text="@string/add_card_header_tv"
+                        android:textColor="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/tvCreditCardMessage"
@@ -424,8 +425,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_view"
                         android:fadeScrollbars="false"
-                        tools:listitem="@layout/item_debit_card"
-                        android:scrollbars="horizontal" />
+                        android:scrollbars="horizontal"
+                        tools:listitem="@layout/item_debit_card" />
 
                 </LinearLayout>
 
@@ -449,8 +450,8 @@
                     <TextView
                         android:id="@+id/tvCategoryOffer"
                         style="@style/TvXLarge"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/category_offer" />
+                        android:text="@string/category_offer"
+                        android:textColor="@color/colorPrimary" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvBankOfferCategory"
@@ -481,8 +482,8 @@
                     <TextView
                         android:id="@+id/lblRange"
                         style="@style/TvXLarge"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/bank_offer_with_in" />
+                        android:text="@string/bank_offer_with_in"
+                        android:textColor="@color/colorPrimary" />
 
 
                     <RadioGroup

@@ -25,15 +25,21 @@ public class MainStoreAdapter extends RecyclerView.Adapter<MainStoreAdapter.MyVi
     private List<Category> moMainStoreList;
     private Context context;
 
-    public int selectedItem;
+    public int selectedItem = -1;
+    public int miMainStoreId = -1;
     BottomSheetDialog moSearchFragment;
     MyViewHolder moHolder;
 
-    public MainStoreAdapter(Context context, ArrayList<Category> foCategoryList, BottomSheetDialog foFragment) {
+    public MainStoreAdapter(Context context, ArrayList<Category> foCategoryList,
+                            BottomSheetDialog foFragment,
+                            int miMainStoreId) {
         this.context = context;
         this.moMainStoreList = foCategoryList;
-        selectedItem = 0;
         moSearchFragment = foFragment;
+        this.miMainStoreId = miMainStoreId;
+        /*if (miMainStoreId == -1) {
+            selectedItem = 0;
+        }*/
     }
 
     @Override
@@ -52,16 +58,18 @@ public class MainStoreAdapter extends RecyclerView.Adapter<MainStoreAdapter.MyVi
                 context.getResources().getDrawable(R.drawable.ic_moby_small),
                 null);
 
-        if (selectedItem == position) {
+        if (miMainStoreId == moMainStoreList.get(position).getCategoryId()) {
+            selectedItem = position;
             holder.rlMainStore.setBackground(ActivityCompat.getDrawable(context, R.drawable.border_for_card));
-        } else {
+        } else if (selectedItem == position) {
+            holder.rlMainStore.setBackground(ActivityCompat.getDrawable(context, R.drawable.border_for_card));
+        } else
             holder.rlMainStore.setBackground(null);
-        }
 
         holder.rlMainStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                miMainStoreId = -1;
                 int previousItem = selectedItem;
                 selectedItem = position;
                 moSearchFragment.selectMainStore(moMainStoreList.get(position));

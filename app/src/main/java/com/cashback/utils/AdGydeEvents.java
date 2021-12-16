@@ -66,7 +66,7 @@ public class AdGydeEvents {
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
         bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
         bundle.putLong("offerID", flOfferID);
-       // bundle.putString("offerName", foOffer.getAdName());
+        // bundle.putString("offerName", foOffer.getAdName());
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("user_id", "USER_SHOPPED");
@@ -78,7 +78,7 @@ public class AdGydeEvents {
         Bundle bundle = new Bundle();
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
         bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
-       // bundle.putLong("offerID", flOfferID);
+        // bundle.putLong("offerID", flOfferID);
         // bundle.putString("offerName", foOffer.getAdName());
 
         Map<String, String> loParams = new HashMap<>();
@@ -100,5 +100,25 @@ public class AdGydeEvents {
         AdGyde.onPermanentUnique("otpVerified", loParams);
     }
 
+    public static void shareApp(Context foContext, String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
 
+        Map<String, String> loParams = new HashMap<>();
+        loParams.put("shareApp", type);
+        loParams.put("miscellaneous", bundle.toString());
+        AdGyde.onPermanentUnique("shareApp", loParams);
+    }
+
+    public static void billTracked(Context foContext) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
+
+        Map<String, String> loParams = new HashMap<>();
+        loParams.put("billTracked", "billTracked");
+        loParams.put("miscellaneous", bundle.toString());
+        AdGyde.onPermanentUnique("billTracked", loParams);
+    }
 }

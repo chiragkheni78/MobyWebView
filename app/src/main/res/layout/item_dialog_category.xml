@@ -8,7 +8,7 @@
         android:id="@+id/rdCategorySelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="@color/orange" />
+        android:buttonTint="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tvCategoryName"
@@ -27,6 +27,7 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="@dimen/_6sdp"
         android:gravity="center_vertical"
-        android:textColor="@color/orange" />
+        android:textColor="@color/colorPrimary"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -25,6 +25,7 @@ import com.cashback.utils.APIClient;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 import com.cashback.utils.SharedPreferenceManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -98,6 +99,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String lsMessage = loJsonBody.getString("message");
             long llAdID = 0, llLocationID = 0, llActivityID = 0, llMessageID = 0;
             int liCategoryId = 0;
+
+            if (loJsonBody.has("fbIsTrack")) {
+                boolean fbIsTrack = loJsonBody.getBoolean("fbIsTrack");
+                if (fbIsTrack) {
+                    try {
+                        AdGydeEvents.billTracked(getApplicationContext());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
             if (loJsonBody.has("type"))
                 liNotifyID = loJsonBody.getInt("type");

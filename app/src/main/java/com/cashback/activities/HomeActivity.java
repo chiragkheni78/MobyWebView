@@ -1,12 +1,21 @@
 package com.cashback.activities;
 
+import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
+import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
+import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
+import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
+import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
+import static com.cashback.utils.Constants.IntentKey.IS_FROM;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -54,22 +63,11 @@ import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-
-import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
-import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
-import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
-import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
-import static com.cashback.utils.Constants.IntentKey.Action.MAP_SCREEN;
-import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
-import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
-import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
-import static com.cashback.utils.Constants.IntentKey.IS_FROM;
 
 @SuppressWarnings("All")
 public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
@@ -79,7 +77,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     HomeViewModel moHomeViewModel;
     MapViewModel moMapViewModel;
-
+    private boolean isLoadOfferPage;
     private String stFrom = "";
     private AppUpdateManager appUpdateManager;
 
@@ -92,7 +90,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         if (getIntent() != null && getIntent().hasExtra(IS_FROM)) {
             stFrom = getIntent().getStringExtra(IS_FROM);
         }
-
         initializeContent();
     }
 
@@ -224,6 +221,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON) || stFrom.equalsIgnoreCase(WALLET_SCREEN)) {
             moBinding.navigation.getMenu().getItem(3).setChecked(true);
             openMyCoupons(0);
+        } else if (stFrom.equalsIgnoreCase(Constants.IntentKey.LOAD_OFFER_PAGE)) {
+            moBinding.navigation.getMenu().getItem(1).setChecked(true);
+            loadOfferListFragment(0, 0, 0, 0);
         } else {
             getSettings();
 //            moBinding.navigation.getMenu().getItem(0).setChecked(true);

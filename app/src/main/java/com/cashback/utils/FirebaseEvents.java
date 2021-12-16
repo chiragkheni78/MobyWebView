@@ -28,10 +28,10 @@ public class FirebaseEvents {
     public static String OPEN_FB_SHARE = "open_FB_for_share";
     public static String OPEN_MESSENGER_SHARE = "open_messenger_share";
     public static String OPEN_INSTAGRAM_SHARE = "open_instagram_share";
-    public static String OPEN_SMS_SHARE = "open_SMS_Share";
+    public static String OPEN_SMS_SHARE = "open_SMS_share";
     public static String OPEN_EMAIL_SHARE = "open_email_share";
     public static String OPEN_TWITTER_SHARE = "open_twitter_share";
-    public static String OPEN_TELEGRAM_SHARE = "open_telegram_Share";
+    public static String OPEN_TELEGRAM_SHARE = "open_telegram_share";
     public static String OPEN_COPY_TEXT_SHARE = "open_copy_text_share";
     public static String PHONE_VERIFIED_MY_CASH = "phone_verified_for_mycash";
 

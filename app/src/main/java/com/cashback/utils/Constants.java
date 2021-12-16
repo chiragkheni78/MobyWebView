@@ -39,6 +39,7 @@ public class Constants {
         public static final String IS_FROM = "isFrom";
         public static final String adId = "adId";
         public static final String FROM_COUPON = "fromCoupon";
+        public static final String LOAD_OFFER_PAGE = "loadOfferPage";
 
         public static final String FUNCTION = "function";
         public class Action {

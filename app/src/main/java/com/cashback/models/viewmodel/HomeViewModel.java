@@ -54,6 +54,7 @@ public class HomeViewModel extends ViewModel {
                     GetSettingResponse loJsonObject = foResponse.body();
                     Log.d("TTT","Response..."+foResponse.body().toString());
                     AppGlobal.setCategories(loJsonObject.getCategoryList());
+                    AppGlobal.setMainStore(loJsonObject.getFoMainStore());
                     AppGlobal.setTotalBillVerified(loJsonObject.getTotalBillVerified());
                     if (loJsonObject.getDealsOfTheDay() != null && loJsonObject.getDealsOfTheDay().size()>0) {
                         AppGlobal.setDealOfTheDayResponse(loJsonObject.getDealsOfTheDay());

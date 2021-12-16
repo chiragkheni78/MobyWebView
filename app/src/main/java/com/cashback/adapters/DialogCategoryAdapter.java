@@ -10,51 +10,35 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
-import com.cashback.models.SubCategory;
+import com.cashback.models.Category;
 
 import java.util.List;
 
 public class DialogCategoryAdapter extends RecyclerView.Adapter<DialogCategoryAdapter.ViewHolder> {
 
-    private List<SubCategory> subCategoryList;
+    private List<Category> categoryList;
     private Context context;
     private OnItemClickCategory categoryListener;
     private int moCatPosition;
     //private OnItemClickExpiringSoon onItemClickExpiringSoon;
     //private OnItemClickBiggestServing onItemClickBiggestServing;
-    private int lastSelectedPosition = -1;
+    public int lastSelectedPosition = -1;
     public int selectedItem;
+    public int miLastCategoryId;
 
-    public DialogCategoryAdapter(List<SubCategory> subCategoryList, Context ctx, OnItemClickCategory categoryListener, int position) {
-        this.subCategoryList = subCategoryList;
+    public DialogCategoryAdapter(List<Category> subCategoryList, Context ctx,
+                                 OnItemClickCategory categoryListener, int position,
+                                 int miLastCategoryId) {
+        this.categoryList = subCategoryList;
         context = ctx;
         selectedItem = 0;
         this.categoryListener = categoryListener;
         this.moCatPosition = position;
+        this.miLastCategoryId = miLastCategoryId;
     }
 
-    /*  public DialogCategoryAdapter(List<SubCategory> subCategoryList, Context ctx, OnItemClickExpiringSoon categoryListener) {
-          this.subCategoryList = subCategoryList;
-          context = ctx;
-          this.onItemClickExpiringSoon = categoryListener;
-      }
-
-      public DialogCategoryAdapter(List<SubCategory> subCategoryList, Context ctx, OnItemClickBiggestServing categoryListener) {
-          this.subCategoryList = subCategoryList;
-          context = ctx;
-          this.onItemClickBiggestServing = categoryListener;
-      }
-  */
     public interface OnItemClickCategory {
-        void onItemClick(SubCategory category, int moCatPosition);
-    }
-
-    public interface OnItemClickExpiringSoon {
-        void onItemClickExpiringSoon(SubCategory category);
-    }
-
-    public interface OnItemClickBiggestServing {
-        void onItemClickBiggestServing(SubCategory category);
+        void onItemClick(Category category, int moCatPosition);
     }
 
     @Override
@@ -66,27 +50,28 @@ public class DialogCategoryAdapter extends RecyclerView.Adapter<DialogCategoryAd
 
     @Override
     public void onBindViewHolder(DialogCategoryAdapter.ViewHolder holder, int position) {
-        SubCategory categoryItem = subCategoryList.get(position);
-        holder.tvCategoryPrice.setText(categoryItem.getPrice());
-        holder.tvCategoryName.setText("" + categoryItem.getCategory());
-        holder.rdCategorySelect.setChecked(lastSelectedPosition == position);
+        Category categoryItem = categoryList.get(position);
+        holder.tvCategoryName.setText("" + categoryItem.getCategoryName());
+        //  holder.rdCategorySelect.setChecked(lastSelectedPosition == position);
+
+        if (miLastCategoryId == categoryItem.getCategoryId()) {
+            holder.rdCategorySelect.setChecked(true);
+        } else {
+            holder.rdCategorySelect.setChecked(false);
+        }
 
         holder.rdCategorySelect.setOnClickListener(view -> {
             if (categoryListener != null) {
                 categoryListener.onItemClick(categoryItem, moCatPosition);
             }
-            lastSelectedPosition = position;
+            miLastCategoryId = categoryItem.getCategoryId();
             notifyDataSetChanged();
-           /* int previousItem = selectedItem;
-            selectedItem = position;
-           notifyItemChanged(previousItem);
-            notifyItemChanged(position);*/
         });
     }
 
     @Override
     public int getItemCount() {
-        return subCategoryList.size();
+        return categoryList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -100,14 +85,6 @@ public class DialogCategoryAdapter extends RecyclerView.Adapter<DialogCategoryAd
             tvCategoryPrice = (TextView) view.findViewById(R.id.tvCategoryPrice);
             tvCategoryName = (TextView) view.findViewById(R.id.tvCategoryName);
             rdCategorySelect = (RadioButton) view.findViewById(R.id.rdCategorySelect);
-            /*rdCategorySelect.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                   *//* lastSelectedPosition = getAdapterPosition();
-                    notifyDataSetChanged();*//*
-
-                }
-            });*/
         }
     }
 }

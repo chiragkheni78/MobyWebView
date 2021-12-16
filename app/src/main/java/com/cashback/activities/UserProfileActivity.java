@@ -1,5 +1,9 @@
 package com.cashback.activities;
 
+import static android.view.View.GONE;
+import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
+import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -28,6 +32,7 @@ import com.cashback.adapters.BankOfferCategoryAdapter;
 import com.cashback.adapters.DebitCardAdapter;
 import com.cashback.adapters.EWalletAdapter;
 import com.cashback.databinding.ActivityMyProfileBinding;
+import com.cashback.dialog.MessageDialog;
 import com.cashback.models.EWallet;
 import com.cashback.models.UserDetails;
 import com.cashback.models.request.SaveUserProfileRequest;
@@ -38,10 +43,6 @@ import com.cashback.models.viewmodel.UserProfileViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
-
-import static android.view.View.GONE;
-import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
-import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
 
 @SuppressWarnings("All")
 public class UserProfileActivity extends BaseActivity implements View.OnClickListener {
@@ -97,12 +98,26 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         setToolbar();
         moBinding.btnSaveProfile.setOnClickListener(this);
 
+        String str = "To set up your Profile & Account \n" +
+                "Please Select Any Coupon / Deal\n" +
+                "Click \"Shop Online\" to Verify OTP.";
+
         if (!getPreferenceManager().isPhoneVerified()) {
-            errorButtonPressed();
+            moBinding.llProfileMain.setVisibility(GONE);
+            MessageDialog loDialog = new MessageDialog(getContext(), null, str, null, false);
+            loDialog.setClickListener(v -> {
+                loDialog.dismiss();
+                Intent intent = new Intent(moContext, HomeActivity.class);
+                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.LOAD_OFFER_PAGE);
+                moContext.startActivity(intent);
+                finishAffinity();
+            });
+            loDialog.show();
+           /* errorButtonPressed();
             moBinding.btnError.setOnClickListener(this);
             moBinding.llErrorMessage.setVisibility(View.VISIBLE);
             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "text_verify_phone_no"));
-            moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number"));
+            moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number"));*/
         } else {
             loadView();
         }

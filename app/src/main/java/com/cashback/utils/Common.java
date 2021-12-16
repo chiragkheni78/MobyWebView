@@ -44,9 +44,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.cashback.AppGlobal;
 import com.cashback.BuildConfig;
 import com.cashback.R;
+import com.cashback.activities.PhoneLoginActivity;
 import com.cashback.dialog.MessageDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -541,6 +543,7 @@ public class Common {
 
     public static void openWhatsapp(Context foContext, String fsMessage) {
         try {
+            AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_WATSUP_SHARE);
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
             FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_WATSUP_SHARE);
@@ -557,6 +560,7 @@ public class Common {
     }
 
     public static void openMessenger(Context foContext, String fsMessage) {
+        AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_MESSENGER_SHARE);
         Bundle bundle = new Bundle();
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
         FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_MESSENGER_SHARE);
@@ -577,6 +581,7 @@ public class Common {
 
     public static void openInstagram(Context foContext, String fsMessage, String imagePath) {
         try {
+            AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_INSTAGRAM_SHARE);
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
             FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_INSTAGRAM_SHARE);
@@ -601,6 +606,7 @@ public class Common {
 
     public static void openFacebook(Context foContext, String fsMessage) {
         try {
+            AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_FB_SHARE);
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
             FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_FB_SHARE);
@@ -620,6 +626,7 @@ public class Common {
 
     public static void openTwitter(Context foContext, String fsMessage) {
         try {
+            AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_TWITTER_SHARE);
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
             FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_TWITTER_SHARE);
@@ -639,6 +646,7 @@ public class Common {
 
     public static void openTelegram(Context foContext, String fsMessage) {
         try {
+            AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_TELEGRAM_SHARE);
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
             FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_TELEGRAM_SHARE);

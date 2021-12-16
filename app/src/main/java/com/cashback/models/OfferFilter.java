@@ -25,11 +25,12 @@ public class OfferFilter {
     @SerializedName("fiBannerId")
     private long bannerID;
 
-    public OfferFilter(String searchString, int currentPage, int categoryId, long bannerID) {
+    public OfferFilter(String searchString, int currentPage, int categoryId, long bannerID,int fiAdType) {
         this.searchString = searchString;
         this.currentPage = currentPage;
         this.categoryId = categoryId;
         this.bannerID = bannerID;
+        this.adType = fiAdType;
     }
 
     public void setSearchString(String searchString) {

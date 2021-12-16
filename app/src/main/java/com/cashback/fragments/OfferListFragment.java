@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,7 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import java.util.ArrayList;
 
 @SuppressWarnings("All")
-public class OfferListFragment extends BaseFragment implements View.OnClickListener, OfferListAdapter.OnAdItemClick {
+public class OfferListFragment extends BaseFragment implements View.OnClickListener, OfferListAdapter.OnAdItemClick, BottomSheetDialog.OnApplyClickFilter {
 
     public OfferListFragment() {
 
@@ -74,13 +75,16 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     ArrayList<Category> moCategories = new ArrayList<>();
     ArrayList<Ad> moOfferList = new ArrayList<>();
     public static int miCategoryId = -1;
+    public static int miLastCategoryId = -1;
     private long mlOfferID = 0, mlBannerID = 0;
 
     private int miCurrentPage = 1;
     private boolean isLastPage = false;
     private boolean isLoading = false;
     private LinearLayoutManager moLayoutManager;
-
+    private String msSearchText = "";
+    private int miAdType = 1;
+    private int miLastMainStoreId = -1;
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -288,8 +292,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             showProgressDialog();
         isLoading = true;
 
-        String lsSearchText = (moBinding.etSearch.getText().length() > 0) ? moBinding.etSearch.getText().toString().trim() : "";
-        OfferFilter loOfferFilter = new OfferFilter(lsSearchText, miCurrentPage, miCategoryId, mlBannerID);
+        //  String lsSearchText = (moBinding.etSearch.getText().length() > 0) ? moBinding.etSearch.getText().toString().trim() : "";
+        OfferFilter loOfferFilter = new OfferFilter(msSearchText, miCurrentPage, miCategoryId, mlBannerID, miAdType);
 
         if (AppGlobal.getLocation() == null) {
             AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
@@ -382,7 +386,11 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 break;
             case R.id.floating_action_search:
                 //floatingSearchPress();
-                BottomSheetDialog bottomSheet = new BottomSheetDialog();
+                BottomSheetDialog bottomSheet = new BottomSheetDialog(this,
+                        msSearchText,
+                        miLastCategoryId,
+                        miLastMainStoreId,
+                        miAdType);
                 bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
                 break;
         }
@@ -553,4 +561,20 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             }
         }
     };
+
+    @Override
+    public void onFilterClick(int position, String searchText, int categoryId, int mainStoreId) {
+        Log.d("TTT", "before id..." + categoryId + "\t " + mainStoreId);
+        miLastMainStoreId = mainStoreId;
+        miLastCategoryId = categoryId;
+        miAdType = position;
+        miCategoryId = categoryId;
+//        if (categoryId >= 0)
+//            miCategoryId = categoryId;
+//        else
+//            miCategoryId = mainStoreId;
+        // Log.d("TTT", "after id..." + miCategoryId);
+        msSearchText = (searchText.length() > 0) ? searchText.toString().trim() : "";
+        refreshData();
+    }
 }

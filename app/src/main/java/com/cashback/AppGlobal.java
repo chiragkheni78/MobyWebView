@@ -27,6 +27,7 @@ public class AppGlobal extends Application {
 
     public static Context moContext;
     public static ArrayList<Category> moCategories = new ArrayList<>();
+    public static ArrayList<Category> moMainStore = new ArrayList<>();
     public static ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse;
     public static ArrayList<Advertisement> moSharePageImages;
     public static Location moLocation;
@@ -93,8 +94,16 @@ public class AppGlobal extends Application {
         return moCategories;
     }
 
+    public static ArrayList<Category> getMoMainStore() {
+        return moMainStore;
+    }
+
     public static void setCategories(ArrayList<Category> loCategories) {
         moCategories = loCategories;
+    }
+
+    public static void setMainStore(ArrayList<Category> loCategories) {
+        moMainStore = loCategories;
     }
 
     public static ArrayList<DealOfTheDayResponse> getDealOfTheDayResponse() {
