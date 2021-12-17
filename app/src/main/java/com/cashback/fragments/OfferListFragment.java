@@ -144,13 +144,13 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         ArrayList<DealOfTheDayResponse> loDealList = AppGlobal.getDealOfTheDayResponse();
         if (loDealList != null && loDealList.size() > 0) {
             if (Common.stOfferShow && !AppGlobal.isDealBannerClosed) {
-                moBinding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+                // moBinding.imageSlider.setIndicatorEnabled(false);
+                // moBinding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
                 moBinding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
                 moBinding.imageSlider.startAutoCycle();
                 moBinding.imageSlider.setSliderAdapter(new DealsOfDayAdapter(getContext(), loDealList, new DealsOfDayAdapter.OnItemClick() {
                     @Override
                     public void onItemClick(DealOfTheDayResponse foDealList) {
-                        //showDealOfTheDayImage();
 
                         if (miCategoryId != foDealList.getCategory()) {
                             miCategoryId = foDealList.getCategory();
@@ -310,7 +310,6 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     Observer<FetchOffersResponse> fetchOffersObserver = new Observer<FetchOffersResponse>() {
-
         @Override
         public void onChanged(FetchOffersResponse loJsonObject) {
             if (!loJsonObject.isError()) {
@@ -323,6 +322,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
                         if (mlOfferID > 0 && miCurrentPage == 1) {
                             moOfferListAdapter.notifyFirstItem(mlOfferID);
+                          //  showDealOfTheDayImage();
                         }
 
                         if (miCurrentPage == 1 && AppGlobal.isNewUser) {

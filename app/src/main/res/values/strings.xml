@@ -80,6 +80,11 @@
     <string name="all_delete_card_validation">You can\'t delete all cards</string>
 
     <string name="empty_wallet">Your Wallet is empty!\nEngage with the Brands to earn money.</string>
+    <string name="empty_wallet_second_msg">You need click via our coupons to shop\n
+        And then your cashback will reflect here\n
+        Otherwise just share the app with Friends\n
+        &amp; Family, when they shop &amp; get cashback\n
+        You Get 15% here, everytime they shop !</string>
 
     <string name="back_from_timeline_title">DON"T LIKE YOUR COUPONS?</string>
     <string name="back_from_timeline_message"><![CDATA[Search for your favorite brands,<br/>Win coupon, & Shop to Get upto<br/>
@@ -202,6 +207,8 @@
     <string name="online_store">Online Store</string>
     <string name="offline_store">Offline Store</string>
     <string name="all_store">All Store</string>
+    <string name="share_app">Share App</string>
+    <string name="shop_now">Shop Now</string>
 
 
     <!--Timeline Sorting-->

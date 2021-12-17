@@ -55,11 +55,11 @@
                 android:layout_marginTop="@dimen/padding_standard"
                 android:background="@drawable/bg_white_blue"
                 android:gravity="center"
-                android:padding="@dimen/_10sdp"
                 android:hint="@string/hint_bill_amount"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLines="1"
+                android:padding="@dimen/_10sdp"
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/txt_large" />
 
@@ -126,7 +126,7 @@
                 style="@style/RippleBtnStandard"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/padding_standard"
-                android:background="@color/black"
+                android:background="@color/colorPrimary"
                 android:text="@string/btn_mark_coupon_used" />
 
         </LinearLayout>

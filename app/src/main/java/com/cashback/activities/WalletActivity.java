@@ -50,6 +50,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     private void initializeContent() {
         initViewModel();
         setToolbar();
+        moBinding.btnShareApp.setOnClickListener(this);
+        moBinding.btnShopNow.setOnClickListener(this);
         moBinding.tvTimelineCoupon.setOnClickListener(this);
         moBinding.imageInfo.setOnClickListener(this);
         moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -107,11 +109,11 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         moTransactionListAdapter.notifyList(moTransactionList);
 
         if (foJsonObject.getTransactionList().size() == 0) {
-            moBinding.tvNoData.setVisibility(View.VISIBLE);
-            moBinding.rvTransactionList.setVisibility(View.GONE);
+            moBinding.rlEmptyData.setVisibility(View.VISIBLE);
+            moBinding.rlWallet.setVisibility(View.GONE);
         } else {
-            moBinding.tvNoData.setVisibility(View.GONE);
-            moBinding.rvTransactionList.setVisibility(View.VISIBLE);
+            moBinding.rlEmptyData.setVisibility(View.GONE);
+            moBinding.rlWallet.setVisibility(View.VISIBLE);
         }
 
         moBinding.tvWallet.setText("Credited In Your " + foJsonObject.getWalletName());
@@ -154,8 +156,22 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             case R.id.tvTimelineCoupon:
                 openCouponList();
                 break;
+            case R.id.btnShareApp:
+                Intent intent = new Intent(WalletActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.LOAD_SHARE_PAGE);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.btnShopNow:
+                Intent intentHome = new Intent(moContext, HomeActivity.class);
+                intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentHome.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.LOAD_OFFER_PAGE);
+                moContext.startActivity(intentHome);
+                //finishAffinity();
+                break;
             case R.id.imageInfo:
-                MessageDialog loDialog = new MessageDialog(this, null, getString(R.string.info_message), getString(R.string.btn_shop_now) , false);
+                MessageDialog loDialog = new MessageDialog(this, null, getString(R.string.info_message), getString(R.string.btn_shop_now), false);
                 loDialog.setClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

@@ -10,30 +10,71 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/tvNoData"
-        style="@style/TvXLarge"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/margin_view"
-        android:gravity="center"
-        android:padding="@dimen/margin_view"
-        android:text="@string/empty_wallet"
-        android:textStyle="bold"
-        android:visibility="gone" />
-
     <RelativeLayout
+        android:id="@+id/rlEmptyData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:visibility="gone">
 
-        <LinearLayout style="@style/RootLayout"
+        <TextView
+            android:id="@+id/tvNoData"
+            style="@style/TvLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:gravity="center"
+            android:justificationMode="inter_word"
+            android:lineSpacingExtra="@dimen/_6sdp"
+            android:text="@string/empty_wallet_second_msg"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNoData"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btnShareApp"
+                style="@style/RippleBtnStandard"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/padding_standard"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_color_primary_gender"
+                android:text="@string/share_app"
+                android:textStyle="bold" />
+
+            <com.rey.material.widget.Button
+                android:id="@+id/btnShopNow"
+                style="@style/RippleBtnStandard"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/padding_standard"
+                android:layout_weight="1"
+                android:background="@drawable/bg_color_primary_gender"
+                android:text="@string/shop_now"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlWallet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            style="@style/RootLayout"
             android:layout_above="@+id/llBottom">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvTransactionList"
                 style="@style/RecycleView78"
-                android:visibility="visible"
                 android:paddingVertical="@dimen/padding_micro"
                 tools:listitem="@layout/item_transaction_list" />
 
@@ -88,8 +129,7 @@
                         android:gravity="left"
                         android:text="(Credited In Your XXXX Wallet)"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
-                         />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <TextView
@@ -124,15 +164,15 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/lbl_virtual_cash"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:text="@string/tv_virtual_cash"
-                        android:textColor="@color/white"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/lbl_virtual_cash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:text="@string/tv_virtual_cash"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/imageInfo"
@@ -153,8 +193,7 @@
                         android:text="(Use Coupon, Convert To Cash)"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -166,10 +205,9 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="Rs. 0"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
                     android:textSize="16sp"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -23,15 +23,18 @@
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_message.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_my_coupons.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_my_profile.xml" value="0.264" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_offer_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_phone_login.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_qr_scan.xml" value="0.2341485507246377" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_quiz_details.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_refer_earn.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_short_profile.xml" value="0.2" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_wallet.xml" value="0.264" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.264" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_common.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_copy_to_clipboard.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_qr_store_coupon.xml" value="0.24230072463768115" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_my_coupon_back.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_qr_store_coupon.xml" value="0.4" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_reward_note.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_store_coupon.xml" value="0.264" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/fragment_map_view.xml" value="0.12360688956433637" />
@@ -46,6 +49,7 @@
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/item_offer_list.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/item_store_location.xml" value="0.24230072463768115" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/toolbar_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/toolbar_transparent.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/menu/menu_bottom_bar.xml" value="0.20092592592592592" />
       </map>
     </option>

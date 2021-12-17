@@ -193,9 +193,9 @@ public class SharedPreferenceManager {
 
     public int getAdvertBannerPosition() {
         if (moSharedPreferences != null) {
-            return moSharedPreferences.getInt(ADVERT_BANNER_POSITION, 0);
+            return moSharedPreferences.getInt(ADVERT_BANNER_POSITION, -1);
         }
-        return 0;
+        return -1;
     }
 
     //START isMarketingAd
