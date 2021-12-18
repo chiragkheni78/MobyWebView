@@ -160,9 +160,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 case NotificationType.BILL_VERIFIED:
                 case NotificationType.CASH_BACK_PAID:
 
-                    if (liNotifyID == NotificationType.PURCHASED) {
-                        AdGydeEvents.purchased(this, llAdID);
-                    }
+//                    if (liNotifyID == NotificationType.PURCHASED) {
+//                        AdGydeEvents.purchased(this, llAdID);
+//                    }
                     loIntent = new Intent(this, HomeActivity.class);
                     loIntent.setAction(WALLET_SCREEN);
                     loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityID);

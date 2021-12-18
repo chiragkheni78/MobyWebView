@@ -420,7 +420,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
 
     private void handleQuizAnswerResponse(SubmitQuizResponse foJsonObject) {
         showSuccessMessage(foJsonObject);
-        AdGydeEvents.offerEngaged(getContext(), moOffer);
+        //AdGydeEvents.offerEngaged(getContext(), moOffer);
     }
 
 

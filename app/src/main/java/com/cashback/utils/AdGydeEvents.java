@@ -25,53 +25,12 @@ public class AdGydeEvents {
         params.put("miscellaneous", bundle.toString());
         AdGyde.onPermanentUnique("saveProfile", params); //eventid,params
 
-
         if (lsGender.equalsIgnoreCase(Constants.Gender.MALE.getValue())) {
             AdGyde.setGender(foContext, AdGyde.M);
         } else {
             AdGyde.setGender(foContext, AdGyde.F);
         }
         AdGyde.setAge(foContext, fiAge);
-    }
-
-    public static void offerEngaged(Context foContext, Ad foOffer) {
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
-        bundle.putLong("offerID", foOffer.getAdID());
-        bundle.putString("offerName", foOffer.getAdName());
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("user_id", "ENGAGED");
-        params.put("miscellaneous", bundle.toString());
-        AdGyde.onPermanentUnique("ENGAGED", params); //eventid,params
-    }
-
-    public static void shopOnlineClicked(Context foContext, Activity foActivity) {
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
-        bundle.putLong("offerID", foActivity.getAdID());
-        bundle.putString("offerName", foActivity.getAdName());
-        bundle.putLong("activityID", foActivity.getActivityID());
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("user_id", "shopOnlineClicked");
-        params.put("miscellaneous", bundle.toString());
-        AdGyde.onPermanentUnique("shopOnlineClicked", params); //eventid, params
-    }
-
-    public static void purchased(Context foContext, long flOfferID) {
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
-        bundle.putLong("offerID", flOfferID);
-        // bundle.putString("offerName", foOffer.getAdName());
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("user_id", "USER_SHOPPED");
-        params.put("miscellaneous", bundle.toString());
-        AdGyde.onPermanentUnique("USER_SHOPPED", params); //eventid, params
     }
 
     public static void offerLoaded(Context foContext) {
@@ -91,8 +50,6 @@ public class AdGydeEvents {
         Bundle bundle = new Bundle();
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
         bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
-        // bundle.putLong("offerID", flOfferID);
-        // bundle.putString("offerName", foOffer.getAdName());
 
         Map<String, String> loParams = new HashMap<>();
         loParams.put("user_id", "otpVerified");
@@ -104,9 +61,10 @@ public class AdGydeEvents {
         Bundle bundle = new Bundle();
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
         bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
+        bundle.putString("shareApp", type);
 
         Map<String, String> loParams = new HashMap<>();
-        loParams.put("shareApp", type);
+        loParams.put("user_id", "shareApp");
         loParams.put("miscellaneous", bundle.toString());
         AdGyde.onPermanentUnique("shareApp", loParams);
     }
@@ -117,8 +75,48 @@ public class AdGydeEvents {
         bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
 
         Map<String, String> loParams = new HashMap<>();
-        loParams.put("billTracked", "billTracked");
+        loParams.put("user_id", "billTracked");
         loParams.put("miscellaneous", bundle.toString());
         AdGyde.onPermanentUnique("billTracked", loParams);
+    }
+
+    public static void shopOnlineClicked(Context foContext, Activity foActivity) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
+        bundle.putLong("offerID", foActivity.getAdID());
+        bundle.putString("offerName", foActivity.getAdName());
+        bundle.putLong("activityID", foActivity.getActivityID());
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("user_id", "shopOnlineClicked");
+        params.put("miscellaneous", bundle.toString());
+        AdGyde.onPermanentUnique("shopOnlineClicked", params);
+    }
+
+    public static void getOfferClicked(Context foContext, Activity foActivity) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
+        bundle.putLong("offerID", foActivity.getAdID());
+        bundle.putString("offerName", foActivity.getAdName());
+        bundle.putLong("activityID", foActivity.getActivityID());
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("user_id", "getOfferClicked");
+        params.put("miscellaneous", bundle.toString());
+        AdGyde.onPermanentUnique("getOfferClicked", params);
+    }
+
+    public static void redirectToURL(Context foContext, String fsURL) {
+        Bundle bundle = new Bundle();
+        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+        bundle.putString("deviceID", Common.getDeviceUniqueId(foContext));
+        bundle.putString("url", fsURL);
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("user_id", "redirectToURL");
+        params.put("miscellaneous", bundle.toString());
+        AdGyde.onPermanentUnique("redirectToURL", params);
     }
 }

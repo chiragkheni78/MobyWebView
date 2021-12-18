@@ -253,6 +253,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         loOfferAdapter.setOnItemClickListener(new CouponAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
+                //trigger event
+                if (moActivity.isBlinkShopOnline()) {
+                    AdGydeEvents.getOfferClicked(getContext(), moActivity);
+                }
+
                 Bundle bundle = new Bundle();
                 bundle.putString("mobile", AppGlobal.getPhoneNumber());
                 FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.GET_OFFER);
@@ -414,6 +419,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
         if (lsLink != null && !lsLink.isEmpty()) {
             dialogCopyToClipboard(lsLink);
+        }
+
+        //trigger event
+        if (moActivity.isBlinkShopOnline()) {
+            AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
         }
         moBinding.tvShopOnline.clearAnimation();
     }
@@ -597,10 +607,6 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (!getPreferenceManager().isPhoneVerified()) {
             openPhoneLogin(fsUrl);
         } else {
-            if (moActivity.isBlinkShopOnline()) {
-                AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
-            }
-
             if (moActivity.getAdCouponType() == 1) { // only coupon then direct open link
                 openDeepLink(fsUrl);
                 return;
@@ -632,6 +638,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void openDeepLink(String fsUrl) {
         if (fsUrl != null && !fsUrl.isEmpty()) {
+            AdGydeEvents.redirectToURL(getContext(), fsUrl);
             Common.openBrowser(getContext(), fsUrl);
 
             isShopOnlinePressed = true;
