@@ -1,6 +1,7 @@
 package com.cashback.activities;
 
-
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +18,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -29,12 +31,14 @@ import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.AdLocationAdapter;
 import com.cashback.adapters.CouponAdapter;
+import com.cashback.adapters.DealsOfDayAdapter;
 import com.cashback.databinding.ActivityDetailsBinding;
 import com.cashback.models.Activity;
 import com.cashback.models.AdLocation;
 import com.cashback.models.Coupon;
 import com.cashback.models.response.ActivityDetailsResponse;
 import com.cashback.models.response.ActivityMarkAsUsedResponse;
+import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.models.response.UpdateShopOnlineBlinkResponse;
 import com.cashback.models.viewmodel.ActivityDetailsViewModel;
 import com.cashback.utils.AdGydeEvents;
@@ -43,10 +47,15 @@ import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 import com.cashback.dialog.MessageDialog;
+import com.cashback.utils.custom.CustomLayoutManager;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
 
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
 import static com.cashback.models.viewmodel.ActivityDetailsViewModel.REQUEST_CAMERA;
 import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
+
+import java.util.ArrayList;
 
 public class CouponDetailsActivity extends BaseActivity implements View.OnClickListener {
 
@@ -56,6 +65,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private boolean mbShopOnlinePressed = false;
     private long miActivityId;
     Activity moActivity;
+    CouponAdapter loOfferAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +144,50 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         }
 
         displayEarnText();
-        displayWebView();
+        if (moActivity.getAdCouponType() == 1) {
+            moBinding.cdWebview.setVisibility(View.GONE);
+            moBinding.tvMaxCashBack.setVisibility(View.GONE);
+            if (moActivity.getCouponList() != null && moActivity.getCouponList().size() > 0) {
+                moBinding.rlBanner.setVisibility(View.VISIBLE);
+
+                moBinding.imageSlider.setIndicatorEnabled(true);
+                moBinding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+                moBinding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                moBinding.imageSlider.startAutoCycle();
+
+                ArrayList<DealOfTheDayResponse> couponList = new ArrayList<>();
+                DealOfTheDayResponse dealOfTheDayResponse = new DealOfTheDayResponse();
+                for (int i = 0; i < moActivity.getCouponList().size(); i++) {
+                    dealOfTheDayResponse.setImage(moActivity.getCouponList().get(i).getCouponBanner());
+                    couponList.add(dealOfTheDayResponse);
+                }
+
+                moBinding.imageSlider.setSliderAdapter(new DealsOfDayAdapter(getContext(), couponList, new DealsOfDayAdapter.OnItemClick() {
+                    @Override
+                    public void onItemClick(DealOfTheDayResponse foDealList, int position) {
+                        if (moActivity.getCouponList() != null &&
+                                moActivity.getCouponList().size() > 0
+                                && loOfferAdapter != null) {
+                            loOfferAdapter.notifyFirstItem(position);
+                            moBinding.rvCoupon.smoothScrollToPosition(position);
+
+                           /* moBinding.nestedScroll.post(new Runnable() {
+                                public void run() {
+                                    // Log.d("TTT", "Top...." + moBinding.rvCoupon.getY());
+                                    //moBinding.nestedScroll.scrollTo(0, moBinding.rvCoupon.getBottom());
+                                    moBinding.nestedScroll.fullScroll(ScrollView.FOCUS_UP);
+                                    moBinding.nestedScroll.smoothScrollTo(0, 0);
+                                    moBinding.rvCoupon.smoothScrollToPosition(position);
+                                }
+                            });*/
+                        }
+                    }
+                }));
+            }
+        } else {
+            displayWebView();
+        }
+
         displayCashbackWalletMessage();
 
         //display remain day
@@ -169,10 +222,23 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 }
             });
             moBinding.tvWebView.getSettings().setJavaScriptEnabled(true);
+            // Log.d("TTT", "moActivity.getOfferDetails()...." + moActivity.getOfferDetails());
             moBinding.tvWebView.loadDataWithBaseURL(null, moActivity.getOfferDetails(), "text/html", "utf-8", null);
         }
-        //  moBinding.tvCouponDesc.setText(Html.fromHtml(moActivity.getOfferDetails()));
 
+       /* ViewTreeObserver viewTreeObserver = moBinding.tvWebView.getViewTreeObserver();
+        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                int height = moBinding.tvWebView.getMeasuredHeight();
+                //Log.d("TTT", "height..." + height);
+                if (height != 0) {
+                    moBinding.tvWebView.getViewTreeObserver().removeOnPreDrawListener(this);
+                }
+                return false;
+            }
+        });*/
+        //  moBinding.tvCouponDesc.setText(Html.fromHtml(moActivity.getOfferDetails()));
     }
 
     private void storeLocationAdapterClick() {
@@ -247,7 +313,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         int liOrientation = Common.getLayoutManagerOrientation(getResources().getConfiguration().orientation);
         final LinearLayoutManager loLayoutManager = new LinearLayoutManager(getContext(), liOrientation, false);
         moBinding.rvCoupon.setLayoutManager(loLayoutManager);
-        CouponAdapter loOfferAdapter = new CouponAdapter(getContext(), moActivity.getCouponList());
+        //CustomLayoutManager customLayoutManager = new CustomLayoutManager(this);
+        // moBinding.rvCoupon.setLayoutManager(customLayoutManager);
+
+        loOfferAdapter = new CouponAdapter(getContext(), moActivity.getCouponList());
         moBinding.rvCoupon.setAdapter(loOfferAdapter);
 
         loOfferAdapter.setOnItemClickListener(new CouponAdapter.ClickListener() {
@@ -436,14 +505,16 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             return;
         }
 
-        if (moActivity.getMarkAsUsedType() == 1) {
-            dialogMarkWithPhone();
-        } else if (moActivity.getMarkAsUsedType() == 2) {
-            openQRCode();
-        } else if (moActivity.getMarkAsUsedType() == 3) {
-            openQRCode();
-        } else if (moActivity.getMarkAsUsedType() == 4) {
-            dialogMarkWithCouponCode();
+        if (moActivity != null) {
+            if (moActivity.getMarkAsUsedType() == 1) {
+                dialogMarkWithPhone();
+            } else if (moActivity.getMarkAsUsedType() == 2) {
+                openQRCode();
+            } else if (moActivity.getMarkAsUsedType() == 3) {
+                openQRCode();
+            } else if (moActivity.getMarkAsUsedType() == 4) {
+                dialogMarkWithCouponCode();
+            }
         }
     }
 

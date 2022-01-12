@@ -3,8 +3,6 @@ package com.cashback.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import static com.cashback.utils.Constants.DEFAULT_REFERRAL_CODE;
-
 public class SharedPreferenceManager {
 
     SharedPreferences moSharedPreferences;
@@ -36,6 +34,7 @@ public class SharedPreferenceManager {
     private static final String IS_PHONE_VERIFIED = "isPhoneVerified";
     private static final String IS_QUIZ_FLOW = "isQuizFlow";
     private static final String SHARE_BANNER_URL = "shareBannerUrl";
+    private static final String IMAGE_INFO_IS_CLICKED = "imageInfoClicked";
 
 
     private static final String IS_PROFILE_SAVE = "is_profile_save";
@@ -389,7 +388,7 @@ public class SharedPreferenceManager {
 
     public String[] getShareBannerUrl() {
         if (moSharedPreferences != null) {
-            String lsUrls =  moSharedPreferences.getString(SHARE_BANNER_URL, "");
+            String lsUrls = moSharedPreferences.getString(SHARE_BANNER_URL, "");
             String[] foUrl = lsUrls.split(",");
             return foUrl;
         }
@@ -397,5 +396,22 @@ public class SharedPreferenceManager {
     }
     //END SHARE_BANNER_URL
 
+
+    //START VIRTUAL CASH IMAGE IS CLICK
+    public void setVirtualCashClicked() {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putBoolean(IMAGE_INFO_IS_CLICKED, true);
+            loEditor.commit();
+        }
+    }
+
+    public boolean getVirtualCashClicked() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getBoolean(IMAGE_INFO_IS_CLICKED, false);
+        }
+        return false;
+    }
+    //END VIRTUAL CASH IMAGE IS CLICK
 
 }

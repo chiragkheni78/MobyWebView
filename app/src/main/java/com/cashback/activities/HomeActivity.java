@@ -191,7 +191,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         moBinding.toolbar.rbList.setOnCheckedChangeListener(this);
 
         moBinding.floatingMenuOption.setOnClickListener(view -> {
-            moBinding.drawerLayout.openDrawer(Gravity.LEFT); //OPEN Nav Drawer!
+            moBinding.drawerLayout.openDrawer(Gravity.START); //OPEN Nav Drawer!
         });
 
         moBinding.navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -319,9 +319,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onClick(View v) {
                 if (moBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    moBinding.drawerLayout.closeDrawer(Gravity.LEFT); //CLOSE Nav Drawer!
+                    moBinding.drawerLayout.closeDrawer(Gravity.START); //CLOSE Nav Drawer!
                 } else {
-                    moBinding.drawerLayout.openDrawer(Gravity.LEFT); //OPEN Nav Drawer!
+                    moBinding.drawerLayout.openDrawer(Gravity.START); //OPEN Nav Drawer!
                 }
             }
         });

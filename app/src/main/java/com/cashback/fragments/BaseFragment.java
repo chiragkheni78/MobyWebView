@@ -1,6 +1,7 @@
 package com.cashback.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ import com.cashback.utils.Common;
 import com.cashback.utils.SharedPreferenceManager;
 
 public class BaseFragment extends Fragment {
-
+    Context moContext;
     ViewBinding binding;
     private SharedPreferenceManager moSharedPreferenceManager;
 
@@ -27,15 +28,15 @@ public class BaseFragment extends Fragment {
         moSharedPreferenceManager = new SharedPreferenceManager(getActivity());
     }
 
-    protected SharedPreferenceManager getPreferenceManager(){
-        return  moSharedPreferenceManager;
+    protected SharedPreferenceManager getPreferenceManager() {
+        return moSharedPreferenceManager;
     }
 
-    protected void showProgressDialog(){
+    protected void showProgressDialog() {
         loProgressDialog = Common.showProgressDialog(getActivity());
     }
 
-    protected void dismissProgressDialog(){
+    protected void dismissProgressDialog() {
         Common.dismissProgressDialog(loProgressDialog);
     }
 
@@ -51,9 +52,19 @@ public class BaseFragment extends Fragment {
         binding = null;
     }
 
-    protected View getContentView(ViewBinding binding){
+    protected View getContentView(ViewBinding binding) {
         this.binding = binding;
         View view = binding.getRoot();
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        moContext = context;
+    }
+
+    protected Context getMoContext() {
+        return moContext;
     }
 }

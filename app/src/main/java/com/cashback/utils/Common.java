@@ -44,11 +44,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.cashback.AppGlobal;
 import com.cashback.BuildConfig;
 import com.cashback.R;
-import com.cashback.activities.PhoneLoginActivity;
 import com.cashback.dialog.MessageDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -139,8 +137,10 @@ public class Common {
 //            new AlertDialog.Builder(foContext).setMessage(lsMessage)
 //                    .setPositiveButton("Ok", null).show();
 //        }
-        MessageDialog loDialog = new MessageDialog(foContext, null, lsMessage, null, isFinish);
-        loDialog.show();
+        if (foContext != null) {
+            MessageDialog loDialog = new MessageDialog(foContext, null, lsMessage, null, isFinish);
+            loDialog.show();
+        }
 
     }
 
@@ -240,10 +240,14 @@ public class Common {
         Calendar loCalender = Calendar.getInstance();
         JSONObject loJsonObject = new JSONObject();
         try {
+
+            String manufacture = getDeviceName();//"Samsung SM-G9٥٥U"; remove special character bcz not able to send via API
+            manufacture = manufacture.replaceAll("[^a-zA-Z0-9]", " ");
+            // Log.d("TTT", "str...." + manufacture);
             loJsonObject.put("versionName", BuildConfig.VERSION_NAME);
             loJsonObject.put("versionCode", BuildConfig.VERSION_CODE);
             loJsonObject.put("deviceDateTime", getFormattedDateTime(loCalender.getTimeInMillis()));
-            loJsonObject.put("manufacturer", getDeviceName());
+            loJsonObject.put("manufacturer", manufacture/*getDeviceName()*/);
             loJsonObject.put("deviceId", getDeviceUniqueId(foContext));
             loJsonObject.put("platformId", 1); // Android = 1; iOS = 2;
             loJsonObject.put("osVersion", android.os.Build.VERSION.SDK_INT);

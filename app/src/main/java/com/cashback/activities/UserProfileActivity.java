@@ -192,7 +192,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSaveProfile:
-                if (moGetUserProfileResponse.getUserDetails() != null)
+                if (moGetUserProfileResponse != null &&
+                        moGetUserProfileResponse.getUserDetails() != null)
                     saveUserProfile();
                 break;
             case R.id.btnError:

@@ -42,6 +42,9 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         return getContentView(moBinding);
     }
 
+    public BottomSheetDialog() {
+    }
+
     public BottomSheetDialog(OnApplyClickFilter onApplyClickFilter, String searchText,
                              int categoryId, int mainStoreId, int adType) {
         this.onApplyClickFilter = onApplyClickFilter;
@@ -50,8 +53,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         this.miLastMainStoreId = mainStoreId;
         this.moPosition = adType;
 
-        Log.d("TTT", "param...." + msSearchText + " cat id..." + categoryId + " main store id..." + miLastMainStoreId +
-                "ad type id.." + adType);
+        /*Log.d("TTT", "param...." + msSearchText + " cat id..." + categoryId + " main store id..." + miLastMainStoreId +
+                "ad type id.." + adType);*/
     }
 
     public interface OnApplyClickFilter {

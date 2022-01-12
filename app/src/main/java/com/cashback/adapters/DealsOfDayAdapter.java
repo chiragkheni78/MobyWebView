@@ -2,6 +2,7 @@ package com.cashback.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,8 @@ public class DealsOfDayAdapter extends
     private ArrayList<DealOfTheDayResponse> moAdvertList;
     private OnItemClick advertisementListener;
 
-    public interface OnItemClick{
-        void onItemClick(DealOfTheDayResponse advertisement);
+    public interface OnItemClick {
+        void onItemClick(DealOfTheDayResponse advertisement, int position);
     }
 
     public DealsOfDayAdapter(Context context, ArrayList<DealOfTheDayResponse> foAdvertList, OnItemClick advertisementListener) {
@@ -49,9 +50,9 @@ public class DealsOfDayAdapter extends
 
         String lsImageUrl = loAdvertisement.getImage();
 
-        Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
-        Drawable loError = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
-
+        // Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
+        //Drawable loError = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
+        //Log.d("TTT", "lsImageUrl..." + lsImageUrl);
         RequestCreator loRequest = Picasso.get().load(lsImageUrl.replace("https", "http"));
         loRequest.into(viewHolder.ivBanner);
 
@@ -59,7 +60,7 @@ public class DealsOfDayAdapter extends
 
         viewHolder.ivBanner.setOnClickListener(view -> {
             if (advertisementListener != null) {
-                advertisementListener.onItemClick(loAdvertisement);
+                advertisementListener.onItemClick(loAdvertisement, position);
             }
         });
     }

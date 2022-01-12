@@ -131,22 +131,23 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void setImageSlider() {
+        if (AppGlobal.moSharePageImages != null && AppGlobal.moSharePageImages.size() > 0) {
+            moBinding.imageSlider.setSliderAdapter(new ShareBannerAdapter(getContext(), AppGlobal.moSharePageImages, new AdvertAdapter.OnItemClick() {
+                @Override
+                public void onItemClick(Advertisement advertisement) {
+                    Intent loIntent = new Intent(getActivity(), HomeActivity.class);
+                    loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    loIntent.putExtra(Constants.IntentKey.OFFER_ID, advertisement.getAdID());
+                    loIntent.putExtra(Constants.IntentKey.CATEGORY_ID, advertisement.getCategoryID());
+                    loIntent.putExtra(Constants.IntentKey.BANNER_ID, advertisement.getBannerID());
+                    startActivity(loIntent);
+                    getActivity().finish();
+                }
+            }));
 
-        moBinding.imageSlider.setSliderAdapter(new ShareBannerAdapter(getContext(), AppGlobal.moSharePageImages, new AdvertAdapter.OnItemClick() {
-            @Override
-            public void onItemClick(Advertisement advertisement) {
-                Intent loIntent = new Intent(getActivity(), HomeActivity.class);
-                loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                loIntent.putExtra(Constants.IntentKey.OFFER_ID, advertisement.getAdID());
-                loIntent.putExtra(Constants.IntentKey.CATEGORY_ID, advertisement.getCategoryID());
-                loIntent.putExtra(Constants.IntentKey.BANNER_ID, advertisement.getBannerID());
-                startActivity(loIntent);
-                getActivity().finish();
+            if (AppGlobal.moSharePageImages.size() < 2) {
+                moBinding.imageSlider.setInfiniteAdapterEnabled(false);
             }
-        }));
-
-        if (AppGlobal.moSharePageImages.size() < 2) {
-            moBinding.imageSlider.setInfiniteAdapterEnabled(false);
         }
     }
 

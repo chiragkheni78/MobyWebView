@@ -67,6 +67,10 @@ public class Ad implements Serializable {
         return adType;
     }
 
+    public void setEngagedFlag(boolean engagedFlag) {
+        this.engagedFlag = engagedFlag;
+    }
+
     public boolean getEngagedFlag() {
         return engagedFlag;
     }

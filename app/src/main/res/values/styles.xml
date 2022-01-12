@@ -122,6 +122,7 @@
 
     <style name="TvLarge" parent="TvStandard">
         <item name="android:textSize">@dimen/txt_large</item>
+        <item name="android:textSize">@dimen/txt_large</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
@@ -281,6 +282,11 @@
 
     <style name="MyCustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Theme_Dialog" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
 </resources>

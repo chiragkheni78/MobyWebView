@@ -220,7 +220,7 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
-        if (moBinding.etPhoneNo.length() > 0){
+        if (moBinding.etPhoneNo.length() > 0) {
             return;
         }
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -277,7 +277,8 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
             case STATE_SIGNIN_FAILED:
                 // No-op, handled by sign-in check
                 moBinding.otpView.setOTP("");
-                timer.cancel();
+                if (timer != null)
+                    timer.cancel();
 
                 moBinding.tvResendCode.setVisibility(View.VISIBLE);
                 Snackbar.make(findViewById(android.R.id.content), R.string.status_sign_in_failed,
@@ -285,15 +286,21 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
 
                 break;
             case STATE_SIGNIN_SUCCESS:
-                getPreferenceManager().setPhoneNumber(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
-                checkConnectedDevices();
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    getPreferenceManager().setPhoneNumber(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+                    checkConnectedDevices();
+                }
                 break;
         }
     }
 
     private void checkConnectedDevices() {
-        showProgressDialog();
-        moPhoneLoginViewModel.getConnectedDeviceList(getContext());
+        try {
+            showProgressDialog();
+            moPhoneLoginViewModel.getConnectedDeviceList(getContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     Observer<MobileDeviceResponse> fetchConnectedDeviceObserver = new Observer<MobileDeviceResponse>() {

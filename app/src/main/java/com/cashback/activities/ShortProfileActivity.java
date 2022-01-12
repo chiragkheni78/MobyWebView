@@ -194,7 +194,12 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         int age = getAge();
         String lsGender = getGender();
 
-        int eWalletId = ((EWallet) moBinding.spinWallet.getSelectedItem()).getWalletId();
+        int eWalletId;
+        try {
+            eWalletId = ((EWallet) moBinding.spinWallet.getSelectedItem()).getWalletId();
+        } catch (NullPointerException e) {
+            eWalletId = 1;
+        }
         String lsUPIAddress = moBinding.etUpiID.getText().toString();
 
         loProgressDialog = Common.showProgressDialog(ShortProfileActivity.this);

@@ -1,7 +1,6 @@
 package com.cashback.fragments;
 
 import static com.cashback.AppGlobal.isSearchButtonBlink;
-import static com.cashback.AppGlobal.moContext;
 import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
 import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
 
@@ -9,7 +8,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +50,6 @@ import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 
 import java.util.ArrayList;
@@ -78,6 +75,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     public static int miLastCategoryId = -1;
     private long mlOfferID = 0, mlBannerID = 0;
 
+    private boolean isFilterApply = false;
     private int miCurrentPage = 1;
     private boolean isLastPage = false;
     private boolean isLoading = false;
@@ -150,7 +148,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 moBinding.imageSlider.startAutoCycle();
                 moBinding.imageSlider.setSliderAdapter(new DealsOfDayAdapter(getContext(), loDealList, new DealsOfDayAdapter.OnItemClick() {
                     @Override
-                    public void onItemClick(DealOfTheDayResponse foDealList) {
+                    public void onItemClick(DealOfTheDayResponse foDealList, int position) {
 
                         if (miCategoryId != foDealList.getCategory()) {
                             miCategoryId = foDealList.getCategory();
@@ -288,6 +286,9 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void fetchOffers() {
+        if (!isFilterApply) {
+            msSearchText = "";
+        }
         if (miCurrentPage == 1)
             showProgressDialog();
         isLoading = true;
@@ -318,11 +319,12 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         moBinding.rvOfferList.setVisibility(View.VISIBLE);
                         int scrollToPosition = moLayoutManager.getItemCount();
                         moOfferList.addAll(loJsonObject.getOfferList());
+                        // moOfferList.get(0).setEngagedFlag(true);
                         moOfferListAdapter.notifyList(moOfferList);
 
                         if (mlOfferID > 0 && miCurrentPage == 1) {
                             moOfferListAdapter.notifyFirstItem(mlOfferID);
-                          //  showDealOfTheDayImage();
+                            //  showDealOfTheDayImage();
                         }
 
                         if (miCurrentPage == 1 && AppGlobal.isNewUser) {
@@ -339,12 +341,23 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         if (isSearchButtonBlink)
                             Common.blinkAnimation(moBinding.floatingActionSearch);
 
-                    } else
+                    } else {
                         isLastPage = true;
+                    }
                 }
             } else {
                 moBinding.rvOfferList.setVisibility(View.GONE);
-                Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
+                if (isFilterApply) {
+                    isFilterApply = false;
+                    MessageDialog loDialog = new MessageDialog(getContext(), null,
+                            getString(R.string.ads_list_is_empty), null, false);
+                    loDialog.setClickListener(v -> {
+                        loDialog.dismiss();
+                    });
+                    loDialog.show();
+                } else {
+                    Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
+                }
             }
             isLoading = false;
             dismissProgressDialog();
@@ -460,19 +473,19 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
     public void handleOfferDetails(int position) {
         miPosition = position;
         Ad loOffer = moOfferList.get(position);
-
-        if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.SELECT_DEAL);
-        }
-
-        if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
-            verifyLocation(loOffer);
-        } else {
-            if (loOffer.isQuizFlow()) {
-                openQuizDetails(loOffer);
-            } else callAPIByPassQuiz(loOffer);
+        if (!loOffer.getEngagedFlag()) {
+            if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
+                Bundle bundle = new Bundle();
+                bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.SELECT_DEAL);
+            }
+            if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
+                verifyLocation(loOffer);
+            } else {
+                if (loOffer.isQuizFlow()) {
+                    openQuizDetails(loOffer);
+                } else callAPIByPassQuiz(loOffer);
+            }
         }
     }
 
@@ -534,7 +547,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         bundle.putString(Constants.IntentKey.FUNCTION, Constants.IntentKey.Action.BY_PASS_QUIZ);
         bundle.putLong(Constants.IntentKey.ACTIVITY_ID, flActivityID);
         fragmentMyCoupons.setArguments(bundle);
-        Common.replaceFragment(getActivity(), fragmentMyCoupons, Constants.FragmentTag.TAG_MY_COUPON_LIST, false);
+        Common.replaceFragment(getMoContext(), fragmentMyCoupons, Constants.FragmentTag.TAG_MY_COUPON_LIST, false);
         ((HomeActivity) getActivity()).updateBottomMenu(3);
     }
 
@@ -564,7 +577,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onFilterClick(int position, String searchText, int categoryId, int mainStoreId) {
-        Log.d("TTT", "before id..." + categoryId + "\t " + mainStoreId);
+        isFilterApply = true;
+        //Log.d("TTT", "before id..." + categoryId + "\t " + mainStoreId);
         miLastMainStoreId = mainStoreId;
         miLastCategoryId = categoryId;
         miAdType = position;

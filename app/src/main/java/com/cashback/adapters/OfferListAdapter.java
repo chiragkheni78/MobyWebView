@@ -92,8 +92,8 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             foHolder.loTvLeft.setText(lsOfferLeft);
             setOfferLabel(foHolder.loTvOffer, loAdOffer);
             setLogo(foHolder.loIvLogo, loAdOffer);
-            setButton(foHolder.loBtnAdDetails, loAdOffer);
             setBackground(foHolder, loAdOffer);
+            setButton(foHolder.loBtnAdDetails, loAdOffer);
             foHolder.itemView.setTag(fiPosition);
             foHolder.loBtnAdDetails.setTag(fiPosition);
 
@@ -143,7 +143,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     }
 
     private void setButton(Button loBtnAdDetails, Ad foAdOffer) {
-        if (foAdOffer.getEngagedFlag() == true) {
+        if (foAdOffer.getEngagedFlag()) {
             loBtnAdDetails.setText(Common.getDynamicText(moContext, "engaged"));
             loBtnAdDetails.setBackgroundColor(moContext.getResources().getColor(R.color.grey));
         } else {
@@ -175,20 +175,22 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 
         if (!foAdOffer.getDiscountUpTo().isEmpty()) {
             foTvCashBackOffer.setText(Common.getColorText("Upto ", Color.WHITE));
-            foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getDiscountUpTo(), fiPrimaryColor));
+           // foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getDiscountUpTo(), fiPrimaryColor));
+            foTvCashBackOffer.append(Common.getColorText(foAdOffer.getDiscountUpTo(), fiPrimaryColor));
             foTvCashBackOffer.append(Common.getColorText(" Off", Color.WHITE));
         }
 
         if (!foAdOffer.getFlatCashBack().isEmpty()) {
-
             if (foTvCashBackOffer.getText().length() > 0) {
                 foTvCashBackOffer.append(Common.getColorText(" + ", Color.WHITE));
                 foTvCashBackOffer.append(Common.getColorText("Extra ", Color.WHITE));
             } else {
                 foTvCashBackOffer.setText(Common.getColorText("Extra ", Color.WHITE));
             }
-            foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
-            foTvCashBackOffer.append(Common.getColorSpaceText(" Cashback", Color.WHITE));
+          //  foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
+            foTvCashBackOffer.append(Common.getColorText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
+            foTvCashBackOffer.append(Common.getColorText(" Cashback", Color.WHITE));
+           // foTvCashBackOffer.append(Common.getColorSpaceText(" Cashback", Color.WHITE));
         }
 
         foTvCashBackOffer.setBackground(ActivityCompat.getDrawable(moContext, R.drawable.rect_black));

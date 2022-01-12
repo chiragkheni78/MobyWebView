@@ -1,65 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical"
     android:visibility="visible"
     app:cardCornerRadius="@dimen/_5sdp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/llFade"
+        style="@style/NormalLayout"
+        android:background="@color/white"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/_7sdp"
-        android:paddingVertical="@dimen/_3sdp"
-        android:weightSum="3"
-        android:baselineAligned="false">
+        android:padding="3dp">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/llTop"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@drawable/back_transparent_white"
-            android:orientation="vertical">
+            android:background="@color/white"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/_7sdp"
+            android:paddingVertical="@dimen/_3sdp"
+            android:weightSum="3">
 
-            <TextView
-                android:id="@+id/tvMessage"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:paddingStart="0dp"
-                android:text="Get Upto 70% off on all Items in women’s denim."
-                android:textSize="12sp" />
+                android:layout_weight="2"
+                android:background="@drawable/back_transparent_white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:text="Get Upto 70% off on all Items in women’s denim."
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="0dp"
+                android:layout_weight="01"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvOfferCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_primary"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/view_offer"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="0dp"
-            android:layout_weight="01"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvOfferCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_primary"
-                android:gravity="center"
-                android:padding="@dimen/_5sdp"
-                android:text="@string/view_offer"
-                android:textColor="@color/white"
-                android:textSize="12dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

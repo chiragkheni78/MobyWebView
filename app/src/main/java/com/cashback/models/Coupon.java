@@ -9,6 +9,9 @@ public class Coupon {
     @SerializedName("fsCouponName")
     String couponName;
 
+    @SerializedName("fsCouponBanner")
+    String couponBanner;
+
     @SerializedName("fsCouponLink")
     String couponLink;
 
@@ -32,5 +35,9 @@ public class Coupon {
 
     public String getCouponCode() {
         return couponCode;
+    }
+
+    public String getCouponBanner() {
+        return couponBanner;
     }
 }

@@ -4,12 +4,17 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -26,6 +31,7 @@ import com.cashback.models.response.TransactionListResponse;
 import com.cashback.models.viewmodel.WalletViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.rey.material.widget.Button;
 
 import java.util.ArrayList;
 
@@ -50,15 +56,12 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     private void initializeContent() {
         initViewModel();
         setToolbar();
-        moBinding.btnShareApp.setOnClickListener(this);
-        moBinding.btnShopNow.setOnClickListener(this);
         moBinding.tvTimelineCoupon.setOnClickListener(this);
         moBinding.imageInfo.setOnClickListener(this);
         moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         moBinding.rvTransactionList.setLayoutManager(moLayoutManager);
         moTransactionListAdapter = new TransactionListAdapter(getContext(), moTransactionList);
         moBinding.rvTransactionList.setAdapter(moTransactionListAdapter);
-
         getTransactionList();
     }
 
@@ -104,15 +107,54 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         }
     };
 
+
+    private void launchWalletDialog() {
+        Dialog b = new Dialog(this, R.style.Theme_Dialog);
+        LayoutInflater inflater = this.getLayoutInflater();
+        b.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        b.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        b.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        b.getWindow().setGravity(Gravity.CENTER);
+        final View dialogView = inflater.inflate(R.layout.dialog_wallet_empty, null);
+        b.setContentView(dialogView);
+        b.setCancelable(false);
+
+        final Button btnShareApp = dialogView.findViewById(R.id.btnShareApp);
+        final Button btnShopNow = dialogView.findViewById(R.id.btnShopNow);
+
+        btnShopNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentHome = new Intent(moContext, HomeActivity.class);
+                intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentHome.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.LOAD_OFFER_PAGE);
+                moContext.startActivity(intentHome);
+            }
+        });
+        btnShareApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WalletActivity.this, HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.LOAD_SHARE_PAGE);
+                startActivity(intent);
+                finish();
+            }
+        });
+        b.show();
+    }
+
+
     private void setViewData(TransactionListResponse foJsonObject) {
         moTransactionList = foJsonObject.getTransactionList();
         moTransactionListAdapter.notifyList(moTransactionList);
 
         if (foJsonObject.getTransactionList().size() == 0) {
-            moBinding.rlEmptyData.setVisibility(View.VISIBLE);
+            launchWalletDialog();
             moBinding.rlWallet.setVisibility(View.GONE);
         } else {
-            moBinding.rlEmptyData.setVisibility(View.GONE);
+            if (!getPreferenceManager().getVirtualCashClicked())
+                Common.blinkAnimation(moBinding.imageInfo);
             moBinding.rlWallet.setVisibility(View.VISIBLE);
         }
 
@@ -156,21 +198,9 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             case R.id.tvTimelineCoupon:
                 openCouponList();
                 break;
-            case R.id.btnShareApp:
-                Intent intent = new Intent(WalletActivity.this, HomeActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.LOAD_SHARE_PAGE);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.btnShopNow:
-                Intent intentHome = new Intent(moContext, HomeActivity.class);
-                intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intentHome.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.LOAD_OFFER_PAGE);
-                moContext.startActivity(intentHome);
-                //finishAffinity();
-                break;
             case R.id.imageInfo:
+                moBinding.imageInfo.clearAnimation();
+                getPreferenceManager().setVirtualCashClicked();
                 MessageDialog loDialog = new MessageDialog(this, null, getString(R.string.info_message), getString(R.string.btn_shop_now), false);
                 loDialog.setClickListener(new View.OnClickListener() {
                     @Override

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Moby</string>
 
-<!--messages-->
+    <!--messages-->
     <string name="validate_age">Please enter your age</string>
     <string name="validate_phone">Please enter valid phone number</string>
     <string name="validate_gender">Please select your gender</string>
@@ -80,11 +80,11 @@
     <string name="all_delete_card_validation">You can\'t delete all cards</string>
 
     <string name="empty_wallet">Your Wallet is empty!\nEngage with the Brands to earn money.</string>
-    <string name="empty_wallet_second_msg">You need click via our coupons to shop\n
-        And then your cashback will reflect here\n
+    <string name="empty_wallet_second_msg">You need to click via our coupons to shop\n
+        And then your cashback will reflect here\n\n
         Otherwise just share the app with Friends\n
-        &amp; Family, when they shop &amp; get cashback\n
-        You Get 15% here, everytime they shop !</string>
+        &amp; Family. When they shop &amp; get cashback\n
+        You Get 15% here, Everytime they Shop !</string>
 
     <string name="back_from_timeline_title">DON"T LIKE YOUR COUPONS?</string>
     <string name="back_from_timeline_message"><![CDATA[Search for your favorite brands,<br/>Win coupon, & Shop to Get upto<br/>
@@ -94,8 +94,6 @@
 
     <string name="bank_offer_title">REAL TIME OFFERS NEAR YOU</string>
     <string name="bank_offer_message">In Store Coupons (Red Pins)\nBank Card Offers (Yellow Pins)\n\nAll Major Cards Are Selected\nYou may edit later in your Profile\nthe Cards &amp; Range to see Offers</string>
-
-
 
 
     <!--buttons-->
@@ -143,7 +141,6 @@
     <string name="cash_back">Cash Back</string>
     <string name="status_pending">Pending</string>
     <string name="status_credited">Credited</string>
-
 
 
     <!--Screen Title-->
@@ -209,6 +206,7 @@
     <string name="all_store">All Store</string>
     <string name="share_app">Share App</string>
     <string name="shop_now">Shop Now</string>
+    <string name="ads_list_is_empty">The offer is not Found, Check in my coupons</string>
 
 
     <!--Timeline Sorting-->

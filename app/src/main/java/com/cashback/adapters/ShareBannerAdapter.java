@@ -31,6 +31,7 @@ public class ShareBannerAdapter extends SliderViewAdapter<ShareBannerAdapter.Dat
     }
 
     private ArrayList<Advertisement> moAdvertList;
+
     public ShareBannerAdapter(Context context, ArrayList<Advertisement> foAdvertList, AdvertAdapter.OnItemClick advertisementListener) {
         this.context = context;
         this.moAdvertList = foAdvertList;
@@ -49,13 +50,13 @@ public class ShareBannerAdapter extends SliderViewAdapter<ShareBannerAdapter.Dat
         Advertisement loAdvertisement = moAdvertList.get(position);
         String lsImageUrl = loAdvertisement.getImageUrl();
 
-        Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
-        Drawable loError = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
+        //Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
+        //  Drawable loError = ActivityCompat.getDrawable(context, R.drawable.ic_share_banner);
 
         RequestCreator loRequest = Picasso.get().load(lsImageUrl.replace("https", "http"));
         loRequest.into(viewHolder.ivBanner);
 
-       // Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
+        // Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
         viewHolder.ivBanner.setOnClickListener(view -> {
             if (advertisementListener != null) {
                 advertisementListener.onItemClick(loAdvertisement);

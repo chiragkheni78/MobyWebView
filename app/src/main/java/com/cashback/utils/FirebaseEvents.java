@@ -37,7 +37,7 @@ public class FirebaseEvents {
     public static String BILL_TRACKED = "bill_tracked";
 
     public static void FirebaseEvent(Context context, Bundle bundle, String eventName) {
-        Log.d("TTT", "Event Fired..." + eventName);
+        //Log.d("TTT", "Event Fired..." + eventName);
         /* Bundle bundle1 = new Bundle();
         bundle1.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
         FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);*/

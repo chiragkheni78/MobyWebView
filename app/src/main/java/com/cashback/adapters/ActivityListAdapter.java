@@ -174,7 +174,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 foHolder.cardItemActivity.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
             }
 
-            if (loActivity.getAdCouponType() == 1){
+            if (loActivity.getAdCouponType() == 1) {
                 foHolder.lblReward.setVisibility(View.GONE);
             } else {
                 foHolder.lblReward.setVisibility(View.VISIBLE);
@@ -295,7 +295,10 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         //int rewardColor = (foActivity.isVirtualCash()) ? fiPrimaryColor : fiPrimaryColor;
 
         //foTvQuizReward.setText(Common.getColorText("Quiz Won ", Color.BLACK));
-        foTvQuizReward.setText(Common.getColorText("Rs. " + foActivity.getQuizReward(), rewardColor));
+        if (foActivity.getAdCouponType() == 1) {
+            foTvQuizReward.setText("");
+        } else
+            foTvQuizReward.setText(Common.getColorText("Rs. " + foActivity.getQuizReward(), rewardColor));
     }
 
     private void setOfferLabel(TextView foTvCashbackAmount, Activity foActivity) {

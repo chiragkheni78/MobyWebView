@@ -1,11 +1,17 @@
 package com.cashback.adapters;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.R;
@@ -29,11 +35,13 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.DataObject
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView loTvMessage, loTvOfferCode;
+        LinearLayout llFade;
 
         public DataObjectHolder(View foView) {
             super(foView);
             loTvMessage = (TextView) foView.findViewById(R.id.tvMessage);
             loTvOfferCode = (TextView) foView.findViewById(R.id.tvOfferCode);
+            llFade = foView.findViewById(R.id.llFade);
             loTvOfferCode.setOnClickListener(this);
         }
 
@@ -68,6 +76,34 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.DataObject
         foHolder.loTvMessage.setTag(fiPosition);
         if (loOffers.getCouponName().isEmpty())
             foHolder.loTvOfferCode.setText(Common.getDynamicText(moContext, "view_offer"));
+
+        foHolder.llFade.setAnimation(null);
+        foHolder.llFade.setBackgroundColor(ActivityCompat.getColor(moContext, R.color.white));
+        if (selectionPosition == fiPosition) {
+            // Log.d("TTT", "set anim..." + fiPosition);
+            setAnimations(foHolder.llFade);
+        }
+    }
+
+    ValueAnimator colorAnimation;
+
+    private void setAnimations(LinearLayout foLlFade) {
+        if (colorAnimation != null) {
+            colorAnimation.cancel();
+        }
+        int colorFrom = moContext.getResources().getColor(R.color.white);
+        int colorTo = moContext.getResources().getColor(R.color.red);
+        colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(1500); // milliseconds
+        colorAnimation.setRepeatCount(ValueAnimator.INFINITE);
+        colorAnimation.setRepeatMode(ValueAnimator.REVERSE);
+        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                foLlFade.setBackgroundColor((int) animator.getAnimatedValue());
+            }
+        });
+        colorAnimation.start();
     }
 
     @Override
@@ -80,4 +116,11 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.DataObject
         notifyDataSetChanged();
     }
 
+    int selectionPosition = -1;
+
+    public void notifyFirstItem(int selectionPosition) {
+        //Log.d("TTT", "selectionPosition..." + selectionPosition);
+        this.selectionPosition = selectionPosition;
+        notifyDataSetChanged();
+    }
 }
