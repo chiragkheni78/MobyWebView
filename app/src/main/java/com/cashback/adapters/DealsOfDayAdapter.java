@@ -53,16 +53,18 @@ public class DealsOfDayAdapter extends
         // Drawable loPlaceHolder = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
         //Drawable loError = ActivityCompat.getDrawable(context, R.drawable.iv_place_holder);
         //Log.d("TTT", "lsImageUrl..." + lsImageUrl);
-        RequestCreator loRequest = Picasso.get().load(lsImageUrl.replace("https", "http"));
-        loRequest.into(viewHolder.ivBanner);
 
-        //Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
+        if (lsImageUrl != null && !lsImageUrl.isEmpty()) {
+            RequestCreator loRequest = Picasso.get().load(lsImageUrl.replace("https", "http"));
+            loRequest.into(viewHolder.ivBanner);
 
-        viewHolder.ivBanner.setOnClickListener(view -> {
-            if (advertisementListener != null) {
-                advertisementListener.onItemClick(loAdvertisement, position);
-            }
-        });
+            //Common.loadImage(viewHolder.ivBanner, lsImageUrl, loError, loPlaceHolder);
+            viewHolder.ivBanner.setOnClickListener(view -> {
+                if (advertisementListener != null) {
+                    advertisementListener.onItemClick(loAdvertisement, position);
+                }
+            });
+        }
     }
 
     @Override
