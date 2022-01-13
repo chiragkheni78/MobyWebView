@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,6 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -136,7 +138,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     };
 
     private void setUpCouponView() {
-
+        moBinding.llTop.setVisibility(View.VISIBLE);
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             setOnlineOfferListView(false);
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
@@ -156,8 +158,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 moBinding.imageSlider.startAutoCycle();
 
                 ArrayList<DealOfTheDayResponse> couponList = new ArrayList<>();
-                DealOfTheDayResponse dealOfTheDayResponse = new DealOfTheDayResponse();
+
                 for (int i = 0; i < moActivity.getCouponList().size(); i++) {
+                    DealOfTheDayResponse dealOfTheDayResponse = new DealOfTheDayResponse();
                     dealOfTheDayResponse.setImage(moActivity.getCouponList().get(i).getCouponBanner());
                     couponList.add(dealOfTheDayResponse);
                 }
@@ -169,17 +172,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                                 moActivity.getCouponList().size() > 0
                                 && loOfferAdapter != null) {
                             loOfferAdapter.notifyFirstItem(position);
-                            moBinding.rvCoupon.smoothScrollToPosition(position);
-
-                           /* moBinding.nestedScroll.post(new Runnable() {
-                                public void run() {
-                                    // Log.d("TTT", "Top...." + moBinding.rvCoupon.getY());
-                                    //moBinding.nestedScroll.scrollTo(0, moBinding.rvCoupon.getBottom());
-                                    moBinding.nestedScroll.fullScroll(ScrollView.FOCUS_UP);
-                                    moBinding.nestedScroll.smoothScrollTo(0, 0);
-                                    moBinding.rvCoupon.smoothScrollToPosition(position);
-                                }
-                            });*/
+                            //moBinding.rvCoupon.smoothScrollToPosition(position);
                         }
                     }
                 }));
@@ -209,6 +202,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+
     private void displayWebView() {
         //display webview
         if (moActivity.getOfferDetails() != null && !moActivity.getOfferDetails().isEmpty()) {
@@ -217,28 +211,15 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     // Disallow the touch request for parent scroll on touch of child view
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
+//                    v.getParent().requestDisallowInterceptTouchEvent(true);
                     return false;
                 }
             });
             moBinding.tvWebView.getSettings().setJavaScriptEnabled(true);
+
             // Log.d("TTT", "moActivity.getOfferDetails()...." + moActivity.getOfferDetails());
             moBinding.tvWebView.loadDataWithBaseURL(null, moActivity.getOfferDetails(), "text/html", "utf-8", null);
         }
-
-       /* ViewTreeObserver viewTreeObserver = moBinding.tvWebView.getViewTreeObserver();
-        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                int height = moBinding.tvWebView.getMeasuredHeight();
-                //Log.d("TTT", "height..." + height);
-                if (height != 0) {
-                    moBinding.tvWebView.getViewTreeObserver().removeOnPreDrawListener(this);
-                }
-                return false;
-            }
-        });*/
-        //  moBinding.tvCouponDesc.setText(Html.fromHtml(moActivity.getOfferDetails()));
     }
 
     private void storeLocationAdapterClick() {

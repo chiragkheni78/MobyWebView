@@ -171,7 +171,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 
     private void setOfferLabel(TextView foTvCashBackOffer, Ad foAdOffer) {
 
-        int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.white);
+        int fiPrimaryColor = ActivityCompat.getColor(moContext, R.color.colorPrimary);
 
         if (!foAdOffer.getDiscountUpTo().isEmpty()) {
             foTvCashBackOffer.setText(Common.getColorText("Upto ", Color.WHITE));
