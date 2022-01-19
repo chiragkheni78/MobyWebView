@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.cashback.AppGlobal;
+import com.facebook.appevents.AppEventsLogger;
 
 public class FirebaseEvents {
 
@@ -24,7 +25,7 @@ public class FirebaseEvents {
     public static String GET_OFFER = "get_offer";
     public static String SELECT_DEAL = "select_deal_press";
     public static String SHOP_ONLINE_BACK_PRESS = "shop_online_backpress";
-    public static String OPEN_WATSUP_SHARE = "open_watsup_share";
+    public static String OPEN_WHATSAPP_SHARE = "open_whatsapp_share";
     public static String OPEN_FB_SHARE = "open_FB_for_share";
     public static String OPEN_MESSENGER_SHARE = "open_messenger_share";
     public static String OPEN_INSTAGRAM_SHARE = "open_instagram_share";
@@ -37,11 +38,13 @@ public class FirebaseEvents {
     public static String BILL_TRACKED = "bill_tracked";
 
     public static void FirebaseEvent(Context context, Bundle bundle, String eventName) {
-        //Log.d("TTT", "Event Fired..." + eventName);
-        /* Bundle bundle1 = new Bundle();
-        bundle1.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
-        FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);*/
         AppGlobal.getFirebaseAnalytics().logEvent(eventName, bundle);
+
+        triggerFacebookEvent(context, eventName);
     }
 
+    private static void triggerFacebookEvent(Context context, String eventName) {
+        AppEventsLogger logger = AppEventsLogger.newLogger(context);
+        logger.logEvent(eventName);
+    }
 }

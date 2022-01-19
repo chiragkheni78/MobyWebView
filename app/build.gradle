@@ -141,4 +141,6 @@ dependencies {
     // Image slidder
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
+    //Facebook-SDK
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 }

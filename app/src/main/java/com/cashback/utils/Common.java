@@ -547,10 +547,10 @@ public class Common {
 
     public static void openWhatsapp(Context foContext, String fsMessage) {
         try {
-            AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_WATSUP_SHARE);
+            AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_WHATSAPP_SHARE);
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_WATSUP_SHARE);
+            FirebaseEvents.FirebaseEvent(foContext, bundle, FirebaseEvents.OPEN_WHATSAPP_SHARE);
 
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
