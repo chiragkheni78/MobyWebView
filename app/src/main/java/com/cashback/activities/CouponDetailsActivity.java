@@ -311,6 +311,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 Bundle bundle = new Bundle();
                 bundle.putString("mobile", AppGlobal.getPhoneNumber());
                 FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.GET_OFFER);
+
                 Coupon loCoupon = moActivity.getCouponList().get(position);
                 if (!isOfflineCall) {
                     if (!loCoupon.getCouponLink().isEmpty()) {
@@ -675,13 +676,13 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                     public void onClick(View v) {
                         loDialog.dismiss();
                         openDeepLink(fsUrl);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("mobile", AppGlobal.getPhoneNumber());
+                        FirebaseEvents.FirebaseEvent(getContext(), bundle, FirebaseEvents.CASHBACK_ACTIVATE_OK_PRESSED);
                     }
                 });
                 loDialog.show();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                FirebaseEvents.FirebaseEvent(getContext(), bundle, FirebaseEvents.OPEN_COPY_TEXT_SHARE);
             } catch (Exception e) {
                 LogV2.logException(TAG, e);
             }

@@ -88,9 +88,6 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
                 moContext.startActivity(loIntent);
             }
         }
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.FirebaseEvent(MyCouponsActivity.this, bundle, FirebaseEvents.MY_COUPON_PAGE);
     }
 
     private void setToolbar() {
@@ -184,6 +181,10 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
             }
+
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.FirebaseEvent(MyCouponsActivity.this, bundle, FirebaseEvents.MY_COUPON_PAGE);
         }
     };
 

@@ -10,7 +10,7 @@ import com.facebook.appevents.AppEventsLogger;
 public class FirebaseEvents {
 
     public static String REGISTER = "register";
-    public static String MAIN_OFFER_LOADED = "main_offer_loaded";
+    public static String OFFER_LOADED_PAGE = "main_offer_loaded";
     public static String PICTURE_PRESS = "picture_press";
     public static String HELP_OPTION = "help_option";
     public static String SHARE_OPTION = "share_option";
@@ -37,9 +37,11 @@ public class FirebaseEvents {
     public static String PHONE_VERIFIED_MY_CASH = "phone_verified_for_mycash";
     public static String BILL_TRACKED = "bill_tracked";
 
+    public static String CASHBACK_ACTIVATE_OK_PRESSED = "cashback_activate_ok_pressed";
+    public static String VIEW_AND_SHOP_PRESSED = "view_and_shop_pressed";
+
     public static void FirebaseEvent(Context context, Bundle bundle, String eventName) {
         AppGlobal.getFirebaseAnalytics().logEvent(eventName, bundle);
-
         triggerFacebookEvent(context, eventName);
     }
 

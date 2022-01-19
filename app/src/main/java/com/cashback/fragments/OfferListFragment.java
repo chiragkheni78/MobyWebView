@@ -330,7 +330,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         if (miCurrentPage == 1 && AppGlobal.isNewUser) {
                             Bundle bundle = new Bundle();
                             bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                            FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.MAIN_OFFER_LOADED);
+                            FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.OFFER_LOADED_PAGE);
 
                             AdGydeEvents.offerLoaded(getActivity());
                         }

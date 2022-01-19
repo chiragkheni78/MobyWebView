@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Moby</string>
 
-    <string name="facebook_app_id">2125510507459547</string>
-    <string name="fb_login_protocol_scheme">fb2125510507459547</string>
+    <string name="facebook_app_id">576205213451199</string>
+    <string name="fb_login_protocol_scheme">fb576205213451199</string>
 
     <!--messages-->
     <string name="validate_age">Please enter your age</string>
