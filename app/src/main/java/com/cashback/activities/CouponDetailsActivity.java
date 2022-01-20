@@ -1,13 +1,10 @@
 package com.cashback.activities;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,11 +16,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -49,7 +44,6 @@ import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 import com.cashback.dialog.MessageDialog;
-import com.cashback.utils.custom.CustomLayoutManager;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 
@@ -310,7 +304,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
                 Bundle bundle = new Bundle();
                 bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.GET_OFFER);
+                FirebaseEvents.trigger(CouponDetailsActivity.this, bundle, FirebaseEvents.GET_OFFER);
 
                 Coupon loCoupon = moActivity.getCouponList().get(position);
                 if (!isOfflineCall) {
@@ -464,7 +458,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void shopOnlinePressed() {
         Bundle bundle = new Bundle();
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE);
+        FirebaseEvents.trigger(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE);
 
         String lsLink = getShopOnlineLink();
 
@@ -678,7 +672,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                         openDeepLink(fsUrl);
                         Bundle bundle = new Bundle();
                         bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                        FirebaseEvents.FirebaseEvent(getContext(), bundle, FirebaseEvents.CASHBACK_ACTIVATE_OK_PRESSED);
+                        FirebaseEvents.trigger(getContext(), bundle, FirebaseEvents.CASHBACK_ACTIVATE_OK_PRESSED);
                     }
                 });
                 loDialog.show();
@@ -717,7 +711,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                     mbShopOnlinePressed = false;
                     Bundle bundle = new Bundle();
                     bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                    FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE_VERIFIED);
+                    FirebaseEvents.trigger(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE_VERIFIED);
 
                 }
                 if (msURL != null) {
@@ -763,7 +757,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         try {
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.FirebaseEvent(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE_BACK_PRESS);
+            FirebaseEvents.trigger(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE_BACK_PRESS);
 
             if (getIntent() != null && getIntent().getAction() != null && moActivity != null &&
                     getIntent().getAction().equalsIgnoreCase(Constants.IntentKey.Action.BY_PASS_QUIZ)) {

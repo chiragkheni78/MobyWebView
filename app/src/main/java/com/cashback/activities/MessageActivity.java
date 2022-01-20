@@ -115,7 +115,7 @@ public class MessageActivity extends BaseActivity {
     public void onBackPressed() {
         Bundle bundle = new Bundle();
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.FirebaseEvent(MessageActivity.this, bundle, FirebaseEvents.MESSAGE_TRACKING);
+        FirebaseEvents.trigger(MessageActivity.this, bundle, FirebaseEvents.MESSAGE_TRACKING);
         super.onBackPressed();
     }
 }

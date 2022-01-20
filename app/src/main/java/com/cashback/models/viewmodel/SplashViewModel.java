@@ -102,8 +102,10 @@ public class SplashViewModel extends ViewModel {
                             lsCampaign = values.get("utm_campaign");
                         }
                         Log.e(TAG, "UTM campaign:" + lsCampaign);
-                        if (!lsCampaign.isEmpty())
+                        if (!lsCampaign.isEmpty()) {
                             loSharedPreferenceManager.setAppDownloadCampaign(lsCampaign);
+                            triggerReferrerEvent(foContext);
+                        }
                     }
 
                     if (values.containsKey("utm_medium")) {
@@ -117,10 +119,6 @@ public class SplashViewModel extends ViewModel {
                         Log.e(TAG, "UTM source:" + lsSource);
                         loSharedPreferenceManager.setAppDownloadSource(lsSource);
                     }
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                    FirebaseEvents.FirebaseEvent(foContext.getApplicationContext(), bundle, FirebaseEvents.DOWNLOAD_USING_REFERRAL_CODE);
                 }
             } catch (Exception e) {
                 LogV2.logException(TAG, e);
@@ -134,10 +132,21 @@ public class SplashViewModel extends ViewModel {
                     if (!lsCampaignName.isEmpty()) {
                         Log.e(TAG, "AdGyde:: UTM campaign:" + lsCampaignName);
                         loSharedPreferenceManager.setAppDownloadCampaign(lsCampaignName);
+                        triggerReferrerEvent(foContext);
                     }
                 }
                 Log.e(TAG, "UTM FINISH: " + loSharedPreferenceManager.getAppDownloadCampaign());
             }
+        }
+    }
+
+    private void triggerReferrerEvent(Context foContext) {
+        SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(foContext);
+        if (!loSharedPreferenceManager.isReferrerEventTrigger()) {
+            Bundle bundle = new Bundle();
+            bundle.putString("mobile", AppGlobal.getPhoneNumber());
+            FirebaseEvents.trigger(foContext.getApplicationContext(), bundle, FirebaseEvents.DOWNLOAD_USING_REFERRAL_CODE);
+            loSharedPreferenceManager.setReferrerEventTrigger(true);
         }
     }
 

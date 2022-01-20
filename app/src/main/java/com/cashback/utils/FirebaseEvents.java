@@ -15,9 +15,9 @@ public class FirebaseEvents {
     public static String HELP_OPTION = "help_option";
     public static String SHARE_OPTION = "share_option";
     public static String SHOP_ONLINE = "shop_online";
-    public static String USER_PROFILE_VERIFIED = "user_profile_verified";
-    public static String SHOP_ONLINE_VERIFIED = "shop_online_verified";
-    public static String PHONE_VERIFIED_FOR_NEAR_ADS = "phone_verified_for_nearAds";
+    public static String USER_PROFILE_VERIFIED = "user_profile_otp_verified";
+    public static String SHOP_ONLINE_VERIFIED = "shop_online_otp_verified";
+    public static String PHONE_VERIFIED_FOR_NEAR_ADS = "near_by_otp_verified";
     public static String MESSAGE_TRACKING = "message_tracking";
     public static String MY_COUPON_PAGE = "coupon_page_Load";
     public static String DOWNLOAD_USING_REFERRAL_CODE = "download_using_referral_code";
@@ -34,13 +34,13 @@ public class FirebaseEvents {
     public static String OPEN_TWITTER_SHARE = "open_twitter_share";
     public static String OPEN_TELEGRAM_SHARE = "open_telegram_share";
     public static String OPEN_COPY_TEXT_SHARE = "open_copy_text_share";
-    public static String PHONE_VERIFIED_MY_CASH = "phone_verified_for_mycash";
+    public static String SHARE_APP_OTP_VERIFIED = "share_app_otp_verified";
     public static String BILL_TRACKED = "bill_tracked";
 
     public static String CASHBACK_ACTIVATE_OK_PRESSED = "cashback_activate_ok_pressed";
     public static String VIEW_AND_SHOP_PRESSED = "view_and_shop_pressed";
 
-    public static void FirebaseEvent(Context context, Bundle bundle, String eventName) {
+    public static void trigger(Context context, Bundle bundle, String eventName) {
         AppGlobal.getFirebaseAnalytics().logEvent(eventName, bundle);
         triggerFacebookEvent(context, eventName);
     }

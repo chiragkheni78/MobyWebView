@@ -184,7 +184,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
 
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.FirebaseEvent(MyCouponsActivity.this, bundle, FirebaseEvents.MY_COUPON_PAGE);
+            FirebaseEvents.trigger(MyCouponsActivity.this, bundle, FirebaseEvents.MY_COUPON_PAGE);
         }
     };
 

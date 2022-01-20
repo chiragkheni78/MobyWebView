@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.AppGlobal;
 import com.cashback.R;
-import com.cashback.fragments.FragmentMyCoupons;
 import com.cashback.models.Activity;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -87,7 +86,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                     if (onCouponItemClick != null) {
                         Bundle bundle = new Bundle();
                         bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                        FirebaseEvents.FirebaseEvent(moContext, bundle, FirebaseEvents.VIEW_AND_SHOP_PRESSED);
+                        FirebaseEvents.trigger(moContext, bundle, FirebaseEvents.VIEW_AND_SHOP_PRESSED);
 
                         onCouponItemClick.openCouponDetails(liPosition);
                     }

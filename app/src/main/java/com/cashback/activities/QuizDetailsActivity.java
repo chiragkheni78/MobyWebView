@@ -2,27 +2,17 @@ package com.cashback.activities;
 
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -41,7 +31,6 @@ import com.cashback.models.QuizAnswer;
 import com.cashback.models.viewmodel.QuizDetailsViewModel;
 import com.cashback.models.response.QuizDetailsResponse;
 import com.cashback.models.response.SubmitQuizResponse;
-import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.dialog.MessageDialog;
@@ -360,7 +349,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
         if (miCurrentQuestion == moQuizList.size() - 1) {
             Bundle bundle = new Bundle();
             bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.FirebaseEvent(QuizDetailsActivity.this, bundle, FirebaseEvents.SUBMIT_QUIZ);
+            FirebaseEvents.trigger(QuizDetailsActivity.this, bundle, FirebaseEvents.SUBMIT_QUIZ);
             submitQuizAnswer();
         } else {
             miCurrentQuestion = miCurrentQuestion + 1;

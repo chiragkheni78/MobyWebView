@@ -36,6 +36,8 @@ public class SharedPreferenceManager {
     private static final String SHARE_BANNER_URL = "shareBannerUrl";
     private static final String IMAGE_INFO_IS_CLICKED = "imageInfoClicked";
 
+    private static final String IS_REFERRER_EVENT_TRIGGER = "isReferrerEventTrigger";
+
 
     private static final String IS_PROFILE_SAVE = "is_profile_save";
     private static final String LANG_ID = "language_id";
@@ -55,6 +57,8 @@ public class SharedPreferenceManager {
     private static final String CITY_ID = "city_id";
     private static final String CITY_NAME = "city_name";
     private static final String USER_PROFILE_PIC = "profile_pic";
+
+
 
 
     public SharedPreferenceManager(Context foContext) {
@@ -413,5 +417,23 @@ public class SharedPreferenceManager {
         return false;
     }
     //END VIRTUAL CASH IMAGE IS CLICK
+
+    //START IS_REFERRER_EVENT_TRIGGER
+    public void setReferrerEventTrigger(boolean isReferrerEventTrigger) {
+        if (moSharedPreferences != null) {
+            SharedPreferences.Editor loEditor = moSharedPreferences.edit();
+            loEditor.putBoolean(IS_REFERRER_EVENT_TRIGGER, isReferrerEventTrigger);
+            loEditor.commit();
+        }
+    }
+
+    public boolean isReferrerEventTrigger() {
+        if (moSharedPreferences != null) {
+            return moSharedPreferences.getBoolean(IS_REFERRER_EVENT_TRIGGER, false);
+        }
+        return false;
+    }
+    //END IS_REFERRER_EVENT_TRIGGER
+
 
 }

@@ -240,7 +240,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             if (resultCode == RESULT_OK) {
                 Bundle bundle = new Bundle();
                 bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.PHONE_VERIFIED_FOR_NEAR_ADS);
+                FirebaseEvents.trigger(getActivity(), bundle, FirebaseEvents.PHONE_VERIFIED_FOR_NEAR_ADS);
                 loadView();
             }
         }

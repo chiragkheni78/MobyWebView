@@ -258,7 +258,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private void replaceShareFragement() {
         Bundle bundle = new Bundle();
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.FirebaseEvent(HomeActivity.this, bundle, FirebaseEvents.SHARE_OPTION);
+        FirebaseEvents.trigger(HomeActivity.this, bundle, FirebaseEvents.SHARE_OPTION);
 
         ShareFragment shareFragment = new ShareFragment();
         Common.replaceFragment(HomeActivity.this, shareFragment, Constants.FragmentTag.TAG_SHARE, false);

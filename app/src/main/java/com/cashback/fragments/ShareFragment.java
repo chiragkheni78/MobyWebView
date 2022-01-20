@@ -164,7 +164,7 @@ public class ShareFragment extends BaseFragment implements View.OnClickListener 
             if (resultCode == RESULT_OK) {
                 Bundle bundle = new Bundle();
                 bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                FirebaseEvents.FirebaseEvent(getActivity(), bundle, FirebaseEvents.PHONE_VERIFIED_MY_CASH);
+                FirebaseEvents.trigger(getActivity(), bundle, FirebaseEvents.SHARE_APP_OTP_VERIFIED);
                 Toast.makeText(getContext(), "Phone Verified", Toast.LENGTH_SHORT).show();
             }
         }

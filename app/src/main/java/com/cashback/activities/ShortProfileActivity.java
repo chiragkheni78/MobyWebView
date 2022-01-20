@@ -130,7 +130,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
 
                                     Bundle bundle = new Bundle();
                                     bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                                    FirebaseEvents.FirebaseEvent(ShortProfileActivity.this,
+                                    FirebaseEvents.trigger(ShortProfileActivity.this,
                                             bundle, FirebaseEvents.PICTURE_PRESS);
 
                                 }
@@ -161,7 +161,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
 
                 Bundle bundle = new Bundle();
                 bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                FirebaseEvents.FirebaseEvent(ShortProfileActivity.this, bundle, FirebaseEvents.REGISTER);
+                FirebaseEvents.trigger(ShortProfileActivity.this, bundle, FirebaseEvents.REGISTER);
 
                 AppGlobal.isNewUser = true;
                 //Adgyde Event - OPEN_REGISTER
