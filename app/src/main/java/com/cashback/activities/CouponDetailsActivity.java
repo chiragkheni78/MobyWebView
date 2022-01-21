@@ -84,9 +84,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         TextView loTvToolbarTitle = loToolbar.findViewById(R.id.tvToolbarTitle);
 
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-            loTvToolbarTitle.setText("ONLINE COUPON");
+            loTvToolbarTitle.setText("Online Coupon");
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
-            loTvToolbarTitle.setText("OFFLINE STORE COUPON");
+            loTvToolbarTitle.setText("Physical Store Coupon");
         }
     }
 
@@ -142,7 +142,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         displayEarnText();
         if (moActivity.getAdCouponType() == 1) {
             moBinding.cdWebview.setVisibility(View.GONE);
-            moBinding.tvMaxCashBack.setVisibility(View.GONE);
+            moBinding.tvMaxCashback.setVisibility(View.GONE);
             if (moActivity.getCouponList() != null && moActivity.getCouponList().size() > 0) {
                 moBinding.rlBanner.setVisibility(View.VISIBLE);
 
@@ -189,7 +189,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moBinding.tvBillUpload.setText(Common.getDynamicText(getContext(), "dont_forget_bill_upload")
                 .replace("XXXXXX", moActivity.getWalletName()).replace("XX", String.valueOf(moActivity.getVirtualCashTransferDays())));
 
-        if (moActivity.getAdCouponType() == 1) {
+        if (moActivity.getAdCouponType() == 1 || moActivity.getFlatCashBack().equals("0")) {
             moBinding.tvBillUpload.setVisibility(View.GONE);
         } else {
             moBinding.tvBillUpload.setVisibility(View.VISIBLE);
@@ -369,9 +369,19 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void displayEarnText() {
         //display cashback text
-        moBinding.tvDiscountUpto.setText("UPTO " + moActivity.getDiscountUpTo() + " DISCOUNT");
-        moBinding.tvExactCashback.setText("EXACT " + moActivity.getFlatCashBack() + " CASHBACK");
-        moBinding.tvMaxCashBack.setText("Max Cashback Rs. " + moActivity.getQuizReward() + "");
+//        moBinding.tvDiscountUpto.setText("UPTO " + moActivity.getDiscountUpTo() + " DISCOUNT");
+        moBinding.tvDiscountUpto.setText(Common.getColorText("upto\n", Color.BLACK));
+        moBinding.tvDiscountUpto.append(Common.getColorSizeText(moActivity.getDiscountUpTo(), Color.BLACK, 1.30f));
+        moBinding.tvDiscountUpto.append(Common.getColorSizeText("\nDiscount", Color.BLACK, 1.20f));
+
+//        moBinding.tvExactCashback.setText("EXACT " + moActivity.getFlatCashBack() + " CASHBACK");
+        moBinding.tvExactCashback.setText(Common.getColorText("exact\n", Color.WHITE));
+        moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBack(), Color.WHITE, 1.30f));
+        moBinding.tvExactCashback.append(Common.getColorSizeText("\nCashback", Color.WHITE, 1.20f));
+
+        moBinding.lblAdditional.setText(moActivity.getAdditionLabel());
+
+        moBinding.tvMaxCashback.setText("Max Cashback Rs. " + moActivity.getQuizReward() + "");
 
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             moBinding.tvBrand.setText(moActivity.getAdName());
@@ -379,8 +389,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             moBinding.tvBrand.setText(moActivity.getAdName());
             moBinding.tvShopOnline.setText(Common.getDynamicText(getContext(), "btn_shop_in_store"));
 
-            moBinding.tvDiscountUpto.append(" - AT STORE");
-            moBinding.tvExactCashback.append(" - FROM US");
+//            moBinding.tvDiscountUpto.append(" - AT STORE");
+//            moBinding.tvExactCashback.append(" - FROM US");
         }
 
         if (moActivity.getFlatCashBack() == null || moActivity.getFlatCashBack().isEmpty() || moActivity.getAdCouponType() == 1) {

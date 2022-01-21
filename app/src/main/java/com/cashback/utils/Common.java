@@ -352,9 +352,9 @@ public class Common {
         return word;
     }
 
-    public static Spannable getColorSizeText(String fsText, int fiColor) {
+    public static Spannable getColorSizeText(String fsText, int fiColor, float ffSize) {
         Spannable word = new SpannableString(fsText);
-        word.setSpan(new RelativeSizeSpan(1.4f), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        word.setSpan(new RelativeSizeSpan(ffSize), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         word.setSpan(new StyleSpan(Typeface.BOLD), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         word.setSpan(new ForegroundColorSpan(fiColor), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return word;

@@ -190,6 +190,9 @@ public class Activity {
     @SerializedName("fsQrCodePasswordText")
     String qrCodeText;
 
+    @SerializedName("fsAdditionLabel")
+    String additionLabel;
+
     public String getWalletName() {
         return walletName;
     }
@@ -244,6 +247,10 @@ public class Activity {
 
     public String getQrCodeText() {
         return qrCodeText;
+    }
+
+    public String getAdditionLabel() {
+        return additionLabel;
     }
 }
 

@@ -23,7 +23,7 @@
     <string name="coupon_expired">Expired</string>
     <string name="empty_offer_list">There is no data found with this search terms\nPlease try with other brands.</string>
     <string name="empty_timeline">Your Timeline is empty!\nEngage with the Brands to earn money.</string>
-    <string name="dont_forget_bill_upload">You will get Cashback in your\nXXXXXX in XX days.</string>
+    <string name="dont_forget_bill_upload">(Cashback in your XXXXXX in ~XX Days)</string>
     <string name="your_cashback_credit">Your Cashback XXX\nCredit After YY days.</string>
     <string name="coupon_valid_for">COUPON VALID FOR XX DAYS.</string>
 

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     style="@style/ToolBar78"
-    android:background="@color/black"
+    android:layout_height="@dimen/_50sdp"
+    android:background="@color/transparent"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp"
     app:popupTheme="@style/AppTheme.PopupOverlay">
@@ -21,8 +22,8 @@
             android:maxLines="1"
             android:paddingHorizontal="@dimen/_10sdp"
             android:text="Moby Coupon"
-            android:textColor="@color/white"
-            android:textSize="@dimen/txt_dxLarge" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_large" />
 
         <LinearLayout
             android:id="@+id/llBack"
@@ -39,14 +40,14 @@
 
             <TextView
                 android:id="@+id/tvTitleEnd"
-                style="@style/TvToolBarTitle78"
+                style="@style/TvStandard"
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/ic_arrow_back"
                 android:drawablePadding="@dimen/padding_mini"
-                android:drawableTint="@color/white"
+                android:drawableTint="@color/black"
                 android:gravity="center_vertical"
                 android:padding="@dimen/padding_standard"
-                android:text=""
+                android:text="Back"
                 android:textColor="@color/black"
                 android:textStyle="normal"
                 android:visibility="visible" />
