@@ -146,12 +146,8 @@ public class Activity {
         return remainDay;
     }
 
-    public String getFsAdLogo() {
+    public String getAdLogo() {
         return fsAdLogo;
-    }
-
-    public void setFsAdLogo(String fsAdLogo) {
-        this.fsAdLogo = fsAdLogo;
     }
 
     @SerializedName("fsWalletName")

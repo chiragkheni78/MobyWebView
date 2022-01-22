@@ -47,11 +47,12 @@
                         android:paddingVertical="@dimen/padding_mini"
                         android:text="Electronics"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textAllCaps="true"
                         android:minWidth="@dimen/_150sdp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:letterSpacing="0.08"
                         android:background="@drawable/round_corner_white"
                         android:textStyle="bold" />
 

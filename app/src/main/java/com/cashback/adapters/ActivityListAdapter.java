@@ -143,7 +143,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             foHolder.tvCouponCode.setText(Common.getDynamicText(moContext, "view_coupon"));
             foHolder.tvRegisterBill.setText(Common.getDynamicText(moContext, "register_bill"));
 
-            Common.loadImage(foHolder.ivLogo, loActivity.getFsAdLogo(),
+            Common.loadImage(foHolder.ivLogo, loActivity.getAdLogo(),
                     moContext.getResources().getDrawable(R.drawable.ic_moby_small),
                     moContext.getResources().getDrawable(R.drawable.ic_moby_small));
 
