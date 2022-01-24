@@ -46,7 +46,7 @@ public class MessageDialog extends Dialog {
         getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().setGravity(Gravity.CENTER);
-        setCancelable(false);
+        setCancelable(true);
 
         moBinding = DialogCommonBinding.inflate(getLayoutInflater());
         setContentView(moBinding.getRoot());

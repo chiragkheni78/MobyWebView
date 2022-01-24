@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:text="Cashback Activated !"
-                android:letterSpacing="0.1"
+                android:letterSpacing="0.08"
                 android:lineSpacingExtra="@dimen/_3sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
@@ -58,13 +58,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="@dimen/_4sdp"
             android:orientation="vertical">
 
             <com.rey.material.widget.Button
                 android:id="@+id/btnOk"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/secondary"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/bg_blue_white"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="OK"

@@ -369,18 +369,15 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void displayEarnText() {
         //display cashback text
-//        moBinding.tvDiscountUpto.setText("UPTO " + moActivity.getDiscountUpTo() + " DISCOUNT");
         moBinding.tvDiscountUpto.setText(Common.getColorText("upto\n", Color.BLACK));
         moBinding.tvDiscountUpto.append(Common.getColorSizeText(moActivity.getDiscountUpTo(), Color.BLACK, 1.30f));
         moBinding.tvDiscountUpto.append(Common.getColorSizeText("\nDiscount", Color.BLACK, 1.20f));
 
-//        moBinding.tvExactCashback.setText("EXACT " + moActivity.getFlatCashBack() + " CASHBACK");
         moBinding.tvExactCashback.setText(Common.getColorText("exact\n", Color.WHITE));
-        moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBack(), Color.WHITE, 1.30f));
+        moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBackCouponScreen(), Color.WHITE, 1.30f));
         moBinding.tvExactCashback.append(Common.getColorSizeText("\nCashback", Color.WHITE, 1.20f));
 
         moBinding.lblAdditional.setText(moActivity.getAdditionLabel());
-
         moBinding.tvMaxCashback.setText("Max Cashback Rs. " + moActivity.getQuizReward() + "");
 
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
@@ -388,14 +385,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
             moBinding.tvBrand.setText(moActivity.getAdName());
             moBinding.tvShopOnline.setText(Common.getDynamicText(getContext(), "btn_shop_in_store"));
-
-//            moBinding.tvDiscountUpto.append(" - AT STORE");
-//            moBinding.tvExactCashback.append(" - FROM US");
         }
 
-        if (moActivity.getFlatCashBack() == null || moActivity.getFlatCashBack().isEmpty() || moActivity.getAdCouponType() == 1) {
-            moBinding.tvExactCashback.setVisibility(View.GONE);
-        }
+//        if (moActivity.getFlatCashBack() == null || moActivity.getFlatCashBack().isEmpty() || moActivity.getAdCouponType() == 1) {
+//            moBinding.tvExactCashback.setVisibility(View.GONE);
+//        }
 
         if (moActivity.getDiscountUpTo() == null || moActivity.getDiscountUpTo().isEmpty()) {
             moBinding.tvDiscountUpto.setVisibility(View.GONE);
@@ -671,10 +665,17 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
             try {
                 String lsTitle = Common.getDynamicText(getContext(), "title_copy_to_clipboard");
-                String lsMessage = Common.getDynamicText(getContext(), "msg_copy_to_clipboard")
-                        .replace("XXXXX", moActivity.getWalletName())
+                String lsMessage;
+                if (moActivity.isBillUploadEnable()){
+                    lsMessage = Common.getDynamicText(getContext(), "msg_cc_bill_upload_cb");
+                } else {
+                    lsMessage = Common.getDynamicText(getContext(), "msg_copy_to_clipboard");
+                }
+
+                lsMessage = lsMessage.replace("XXXXX", moActivity.getWalletName())
                         .replace("YY", String.valueOf(moActivity.getVirtualCashTransferDays()));
-                MessageDialog loDialog = new MessageDialog(CouponDetailsActivity.this, lsTitle, lsMessage, null, false);
+
+                MessageDialog loDialog = new MessageDialog(CouponDetailsActivity.this, lsTitle, lsMessage, "SHOP AS USUAL", false);
                 loDialog.setClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

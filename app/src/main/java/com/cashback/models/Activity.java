@@ -66,6 +66,9 @@ public class Activity {
     @SerializedName("fsRemainDay")
     String remainDay;
 
+    @SerializedName("fsCashbackCouponScreen")
+    String flatCashBackCouponScreen;
+
     public long getActivityID() {
         return activityID;
     }
@@ -247,6 +250,10 @@ public class Activity {
 
     public String getAdditionLabel() {
         return additionLabel;
+    }
+
+    public String getFlatCashBackCouponScreen() {
+        return flatCashBackCouponScreen;
     }
 }
 

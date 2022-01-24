@@ -18,7 +18,7 @@
     <string name="action_already_engaged">Already Engaged... :)</string>
     <string name="default_reward_note">TOUCH THE RED PINS NEAR YOU IN THE MALL &amp; ANSWER THE POP UP QUIZ. MUST BE “INSIDE\" THE RELEVANT STORES,\n" +
                         "ELSE YOUR REWARD MONEY WILL BE REVERSE</string>
-    <string name="bill_uploaded">You have already uploaded bill for this Ad, Try other brands.</string>
+    <string name="bill_uploaded">You have already uploaded bill for this Ad, Trtitle_copy_to_clipboardy other brands.</string>
     <string name="upload_bill_restrict">Please use your MOBY COUPON first, before you upload the bill.</string>
     <string name="coupon_expired">Expired</string>
     <string name="empty_offer_list">There is no data found with this search terms\nPlease try with other brands.</string>
@@ -27,10 +27,32 @@
     <string name="your_cashback_credit">Your Cashback XXX\nCredit After YY days.</string>
     <string name="coupon_valid_for">COUPON VALID FOR XX DAYS.</string>
 
-    <string name="title_copy_to_clipboard">CashBack Activated !</string>
-    <string name="msg_copy_to_clipboard">AFTER YOU SHOP, Transaction\nis Tracked &amp; SMS sent in max 24 Hrs\n\nCash Credit in XXXXX
-        \nfrom Delivery Date + YY Days.\n\nIf "'"Register"'" button shown on your\nCoupon, Go back AFTER you shop &amp;\nRegister bill(Amt) in "'"My Coupons"'"</string>
+    <string name="title_copy_to_clipboard">CASHBACK TRACKING ACTIVATED</string>
+    <string name="msg_copy_to_clipboard">
+        AFTER PAYMENT AT STORE,
+        \nTransaction is Tracked &amp; SMS is
+        \nsent within 5 Min to Max 24 Hrs
+        \nThis SMS confirms the Cashback
+        \n\n
+        Cash Credit in XXXXX
+        \nWithin YY days, after the expiry of
+        \nproduct Return/Exchange period.
+        \n\n
+        OUR Cashback, No Code Needed
+        \nYou may use Coupon codes given
+        \nat site checkout, if not given by us.
+    </string>
 
+    <string name="msg_cc_bill_upload_cb">
+        AFTER PAYMENT AT STORE,\n
+        Register Billing in “MyCoupons”\n
+        you will find the same \‘coupon\'\n
+        Cashback is then Confirmed &amp;\n
+        Tracked in about 24 hrs by SMS\n\n
+        Cash Credit in XXXXX
+        \nWithin YY days, after the expiry of\n
+        product Return/Exchange period.
+    </string>
 
     <string name="mobile_no_mark_used">Mobile No. to Mark as Used</string>
     <string name="btn_mark_coupon_used">Mark Coupon Used</string>

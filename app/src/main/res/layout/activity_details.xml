@@ -64,7 +64,6 @@
                         android:weightSum="3"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
-                        android:gravity="center"
                         android:visibility="visible">
 
                         <TextView
