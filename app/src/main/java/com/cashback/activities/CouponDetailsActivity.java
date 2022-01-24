@@ -374,7 +374,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moBinding.tvDiscountUpto.append(Common.getColorSizeText("\nDiscount", Color.BLACK, 1.20f));
 
         moBinding.tvExactCashback.setText(Common.getColorText("exact\n", Color.WHITE));
-        moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBackCouponScreen(), Color.WHITE, 1.30f));
+        moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBack(), Color.WHITE, 1.30f));
         moBinding.tvExactCashback.append(Common.getColorSizeText("\nCashback", Color.WHITE, 1.20f));
 
         moBinding.lblAdditional.setText(moActivity.getAdditionLabel());
