@@ -182,6 +182,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                 moBinding.rlBanner.setVisibility(View.VISIBLE);
 
                 //Common.stOfferShow = false;
+            } else {
+                moBinding.rlBanner.setVisibility(View.GONE);
             }
 
             moBinding.imageMainClose.setOnClickListener(new View.OnClickListener() {

@@ -146,6 +146,7 @@
                             android:layout_height="wrap_content"
                             android:nestedScrollingEnabled="true"
                             android:visibility="visible"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
                             app:cardCornerRadius="@dimen/_5sdp">
 
                             <com.smarteist.autoimageslider.SliderView

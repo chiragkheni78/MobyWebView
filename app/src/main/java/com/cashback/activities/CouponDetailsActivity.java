@@ -142,7 +142,6 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         displayEarnText();
         if (moActivity.getAdCouponType() == 1) {
             moBinding.cdWebview.setVisibility(View.GONE);
-            moBinding.tvMaxCashback.setVisibility(View.GONE);
             if (moActivity.getCouponList() != null && moActivity.getCouponList().size() > 0) {
                 moBinding.rlBanner.setVisibility(View.VISIBLE);
 
@@ -371,14 +370,24 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         //display cashback text
         moBinding.tvDiscountUpto.setText(Common.getColorText("upto\n", Color.BLACK));
         moBinding.tvDiscountUpto.append(Common.getColorSizeText(moActivity.getDiscountUpTo(), Color.BLACK, 1.30f));
-        moBinding.tvDiscountUpto.append(Common.getColorSizeText("\nDiscount", Color.BLACK, 1.20f));
+        moBinding.tvDiscountUpto.append(Common.getColorSizeText("\nDiscount", Color.BLACK, 1.15f));
 
-        moBinding.tvExactCashback.setText(Common.getColorText("exact\n", Color.WHITE));
-        moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBack(), Color.WHITE, 1.30f));
-        moBinding.tvExactCashback.append(Common.getColorSizeText("\nCashback", Color.WHITE, 1.20f));
+        if (moActivity.getAdCouponType() == 1) {
+            moBinding.tvExactCashback.setText(Common.getColorText("upto\n", Color.WHITE));
+            moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBack(), Color.WHITE, 1.30f));
+            moBinding.tvExactCashback.append(Common.getColorSizeText("\nInstant\nDiscount", Color.WHITE, 1.10f));
+            moBinding.tvCardMsg.setVisibility(View.VISIBLE);
+        } else {
+            moBinding.tvExactCashback.setText(Common.getColorText("exact\n", Color.WHITE));
+            moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBack(), Color.WHITE, 1.30f));
+            moBinding.tvExactCashback.append(Common.getColorSizeText("\nCashback", Color.WHITE, 1.10f));
+        }
 
         moBinding.lblAdditional.setText(moActivity.getAdditionLabel());
         moBinding.tvMaxCashback.setText("Max Cashback Rs. " + moActivity.getQuizReward() + "");
+        if(moActivity.getQuizReward() == 0 || moActivity.getAdCouponType() == 1) {
+            moBinding.tvMaxCashback.setVisibility(View.GONE);
+        }
 
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             moBinding.tvBrand.setText(moActivity.getAdName());
@@ -666,7 +675,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             try {
                 String lsTitle = Common.getDynamicText(getContext(), "title_copy_to_clipboard");
                 String lsMessage;
-                if (moActivity.isBillUploadEnable()){
+                if (moActivity.isBillUploadEnable()) {
                     lsMessage = Common.getDynamicText(getContext(), "msg_cc_bill_upload_cb");
                 } else {
                     lsMessage = Common.getDynamicText(getContext(), "msg_copy_to_clipboard");

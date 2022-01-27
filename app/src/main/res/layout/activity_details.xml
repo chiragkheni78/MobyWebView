@@ -100,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginHorizontal="@dimen/_5sdp"
-                            android:gravity="center"
+                            android:gravity="center_horizontal"
                             android:padding="@dimen/padding_mini"
                             android:text="exact\n8%\nCashback"
                             android:textColor="@color/white"
@@ -119,6 +119,21 @@
                         android:textColor="@color/black"
                         android:letterSpacing="0.1"
                         android:textSize="15sp"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCardMsg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingBottom="@dimen/txt_large"
+                        android:layout_marginRight="@dimen/_18sdp"
+                        android:textColor="@color/white"
+                        android:letterSpacing="0.08"
+                        android:textSize="10sp"
+                        android:text="(On most Major Cards)"
+                        android:visibility="gone"
                         android:layout_gravity="center_horizontal|bottom"
                         android:textStyle="bold" />
 

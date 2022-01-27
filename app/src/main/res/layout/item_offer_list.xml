@@ -141,7 +141,7 @@
                             android:paddingVertical="@dimen/_5sdp"
                             android:text="Rs. 20"
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:textSize="11sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
