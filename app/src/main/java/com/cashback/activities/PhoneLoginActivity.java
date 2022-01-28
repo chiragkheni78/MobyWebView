@@ -31,6 +31,7 @@ import com.cashback.models.response.ProceedDeviceResponse;
 import com.cashback.models.viewmodel.PhoneLoginViewModel;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
+import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.custom.otpview.OTPListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -328,7 +329,10 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
                 getPreferenceManager().setPhoneVerified(true);
                 FirebaseAuth.getInstance().signOut();
                 AdGydeEvents.otpVerified(PhoneLoginActivity.this);
+
                 //All Done
+                FirebaseEvents.trigger(getContext(), null, FirebaseEvents.OTP_VERIFIED_ALL);
+
                 Intent intent = new Intent();
                 setResult(Activity.RESULT_OK, intent);
                 finish();

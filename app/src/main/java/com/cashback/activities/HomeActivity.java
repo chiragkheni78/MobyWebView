@@ -226,7 +226,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             loadOfferListFragment(0, 0, 0, 0);
         } else if (stFrom.equalsIgnoreCase(Constants.IntentKey.LOAD_SHARE_PAGE)) {
             moBinding.navigation.getMenu().getItem(4).setChecked(true);
-            replaceShareFragement();
+            openShareFragement();
         } else {
             getSettings();
 //            moBinding.navigation.getMenu().getItem(0).setChecked(true);
@@ -251,14 +251,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 dialogOpenMapPopup();
             }
         } else if (position == R.id.itemShare) {
-            replaceShareFragement();
+            openShareFragement();
         }
     }
 
-    private void replaceShareFragement() {
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.trigger(HomeActivity.this, bundle, FirebaseEvents.SHARE_OPTION);
+    private void openShareFragement() {
+        FirebaseEvents.trigger(HomeActivity.this, null, FirebaseEvents.SHARE_OPTION);
 
         ShareFragment shareFragment = new ShareFragment();
         Common.replaceFragment(HomeActivity.this, shareFragment, Constants.FragmentTag.TAG_SHARE, false);

@@ -84,9 +84,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             switch (foView.getId()) {
                 case R.id.tvCouponCode:
                     if (onCouponItemClick != null) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                        FirebaseEvents.trigger(moContext, bundle, FirebaseEvents.VIEW_AND_SHOP_PRESSED);
+                        FirebaseEvents.trigger(moContext, null, FirebaseEvents.VIEW_AND_SHOP_CLICKED);
 
                         onCouponItemClick.openCouponDetails(liPosition);
                     }
@@ -115,6 +113,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 //                        loIntent.putExtra(PIN_COLOR, loActivity.getPinColor());
 //                        moContext.startActivity(loIntent);
                         if (onCouponItemClick != null) {
+                            FirebaseEvents.trigger(moContext, null, FirebaseEvents.REGISTER_BILL_CLICKED);
                             onCouponItemClick.openBillUpload(fiPosition);
                         }
                     }

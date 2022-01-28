@@ -165,7 +165,18 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                                 moActivity.getCouponList().size() > 0
                                 && loOfferAdapter != null) {
                             loOfferAdapter.notifyFirstItem(position);
-                            //moBinding.rvCoupon.smoothScrollToPosition(position);
+
+
+                            float sliderHeight = moBinding.imageSlider.getHeight();
+                            float headerHeight = moBinding.llHeader.getHeight();
+                            View view = moBinding.rvCoupon.getLayoutManager().findViewByPosition(position);
+                            if (view != null) {
+                                float X = view.getX();
+                                float Y = view.getY();
+                                moBinding.nsvTop.smoothScrollTo(0, (int) (Y + sliderHeight + headerHeight));
+//                                moBinding.rvCoupon.scrollToPosition(position);
+                            }
+
                         }
                     }
                 }));
@@ -301,9 +312,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                     AdGydeEvents.getOfferClicked(getContext(), moActivity);
                 }
 
-                Bundle bundle = new Bundle();
-                bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                FirebaseEvents.trigger(CouponDetailsActivity.this, bundle, FirebaseEvents.GET_OFFER);
+                FirebaseEvents.trigger(CouponDetailsActivity.this, null, FirebaseEvents.GET_OFFER_CLICKED);
 
                 Coupon loCoupon = moActivity.getCouponList().get(position);
                 if (!isOfflineCall) {
@@ -320,6 +329,13 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 }
             }
         });
+
+        moBinding.tvHeader.setText("SOME OTHER OFFERS IN THE STORE");
+        if (moActivity.getAdCouponType() != 1) {
+            String lsSubline = "\nCASHBACK IS THE SAME XX EXTRA";
+            lsSubline = lsSubline.replace("XX", moActivity.getFlatCashBack());
+            moBinding.tvHeader.append(Common.getColorSizeText(lsSubline, Color.BLACK, 0.80f));
+        }
 
         //handle visibility in offline mode & online mode
         if (!isOfflineCall) {
@@ -374,7 +390,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
         if (moActivity.getAdCouponType() == 1) {
             moBinding.tvExactCashback.setText(Common.getColorText("upto\n", Color.WHITE));
-            moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBack(), Color.WHITE, 1.30f));
+            moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCbAmazon(), Color.WHITE, 1.30f));
             moBinding.tvExactCashback.append(Common.getColorSizeText("\nInstant\nDiscount", Color.WHITE, 1.10f));
             moBinding.tvCardMsg.setVisibility(View.VISIBLE);
         } else {
@@ -385,7 +401,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
         moBinding.lblAdditional.setText(moActivity.getAdditionLabel());
         moBinding.tvMaxCashback.setText("Max Cashback Rs. " + moActivity.getQuizReward() + "");
-        if(moActivity.getQuizReward() == 0 || moActivity.getAdCouponType() == 1) {
+        if (moActivity.getQuizReward() == 0 || moActivity.getAdCouponType() == 1) {
             moBinding.tvMaxCashback.setVisibility(View.GONE);
         }
 
@@ -469,9 +485,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     private void shopOnlinePressed() {
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.trigger(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE);
+        FirebaseEvents.trigger(CouponDetailsActivity.this, null, FirebaseEvents.SHOP_ONLINE_CLICKED);
 
         String lsLink = getShopOnlineLink();
 
@@ -690,9 +704,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                     public void onClick(View v) {
                         loDialog.dismiss();
                         openDeepLink(fsUrl);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                        FirebaseEvents.trigger(getContext(), bundle, FirebaseEvents.CASHBACK_ACTIVATE_OK_PRESSED);
+
+                        FirebaseEvents.trigger(getContext(), null, FirebaseEvents.CASHBACK_ACTIVATE_OK_CLICKED);
                     }
                 });
                 loDialog.show();
@@ -729,10 +742,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             if (resultCode == RESULT_OK) {
                 if (mbShopOnlinePressed) {
                     mbShopOnlinePressed = false;
-                    Bundle bundle = new Bundle();
-                    bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                    FirebaseEvents.trigger(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE_VERIFIED);
 
+                    FirebaseEvents.trigger(CouponDetailsActivity.this, null, FirebaseEvents.SHOP_ONLINE_VERIFIED);
                 }
                 if (msURL != null) {
                     dialogCopyToClipboard(msURL);
@@ -775,9 +786,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         try {
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(CouponDetailsActivity.this, bundle, FirebaseEvents.SHOP_ONLINE_BACK_PRESS);
+            FirebaseEvents.trigger(CouponDetailsActivity.this, null, FirebaseEvents.SHOP_ONLINE_BACK_PRESS);
 
             if (getIntent() != null && getIntent().getAction() != null && moActivity != null &&
                     getIntent().getAction().equalsIgnoreCase(Constants.IntentKey.Action.BY_PASS_QUIZ)) {

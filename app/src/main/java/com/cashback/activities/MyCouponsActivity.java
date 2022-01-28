@@ -182,9 +182,7 @@ public class MyCouponsActivity extends BaseActivity implements View.OnClickListe
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
             }
 
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(MyCouponsActivity.this, bundle, FirebaseEvents.MY_COUPON_PAGE);
+            FirebaseEvents.trigger(MyCouponsActivity.this, null, FirebaseEvents.MY_COUPON_PAGE);
         }
     };
 

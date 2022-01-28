@@ -143,9 +143,7 @@ public class SplashViewModel extends ViewModel {
     private void triggerReferrerEvent(Context foContext) {
         SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(foContext);
         if (!loSharedPreferenceManager.isReferrerEventTrigger()) {
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(foContext.getApplicationContext(), bundle, FirebaseEvents.DOWNLOAD_USING_REFERRAL_CODE);
+            FirebaseEvents.trigger(foContext.getApplicationContext(), null, FirebaseEvents.DOWNLOAD_USING_REFERRAL_CODE);
             loSharedPreferenceManager.setReferrerEventTrigger(true);
         }
     }

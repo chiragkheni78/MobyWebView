@@ -347,9 +347,7 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
         }
 
         if (miCurrentQuestion == moQuizList.size() - 1) {
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(QuizDetailsActivity.this, bundle, FirebaseEvents.SUBMIT_QUIZ);
+            FirebaseEvents.trigger(QuizDetailsActivity.this, null, FirebaseEvents.SUBMIT_QUIZ);
             submitQuizAnswer();
         } else {
             miCurrentQuestion = miCurrentQuestion + 1;

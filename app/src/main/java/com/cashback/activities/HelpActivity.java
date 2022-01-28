@@ -35,9 +35,7 @@ public class HelpActivity extends BaseActivity {
         Common.hideKeyboard(this);
         setToolbar();
 
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.trigger(HelpActivity.this, bundle, FirebaseEvents.HELP_OPTION);
+        FirebaseEvents.trigger(HelpActivity.this, null, FirebaseEvents.HELP_OPTION);
 
         moBinding.webViewHelp.getSettings().setJavaScriptEnabled(true);
         moBinding.webViewHelp.loadUrl("https://mobyads.in/moby/v2-apis/?fsAction=loadWebViewHtml&fsPage=faqs");

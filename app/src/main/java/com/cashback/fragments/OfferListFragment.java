@@ -329,16 +329,11 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                             //  showDealOfTheDayImage();
                         }
 
-                        if (miCurrentPage == 1 && AppGlobal.isNewUser) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                            FirebaseEvents.trigger(getActivity(), bundle, FirebaseEvents.OFFER_LOADED_PAGE);
-
-                            AdGydeEvents.offerLoaded(getActivity());
+                        if (miCurrentPage == 1) {
+                            FirebaseEvents.trigger(getActivity(), null, FirebaseEvents.OFFER_LOADED_PAGE);
+                            if (AppGlobal.isNewUser)
+                                AdGydeEvents.offerLoaded(getActivity());
                         }
-                        //else {
-//                            moBinding.rvOfferList.smoothScrollToPosition(0);
-//                        }
 
                         if (isSearchButtonBlink)
                             Common.blinkAnimation(moBinding.floatingActionSearch);
@@ -477,9 +472,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         Ad loOffer = moOfferList.get(position);
         if (!loOffer.getEngagedFlag()) {
             if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
-                Bundle bundle = new Bundle();
-                bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                FirebaseEvents.trigger(getActivity(), bundle, FirebaseEvents.SELECT_DEAL);
+                FirebaseEvents.trigger(getActivity(), null, FirebaseEvents.SELECT_DEAL_CLICKED);
             }
             if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
                 verifyLocation(loOffer);

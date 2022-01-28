@@ -215,9 +215,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PHONE_LOGIN) {
             if (resultCode == RESULT_OK) {
-                Bundle bundle = new Bundle();
-                bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                FirebaseEvents.trigger(UserProfileActivity.this, bundle, FirebaseEvents.USER_PROFILE_VERIFIED);
+                FirebaseEvents.trigger(UserProfileActivity.this, null, FirebaseEvents.USER_PROFILE_VERIFIED);
                 loadView();
             }
         }

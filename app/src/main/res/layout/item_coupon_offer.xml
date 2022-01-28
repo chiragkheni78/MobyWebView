@@ -44,7 +44,6 @@
                     android:paddingEnd="@dimen/_5sdp"
                     android:text="Get Upto 70% off on all Items in women’s denim."
                     android:textSize="12sp" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -68,7 +67,6 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

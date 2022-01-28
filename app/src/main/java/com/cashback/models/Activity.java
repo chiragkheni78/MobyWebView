@@ -66,6 +66,9 @@ public class Activity {
     @SerializedName("fsRemainDay")
     String remainDay;
 
+    @SerializedName("fsFlatCashBackAmazon")
+    String flatCbAmazon;
+
     public long getActivityID() {
         return activityID;
     }
@@ -248,6 +251,11 @@ public class Activity {
     public String getAdditionLabel() {
         return additionLabel;
     }
+
+    public String getFlatCbAmazon() {
+        return flatCbAmazon;
+    }
+
 }
 
 

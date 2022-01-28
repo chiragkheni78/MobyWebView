@@ -106,9 +106,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if (fbIsTrack) {
                     try {
                         AdGydeEvents.billTracked(getApplicationContext());
-                        Bundle bundle = new Bundle();
-                        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-                        FirebaseEvents.trigger(getApplicationContext(), bundle, FirebaseEvents.BILL_TRACKED);
+                        FirebaseEvents.trigger(getApplicationContext(), null, FirebaseEvents.BILL_TRACKED);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

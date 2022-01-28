@@ -548,9 +548,7 @@ public class Common {
     public static void openWhatsapp(Context foContext, String fsMessage) {
         try {
             AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_WHATSAPP_SHARE);
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(foContext, bundle, FirebaseEvents.OPEN_WHATSAPP_SHARE);
+            FirebaseEvents.trigger(foContext, null, FirebaseEvents.OPEN_WHATSAPP_SHARE);
 
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
@@ -565,9 +563,7 @@ public class Common {
 
     public static void openMessenger(Context foContext, String fsMessage) {
         AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_MESSENGER_SHARE);
-        Bundle bundle = new Bundle();
-        bundle.putString("mobile", AppGlobal.getPhoneNumber());
-        FirebaseEvents.trigger(foContext, bundle, FirebaseEvents.OPEN_MESSENGER_SHARE);
+        FirebaseEvents.trigger(foContext, null, FirebaseEvents.OPEN_MESSENGER_SHARE);
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
@@ -586,9 +582,7 @@ public class Common {
     public static void openInstagram(Context foContext, String fsMessage, String imagePath) {
         try {
             AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_INSTAGRAM_SHARE);
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(foContext, bundle, FirebaseEvents.OPEN_INSTAGRAM_SHARE);
+            FirebaseEvents.trigger(foContext, null, FirebaseEvents.OPEN_INSTAGRAM_SHARE);
 
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
 
@@ -611,9 +605,7 @@ public class Common {
     public static void openFacebook(Context foContext, String fsMessage) {
         try {
             AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_FB_SHARE);
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(foContext, bundle, FirebaseEvents.OPEN_FB_SHARE);
+            FirebaseEvents.trigger(foContext, null, FirebaseEvents.OPEN_FB_SHARE);
 
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
@@ -631,9 +623,7 @@ public class Common {
     public static void openTwitter(Context foContext, String fsMessage) {
         try {
             AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_TWITTER_SHARE);
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(foContext, bundle, FirebaseEvents.OPEN_TWITTER_SHARE);
+            FirebaseEvents.trigger(foContext, null, FirebaseEvents.OPEN_TWITTER_SHARE);
 
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
@@ -651,9 +641,7 @@ public class Common {
     public static void openTelegram(Context foContext, String fsMessage) {
         try {
             AdGydeEvents.shareApp(foContext, FirebaseEvents.OPEN_TELEGRAM_SHARE);
-            Bundle bundle = new Bundle();
-            bundle.putString("mobile", AppGlobal.getPhoneNumber());
-            FirebaseEvents.trigger(foContext, bundle, FirebaseEvents.OPEN_TELEGRAM_SHARE);
+            FirebaseEvents.trigger(foContext, null, FirebaseEvents.OPEN_TELEGRAM_SHARE);
 
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");

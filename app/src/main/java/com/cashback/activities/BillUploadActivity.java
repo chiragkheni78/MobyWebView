@@ -36,6 +36,7 @@ import com.cashback.models.viewmodel.ActivityDetailsViewModel;
 import com.cashback.models.viewmodel.BillUploadViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
+import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 import com.cashback.dialog.MessageDialog;
 import com.shagi.materialdatepicker.date.DatePickerFragmentDialog;
@@ -209,7 +210,7 @@ public class BillUploadActivity extends BaseActivity implements View.OnClickList
         @Override
         public void onChanged(BillUploadResponse loJsonObject) {
             if (!loJsonObject.isError()) {
-
+                FirebaseEvents.trigger(moContext, null, FirebaseEvents.BILL_UPLOAD_SUCCEED);
                 MessageDialog loDialog = new MessageDialog(getContext(), null, loJsonObject.getMessage(), null, false);
                 loDialog.setClickListener(v -> {
                     loDialog.dismiss();
