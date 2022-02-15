@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.cashback.databinding.ActivitySplashBinding;
 import com.cashback.models.response.StaticLabelsResponse;
+import com.cashback.models.viewmodel.ReferralTrackViewModel;
 import com.cashback.models.viewmodel.SplashViewModel;
 
 import static com.cashback.utils.Constants.SPLASH_TIME;
@@ -21,6 +22,7 @@ public class SplashActivity extends BaseActivity {
 
     ActivitySplashBinding moBinding;
     SplashViewModel moSplashViewModel;
+    ReferralTrackViewModel moReferralTrackViewModel;
 
     Observer<StaticLabelsResponse> fetchStaticLabelsObserver = new Observer<StaticLabelsResponse>() {
         @Override
@@ -46,11 +48,12 @@ public class SplashActivity extends BaseActivity {
 
     private void initializeContent() {
         moSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
-        moSplashViewModel.retrieveFirebaseDeepLink(this, getIntent());
-        moSplashViewModel.checkInstallReferrer(getContext());
-
         moSplashViewModel.fetchStaticLabels.observe(this, fetchStaticLabelsObserver);
         moSplashViewModel.fetchStaticLabelsList(getContext());
+
+//        moReferralTrackViewModel = new ViewModelProvider(this).get(ReferralTrackViewModel.class);
+//        moReferralTrackViewModel.retrieveFirebaseDeepLink(this, getIntent());
+//        moReferralTrackViewModel.checkInstallReferrer(getContext());
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override

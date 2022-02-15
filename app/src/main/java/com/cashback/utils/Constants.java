@@ -10,7 +10,7 @@ public class Constants {
     public static String ADGYDE_APP_KEY = BuildConfig.ADGYDE_APP_KEY;
 
     public static String IMAGE_BASE_URL = "https://mobyads.in/moby/";
-    public static String DEFAULT_REFERRAL_CODE = ""; //SAMSUNG
+    public static String DEFAULT_REFERRAL_CODE = ""; //SAMSUNG //APPNEXTSAM
 
 
     public class FragmentTag {

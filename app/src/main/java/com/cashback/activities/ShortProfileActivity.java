@@ -21,6 +21,7 @@ import com.cashback.models.viewmodel.MiniProfileViewModel;
 import com.cashback.models.UserDetails;
 import com.cashback.models.response.GetMiniProfileResponse;
 import com.cashback.models.response.SaveMiniProfileResponse;
+import com.cashback.models.viewmodel.ReferralTrackViewModel;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -37,6 +38,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
     EWalletAdapter loEWalletAdapter;
 
     MiniProfileViewModel moMiniProfileViewModel;
+    ReferralTrackViewModel moReferralTrackViewModel;
 
     private long mlOfferID = 0, miBannerID = 0;
     private int miCategoryId = 0;
@@ -80,6 +82,10 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         moMiniProfileViewModel = new ViewModelProvider(this).get(MiniProfileViewModel.class);
         moMiniProfileViewModel.saveMiniProfileStatus.observe(this, saveProfileObserver);
         moMiniProfileViewModel.getMiniProfileStatus.observe(this, getProfileObserver);
+
+        moReferralTrackViewModel = new ViewModelProvider(this).get(ReferralTrackViewModel.class);
+        moReferralTrackViewModel.retrieveFirebaseDeepLink(this, getIntent());
+        moReferralTrackViewModel.checkInstallReferrer(getContext());
     }
 
     Observer<GetMiniProfileResponse> getProfileObserver = new Observer<GetMiniProfileResponse>() {
