@@ -26,6 +26,8 @@ public class AppGlobal extends Application {
     public static boolean isSearchButtonBlink = true;
     public static boolean isDealBannerClosed = false;
     public static boolean isNewUser = false;
+    public static boolean fbIsGpsEnInApp = false;
+    public static boolean fbIsBottomSheetIsOpen = false;
 
     public static Context moContext;
     public static ArrayList<Category> moCategories = new ArrayList<>();

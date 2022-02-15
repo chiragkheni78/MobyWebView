@@ -1,5 +1,8 @@
 package com.cashback.dialog;
 
+import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
+
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,6 +12,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.cashback.AppGlobal;
@@ -18,12 +24,14 @@ import com.cashback.adapters.MainStoreAdapter;
 import com.cashback.databinding.BottomSheetLayoutBinding;
 import com.cashback.models.Category;
 import com.cashback.models.SubCategory;
+import com.cashback.models.viewmodel.MapViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment implements View.OnClickListener, DialogCategoryAdapter.OnItemClickCategory {
 
+    private boolean fbIsClickStore = false;
     private BottomSheetLayoutBinding moBinding;
     private OnApplyClickFilter onApplyClickFilter;
     private int moPosition;
@@ -33,6 +41,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
     private MainStoreAdapter mainStoreAdapter;
     private ArrayList<Category> moCategories;
     private DialogCategoryAdapter dialogCategoryAdapter;
+    MapViewModel moMapViewModel;
+    private Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -46,19 +56,32 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
     }
 
     public BottomSheetDialog(OnApplyClickFilter onApplyClickFilter, String searchText,
-                             int categoryId, int mainStoreId, int adType) {
+                             int categoryId, int mainStoreId, int adType, Activity activity) {
         this.onApplyClickFilter = onApplyClickFilter;
         this.msSearchText = searchText;
         this.miLastCategoryId = categoryId;
         this.miLastMainStoreId = mainStoreId;
         this.moPosition = adType;
-
-        /*Log.d("TTT", "param...." + msSearchText + " cat id..." + categoryId + " main store id..." + miLastMainStoreId +
-                "ad type id.." + adType);*/
+        this.activity = activity;
     }
 
     public interface OnApplyClickFilter {
         void onFilterClick(int position, String searchText, int categoryId, int mainStoreIdn);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkPermissionStatus();
+    }
+
+    private void checkPermissionStatus() {
+        if (!AppGlobal.fbIsGpsEnInApp && fbIsClickStore) {
+            AppGlobal.fbIsBottomSheetIsOpen = true;
+            if (!moMapViewModel.checkGPSEnabled(getActivity())) {
+                moMapViewModel.enableGPS(getActivity());
+            }
+        }
     }
 
     private void initComponent() {
@@ -66,6 +89,9 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         moBinding.rvMainStore.setLayoutManager(layoutManager);
         GridLayoutManager layoutManagerCategories = new GridLayoutManager(getActivity(), 2);
         moBinding.rvCategories.setLayoutManager(layoutManagerCategories);
+
+        moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+     //   moMapViewModel.functionCallStatus.observe((LifecycleOwner) activity, functionCallObserver);
 
         moBinding.btnApplyFilter.setOnClickListener(this);
         moBinding.tvOfflineStore.setOnClickListener(this);
@@ -96,6 +122,14 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         // setExpiringSoonAdapter();
         //  setBiggestServingAdapter();
     }
+
+ /*   Observer<String> functionCallObserver = fsFunctionName -> {
+        switch (fsFunctionName) {
+            case FETCH_OFFERS:
+                Log.d("TTT", "call fetch offer bottom...");
+                break;
+        }
+    };*/
 
     private void setMainStoreAdapter() {
         moMainStoreList = AppGlobal.getMoMainStore();
@@ -176,18 +210,23 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
                 this.dismiss();
                 break;
             case R.id.tvAllStore:
+                fbIsClickStore = true;
+                checkPermissionStatus();
                 moPosition = 0;
                 clearBgForView();
                 moBinding.tvAllStore.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_color_primary_left));
                 moBinding.tvAllStore.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 break;
             case R.id.tvOfflineStore:
+                fbIsClickStore = true;
+                checkPermissionStatus();
                 moPosition = 2;
                 clearBgForView();
                 moBinding.tvOfflineStore.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_color_primary_right));
                 moBinding.tvOfflineStore.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 break;
             case R.id.tvOnlineStore:
+                fbIsClickStore = false;
                 moPosition = 1;
                 clearBgForView();
                 moBinding.tvOnlineStore.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));

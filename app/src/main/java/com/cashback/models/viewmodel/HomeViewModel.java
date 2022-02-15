@@ -52,14 +52,16 @@ public class HomeViewModel extends ViewModel {
                 Common.printReqRes(foResponse.body(), "getGlobalSetting", Common.LogType.RESPONSE);
                 if (foResponse.isSuccessful()) {
                     GetSettingResponse loJsonObject = foResponse.body();
-                    Log.d("TTT","Response..."+foResponse.body().toString());
+                    Log.d("TTT", "Response..." + foResponse.body().toString());
                     AppGlobal.setCategories(loJsonObject.getCategoryList());
                     AppGlobal.setMainStore(loJsonObject.getFoMainStore());
                     AppGlobal.setTotalBillVerified(loJsonObject.getTotalBillVerified());
-                    if (loJsonObject.getDealsOfTheDay() != null && loJsonObject.getDealsOfTheDay().size()>0) {
+                    AppGlobal.fbIsGpsEnInApp = loJsonObject.isFbIsGpsEnInApp();
+                    //AppGlobal.fbIsGpsEnInApp = false;
+                    if (loJsonObject.getDealsOfTheDay() != null && loJsonObject.getDealsOfTheDay().size() > 0) {
                         AppGlobal.setDealOfTheDayResponse(loJsonObject.getDealsOfTheDay());
                     }
-                    if (loJsonObject.getShareScreenImages() != null && loJsonObject.getShareScreenImages().size()>0) {
+                    if (loJsonObject.getShareScreenImages() != null && loJsonObject.getShareScreenImages().size() > 0) {
                         AppGlobal.setSharePageImages(loJsonObject.getShareScreenImages());
                     }
                     getSettingStatus.postValue(loJsonObject);

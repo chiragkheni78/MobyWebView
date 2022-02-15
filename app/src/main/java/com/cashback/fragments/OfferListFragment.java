@@ -400,7 +400,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                         msSearchText,
                         miLastCategoryId,
                         miLastMainStoreId,
-                        miAdType);
+                        miAdType,
+                        getActivity());
                 bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
                 break;
         }
@@ -561,10 +562,8 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
                     break;
                 case FETCH_OFFERS:
                     dismissProgressDialog();
-                    if (moMapViewModel.getCurrentLocation() != null) {
-                        AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
-                        handleOfferDetails(miPosition);
-                    }
+                    AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
+                    handleOfferDetails(miPosition);
                     break;
             }
         }

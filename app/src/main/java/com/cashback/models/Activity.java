@@ -1,10 +1,14 @@
 package com.cashback.models;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class Activity {
+public class Activity implements LifecycleOwner {
 
     @SerializedName("fiActivityId")
     long activityID;
@@ -256,6 +260,11 @@ public class Activity {
         return flatCbAmazon;
     }
 
+    @NonNull
+    @Override
+    public Lifecycle getLifecycle() {
+        return null;
+    }
 }
 
 

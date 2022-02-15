@@ -36,6 +36,9 @@ public class GetSettingResponse {
     @SerializedName("fsReferralLink")
     String referralUrl;
 
+    @SerializedName("fbIsGpsEnInApp")
+    boolean fbIsGpsEnInApp;
+
     @SerializedName("fIZoomAndroid")
     int zoomLevel;
 
@@ -169,6 +172,10 @@ public class GetSettingResponse {
 
     public void setTotalBillVerified(int fiTotalBillVerified) {
         this.totalBillVerified = fiTotalBillVerified;
+    }
+
+    public boolean isFbIsGpsEnInApp() {
+        return fbIsGpsEnInApp;
     }
 
     public boolean isUserExist() {

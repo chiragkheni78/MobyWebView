@@ -11,6 +11,7 @@ import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
 import static com.cashback.utils.Constants.IntentKey.IS_FROM;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -74,7 +75,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     ActivityHomeBinding moBinding;
-
     HomeViewModel moHomeViewModel;
     MapViewModel moMapViewModel;
     private boolean isLoadOfferPage;
@@ -233,8 +233,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         }
     }
 
-    public void openNavigationBarFragments(int position) {
+    int moPosition;
 
+    public void openNavigationBarFragments(int position) {
+        moPosition = position;
         if (position != R.id.itemNearBy) {
             moBinding.navigation.getMenu().findItem(position).setChecked(true);
         }
@@ -248,7 +250,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 moBinding.navigation.getMenu().findItem(position).setChecked(true);
                 loadMapViewFragment();
             } else {
-                dialogOpenMapPopup();
+                if (!AppGlobal.fbIsGpsEnInApp) {
+                    mbIsLocationRequired = true;
+                    checkPermissionStatus();
+                } else {
+                    dialogOpenMapPopup(HomeActivity.this);
+                }
             }
         } else if (position == R.id.itemShare) {
             openShareFragement();
@@ -264,29 +271,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     public void updateBottomMenu(int fiPosition) {
         moBinding.navigation.getMenu().getItem(fiPosition).setChecked(true);
-    }
-
-    private void dialogOpenMapPopup() {
-        Dialog moDialog = new Dialog(getContext());
-        moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        moDialog.setContentView(R.layout.dialog_map_alert);
-        moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        moDialog.getWindow().setGravity(Gravity.CENTER);
-        moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        moDialog.setCancelable(false);
-        moDialog.show();
-
-        final Button loBtnLater = moDialog.findViewById(R.id.btnContinue);
-        TextView tvMapDialogText = moDialog.findViewById(R.id.tvMapPopupText1);
-
-        Common.blinkAnimation(tvMapDialogText);
-
-        loBtnLater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moDialog.dismiss();
-            }
-        });
     }
 
     private void getSettings() {
@@ -543,8 +527,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     if (stFrom.equalsIgnoreCase(Constants.IntentKey.FROM_COUPON)) {
                         openNavigationBarFragments(R.id.itemCoupons);
                     } else {
-                        mbIsLocationRequired = true;
                         moJsonObject = foJsonObject;
+                        if (!AppGlobal.fbIsGpsEnInApp) {
+                            loadOffers();
+                            return;
+                        }
+                        mbIsLocationRequired = true;
                         checkPermissionStatus();
                     }
                 }
@@ -715,8 +703,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void checkPermissionStatus() {
-        if (!moMapViewModel.checkGPSEnabled(this)) {
-            moMapViewModel.enableGPS(this);
+        Log.d("TTT", "mbIsLocationRequired..." + mbIsLocationRequired);
+        if (mbIsLocationRequired) {
+            if (!moMapViewModel.checkGPSEnabled(this)) {
+                moMapViewModel.enableGPS(this);
+            }
         }
     }
 
@@ -725,29 +716,65 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         public void onChanged(String foFunctionName) {
             switch (foFunctionName) {
                 case LOAD_MAP_VIEW:
+                    Log.d("TTT", "map view load...");
                     //all permission granted
                     mbIsLocationRequired = false;
                     showProgressDialog();
                     moMapViewModel.getLastKnownLocation(HomeActivity.this);
                     break;
                 case FETCH_OFFERS:
+                    Log.d("TTT", "call fetch offer...");
                     dismissProgressDialog();
-                    AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
-                    if (AppGlobal.getLocation() != null) {
-                        loadOffers();
+                    if (moPosition == R.id.itemNearBy) {
+                        dialogOpenMapPopup(HomeActivity.this);
                     } else {
-                        moMapViewModel.getLastKnownLocation(HomeActivity.this);
+                        if (AppGlobal.fbIsBottomSheetIsOpen) {
+                            AppGlobal.fbIsBottomSheetIsOpen = false;
+                            return;
+                        }
+                        AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
+                        if (AppGlobal.getLocation() != null) {
+                            loadOffers();
+                        } else {
+                            moMapViewModel.getLastKnownLocation(HomeActivity.this);
+                        }
+
                     }
                     break;
             }
         }
     };
 
+    public void dialogOpenMapPopup(Activity foContext) {
+        Dialog moDialog = new Dialog(foContext);
+        moDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        moDialog.setContentView(R.layout.dialog_map_alert);
+        moDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        moDialog.getWindow().setGravity(Gravity.CENTER);
+        moDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        moDialog.setCancelable(false);
+        moDialog.show();
+
+        final Button loBtnLater = moDialog.findViewById(R.id.btnContinue);
+        TextView tvMapDialogText = moDialog.findViewById(R.id.tvMapPopupText1);
+
+        Common.blinkAnimation(tvMapDialogText);
+
+        loBtnLater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moDialog.dismiss();
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         if (mbIsLocationRequired) {
+            //if (AppGlobal.fbIsGpsEnInApp) {
             checkPermissionStatus();
+            // }
         }
     }
 }

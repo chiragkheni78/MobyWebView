@@ -1,9 +1,10 @@
 package com.cashback.models.viewmodel;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -48,8 +49,6 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 @SuppressWarnings("All")
 public class MapViewModel extends ViewModel {
@@ -281,6 +280,7 @@ public class MapViewModel extends ViewModel {
         } else
             checkLocationPermission(foContext);
     }
+
 
     private void checkLocationPermission(Activity foActivity) {
         if (ContextCompat.checkSelfPermission(foActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

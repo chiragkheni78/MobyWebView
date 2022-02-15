@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/jay81/.gradle/caches/transforms-2/files-2.1/c3e28a1b33fcc840e9977f4e5af7d60a/core-1.6.0/res/layout/custom_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/drawable-ldpi/bg_color_primary_left.xml" value="0.26615384615384613" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/drawable-ldpi/bg_color_primary_right.xml" value="0.26615384615384613" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/drawable-xxxhdpi/border_for_card.xml" value="0.2703125" />
@@ -17,7 +18,7 @@
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/drawable/rect_red_black.xml" value="0.26615384615384613" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_bank_offer_details.xml" value="0.2341485507246377" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_bill_upload.xml" value="0.264" />
-        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_details.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_details.xml" value="0.2" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_home.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_image_slidder.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_message.xml" value="0.25416666666666665" />
@@ -31,12 +32,15 @@
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_short_profile.xml" value="0.2" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/activity_wallet.xml" value="0.264" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.264" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/custom_dialog_new.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_common.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_copy_to_clipboard.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_map_alert.xml" value="0.2074074074074074" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_my_coupon_back.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_qr_store_coupon.xml" value="0.4" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_reward_note.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_store_coupon.xml" value="0.264" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/dialog_wallet_empty.xml" value="0.2064814814814815" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/fragment_map_view.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/fragment_offer_list.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/item_activity.xml" value="0.2341485507246377" />
@@ -48,41 +52,14 @@
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/item_map_custom_view.xml" value="0.2341485507246377" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/item_offer_list.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/item_store_location.xml" value="0.24230072463768115" />
+        <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/item_transaction_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/toolbar_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/layout/toolbar_transparent.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/jay81/Payal/Chirag/moby-cashback-ndroid/app/src/main/res/menu/menu_bottom_bar.xml" value="0.20092592592592592" />
-        <entry key="app/src/main/res/drawable-ldpi/bg_blue_white.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable-mdpi/round_corner_primary.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable-xxhdpi/round_corner_white.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/bg_blue_white.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/bg_radio_gender_short_profile.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/bg_white_blue.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/bg_white_line.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/border_primary_round.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/half_circle_light_green.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/rect_border.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/rect_red_black.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/rect_white.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/round_corner_primary.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/round_corner_white.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/drawable/round_gray.xml" value="0.35052083333333334" />
-        <entry key="app/src/main/res/layout/activity_details.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_detailsv2.xml" value="0.334375" />
-        <entry key="app/src/main/res/layout/activity_offer_details.xml" value="0.19701086956521738" />
-        <entry key="app/src/main/res/layout/activity_short_profile.xml" value="0.19972826086956522" />
-        <entry key="app/src/main/res/layout/dialog_common.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/dialog_qr_store_coupon.xml" value="0.19972826086956522" />
-        <entry key="app/src/main/res/layout/dialog_reward_note.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/fragment_offer_list.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/item_activity.xml" value="0.16261398176291794" />
-        <entry key="app/src/main/res/layout/item_coupon_offer.xml" value="0.19972826086956522" />
-        <entry key="app/src/main/res/layout/item_dod.xml" value="0.19610507246376813" />
-        <entry key="app/src/main/res/layout/item_offer_list.xml" value="0.16261398176291794" />
-        <entry key="app/src/main/res/layout/toolbar_activity_details.xml" value="0.33" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

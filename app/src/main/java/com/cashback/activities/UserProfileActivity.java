@@ -2,6 +2,7 @@ package com.cashback.activities;
 
 import static android.view.View.GONE;
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
+import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
 import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
 
 import android.content.Intent;
@@ -39,6 +40,7 @@ import com.cashback.models.request.SaveUserProfileRequest;
 import com.cashback.models.response.DeleteCardResponse;
 import com.cashback.models.response.GetUserProfileResponse;
 import com.cashback.models.response.SaveUserProfileResponse;
+import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.models.viewmodel.UserProfileViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -49,7 +51,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
     private static final String TAG = UserProfileActivity.class.getSimpleName();
     ActivityMyProfileBinding moBinding;
-
+    boolean fbRgRangeClicked = false;
     UserProfileViewModel moUserProfileViewModel;
     GetUserProfileResponse moGetUserProfileResponse;
 
@@ -57,7 +59,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     BankOfferCategoryAdapter moBankOfferCategoryAdapter;
     DebitCardAdapter moDebitCardAdapter;
     private int miDeletePosition;
-
+    MapViewModel moMapViewModel;
     private int miPaymentMode;
 
     @Override
@@ -102,6 +104,9 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                 "Please Select Any Coupon / Deal\n" +
                 "Click \"Shop Online\" to Verify OTP.";
 
+        moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        moMapViewModel.functionCallStatus.observe(this, functionCallObserver);
+
         if (!getPreferenceManager().isPhoneVerified()) {
             moBinding.llProfileMain.setVisibility(GONE);
             MessageDialog loDialog = new MessageDialog(getContext(), null, str, null, false);
@@ -121,7 +126,26 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         } else {
             loadView();
         }
+        moBinding.rgRange.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+               // Log.d("TTT", "on Checked range....");
+                fbRgRangeClicked = true;
+                if (!AppGlobal.fbIsGpsEnInApp)
+                    checkPermissionStatus();
+            }
+        });
     }
+
+    Observer<String> functionCallObserver = new Observer<String>() {
+        @Override
+        public void onChanged(String foFunctionName) {
+            switch (foFunctionName) {
+                case FETCH_OFFERS:
+                    dismissProgressDialog();
+                    break;
+            }
+        }
+    };
 
     private void loadView() {
         moBinding.llErrorMessage.setVisibility(View.GONE);
@@ -131,6 +155,19 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     private void getUserProfile() {
         showProgressDialog();
         moUserProfileViewModel.getUserProfile(getContext());
+    }
+
+    private void checkPermissionStatus() {
+        if (!moMapViewModel.checkGPSEnabled(this)) {
+            moMapViewModel.enableGPS(this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!AppGlobal.fbIsGpsEnInApp && fbRgRangeClicked)
+            checkPermissionStatus();
     }
 
     private void setToolbar() {
