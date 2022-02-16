@@ -771,10 +771,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mbIsLocationRequired) {
-            //if (AppGlobal.fbIsGpsEnInApp) {
-            checkPermissionStatus();
-            // }
-        }
+        // if (mbIsLocationRequired) {
+        //if (AppGlobal.fbIsGpsEnInApp) {
+        checkPermissionStatus();
+        // }
+        //}
     }
 }

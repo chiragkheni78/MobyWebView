@@ -4,13 +4,17 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
@@ -49,6 +53,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
         Button loBtnAdDetails;
         ImageView loIvLogo;
         LinearLayout loLlRoot, loLlFade;
+        View view1;
+        //LoaderChip loLoaderChip;
+        //RelativeLayout rlTop;
 
         public DataObjectHolder(View foView) {
             super(foView);
@@ -60,6 +67,9 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             loIvLogo = foView.findViewById(R.id.ivLogo);
             loLlRoot = foView.findViewById(R.id.llRoot);
             loLlFade = foView.findViewById(R.id.llFade);
+            view1 = foView.findViewById(R.id.view1);
+            // rlTop = foView.findViewById(R.id.rlTop);
+           // loLoaderChip = foView.findViewById(R.id.loaderChip);
             foView.setOnClickListener(this);
             loBtnAdDetails.setOnClickListener(this);
         }
@@ -111,7 +121,12 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 //            foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
 //
 //            foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.black), null);
-            setAnimations(foHolder.loLlFade);
+            // TODO: 15-02-2022 payal
+             setAnimations(foHolder.loLlFade);
+            //foHolder.loLoaderChip.startLoading();
+            // foHolder.view1.setVisibility(View.VISIBLE);
+            // slideDown(foHolder.view1, foHolder.rlTop);
+            //slideUp(foHolder.view1);
         } else {
 
         }
@@ -122,6 +137,51 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
         foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.black));
 
         foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.white), null);
+    }
+
+    public void slideDown(View view, RelativeLayout relativeLayout) {
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                0,                 // fromYDelta
+                relativeLayout.getHeight()); // toYDelta
+        animate.setDuration(700);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+        animate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        slideDown(view, relativeLayout);
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
+    public void slideUp(View view) {
+        view.setVisibility(View.VISIBLE);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                view.getHeight(),  // fromYDelta
+                0);                // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
     }
 
     private void setAnimations(LinearLayout foLlFade) {
@@ -175,7 +235,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 
         if (!foAdOffer.getDiscountUpTo().isEmpty()) {
             foTvCashBackOffer.setText(Common.getColorText("Upto ", Color.WHITE));
-           // foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getDiscountUpTo(), fiPrimaryColor));
+            // foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getDiscountUpTo(), fiPrimaryColor));
             foTvCashBackOffer.append(Common.getColorText(foAdOffer.getDiscountUpTo(), fiPrimaryColor));
             foTvCashBackOffer.append(Common.getColorText(" Off", Color.WHITE));
         }
@@ -187,10 +247,10 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             } else {
                 foTvCashBackOffer.setText(Common.getColorText("Extra ", Color.WHITE));
             }
-          //  foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
+            //  foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
             foTvCashBackOffer.append(Common.getColorText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
             foTvCashBackOffer.append(Common.getColorText(" Cashback", Color.WHITE));
-           // foTvCashBackOffer.append(Common.getColorSpaceText(" Cashback", Color.WHITE));
+            // foTvCashBackOffer.append(Common.getColorSpaceText(" Cashback", Color.WHITE));
         }
 
         foTvCashBackOffer.setBackground(ActivityCompat.getDrawable(moContext, R.drawable.rect_black));
