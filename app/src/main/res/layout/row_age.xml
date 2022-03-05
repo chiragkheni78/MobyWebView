@@ -3,6 +3,7 @@
     android:id="@+id/tvRowTitle"
     style="@style/TvStandard"
     android:layout_width="match_parent"
-    android:paddingRight="16dp"
     android:background="@color/white"
+    android:gravity="center"
+    android:paddingRight="@dimen/_4sdp"
     android:textSize="@dimen/txt_standard" />

@@ -35,7 +35,7 @@ android {
         applicationId "com.mobyads"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 152
+        versionCode 154
         versionName "2.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -85,7 +85,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-   //Kotlin
+    //Kotlin
     implementation "androidx.core:core-ktx:1.6.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
@@ -144,5 +144,4 @@ dependencies {
     //Facebook-SDK
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
-   //implementation 'com.github.AbhinavChauhan97:LoaderChip:1.0.4'
 }

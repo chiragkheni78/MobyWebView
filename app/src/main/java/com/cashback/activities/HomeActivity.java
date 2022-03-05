@@ -20,9 +20,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -38,6 +41,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -70,8 +74,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+
 @SuppressWarnings("All")
-public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     ActivityHomeBinding moBinding;
@@ -80,6 +85,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private boolean isLoadOfferPage;
     private String stFrom = "";
     private AppUpdateManager appUpdateManager;
+    Animation moAnimBlink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +195,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         moBinding.toolbar.ibDashBoard.setOnClickListener(this);
         moBinding.toolbar.tvMyCoupon.setOnClickListener(this);
         moBinding.toolbar.rbList.setOnCheckedChangeListener(this);
+        moBinding.drawerLayout.setDrawerListener(this);
 
         moBinding.floatingMenuOption.setOnClickListener(view -> {
             moBinding.drawerLayout.openDrawer(Gravity.START); //OPEN Nav Drawer!
@@ -344,6 +351,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             lsMessage = lsMessage.replace("XXXXXX", getPreferenceManager().getReferralLink());
             Common.shareApp(this, lsMessage);
         }
+    }
+
+    private void blinkText(View view) {
+        moAnimBlink = new AlphaAnimation(0.0f, 1.0f);
+        moAnimBlink.setDuration(400); //You can manage the blinking time with this parameter
+        moAnimBlink.setStartOffset(20);
+        moAnimBlink.setRepeatMode(Animation.REVERSE);
+        moAnimBlink.setRepeatCount(Animation.INFINITE);
+        view.startAnimation(moAnimBlink);
     }
 
     @Override
@@ -766,6 +782,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 moDialog.dismiss();
             }
         });
+
+//        String TEST_PAGE_URL = "https://app.mobyads.in/publisher/A01234567/?fsMobile=918140663133&fsEmail=johndeo@gmail.com&fsFirstName=Chirag&fsLastName=Kheni&fiDeviceType=0";
+//
+//        FinestWebViewBuilder builder = new FinestWebViewBuilder().
+//                setAccessStorage(true).
+//                setAccessGPS(true).
+//                setUrl(TEST_PAGE_URL).
+//                build();
+//        builder.loadWebView();
     }
 
     @Override
@@ -776,5 +801,39 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         checkPermissionStatus();
         // }
         //}
+    }
+
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+        Menu menu = moBinding.navView.getMenu();
+        View navWallet = findViewById(R.id.nav_wallet);
+        blinkText(navWallet);
+
+//        MenuItem photo = menu.findItem(R.id.nav_wallet);
+//        TextView textView = new TextView(this);
+//        textView.setText("Moby Wallet");
+//        textView.setGravity(Gravity.CENTER);
+//        blinkText(textView);
+//        photo.setActionView(textView);
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+        try {
+            if (moAnimBlink != null)
+                moAnimBlink.cancel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
     }
 }

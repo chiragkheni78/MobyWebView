@@ -3,8 +3,14 @@ package com.cashback.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
 
 import androidx.lifecycle.Observer;
@@ -17,6 +23,7 @@ import com.cashback.adapters.EWalletAdapter;
 import com.cashback.databinding.ActivityShortProfileBinding;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
+import com.cashback.models.response.SawOurAdOn;
 import com.cashback.models.viewmodel.MiniProfileViewModel;
 import com.cashback.models.UserDetails;
 import com.cashback.models.response.GetMiniProfileResponse;
@@ -43,6 +50,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
     private long mlOfferID = 0, miBannerID = 0;
     private int miCategoryId = 0;
     private ArrayList<EWallet> moWalletList;
+    private ArrayList<SawOurAdOn> moShowOurAdsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +65,32 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         Common.hideKeyboard(this);
         initViewModel();
         moBinding.btnSaveProfile.setOnClickListener(this);
+        moBinding.checkedMobile.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                moBinding.llPaytmNo.setVisibility(View.VISIBLE);
+            } else {
+                moBinding.llPaytmNo.setVisibility(View.GONE);
+            }
+        });
 
         moBinding.spinWallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (moWalletList != null && moWalletList.size() > 0) {
 
-                    if (moWalletList.get(position).getWalletId() == 2) {
+                    moBinding.llUPI.setVisibility(View.GONE);
+                    moBinding.llPaytmCheck.setVisibility(View.GONE);
+                    moBinding.llPaytmNo.setVisibility(View.GONE);
+                    if (moWalletList.get(position).getWalletId() == 1) {
+                        moBinding.llPaytmCheck.setVisibility(View.VISIBLE);
+                        if (!moBinding.checkedMobile.isChecked()) {
+                            moBinding.llPaytmNo.setVisibility(View.VISIBLE);
+                        }
+                    } else if (moWalletList.get(position).getWalletId() == 2) {
+                        moBinding.lblUPI.setText(getString(R.string.hint_upi_address));
+                        moBinding.etUpiID.setHint(getString(R.string.enter_upi_id));
                         moBinding.llUPI.setVisibility(View.VISIBLE);
-                    } else moBinding.llUPI.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -87,6 +112,8 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         moReferralTrackViewModel.retrieveFirebaseDeepLink(this, getIntent());
         moReferralTrackViewModel.checkInstallReferrer(getContext());
     }
+
+    ArrayList<String> mStrAgeList = new ArrayList<>();
 
     Observer<GetMiniProfileResponse> getProfileObserver = new Observer<GetMiniProfileResponse>() {
         @Override
@@ -113,6 +140,19 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                         moBinding.spinWallet.setAdapter(loEWalletAdapter);
                         moBinding.spinWallet.setSelection(moMiniProfileViewModel.getSelectedWalletPosition(loJsonObject.getWalletList()));
                     }
+
+                    if (TextUtils.isEmpty(AppGlobal.getPreferenceManager().getAppDownloadCampaign())) {
+                        if (loJsonObject.getSawOurAdOn() != null && loJsonObject.getSawOurAdOn().size() > 0) {
+                            moShowOurAdsList = loJsonObject.getSawOurAdOn();
+                            addAdsLayout();
+                        }
+                    }
+
+                    setAgeArray();
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(ShortProfileActivity.this,
+                            R.layout.row_age, R.id.tvRowTitle, mStrAgeList);
+                    moBinding.spinAge.setAdapter(adapter);
+                    moBinding.spinAge.setSelection(15);
 
                     Advertisement loAdvertisement = null;
                     ArrayList<Advertisement> loAdvertisementList = loJsonObject.getAdvertisementList();
@@ -152,6 +192,34 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         }
     };
 
+    private void addAdsLayout() {
+        moBinding.rgAd.removeAllViews();
+        moBinding.llAge.setVisibility(View.VISIBLE);
+        LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen._35sdp));
+        lParams.weight = 1;
+        // lParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+        // lParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        for (int i = 0; i < moShowOurAdsList.size(); i++) {
+            RadioButton radioButton = new RadioButton(this);
+            if (i != 0) {
+                lParams.leftMargin = (int) getResources().getDimension(R.dimen.padding_mini);
+            } else {
+                radioButton.setChecked(true);
+            }
+            radioButton.setLayoutParams(lParams);
+            radioButton.setId(i);
+            radioButton.setText(moShowOurAdsList.get(i).getPromoName());
+            radioButton.setButtonDrawable(null);
+            radioButton.setBackground(getResources().getDrawable(R.drawable.bg_radio_gender_short_profile));
+            //radioButton.setGravity(View.TEXT_ALIGNMENT_CENTER);
+            radioButton.setGravity(Gravity.CENTER);
+            radioButton.setPadding(0, 0, 0, 0);
+            radioButton.setTextColor(getResources().getColorStateList(R.color.color_radio_txt));
+            moBinding.rgAd.addView(radioButton);
+        }
+    }
+
     Observer<SaveMiniProfileResponse> saveProfileObserver = new Observer<SaveMiniProfileResponse>() {
         @Override
         public void onChanged(SaveMiniProfileResponse loJsonObject) {
@@ -182,6 +250,12 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         }
     };
 
+    public void setAgeArray() {
+        for (int i = 15; i <= 99; i++) {
+            mStrAgeList.add(i + " Yr");
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -193,8 +267,9 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
 
     private void saveShortProfile() {
         Common.hideKeyboard(this);
-        int age = getAge();
+        //int age = getAge();
         String lsGender = getGender();
+        String lsSawOurAds = getSawOurAds();
 
         int eWalletId;
         try {
@@ -202,10 +277,19 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         } catch (NullPointerException e) {
             eWalletId = 1;
         }
+        String age = (String) moBinding.spinAge.getSelectedItem();
+        age = age.replace("Yr", "").trim();
+
         String lsUPIAddress = moBinding.etUpiID.getText().toString();
+        String lsPaytmNumber = moBinding.etPaytmNumber.getText().toString();
+        String lsPhoneNumber = moBinding.etPhoneNumber.getText().toString();
 
         loProgressDialog = Common.showProgressDialog(ShortProfileActivity.this);
-        moMiniProfileViewModel.saveProfile(this, age, lsGender, eWalletId, lsUPIAddress);
+        if (TextUtils.isEmpty(lsSawOurAds)) {
+            lsSawOurAds = AppGlobal.getPreferenceManager().getAppDownloadCampaign();
+        }
+        moMiniProfileViewModel.saveProfile(this, Integer.parseInt(age), lsGender, eWalletId,
+                lsUPIAddress, lsPaytmNumber, lsPhoneNumber, moBinding.checkedMobile.isChecked(), lsSawOurAds);
     }
 
     private int getAge() {
@@ -222,5 +306,17 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
             gender = (idx == 1) ? Constants.Gender.MALE.getValue() : Constants.Gender.FEMALE.getValue(); //1-Male & 2-Female
         }
         return gender;
+    }
+
+    private String getSawOurAds() {
+        int radioButtonID = moBinding.rgAd.getCheckedRadioButtonId();
+        View radioButton = moBinding.rgAd.findViewById(radioButtonID);
+        int idx = moBinding.rgAd.indexOfChild(radioButton);
+
+        String ads = null;
+        if (idx > -1) {
+            ads = moShowOurAdsList.get(idx).getPromoCode();
+        }
+        return ads;
     }
 }

@@ -97,7 +97,7 @@ public class ReferralTrackViewModel extends ViewModel {
 
                     if (values.containsKey("utm_campaign")) {
                         String lsCampaign = "";
-                        if ((TextUtils.isDigitsOnly(values.get("utm_campaign")) && (values.containsKey("cmp")))){
+                        if ((TextUtils.isDigitsOnly(values.get("utm_campaign")) && (values.containsKey("cmp")))) {
                             lsCampaign = values.get("cmp");
                         } else {
                             lsCampaign = values.get("utm_campaign");
@@ -181,6 +181,7 @@ public class ReferralTrackViewModel extends ViewModel {
                                 loSharedPreferenceManager.setAppDownloadCampaign(lsCampaign);
                                 loSharedPreferenceManager.setAppDownloadMedium(lsMedium);
                                 loSharedPreferenceManager.setAppDownloadSource(lsSource);
+                                triggerReferrerEvent(foContext);
                             }
 
                             // [START_EXCLUDE]

@@ -27,6 +27,9 @@ public class GetMiniProfileResponse {
     @SerializedName("foUserDetails")
     private UserDetails userDetails;
 
+    @SerializedName("foSawOurAdOn")
+    private ArrayList<SawOurAdOn> sawOurAdOn;
+
     public GetMiniProfileResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
@@ -62,5 +65,9 @@ public class GetMiniProfileResponse {
 
     public UserDetails getUserDetails() {
         return userDetails;
+    }
+
+    public ArrayList<SawOurAdOn> getSawOurAdOn() {
+        return sawOurAdOn;
     }
 }

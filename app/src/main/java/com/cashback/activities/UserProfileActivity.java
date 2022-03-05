@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
@@ -45,6 +46,8 @@ import com.cashback.models.viewmodel.UserProfileViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
+
+import kotlin.text.Regex;
 
 @SuppressWarnings("All")
 public class UserProfileActivity extends BaseActivity implements View.OnClickListener {
@@ -128,7 +131,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         }
         moBinding.rgRange.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-               // Log.d("TTT", "on Checked range....");
+                // Log.d("TTT", "on Checked range....");
                 fbRgRangeClicked = true;
                 if (!AppGlobal.fbIsGpsEnInApp)
                     checkPermissionStatus();
@@ -266,6 +269,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             moBinding.etEmail.setText(loUserDetails.getEmail());
             moBinding.etDob.setText(loUserDetails.getBirthDate());
             moBinding.etPhoneNo.setText(loUserDetails.getMobileNumber().replace("+91", ""));
+            if (!TextUtils.isEmpty(moGetUserProfileResponse.getPaymentDetails().getFsPaytmMobile()))
+                moBinding.etPaytmNumber.setText(moGetUserProfileResponse.getPaymentDetails().getFsPaytmMobile());
             setBankOfferRadiusBox(loUserDetails.getBankOfferRadius());
         }
 
@@ -277,25 +282,35 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             moBinding.spinWallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                    moBinding.llPaytmNo.setVisibility(GONE);
+                    moBinding.llUPI.setVisibility(GONE);
                     if (position == 0) {
                         //Paytm Wallet
                         miPaymentMode = 1;
-                        moBinding.llUPI.setVisibility(View.GONE);
+                        // moBinding.llUPI.setVisibility(View.VISIBLE);
+                        moBinding.etUpiID.setVisibility(GONE);
+                        // moBinding.etPaytmNumber.setVisibility(View.VISIBLE);
+                        // moBinding.lblUPI.setHint(getString(R.string.enter_paytm_number));
                         moBinding.linearUserProfileBankAccount.setVisibility(View.GONE);
+
+                        moBinding.llPaytmNo.setVisibility(View.VISIBLE);
                     } else if (position == 1) {
                         //UPI
                         miPaymentMode = 2;
                         moBinding.llUPI.setVisibility(View.VISIBLE);
+                        moBinding.lblUPI.setHint(getString(R.string.enter_upi_id));
+                        moBinding.etUpiID.setVisibility(View.VISIBLE);
+                        //moBinding.etPaytmNumber.setVisibility(GONE);
                         moBinding.linearUserProfileBankAccount.setVisibility(View.GONE);
                     } else if (position == 2) {
                         //Future Pay Wallet
                         miPaymentMode = 3;
-                        moBinding.llUPI.setVisibility(View.GONE);
+                        //moBinding.llUPI.setVisibility(View.GONE);
                         moBinding.linearUserProfileBankAccount.setVisibility(View.GONE);
                     } else {
                         //Bank Account
                         miPaymentMode = 4;
-                        moBinding.llUPI.setVisibility(View.GONE);
+                        //moBinding.llUPI.setVisibility(View.GONE);
                         moBinding.linearUserProfileBankAccount.setVisibility(View.VISIBLE);
                     }
                 }
@@ -405,6 +420,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         String lsUPILink = moBinding.etUpiID.getText().toString();
         String lsAccountNo = moBinding.etAccountNumber.getText().toString();
         String lsIFSCCode = moBinding.etIFSCCode.getText().toString();
+        String paytmNumber = moBinding.etPaytmNumber.getText().toString();
 
         String lsBirthDate = moGetUserProfileResponse.getUserDetails().getBirthDate();
 
@@ -421,6 +437,13 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
         String lsReferrer = moGetUserProfileResponse.getUserDetails().getReferrer();
 
+        if (miPaymentMode == 1) {
+            Regex reg = new Regex("^[0-9]{10}$");
+            if (TextUtils.isEmpty(paytmNumber) || !reg.matches(paytmNumber)) {
+                Common.showErrorDialog(UserProfileActivity.this, "Please enter valid paytm mobile number", false);
+                return;
+            }
+        }
         showProgressDialog();
 
         SaveUserProfileRequest loSaveUserProfileRequest = new SaveUserProfileRequest();
@@ -438,6 +461,9 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         loSaveUserProfileRequest.setFsIFSCCode(lsIFSCCode);
         loSaveUserProfileRequest.setBirthDate(lsBirthDate);
         loSaveUserProfileRequest.seteWalletId(eWalletId);
+        if (!TextUtils.isEmpty(paytmNumber))
+            loSaveUserProfileRequest.setPaytmMobile(paytmNumber);
+
         moUserProfileViewModel.saveUserProfile(this, loSaveUserProfileRequest);
     }
 

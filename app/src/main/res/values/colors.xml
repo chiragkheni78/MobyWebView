@@ -43,4 +43,6 @@
 
     <color name="twhite">#A5FFFFFF</color>
     <color name="mblack">#60000000</color>
+    <color name="mmblack">#2C2C2C</color>
+    <color name="mwhite">#E1E1E1</color>
 </resources>

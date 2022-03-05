@@ -5,25 +5,25 @@
         android:id="@+id/itemOffer"
         android:enabled="true"
         android:icon="@drawable/ic_offer"
-        android:title="@string/offers"/>
+        android:title="@string/offers" />
     <item
         android:id="@+id/itemNearBy"
         android:enabled="true"
         android:icon="@drawable/ic_location"
-        android:title="@string/nearBy"/>
+        android:title="@string/nearBy" />
 
     <item
-        android:title=""
         android:id="@+id/itemNoItem"
-        android:enabled="true"/>
+        android:enabled="true"
+        android:title="" />
     <item
         android:id="@+id/itemCoupons"
         android:enabled="true"
         android:icon="@drawable/ic_my_coupon"
-        android:title="@string/coupons"/>
+        android:title="@string/coupons" />
     <item
         android:id="@+id/itemShare"
         android:enabled="true"
         android:icon="@drawable/ic_share_24"
-        android:title="My Cash"/>
+        android:title="My Cash" />
 </menu>

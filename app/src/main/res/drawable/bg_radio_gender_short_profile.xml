@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:drawable="@drawable/bg_color_primary_gender" android:state_checked="true" />
-    <item android:drawable="@drawable/bg_white_blue" android:state_checked="false" />
+    <item android:drawable="@drawable/bg_white_black" android:state_checked="false" />
 
 </selector>

@@ -1,12 +1,6 @@
 package com.cashback.models;
 
-import android.content.Context;
-
-import com.cashback.R;
-import com.cashback.utils.Common;
 import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONObject;
 
 public class UserDetails {
 

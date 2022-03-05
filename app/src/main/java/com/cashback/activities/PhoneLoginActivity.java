@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.DeviceListAdapter;
 import com.cashback.databinding.ActivityPhoneLoginBinding;
@@ -72,7 +73,12 @@ public class PhoneLoginActivity extends BaseActivity implements View.OnClickList
 
     private void initializeContent() {
         initViewModel();
-
+        if (!AppGlobal.getPhoneNumber().isEmpty()) {
+            if (AppGlobal.getPhoneNumber().contains("+91")) {
+                moBinding.etPhoneNo.setText(AppGlobal.getPhoneNumber().replace("+91", ""));
+            } else
+                moBinding.etPhoneNo.setText(AppGlobal.getPhoneNumber());
+        }
         moBinding.btnSendOTP.setOnClickListener(this);
         moBinding.btnVerifyOTP.setOnClickListener(this);
         moBinding.tvResendCode.setOnClickListener(this);

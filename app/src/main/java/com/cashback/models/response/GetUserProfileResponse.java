@@ -85,6 +85,9 @@ public class GetUserProfileResponse {
         @SerializedName("fsAccountNo")
         private String fsAccountNo;
 
+        @SerializedName("fsPaytmMobile")
+        private String fsPaytmMobile;
+
         public int getPaymentMode() {
             return paymentMode;
         }
@@ -107,6 +110,14 @@ public class GetUserProfileResponse {
 
         public void setFsAccountNo(String fsAccountNo) {
             this.fsAccountNo = fsAccountNo;
+        }
+
+        public String getFsPaytmMobile() {
+            return fsPaytmMobile;
+        }
+
+        public void setFsPaytmMobile(String fsPaytmMobile) {
+            this.fsPaytmMobile = fsPaytmMobile;
         }
     }
 }

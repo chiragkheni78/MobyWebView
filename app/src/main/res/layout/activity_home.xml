@@ -19,7 +19,7 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar_home"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment_container_view"
@@ -42,9 +42,9 @@
             android:id="@+id/floatingMenuOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_round_menu_24"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="@dimen/_20sdp"
+            android:src="@drawable/ic_rupee"
             app:backgroundTint="@color/colorPrimary"
             app:tint="@android:color/white" />
 

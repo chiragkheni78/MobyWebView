@@ -88,7 +88,10 @@
     <string name="hint_phone_number">Phone Number</string>
     <string name="hint_email_address">Email Address</string>
     <string name="hint_upi_address">UPI Address (Make sure this is correct.)</string>
-    <string name="hint_e_wallet">Choose E-wallet for Cashback credit</string>
+    <string name="hint_paytm_address">Paytm Number (Make sure this is correct.)</string>
+    <string name="hint_paytm_number">Paytm Number</string>
+    <string name="enter_paytm_number">ENTER PAYTM NUMBER</string>
+    <string name="hint_e_wallet">I Want Cashbacks In My</string>
     <string name="hint_bank_account_no">Account Number</string>
     <string name="hint_bank_account_ifsc">IFSC Code</string>
 
@@ -212,7 +215,8 @@
     <string name="mapPopupTextOne">Real Time Card Offers</string>
     <string name="mapPopupTextTwo">Coupons for Stores Nearby</string>
     <string name="continueLabel">Continue To Shop</string>
-    <string name="info_message"><![CDATA[Cashback & Rewards\non Coupons you have\nwon in "My Coupons"]]></string>
+   <!-- <string name="info_message"><![CDATA[Cashback & Rewards\non Coupons you have\nwon in "My Coupons"]]></string>-->
+    <string name="info_message">To convert your Virtual cash into Real cash credit into your chosen wallet you need to click via your Coupons &amp; Shop. Our Cashbacks are always EXACT &amp; EXTRA over any discounts you avail from the brand, &amp; you don\'t require codes for them.</string>
 
     <string name="share_title">REFER TO YOUR FRIENDS &amp; FAMILY,\nEARN CASH WHENEVER THEY SHOP</string>
 

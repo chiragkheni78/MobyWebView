@@ -61,6 +61,13 @@ public class SaveUserProfileRequest {
     @SerializedName("fsReferrerCode")
     String referrer;
 
+    @SerializedName("fsPaytmMobile")
+    String paytmMobile;
+
+    public void setPaytmMobile(String paytmMobile) {
+        this.paytmMobile = paytmMobile;
+    }
+
     public void setAction(String action) {
         this.action = action;
     }

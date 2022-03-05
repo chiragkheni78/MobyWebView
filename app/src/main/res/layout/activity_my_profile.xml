@@ -325,8 +325,30 @@
                             <EditText
                                 android:id="@+id/etUpiID"
                                 style="@style/etStandard"
-                                android:hint="@string/enter_upi_id"
                                 android:inputType="text" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llPaytmNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                style="@style/TvSmall"
+                                android:layout_gravity="start"
+                                android:text="Paytm Mobile No" />
+
+
+                            <EditText
+                                android:id="@+id/etPaytmNumber"
+                                style="@style/etStandard"
+                                android:gravity="start"
+                                android:inputType="number"
+                                android:maxLength="10" />
 
                         </LinearLayout>
 
@@ -354,7 +376,6 @@
                                     android:id="@+id/etAccountNumber"
                                     style="@style/etStandard"
                                     android:digits="0123456789"
-                                    android:hint="@string/enter_bank_account_number"
                                     android:inputType="numberDecimal" />
 
                             </LinearLayout>
@@ -375,7 +396,6 @@
                                 <EditText
                                     android:id="@+id/etIFSCCode"
                                     style="@style/etStandard"
-                                    android:hint="@string/enter_ifsc_code"
                                     android:inputType="text" />
 
                             </LinearLayout>
@@ -575,7 +595,6 @@
 
             </androidx.cardview.widget.CardView>
 
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -638,7 +657,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

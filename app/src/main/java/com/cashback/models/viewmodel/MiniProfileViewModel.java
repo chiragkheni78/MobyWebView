@@ -1,13 +1,12 @@
 package com.cashback.models.viewmodel;
 
 import android.content.Context;
-import android.os.Bundle;
+import android.text.TextUtils;
 
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.adgyde.android.AdGyde;
 import com.cashback.AppGlobal;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
@@ -19,10 +18,8 @@ import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -107,14 +104,22 @@ public class MiniProfileViewModel extends ViewModel {
 
     public MutableLiveData<SaveMiniProfileResponse> saveMiniProfileStatus = new MutableLiveData<>();
 
-    public void saveProfile(Context foContext, int fiAge, String fsGender, int fiEWalletId, String fsUPIAddress) {
-        SaveMiniProfileRequest loSaveMiniProfileRequest = new SaveMiniProfileRequest(fiAge, fsGender, fiEWalletId, fsUPIAddress);
+    public void saveProfile(Context foContext, int fiAge, String fsGender, int fiEWalletId,
+                            String fsUPIAddress, String fsPaytmNumber, String fsPhoneNumber,
+                            boolean isCheckedMobile, String lsSawOurAdsReferrer) {
+        SaveMiniProfileRequest loSaveMiniProfileRequest = new SaveMiniProfileRequest(fiAge, fsGender, fiEWalletId,
+                fsUPIAddress, fsPaytmNumber, fsPhoneNumber, isCheckedMobile, lsSawOurAdsReferrer);
         loSaveMiniProfileRequest.setAction(Constants.API.SAVE_MINI_PROFILE.getValue());
         loSaveMiniProfileRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
-        loSaveMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getAppDownloadCampaign());
+       /* if (!TextUtils.isEmpty(lsSawOurAdsReferrer))
+            loSaveMiniProfileRequest.setReferrer(lsSawOurAdsReferrer);
+        else
+        loSaveMiniProfileRequest.setReferrer(AppGlobal.getPreferenceManager().getAppDownloadCampaign());*/
+        loSaveMiniProfileRequest.setReferrer(lsSawOurAdsReferrer);
         loSaveMiniProfileRequest.setUtmMedium(AppGlobal.getPreferenceManager().getAppDownloadMedium());
         loSaveMiniProfileRequest.setUtmSource(AppGlobal.getPreferenceManager().getAppDownloadSource());
-        loSaveMiniProfileRequest.setMobileNumber(AppGlobal.getPhoneNumber());
+        AppGlobal.getPreferenceManager().setPhoneNumber(fsPhoneNumber);
+        loSaveMiniProfileRequest.setUserContact(fsPhoneNumber);
 
         String lsMessage = loSaveMiniProfileRequest.validateData(foContext);
         if (lsMessage != null) {

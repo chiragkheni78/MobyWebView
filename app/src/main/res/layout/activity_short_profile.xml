@@ -37,7 +37,8 @@
                     <LinearLayout
                         style="@style/NormalLayout"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/TvLarge"
@@ -64,10 +65,101 @@
                             android:text="Years &amp; I" />
                     </LinearLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            style="@style/NormalLayout"
+                            android:layout_height="@dimen/_36sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:layout_toStartOf="@+id/rlYear"
+                            android:background="@drawable/bg_spinner"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvCountryCode"
+                                style="@style/TvStandard"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:gravity="center"
+                                android:paddingHorizontal="@dimen/padding_standard"
+                                android:text="+91"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginVertical="@dimen/padding_standard"
+                                android:background="@color/colorSecondaryText" />
+
+                            <EditText
+                                android:id="@+id/etPhoneNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null"
+                                android:gravity="left|center_vertical"
+                                android:hint="@string/hint_mobile_no"
+                                android:imeOptions="actionDone"
+                                android:inputType="phone"
+                                android:maxLength="10"
+                                android:maxLines="1"
+                                android:paddingStart="@dimen/padding_mini"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/txt_standard" />
+                        </LinearLayout>
+
+                        <!-- <EditText
+                             android:id="@+id/etPhoneNumber"
+                             style="@style/TvLarge"
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent"
+                             android:layout_centerInParent="true"
+                             android:layout_marginEnd="@dimen/_4sdp"
+                             android:layout_toStartOf="@+id/rlYear"
+                             android:background="@drawable/bg_radio_gender_short_profile"
+                             android:hint="Mobile Number"
+                             android:inputType="number"
+                             android:maxLength="10"
+                             android:padding="8dp" />-->
+
+                        <RelativeLayout
+                            android:id="@+id/rlYear"
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="@dimen/_4sdp">
+
+                            <Spinner
+                                android:id="@+id/spinAge"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_36sdp"
+                                android:background="@drawable/bg_spinner"
+                                android:gravity="center"
+                                android:padding="8dp"
+                                android:textAlignment="center" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="@dimen/padding_micro"
+                                android:src="@drawable/ic_arrow_drop_down" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
                     <LinearLayout
                         style="@style/NormalLayout"
+                        android:layout_marginTop="@dimen/margin_view"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/TvLarge"
@@ -75,47 +167,63 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         style="@style/NormalLayout"
                         android:layout_marginTop="@dimen/margin_view"
-                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <RadioGroup
                             android:id="@+id/rgGender"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_toLeftOf="@+id/tvTimeline"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_3sdp"
-                            android:weightSum="2">
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal">
 
                             <RadioButton
                                 android:id="@+id/rbMap"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:layout_marginRight="@dimen/padding_mini"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="@dimen/_4sdp"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_radio_gender_short_profile"
-                                android:button="@null"
                                 android:checked="false"
-                                android:gravity="center"
-                                android:text="FEMALE"
-                                android:textColor="@drawable/color_radio_txt" />
+                                android:gravity="start|center_vertical"
+                                android:text="Female"
+                                android:textSize="@dimen/txt_standard" />
 
                             <RadioButton
                                 android:id="@+id/rbList"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:layout_marginLeft="@dimen/padding_mini"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/_4sdp"
                                 android:layout_weight="1"
-                                android:background="@drawable/bg_radio_gender_short_profile"
-                                android:button="@null"
-                                android:checked="false"
-                                android:gravity="center"
-                                android:text="MALE"
-                                android:textColor="@drawable/color_radio_txt" />
+                                android:checked="true"
+                                android:gravity="start|center_vertical"
+                                android:text="Male"
+                                android:textSize="@dimen/txt_standard" />
+
+                        </RadioGroup>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llAge"
+                        style="@style/NormalLayout"
+                        android:layout_marginTop="@dimen/margin_view"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            style="@style/TvLarge"
+                            android:layout_gravity="center"
+                            android:text="You saw our Ad on" />
+
+                        <RadioGroup
+                            android:id="@+id/rgAd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_3sdp">
 
                         </RadioGroup>
                     </LinearLayout>
@@ -127,8 +235,9 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            style="@style/TvLarge"
-                            android:text="@string/hint_e_wallet" />
+                            style="@style/TvStandard"
+                            android:text="@string/hint_e_wallet"
+                            android:textSize="@dimen/txt_standard" />
 
                     </LinearLayout>
 
@@ -140,16 +249,18 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp">
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@drawable/bg_spinner">
 
                             <Spinner
                                 android:id="@+id/spinWallet"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_36sdp"
-                                android:background="@drawable/bg_white_blue"
+                                android:background="@android:color/transparent"
                                 android:gravity="center"
-                                android:textAlignment="center"
-                                android:padding="8dp" />
+                                android:padding="8dp"
+                                android:spinnerMode="dropdown"
+                                android:textAlignment="center" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -158,6 +269,8 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginRight="@dimen/padding_standard"
                                 android:src="@drawable/ic_arrow_drop_down" />
+
+
                         </RelativeLayout>
 
                         <LinearLayout
@@ -177,7 +290,6 @@
                             <EditText
                                 android:id="@+id/etUpiID"
                                 style="@style/etStandard"
-                                android:hint="ENTER UPI ID"
                                 android:gravity="center"
                                 android:inputType="text" />
 
@@ -185,38 +297,82 @@
 
                     </LinearLayout>
 
-<!--                    <androidx.cardview.widget.CardView-->
-<!--                        android:id="@+id/cvBanner"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginBottom="@dimen/_20sdp"-->
-<!--                        android:layout_marginTop="@dimen/_10sdp"-->
-<!--                        android:nestedScrollingEnabled="true"-->
-<!--                        android:visibility="visible"-->
-<!--                        app:cardCornerRadius="@dimen/_5sdp">-->
+                    <LinearLayout
+                        android:id="@+id/llPaytmCheck"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:orientation="horizontal">
 
-<!--                        <com.smarteist.autoimageslider.SliderView-->
-<!--                            android:id="@+id/imageSlider"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="@dimen/_320sdp"-->
-<!--                            android:layout_gravity="center"-->
-<!--                            app:sliderAnimationDuration="600"-->
-<!--                            app:sliderAutoCycleDirection="back_and_forth"-->
-<!--                            app:sliderAutoCycleEnabled="true"-->
-<!--                            app:sliderIndicatorAnimationDuration="600"-->
-<!--                            app:sliderIndicatorGravity="center_horizontal|bottom"-->
-<!--                            app:sliderIndicatorMarginBottom="15dp"-->
-<!--                            app:sliderIndicatorMarginLeft="15dp"-->
-<!--                            app:sliderIndicatorMarginRight="15dp"-->
-<!--                            app:sliderIndicatorMarginTop="15dp"-->
-<!--                            app:sliderIndicatorOrientation="horizontal"-->
-<!--                            app:sliderIndicatorPadding="3dp"-->
-<!--                            app:sliderIndicatorRadius="2dp"-->
-<!--                            app:sliderIndicatorSelectedColor="@color/colorPrimary"-->
-<!--                            app:sliderIndicatorUnselectedColor="@color/colorBackground"-->
-<!--                            app:sliderScrollTimeInSec="10"-->
-<!--                            app:sliderStartAutoCycle="false" />-->
-<!--                    </androidx.cardview.widget.CardView>-->
+                        <CheckBox
+                            android:id="@+id/checkedMobile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="Your mobile above should be registered with paytm wallet?"
+                            android:textSize="@dimen/txt_small" />
+
+                        <!--<TextView
+                            style="@style/TvSmall"
+                            android:layout_gravity="start|center_vertical"
+                            android:text="Your mobile above should be registered with paytm wallet?" />-->
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llPaytmNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            style="@style/TvProfileHint"
+                            android:gravity="center"
+                            android:text="Paytm Mobile No"
+                            android:textSize="@dimen/txt_standard" />
+
+                        <EditText
+                            android:id="@+id/etPaytmNumber"
+                            style="@style/etStandard"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="10" />
+
+                    </LinearLayout>
+
+                    <!--                    <androidx.cardview.widget.CardView-->
+                    <!--                        android:id="@+id/cvBanner"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginBottom="@dimen/_20sdp"-->
+                    <!--                        android:layout_marginTop="@dimen/_10sdp"-->
+                    <!--                        android:nestedScrollingEnabled="true"-->
+                    <!--                        android:visibility="visible"-->
+                    <!--                        app:cardCornerRadius="@dimen/_5sdp">-->
+
+                    <!--                        <com.smarteist.autoimageslider.SliderView-->
+                    <!--                            android:id="@+id/imageSlider"-->
+                    <!--                            android:layout_width="match_parent"-->
+                    <!--                            android:layout_height="@dimen/_320sdp"-->
+                    <!--                            android:layout_gravity="center"-->
+                    <!--                            app:sliderAnimationDuration="600"-->
+                    <!--                            app:sliderAutoCycleDirection="back_and_forth"-->
+                    <!--                            app:sliderAutoCycleEnabled="true"-->
+                    <!--                            app:sliderIndicatorAnimationDuration="600"-->
+                    <!--                            app:sliderIndicatorGravity="center_horizontal|bottom"-->
+                    <!--                            app:sliderIndicatorMarginBottom="15dp"-->
+                    <!--                            app:sliderIndicatorMarginLeft="15dp"-->
+                    <!--                            app:sliderIndicatorMarginRight="15dp"-->
+                    <!--                            app:sliderIndicatorMarginTop="15dp"-->
+                    <!--                            app:sliderIndicatorOrientation="horizontal"-->
+                    <!--                            app:sliderIndicatorPadding="3dp"-->
+                    <!--                            app:sliderIndicatorRadius="2dp"-->
+                    <!--                            app:sliderIndicatorSelectedColor="@color/colorPrimary"-->
+                    <!--                            app:sliderIndicatorUnselectedColor="@color/colorBackground"-->
+                    <!--                            app:sliderScrollTimeInSec="10"-->
+                    <!--                            app:sliderStartAutoCycle="false" />-->
+                    <!--                    </androidx.cardview.widget.CardView>-->
 
                     <ImageView
                         android:id="@+id/ivBanner"
@@ -226,9 +382,10 @@
                         android:layout_marginBottom="@dimen/_20sdp"
                         android:adjustViewBounds="true"
                         android:src="@drawable/sample3"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
                 </LinearLayout>
+
             </ScrollView>
 
             <LinearLayout
@@ -247,6 +404,7 @@
                     android:background="@drawable/bg_black_blue"
                     android:text="Save" />
             </LinearLayout>
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
