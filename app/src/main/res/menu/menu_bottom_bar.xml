@@ -24,6 +24,6 @@
     <item
         android:id="@+id/itemShare"
         android:enabled="true"
-        android:icon="@drawable/ic_share_24"
-        android:title="My Cash" />
+        android:icon="@drawable/ic_rupee"
+        android:title="Refer" />
 </menu>

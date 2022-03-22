@@ -1,6 +1,5 @@
 package com.cashback.models.response;
 
-import com.cashback.models.Activity;
 import com.cashback.models.Transaction;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,11 +22,25 @@ public class TransactionListResponse {
     @SerializedName("foTransactionList")
     private ArrayList<Transaction> transactionList;
 
+    @SerializedName("foMyCash")
+    private MyCash myCash;
+
     @SerializedName("fiTotalVirtualCash")
     int totalVirtualCash;
 
     @SerializedName("fiTotalCashAmount")
     int totalCashAmount;
+
+    @SerializedName("fiTotalCredit")
+    double totalCredit;
+
+    public MyCash getMyCash() {
+        return myCash;
+    }
+
+    public double getFiTotalCredit() {
+        return totalCredit;
+    }
 
     public int getTotalVirtualCash() {
         return totalVirtualCash;

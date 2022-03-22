@@ -70,7 +70,8 @@
                             android:letterSpacing="0.1"
                             android:lineSpacingExtra="@dimen/_2sdp"
                             android:text="YOU GOT 1 FREE MOBY COUPONS\nUPTO 50% OFF AT STORE CHECKOUT\nAND\nEXTRA MOBY CASHBACK UPTO\nRS 2200 CREDIT TO E-WALLET\n"
-                            android:textColor="@color/colorPrimaryText" />
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="@dimen/txt_standard" />
 
                         <ImageView
                             android:id="@+id/ivBanner"
@@ -128,9 +129,9 @@
             android:id="@+id/imageMainClose"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
-            android:elevation="@dimen/_10sdp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_close_red"/>
+            android:elevation="@dimen/_10sdp"
+            android:src="@drawable/ic_close_red" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

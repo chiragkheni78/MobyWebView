@@ -7,8 +7,18 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -173,7 +183,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         showTotalRewards(foJsonObject);
     }
 
+    String moRedeemVal;
+
     private void showTotalRewards(TransactionListResponse foJsonObject) {
+        moRedeemVal = foJsonObject.getMyCash().getAutoRedeemPer();
         long mlTotalVirtualCash = 0, mlTotalInstantCash = 0;
         if (moTransactionList.size() > 0) {
             for (Transaction loUTrans : moTransactionList) {
@@ -189,7 +202,55 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             }
         }
         moBinding.tvInstantCash.setText("Rs. " + foJsonObject.getTotalCashAmount());
-        moBinding.tvVirtualCash.setText("Rs. " + foJsonObject.getTotalVirtualCash());
+        moBinding.tvTotalCredit.setText("Rs. " + foJsonObject.getFiTotalCredit());
+        moBinding.tvMyCash.setText("Rs. " + foJsonObject.getMyCash().getUsedMyCash());
+        String text = String.format(getResources().getString(R.string.my_case_redeem),
+                String.valueOf(foJsonObject.getMyCash().getAutoRedeemPer()) + "%");
+        moBinding.tvTimelineCoupon.setText(text);
+        moBinding.lblMyCash.setText("Rs. MyCash (" + foJsonObject.getMyCash().getTotalMyCash() + ")");
+
+        if (foJsonObject.getMyCash().getTotalMyCash() > 0) {
+            moBinding.tvAmount.setText("Rs. " + foJsonObject.getMyCash().getMyCashHistory().get(0).getRemainAmount());
+            moBinding.tvExpiry.setText(foJsonObject.getMyCash().getMyCashHistory().get(0).getExpiryDate());
+            moBinding.tvTitleExp.setText(foJsonObject.getMyCash().getMyCashHistory().get(0).getTitle());
+
+            moBinding.tvMyCashTotal.setText("Rs. " + foJsonObject.getMyCash().getTotalMyCash());
+            String textMyOffer = String.format(getResources().getString(R.string.my_case_offer),
+                    "Rs. " + String.valueOf(foJsonObject.getMyCash().getTotalMyCash()));
+            moBinding.tvTimelineCoupon.setText(text);
+
+            Spannable spannable = new SpannableString(textMyOffer);
+            String str = spannable.toString();
+            int iStart = str.indexOf("Expiry/History");
+            int iEnd = iStart + 14;
+
+            SpannableString ssText = new SpannableString(spannable);
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    if (moBinding.tbExpiryHistory.getVisibility() == View.VISIBLE)
+                        moBinding.tbExpiryHistory.setVisibility(View.GONE);
+                    else
+                        moBinding.tbExpiryHistory.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
+                    ds.setColor(getResources().getColor(R.color.colorPrimary));
+                }
+            };
+
+            int iStartBold = str.indexOf("Rs.");
+            ssText.setSpan(clickableSpan, iStart, iEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ssText.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), iStartBold, iStartBold + String.valueOf(foJsonObject.getMyCash().getTotalMyCash()).length() + 4, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            moBinding.tvMyCashText.setText(ssText);
+            moBinding.tvMyCashText.setMovementMethod(LinkMovementMethod.getInstance());
+            moBinding.tvMyCashText.setHighlightColor(Color.TRANSPARENT);
+            moBinding.tvMyCashText.setEnabled(true);
+            moBinding.llHiddenMyCash.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -201,14 +262,22 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             case R.id.imageInfo:
                 moBinding.imageInfo.clearAnimation();
                 getPreferenceManager().setVirtualCashClicked();
-                MessageDialog loDialog = new MessageDialog(this, null, getString(R.string.info_message), getString(R.string.btn_shop_now), false);
-                loDialog.setClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openCouponList();
-                    }
-                });
-                loDialog.show();
+
+                try {
+                    String text = String.format(getResources().getString(R.string.info_message),
+                            String.valueOf(moRedeemVal) + "%", String.valueOf(moRedeemVal) + "%");
+                    text.replaceAll("100","100%");
+                    MessageDialog loDialog = new MessageDialog(this, null, text, getString(R.string.btn_shop_now), false);
+                    loDialog.setClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openCouponList();
+                        }
+                    });
+                    loDialog.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 break;

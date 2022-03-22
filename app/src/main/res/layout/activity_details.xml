@@ -28,7 +28,7 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:paddingBottom="@dimen/padding_large"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <FrameLayout
                     android:id="@+id/flCoupon"
@@ -39,23 +39,37 @@
                     android:orientation="vertical"
                     android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/tvBrand"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@drawable/round_corner_white"
-                        android:gravity="center"
-                        android:letterSpacing="0.08"
-                        android:minWidth="@dimen/_150sdp"
-                        android:paddingHorizontal="@dimen/_15sdp"
-                        android:paddingVertical="@dimen/padding_mini"
-                        android:text="Electronics"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvBrand"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_toEndOf="@+id/ivOfferImage"
+                            android:background="@drawable/round_corner_white"
+                            android:gravity="center"
+                            android:letterSpacing="0.08"
+                            android:minWidth="@dimen/_150sdp"
+                            android:paddingHorizontal="@dimen/_15sdp"
+                            android:paddingVertical="@dimen/padding_mini"
+                            android:text="Electronics"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/ivOfferImage"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginStart="@dimen/_40sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginEnd="@dimen/_30sdp" />
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/llCenter"
@@ -332,13 +346,20 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
+                    <ImageView
+                        android:id="@+id/ivArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
                     <LinearLayout
                         android:id="@+id/llHeader"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/_15sdp"
                         android:visibility="visible">
 
                         <TextView
@@ -346,10 +367,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:letterSpacing="0.08"
                             android:text=""
                             android:textColor="@color/black"
                             android:textSize="15sp"
-                            android:letterSpacing="0.08"
                             android:textStyle="bold" />
 
                         <TextView

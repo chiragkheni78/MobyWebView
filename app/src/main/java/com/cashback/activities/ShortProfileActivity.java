@@ -7,10 +7,13 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 
 import androidx.lifecycle.Observer;
@@ -67,12 +70,14 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         moBinding.btnSaveProfile.setOnClickListener(this);
         moBinding.checkedMobile.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
+                moBinding.etPaytmNumber.requestFocus();
                 moBinding.llPaytmNo.setVisibility(View.VISIBLE);
             } else {
                 moBinding.llPaytmNo.setVisibility(View.GONE);
             }
         });
 
+        // moBinding.etPaytmNumber.requestFocus();
         moBinding.spinWallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -85,6 +90,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                         moBinding.llPaytmCheck.setVisibility(View.VISIBLE);
                         if (!moBinding.checkedMobile.isChecked()) {
                             moBinding.llPaytmNo.setVisibility(View.VISIBLE);
+                            moBinding.etPaytmNumber.requestFocus();
                         }
                     } else if (moWalletList.get(position).getWalletId() == 2) {
                         moBinding.lblUPI.setText(getString(R.string.hint_upi_address));
@@ -205,7 +211,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
             if (i != 0) {
                 lParams.leftMargin = (int) getResources().getDimension(R.dimen.padding_mini);
             } else {
-                radioButton.setChecked(true);
+                //  radioButton.setChecked(true);
             }
             radioButton.setLayoutParams(lParams);
             radioButton.setId(i);
@@ -271,6 +277,10 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         String lsGender = getGender();
         String lsSawOurAds = getSawOurAds();
 
+        if (TextUtils.isEmpty(lsSawOurAds) && moShowOurAdsList != null && moShowOurAdsList.size() > 0) {
+            Toast.makeText(ShortProfileActivity.this, getResources().getString(R.string.valid_ads_msg), Toast.LENGTH_SHORT).show();
+            return;
+        }
         int eWalletId;
         try {
             eWalletId = ((EWallet) moBinding.spinWallet.getSelectedItem()).getWalletId();
@@ -290,6 +300,15 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         }
         moMiniProfileViewModel.saveProfile(this, Integer.parseInt(age), lsGender, eWalletId,
                 lsUPIAddress, lsPaytmNumber, lsPhoneNumber, moBinding.checkedMobile.isChecked(), lsSawOurAds);
+    }
+
+    private void blinkText(View view) {
+        AlphaAnimation moAnimBlink = new AlphaAnimation(0.0f, 1.0f);
+        moAnimBlink.setDuration(700); //You can manage the blinking time with this parameter
+        moAnimBlink.setStartOffset(20);
+        moAnimBlink.setRepeatMode(Animation.REVERSE);
+        moAnimBlink.setRepeatCount(Animation.INFINITE);
+        view.startAnimation(moAnimBlink);
     }
 
     private int getAge() {

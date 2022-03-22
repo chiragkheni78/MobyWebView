@@ -294,6 +294,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                         moBinding.linearUserProfileBankAccount.setVisibility(View.GONE);
 
                         moBinding.llPaytmNo.setVisibility(View.VISIBLE);
+                        moBinding.etPaytmNumber.requestFocus();
+                        moBinding.etPaytmNumber.setSelection(moBinding.etPaytmNumber.getText().length());
                     } else if (position == 1) {
                         //UPI
                         miPaymentMode = 2;

@@ -355,7 +355,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void blinkText(View view) {
         moAnimBlink = new AlphaAnimation(0.0f, 1.0f);
-        moAnimBlink.setDuration(400); //You can manage the blinking time with this parameter
+        moAnimBlink.setDuration(700); //You can manage the blinking time with this parameter
         moAnimBlink.setStartOffset(20);
         moAnimBlink.setRepeatMode(Animation.REVERSE);
         moAnimBlink.setRepeatCount(Animation.INFINITE);
@@ -594,6 +594,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             ImageView loIvBanner = alertDialog.findViewById(R.id.ivBanner);
             ImageView imageMainClose = alertDialog.findViewById(R.id.imageMainClose);
 
+            if (fsTitle.contains("MOBY")) {
+                fsTitle = fsTitle.replaceAll("MOBY", "").trim();
+            }
             loTvTitle.setText(fsTitle);
             loBtnShopNow.setText(Common.getDynamicText(getContext(), "btn_redeem_coupon"));
             loBtnFindMore.setText(Common.getDynamicText(getContext(), "btn_get_free_coupon"));

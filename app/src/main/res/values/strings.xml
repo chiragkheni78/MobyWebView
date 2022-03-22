@@ -26,8 +26,9 @@
     <string name="dont_forget_bill_upload">(Cashback in your XXXXXX in ~XX Days)</string>
     <string name="your_cashback_credit">Your Cashback XXX\nCredit After YY days.</string>
     <string name="coupon_valid_for">COUPON VALID FOR XX DAYS.</string>
+    <string name="cashback">Cashback</string>
 
-    <string name="title_copy_to_clipboard">CASHBACK TRACKING ACTIVATED</string>
+    <string name="title_copy_to_clipboard">CASHBACK ACTIVATED</string>
     <string name="msg_copy_to_clipboard">
         AFTER PAYMENT AT STORE,
         \nTransaction is Tracked &amp; SMS is
@@ -111,8 +112,8 @@
     <string name="empty_wallet_second_msg">You need to click via our coupons to shop\n
         And then your cashback will reflect here\n\n
         Otherwise just share the app with Friends\n
-        &amp; Family. When they shop &amp; get cashback\n
-        You Get 15% here, Everytime they Shop !</string>
+        and Family. So when they shop.\n
+        You Get 15% Exact Everytime!</string>
 
     <string name="back_from_timeline_title">DON"T LIKE YOUR COUPONS?</string>
     <string name="back_from_timeline_message"><![CDATA[Search for your favorite brands,<br/>Win coupon, & Shop to Get upto<br/>
@@ -164,6 +165,7 @@
     <string name="lbl_you_earned">YOUR STATEMENT</string>
     <string name="tv_instant_cash">Cash Rewards</string>
     <string name="tv_virtual_cash">Virtual Cash</string>
+    <string name="tv_my_case">My Cash</string>
     <string name="instant_cash">Cash Reward</string>
     <string name="virtual_cash">Virtual Cash</string>
     <string name="cash_back">Cash Back</string>
@@ -215,9 +217,16 @@
     <string name="mapPopupTextOne">Real Time Card Offers</string>
     <string name="mapPopupTextTwo">Coupons for Stores Nearby</string>
     <string name="continueLabel">Continue To Shop</string>
-   <!-- <string name="info_message"><![CDATA[Cashback & Rewards\non Coupons you have\nwon in "My Coupons"]]></string>-->
-    <string name="info_message">To convert your Virtual cash into Real cash credit into your chosen wallet you need to click via your Coupons &amp; Shop. Our Cashbacks are always EXACT &amp; EXTRA over any discounts you avail from the brand, &amp; you don\'t require codes for them.</string>
-
+    <!-- <string name="info_message"><![CDATA[Cashback & Rewards\non Coupons you have\nwon in "My Coupons"]]></string>-->
+    <string name="info_message">Earn This MyCash Reward, Every time
+        you shop using our coupons. On every
+        purchase we will auto Redeem MyCash
+        as %1$s of your Cashback and credit you
+        in cash. As you shop more, the  %2$s rises
+        to reach 100 or say…Double your
+        Cashback Every time.</string>
+    <string name="my_case_redeem">Auto Redeem %1$s of Cash\'B.</string>
+    <string name="my_case_offer">Congrats! You got MyCash Credit %1$s, Check Expiry/History Of MyCash.</string>
     <string name="share_title">REFER TO YOUR FRIENDS &amp; FAMILY,\nEARN CASH WHENEVER THEY SHOP</string>
 
     <string name="btn_use_coupon_store">Use Coupon @ Store</string>
@@ -236,6 +245,8 @@
     <string name="share_app">Share App</string>
     <string name="shop_now">Shop Now</string>
     <string name="ads_list_is_empty">The offer is not Found, Check in my coupons</string>
+    <string name="valid_ads_msg">Please select any one Ad on.</string>
+    <string name="total_credit">Total Credits</string>
 
 
     <!--Timeline Sorting-->

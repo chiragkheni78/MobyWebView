@@ -12,7 +12,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -99,6 +103,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moBinding.tvShopOnline.setOnClickListener(this);
         moBinding.tvShopOffline.setOnClickListener(this);
         moBinding.tvMarkAsUsed.setOnClickListener(this);
+        moBinding.ivArrow.setOnClickListener(this);
 
         loadCouponView();
     }
@@ -400,11 +405,14 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         }
 
         moBinding.lblAdditional.setText(moActivity.getAdditionLabel());
-        moBinding.tvMaxCashback.setText("Max Cashback Rs. " + moActivity.getQuizReward() + "");
+        moBinding.tvMaxCashback.setText("Max CASHBACK Rs. " + moActivity.getQuizReward() + "");
         if (moActivity.getQuizReward() == 0 || moActivity.getAdCouponType() == 1) {
             moBinding.tvMaxCashback.setVisibility(View.GONE);
         }
 
+        Common.loadImage(moBinding.ivOfferImage, moActivity.getAdLogo(),
+                getResources().getDrawable(R.drawable.ic_moby_small),
+                null);
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             moBinding.tvBrand.setText(moActivity.getAdName());
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
@@ -464,6 +472,26 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tvShopOffline:
                 shopOfflinePressed(false);
+            case R.id.ivArrow:
+                if (moBinding.ivArrow.getTag() != null) {
+                    if (moBinding.ivArrow.getTag().equals("UP")) {
+                        moBinding.ivArrow.setTag("DOWN");
+                        moBinding.ivArrow.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_keyboard_arrow_down_24));
+                    } else {
+                        moBinding.ivArrow.setTag("UP");
+                        moBinding.ivArrow.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_keyboard_arrow_up_24));
+                    }
+                } else {
+                    moBinding.ivArrow.setTag("UP");
+                    moBinding.ivArrow.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_baseline_keyboard_arrow_up_24));
+                }
+                int[] location = new int[2];
+                moBinding.ivArrow.getLocationOnScreen(location);
+                int x = location[0];
+                int height = location[1];
+                moBinding.nsvTop.smoothScrollTo(x, height + 50, 2000);
+                break;
+
         }
     }
 
@@ -698,6 +726,9 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 lsMessage = lsMessage.replace("XXXXX", moActivity.getWalletName())
                         .replace("YY", String.valueOf(moActivity.getVirtualCashTransferDays()));
 
+               /* if (lsTitle.contains("CASHBACK TRACKING ACTIVATED")) {
+                    lsTitle.replaceAll("TRACKING", "");
+                }*/
                 MessageDialog loDialog = new MessageDialog(CouponDetailsActivity.this, lsTitle, lsMessage, "SHOP AS USUAL", false);
                 loDialog.setClickListener(new View.OnClickListener() {
                     @Override

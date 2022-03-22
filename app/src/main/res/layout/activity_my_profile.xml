@@ -342,13 +342,65 @@
                                 android:layout_gravity="start"
                                 android:text="Paytm Mobile No" />
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
-                            <EditText
-                                android:id="@+id/etPaytmNumber"
-                                style="@style/etStandard"
-                                android:gravity="start"
-                                android:inputType="number"
-                                android:maxLength="10" />
+                                <LinearLayout
+                                    style="@style/NormalLayout"
+                                    android:layout_height="@dimen/_36sdp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="@dimen/_4sdp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/tvCountryCodePaytm"
+                                        style="@style/TvStandard"
+                                        android:layout_height="match_parent"
+                                        android:background="@null"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="@dimen/padding_standard"
+                                        android:text="+91"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginVertical="@dimen/padding_standard"
+                                        android:background="@color/colorSecondaryText"
+                                        android:visibility="gone" />
+
+                                    <EditText
+                                        android:id="@+id/etPaytmNumber"
+                                        style="@style/etStandard"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@null"
+                                        android:gravity="left|center_vertical"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="phone"
+                                        android:maxLength="10"
+                                        android:maxLines="1"
+                                        android:paddingStart="@dimen/padding_mini"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/txt_standard" />
+                                </LinearLayout>
+
+                                <View
+                                    android:id="@+id/view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.5dp"
+                                    android:background="@color/colorSecondaryText" />
+                            </LinearLayout>
+                            <!--  <EditText
+                                  android:id="@+id/etPaytmNumber"
+                                  style="@style/etStandard"
+                                  android:gravity="start"
+                                  android:inputType="number"
+                                  android:maxLength="10" />-->
 
                         </LinearLayout>
 

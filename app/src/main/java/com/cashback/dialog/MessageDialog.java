@@ -9,11 +9,14 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
 import com.cashback.databinding.DialogCommonBinding;
+import com.cashback.utils.Common;
 
 public class MessageDialog extends Dialog {
 
@@ -55,6 +58,7 @@ public class MessageDialog extends Dialog {
 
     private void initContent() {
 
+
         if (moListener != null) {
             moBinding.btnOk.setOnClickListener(moListener);
         } else {
@@ -77,8 +81,11 @@ public class MessageDialog extends Dialog {
 
         moBinding.tvMessage.setText(msMessage);
 
-        if (msButtonName != null)
+        if (msButtonName != null) {
             moBinding.btnOk.setText(msButtonName);
-
+            if (msButtonName.equalsIgnoreCase("SHOP AS USUAL")) {
+                Common.blinkAnimation(moBinding.btnOk);
+            }
+        }
     }
 }
