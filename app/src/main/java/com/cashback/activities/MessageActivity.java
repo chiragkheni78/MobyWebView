@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.MessageListAdapter;
 import com.cashback.databinding.ActivityMessageBinding;
@@ -20,7 +19,6 @@ import com.cashback.models.Message;
 import com.cashback.models.response.MessageListResponse;
 import com.cashback.models.viewmodel.MessagesViewModel;
 import com.cashback.utils.Common;
-import com.cashback.utils.FirebaseEvents;
 
 import java.util.ArrayList;
 

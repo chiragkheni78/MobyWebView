@@ -591,7 +591,6 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         loTvCouponCode.setText(moActivity.getCouponCode());
         loTvCbMessage.setText(Common.getDynamicText(getContext(), "your_cashback_credit")
                 .replace("XXX", moActivity.getFlatCashBack()).replace("YY", String.valueOf(moActivity.getVirtualCashTransferDays())));
-
         loBtnMarkAsUsed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

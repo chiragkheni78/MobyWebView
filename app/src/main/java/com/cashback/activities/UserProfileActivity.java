@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -423,6 +424,22 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         String lsAccountNo = moBinding.etAccountNumber.getText().toString();
         String lsIFSCCode = moBinding.etIFSCCode.getText().toString();
         String paytmNumber = moBinding.etPaytmNumber.getText().toString();
+
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if (TextUtils.isEmpty(lsFirstName)) {
+            Toast.makeText(UserProfileActivity.this, "Please enter first name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(lsEmail)) {
+            Toast.makeText(UserProfileActivity.this, "Please enter email", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            if (!lsEmail.toString().trim().matches(emailPattern)) {
+                Toast.makeText(getApplicationContext(), "Enter valid email", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
 
         String lsBirthDate = moGetUserProfileResponse.getUserDetails().getBirthDate();
 

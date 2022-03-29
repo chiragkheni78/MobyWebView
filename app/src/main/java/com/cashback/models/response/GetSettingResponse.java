@@ -78,6 +78,9 @@ public class GetSettingResponse {
     @SerializedName("foDealOfTheDays")
     private ArrayList<DealOfTheDayResponse> dealsOfTheDay;
 
+    @SerializedName("foMessageDetailImage")
+    private ArrayList<MessageDetailImage> messageDetailImage;
+
     @SerializedName("foShareScreenImages")
     private ArrayList<Advertisement> shareScreenImages;
 
@@ -204,5 +207,9 @@ public class GetSettingResponse {
 
     public long getCourageRadius() {
         return courageRadius;
+    }
+
+    public ArrayList<MessageDetailImage> getMessageDetailImage() {
+        return messageDetailImage;
     }
 }

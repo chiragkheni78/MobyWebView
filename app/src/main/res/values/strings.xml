@@ -35,7 +35,7 @@
         \nsent within 5 Min to Max 24 Hrs
         \nThis SMS confirms the Cashback
         \n\n
-        Cash Credit in XXXXX
+        Cash Credit in Your XXXXX
         \nWithin YY days, after the expiry of
         \nproduct Return/Exchange period.
         \n\n
@@ -226,7 +226,7 @@
         to reach 100 or say…Double your
         Cashback Every time.</string>
     <string name="my_case_redeem">Auto Redeem %1$s of Cash\'B.</string>
-    <string name="my_case_offer">Congrats! You got MyCash Credit %1$s, Check Expiry/History Of MyCash.</string>
+    <string name="my_case_offer">Congrats! You got MyCash Credit %1$s,\nCheck Expiry/History Of MyCash.</string>
     <string name="share_title">REFER TO YOUR FRIENDS &amp; FAMILY,\nEARN CASH WHENEVER THEY SHOP</string>
 
     <string name="btn_use_coupon_store">Use Coupon @ Store</string>

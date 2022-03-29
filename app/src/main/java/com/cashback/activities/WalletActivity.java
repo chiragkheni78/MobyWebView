@@ -1,24 +1,17 @@
 package com.cashback.activities;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,10 +26,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.cashback.R;
+import com.cashback.adapters.ExpiryHistoryAdapter;
 import com.cashback.adapters.TransactionListAdapter;
 import com.cashback.databinding.ActivityWalletBinding;
 import com.cashback.dialog.MessageDialog;
 import com.cashback.models.Transaction;
+import com.cashback.models.response.MyCashHistory;
 import com.cashback.models.response.TransactionListResponse;
 import com.cashback.models.viewmodel.WalletViewModel;
 import com.cashback.utils.Common;
@@ -52,7 +47,9 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     WalletViewModel moWalletViewModel;
 
     TransactionListAdapter moTransactionListAdapter;
+    ExpiryHistoryAdapter moExpiryHistoryAdapter;
     ArrayList<Transaction> moTransactionList = new ArrayList<>();
+    ArrayList<MyCashHistory> moMyCashHistory = new ArrayList<>();
     private LinearLayoutManager moLayoutManager;
 
     @Override
@@ -72,6 +69,9 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         moBinding.rvTransactionList.setLayoutManager(moLayoutManager);
         moTransactionListAdapter = new TransactionListAdapter(getContext(), moTransactionList);
         moBinding.rvTransactionList.setAdapter(moTransactionListAdapter);
+
+        moExpiryHistoryAdapter = new ExpiryHistoryAdapter(getContext(), moMyCashHistory);
+        moBinding.rvRowExpiryHistory.setAdapter(moExpiryHistoryAdapter);
         getTransactionList();
     }
 
@@ -168,18 +168,18 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             moBinding.rlWallet.setVisibility(View.VISIBLE);
         }
 
-        moBinding.tvWallet.setText("Credited In Your " + foJsonObject.getWalletName());
-        if (foJsonObject.isActivityCouponExist()) {
-            int liStart = getResources().getColor(R.color.white);
-            int liEnd = getResources().getColor(R.color.colorAccent);
+        moBinding.tvWallet.setText("(Credited In Your " + foJsonObject.getWalletName() + ")");
+        //if (foJsonObject.isActivityCouponExist()) {
+        //int liStart = getResources().getColor(R.color.white);
+        //  int liEnd = getResources().getColor(R.color.colorAccent);
 
-            ObjectAnimator textColorAnim = ObjectAnimator.ofInt(moBinding.tvTimelineCoupon, "textColor", liEnd, liStart);
+            /*ObjectAnimator textColorAnim = ObjectAnimator.ofInt(moBinding.tvTimelineCoupon, "textColor", liEnd, liStart);
             textColorAnim.setDuration(1500);
             textColorAnim.setEvaluator(new ArgbEvaluator());
             textColorAnim.setRepeatCount(ValueAnimator.INFINITE);
             textColorAnim.setRepeatMode(ValueAnimator.REVERSE);
-            textColorAnim.start();
-        }
+            textColorAnim.start();*/
+        //}
         showTotalRewards(foJsonObject);
     }
 
@@ -207,17 +207,19 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         String text = String.format(getResources().getString(R.string.my_case_redeem),
                 String.valueOf(foJsonObject.getMyCash().getAutoRedeemPer()) + "%");
         moBinding.tvTimelineCoupon.setText(text);
-        moBinding.lblMyCash.setText("Rs. MyCash (" + foJsonObject.getMyCash().getTotalMyCash() + ")");
+        moBinding.lblMyCash.setText(" MyCash (Rs. " + foJsonObject.getMyCash().getTotalMyCash() + ")");
 
+        moMyCashHistory.addAll(foJsonObject.getMyCash().getMyCashHistory());
+        moExpiryHistoryAdapter.notifyDataSetChanged();
         if (foJsonObject.getMyCash().getTotalMyCash() > 0) {
-            moBinding.tvAmount.setText("Rs. " + foJsonObject.getMyCash().getMyCashHistory().get(0).getRemainAmount());
-            moBinding.tvExpiry.setText(foJsonObject.getMyCash().getMyCashHistory().get(0).getExpiryDate());
-            moBinding.tvTitleExp.setText(foJsonObject.getMyCash().getMyCashHistory().get(0).getTitle());
+            // moBinding.tvAmount.setText("Rs. " + foJsonObject.getMyCash().getMyCashHistory().get(0).getRemainAmount());
+            // moBinding.tvExpiry.setText(foJsonObject.getMyCash().getMyCashHistory().get(0).getExpiryDate());
+            //  moBinding.tvTitleExp.setText(foJsonObject.getMyCash().getMyCashHistory().get(0).getTitle());
 
             moBinding.tvMyCashTotal.setText("Rs. " + foJsonObject.getMyCash().getTotalMyCash());
             String textMyOffer = String.format(getResources().getString(R.string.my_case_offer),
                     "Rs. " + String.valueOf(foJsonObject.getMyCash().getTotalMyCash()));
-            moBinding.tvTimelineCoupon.setText(text);
+            moBinding.tvTimelineCoupon.setText("(" + text + ")");
 
             Spannable spannable = new SpannableString(textMyOffer);
             String str = spannable.toString();
@@ -228,10 +230,13 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             ClickableSpan clickableSpan = new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
-                    if (moBinding.tbExpiryHistory.getVisibility() == View.VISIBLE)
+                    if (moBinding.tbExpiryHistory.getVisibility() == View.VISIBLE) {
                         moBinding.tbExpiryHistory.setVisibility(View.GONE);
-                    else
+                        moBinding.rvRowExpiryHistory.setVisibility(View.GONE);
+                    } else {
                         moBinding.tbExpiryHistory.setVisibility(View.VISIBLE);
+                        moBinding.rvRowExpiryHistory.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override
@@ -266,7 +271,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 try {
                     String text = String.format(getResources().getString(R.string.info_message),
                             String.valueOf(moRedeemVal) + "%", String.valueOf(moRedeemVal) + "%");
-                    text.replaceAll("100","100%");
+                    text = text.replaceAll("100", "100%");
                     MessageDialog loDialog = new MessageDialog(this, null, text, getString(R.string.btn_shop_now), false);
                     loDialog.setClickListener(new View.OnClickListener() {
                         @Override

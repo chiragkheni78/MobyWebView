@@ -28,7 +28,7 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_5sdp"
                 android:paddingBottom="@dimen/padding_large"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <FrameLayout
                     android:id="@+id/flCoupon"
@@ -47,9 +47,9 @@
                             android:id="@+id/tvBrand"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_toEndOf="@+id/ivOfferImage"
                             android:background="@drawable/round_corner_white"
                             android:gravity="center"
                             android:letterSpacing="0.08"
@@ -62,13 +62,19 @@
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/ivOfferImage"
-                            android:layout_width="@dimen/_35sdp"
-                            android:layout_height="@dimen/_35sdp"
+                        <RelativeLayout
+                            android:layout_width="@dimen/_38sdp"
+                            android:layout_height="@dimen/_38sdp"
                             android:layout_marginStart="@dimen/_40sdp"
                             android:layout_marginTop="@dimen/_12sdp"
-                            android:layout_marginEnd="@dimen/_30sdp" />
+                            android:background="@drawable/bg_color_grey">
+
+                            <ImageView
+                                android:id="@+id/ivOfferImage"
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_centerInParent="true"
+                                android:layout_height="@dimen/_35sdp" />
+                        </RelativeLayout>
                     </RelativeLayout>
 
                     <LinearLayout

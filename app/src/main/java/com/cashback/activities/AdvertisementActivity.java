@@ -12,16 +12,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.cashback.R;
 import com.cashback.adapters.AdvertAdapter;
-import com.cashback.adapters.ImageSliderAdapter;
 import com.cashback.databinding.ActivityImageSlidderBinding;
 import com.cashback.models.Advertisement;
 import com.cashback.models.response.AdvertisementResponse;
 import com.cashback.models.viewmodel.AdvertisementViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
-import com.cashback.utils.custom.CirclePageIndicator;
-import com.cashback.utils.custom.CircularViewPagerHandler;
-import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 

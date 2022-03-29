@@ -8,6 +8,7 @@ import com.adgyde.android.AdGyde;
 import com.cashback.models.Advertisement;
 import com.cashback.models.Category;
 import com.cashback.models.response.DealOfTheDayResponse;
+import com.cashback.models.response.MessageDetailImage;
 import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
 import com.facebook.FacebookSdk;
@@ -34,6 +35,7 @@ public class AppGlobal extends Application {
     public static ArrayList<Category> moMainStore = new ArrayList<>();
     public static ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse;
     public static ArrayList<Advertisement> moSharePageImages;
+    public static ArrayList<MessageDetailImage> moMessageDetailImage;
     public static Location moLocation;
 
     public static int getTotalBillVerified() {
@@ -121,8 +123,16 @@ public class AppGlobal extends Application {
         return moDealOfTheDayResponse;
     }
 
+    public static ArrayList<MessageDetailImage> getMessageDetailImage() {
+        return moMessageDetailImage;
+    }
+
     public static void setDealOfTheDayResponse(ArrayList<DealOfTheDayResponse> moDealOfTheDayResponse) {
         AppGlobal.moDealOfTheDayResponse = moDealOfTheDayResponse;
+    }
+
+    public static void setMessageDetailImage(ArrayList<MessageDetailImage> moMessageDetailImage) {
+        AppGlobal.moMessageDetailImage = moMessageDetailImage;
     }
 
     public static ArrayList<Advertisement> getSharePageImages() {

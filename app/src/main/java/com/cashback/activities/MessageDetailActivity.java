@@ -2,6 +2,8 @@ package com.cashback.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -10,11 +12,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.databinding.ActivityMessageDetailBinding;
 import com.cashback.models.response.MessageDetailsResponse;
 import com.cashback.models.viewmodel.MessagesViewModel;
 import com.cashback.utils.Common;
+import com.squareup.picasso.Picasso;
 
 public class MessageDetailActivity extends BaseActivity {
     private static final String TAG = MessageDetailActivity.class.getSimpleName();
@@ -52,6 +56,12 @@ public class MessageDetailActivity extends BaseActivity {
         getMessageDetails();
         moBinding.tvTitle.setText(sMessageTitle);
         moBinding.tvDesc.setText(sMessageDesc);
+
+        if (AppGlobal.getMessageDetailImage() != null && AppGlobal.getMessageDetailImage().size() > 0 &&
+                !TextUtils.isEmpty(AppGlobal.getMessageDetailImage().get(0).getImageUrl())) {
+            moBinding.ivBanner.setVisibility(View.VISIBLE);
+            Picasso.get().load(AppGlobal.getMessageDetailImage().get(0).getImageUrl()).into(moBinding.ivBanner);
+        }
     }
 
     private void setToolbar() {

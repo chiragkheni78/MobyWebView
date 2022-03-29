@@ -1,9 +1,14 @@
 package com.cashback.activities;
 
+import android.Manifest;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,32 +18,42 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
-
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cashback.AppGlobal;
 import com.cashback.R;
-
 import com.cashback.adapters.EWalletAdapter;
 import com.cashback.databinding.ActivityShortProfileBinding;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
-import com.cashback.models.response.SawOurAdOn;
-import com.cashback.models.viewmodel.MiniProfileViewModel;
 import com.cashback.models.UserDetails;
 import com.cashback.models.response.GetMiniProfileResponse;
 import com.cashback.models.response.SaveMiniProfileResponse;
+import com.cashback.models.response.SawOurAdOn;
+import com.cashback.models.viewmodel.MiniProfileViewModel;
 import com.cashback.models.viewmodel.ReferralTrackViewModel;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
-
+import com.google.android.gms.auth.api.credentials.Credential;
+import com.google.android.gms.auth.api.credentials.Credentials;
+import com.google.android.gms.auth.api.credentials.CredentialsApi;
+import com.google.android.gms.auth.api.credentials.CredentialsClient;
+import com.google.android.gms.auth.api.credentials.CredentialsOptions;
+import com.google.android.gms.auth.api.credentials.HintRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ShortProfileActivity extends BaseActivity implements View.OnClickListener {
 
@@ -49,24 +64,30 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
 
     MiniProfileViewModel moMiniProfileViewModel;
     ReferralTrackViewModel moReferralTrackViewModel;
+    private Animation moAnim;
 
     private long mlOfferID = 0, miBannerID = 0;
     private int miCategoryId = 0;
     private ArrayList<EWallet> moWalletList;
     private ArrayList<SawOurAdOn> moShowOurAdsList;
+    ArrayList<String> mStrAgeList = new ArrayList<>();
+    private int CREDENTIAL_PICKER_REQUEST = 1111;
+    public static final int REQUEST_PHONE_PERMISSIONS = 2222;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         moBinding = ActivityShortProfileBinding.inflate(getLayoutInflater());
         setContentView(getContentView(moBinding));
-
         initializeContent();
     }
 
     private void initializeContent() {
         Common.hideKeyboard(this);
         initViewModel();
+        /*if (checkAndRequestPermissions()) {
+            phoneSelection();
+        }*/
         moBinding.btnSaveProfile.setOnClickListener(this);
         moBinding.checkedMobile.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
@@ -107,6 +128,117 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         });
 
         moMiniProfileViewModel.getMiniProfile(getContext());
+        moBinding.rgAd.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                stopAnim();
+            }
+        });
+
+    }
+
+    public void blinkAnimation(View foView) {
+        Animation moAnim = new AlphaAnimation(1, 0.5f);
+        moAnim.setDuration(1000); //You can manage the blinking time with this parameter
+        moAnim.setStartOffset(20);
+        moAnim.setRepeatMode(Animation.REVERSE);
+        moAnim.setRepeatCount(Animation.INFINITE);
+        foView.startAnimation(moAnim);
+    }
+
+    public void stopAnim() {
+        /*if (moAnim != null) {
+            moAnim.cancel();
+        }*/
+        int count = moBinding.rgAd.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View o = moBinding.rgAd.getChildAt(i);
+            if (o instanceof RadioButton) {
+                o.clearAnimation();
+            }
+
+        }
+    }
+
+    private void phoneSelection() {
+        //To retrieve the Phone Number hints, first, configure the hint selector dialog by creating a HintRequest object.
+        HintRequest hintRequest = new HintRequest.Builder()
+                .setPhoneNumberIdentifierSupported(true)
+                .build();
+
+        CredentialsOptions options = new CredentialsOptions.Builder()
+                .forceEnableSaveDialog()
+                .build();
+
+        //Then, pass the HintRequest object to credentialsClient.getHintPickerIntent()
+        // to get an intent to prompt the user to choose a phone number.
+        CredentialsClient credentialsClient = Credentials.getClient(this, options);
+        PendingIntent intent = credentialsClient.getHintPickerIntent(hintRequest);
+        try {
+            startIntentSenderForResult(
+                    intent.getIntentSender(),
+                    CREDENTIAL_PICKER_REQUEST, null, 0, 0, 0, new Bundle()
+            );
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == RESULT_OK) {
+            // get data from the dialog which is of type Credential
+            Credential credential = data.getParcelableExtra(Credential.EXTRA_KEY);
+            moBinding.etPhoneNumber.setText(credential.getId().replaceAll("[\\D]", "").
+                    replaceFirst("91", ""));
+        } else if (requestCode == CREDENTIAL_PICKER_REQUEST && resultCode == CredentialsApi.ACTIVITY_RESULT_NO_HINTS_AVAILABLE) {
+            Toast.makeText(this, "No phone numbers found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean checkAndRequestPermissions() {
+        int readPhoneState = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        int phoneNumber = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        if (readPhoneState != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (phoneNumber != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_PHONE_NUMBERS);
+        }
+
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
+                    REQUEST_PHONE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_PHONE_PERMISSIONS:
+                Map<String, Integer> perm = new HashMap<>();
+                perm.put(Manifest.permission.READ_PHONE_STATE, PackageManager.PERMISSION_GRANTED);
+                perm.put(Manifest.permission.READ_PHONE_NUMBERS, PackageManager.PERMISSION_GRANTED);
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < permissions.length; i++)
+                        perm.put(permissions[i], grantResults[i]);
+                    // Check for both permissions
+                    if (perm.get(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED &&
+                            perm.get(Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED) {
+                        phoneSelection();
+                    } else {
+                        Log.i(TAG, "Some permissions are not granted ask again ");
+                        Toast.makeText(ShortProfileActivity.this, "Go to app settings and enable permissions", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                }
+        }
     }
 
     private void initViewModel() {
@@ -118,8 +250,6 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         moReferralTrackViewModel.retrieveFirebaseDeepLink(this, getIntent());
         moReferralTrackViewModel.checkInstallReferrer(getContext());
     }
-
-    ArrayList<String> mStrAgeList = new ArrayList<>();
 
     Observer<GetMiniProfileResponse> getProfileObserver = new Observer<GetMiniProfileResponse>() {
         @Override
@@ -201,28 +331,26 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
     private void addAdsLayout() {
         moBinding.rgAd.removeAllViews();
         moBinding.llAge.setVisibility(View.VISIBLE);
+
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen._35sdp));
         lParams.weight = 1;
-        // lParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
-        // lParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         for (int i = 0; i < moShowOurAdsList.size(); i++) {
             RadioButton radioButton = new RadioButton(this);
             if (i != 0) {
                 lParams.leftMargin = (int) getResources().getDimension(R.dimen.padding_mini);
-            } else {
-                //  radioButton.setChecked(true);
             }
+
             radioButton.setLayoutParams(lParams);
             radioButton.setId(i);
             radioButton.setText(moShowOurAdsList.get(i).getPromoName());
             radioButton.setButtonDrawable(null);
             radioButton.setBackground(getResources().getDrawable(R.drawable.bg_radio_gender_short_profile));
-            //radioButton.setGravity(View.TEXT_ALIGNMENT_CENTER);
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setPadding(0, 0, 0, 0);
             radioButton.setTextColor(getResources().getColorStateList(R.color.color_radio_txt));
             moBinding.rgAd.addView(radioButton);
+            blinkAnimation(radioButton);
         }
     }
 
@@ -279,6 +407,16 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
 
         if (TextUtils.isEmpty(lsSawOurAds) && moShowOurAdsList != null && moShowOurAdsList.size() > 0) {
             Toast.makeText(ShortProfileActivity.this, getResources().getString(R.string.valid_ads_msg), Toast.LENGTH_SHORT).show();
+
+          /*  int count = moBinding.rgAd.getChildCount();
+            for (int i = 0; i < count; i++) {
+                if (i == 0) {
+                    View o = moBinding.rgAd.getChildAt(i);
+                    if (o instanceof RadioButton) {
+                        blinkAnimation(o);
+                    }
+                }
+            }*/
             return;
         }
         int eWalletId;

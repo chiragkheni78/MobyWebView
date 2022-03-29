@@ -375,6 +375,7 @@ public class Common {
         return isMock;
     }
 
+
     public static void blinkAnimation(View foView) {
         Animation anim = new AlphaAnimation(1, 0);
         anim.setDuration(1000); //You can manage the blinking time with this parameter
