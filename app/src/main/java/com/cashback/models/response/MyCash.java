@@ -15,6 +15,9 @@ public class MyCash {
     @SerializedName("fiAutoRedeemPer")
     private String autoRedeemPer;
 
+    @SerializedName("fsMyCashName")
+    private String myCashName;
+
     @SerializedName("foMyCashHistory")
     private ArrayList<MyCashHistory> myCashHistory;
 
@@ -32,5 +35,9 @@ public class MyCash {
 
     public ArrayList<MyCashHistory> getMyCashHistory() {
         return myCashHistory;
+    }
+
+    public String getMyCashName() {
+        return myCashName;
     }
 }

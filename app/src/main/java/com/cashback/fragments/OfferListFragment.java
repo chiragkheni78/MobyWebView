@@ -44,8 +44,10 @@ import com.cashback.models.response.BypassQuizResponse;
 import com.cashback.models.response.DealOfTheDayResponse;
 import com.cashback.models.response.FetchOffersResponse;
 import com.cashback.models.response.OfferFilterResponse;
+import com.cashback.models.response.SaveMiniProfileResponse;
 import com.cashback.models.viewmodel.MapViewModel;
 import com.cashback.models.viewmodel.OfferListViewModel;
+import com.cashback.utils.APIClient;
 import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -53,6 +55,8 @@ import com.cashback.utils.FirebaseEvents;
 import com.smarteist.autoimageslider.SliderAnimations;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
 
 @SuppressWarnings("All")
 public class OfferListFragment extends BaseFragment implements View.OnClickListener, OfferListAdapter.OnAdItemClick, BottomSheetDialog.OnApplyClickFilter {

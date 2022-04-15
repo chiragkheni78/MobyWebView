@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModel;
 import com.cashback.AppGlobal;
 import com.cashback.models.Advertisement;
 import com.cashback.models.EWallet;
+import com.cashback.models.request.UpdateUserSessionRequest;
 import com.cashback.models.request.GetSettingRequest;
+import com.cashback.models.response.GetUpdateUserSessionResponse;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.services.MyFirebaseMessagingService;
 import com.cashback.utils.APIClient;
@@ -29,6 +31,7 @@ public class HomeViewModel extends ViewModel {
     private static final String TAG = HomeViewModel.class.getSimpleName();
 
     public MutableLiveData<GetSettingResponse> getSettingStatus = new MutableLiveData<>();
+    public MutableLiveData<GetUpdateUserSessionResponse> getUpdateUserSession = new MutableLiveData<>();
 
     public void getGlobalSetting(Context foContext) {
         GetSettingRequest loGetSettingRequest = new GetSettingRequest();
@@ -79,6 +82,35 @@ public class HomeViewModel extends ViewModel {
             public void onFailure(Call<GetSettingResponse> call, Throwable t) {
                 Common.printReqRes(t, "getGlobalSetting", Common.LogType.ERROR);
                 getSettingStatus.postValue(new GetSettingResponse(true, t.getMessage()));
+            }
+        });
+
+        UpdateUserSessionRequest loGetRequestFirstLoad = new UpdateUserSessionRequest();
+        loGetRequestFirstLoad.setAction(Constants.API.UPDATE_USER_SESSION.getValue());
+        loGetRequestFirstLoad.setAdId("0");
+        loGetRequestFirstLoad.setPhoneNumber(AppGlobal.getPhoneNumber());
+        loGetRequestFirstLoad.setEventType(Constants.IntentKey.CURRENT_SESSION_TIME);
+
+        Call<GetUpdateUserSessionResponse> loRequestForFirstLoad = APIClient.getInterface().saveEvent(loGetRequestFirstLoad);
+        Common.printReqRes(loGetRequestFirstLoad, "UpdateUserSessionRequest", Common.LogType.REQUEST);
+
+        loRequestForFirstLoad.enqueue(new Callback<GetUpdateUserSessionResponse>() {
+            @Override
+            public void onResponse(Call<GetUpdateUserSessionResponse> call, Response<GetUpdateUserSessionResponse> foResponse) {
+                Common.printReqRes(foResponse.body(), "UpdateUserSessionRequest", Common.LogType.RESPONSE);
+                if (foResponse.isSuccessful()) {
+                    //GetPageLoadEventResponse loJsonObject = foResponse.body();
+                    Log.d("TTT", "Response..." + foResponse.body().toString());
+                } else {
+                    String fsMessage = Common.getErrorMessage(foResponse);
+                    getUpdateUserSession.postValue(new GetUpdateUserSessionResponse(true, fsMessage));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetUpdateUserSessionResponse> call, Throwable t) {
+                Common.printReqRes(t, "UpdateUserSessionRequest", Common.LogType.ERROR);
+                getUpdateUserSession.postValue(new GetUpdateUserSessionResponse(true, t.getMessage()));
             }
         });
     }

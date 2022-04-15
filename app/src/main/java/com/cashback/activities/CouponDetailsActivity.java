@@ -7,15 +7,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -40,6 +38,7 @@ import com.cashback.models.Coupon;
 import com.cashback.models.response.ActivityDetailsResponse;
 import com.cashback.models.response.ActivityMarkAsUsedResponse;
 import com.cashback.models.response.DealOfTheDayResponse;
+import com.cashback.models.response.GetUpdateUserSessionResponse;
 import com.cashback.models.response.UpdateShopOnlineBlinkResponse;
 import com.cashback.models.viewmodel.ActivityDetailsViewModel;
 import com.cashback.utils.AdGydeEvents;
@@ -53,6 +52,7 @@ import com.smarteist.autoimageslider.SliderAnimations;
 
 import static com.cashback.fragments.MapViewFragment.REQUEST_PHONE_LOGIN;
 import static com.cashback.models.viewmodel.ActivityDetailsViewModel.REQUEST_CAMERA;
+import static com.cashback.utils.Constants.IntentKey.FROM_QUIZ;
 import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
 
 import java.util.ArrayList;
@@ -64,6 +64,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     ActivityDetailsViewModel moActivityDetailsViewModel;
     private boolean mbShopOnlinePressed = false;
     private long miActivityId;
+    private String isFrom;
     Activity moActivity;
     CouponAdapter loOfferAdapter;
 
@@ -99,6 +100,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         moActivityDetailsViewModel.fetchActivityStatus.observe(this, fetchActivityObserver);
         moActivityDetailsViewModel.updateMarkAsUsedStatus.observe(this, updateMarkAdUsedObserver);
         moActivityDetailsViewModel.updateShopOnlineBlinkStatus.observe(this, updateShopOnlineBlinkObserver);
+        moActivityDetailsViewModel.getUpdateUserSessionResponse.observe(this, getUpdateUserSessionResponse);
 
         moBinding.tvShopOnline.setOnClickListener(this);
         moBinding.tvShopOffline.setOnClickListener(this);
@@ -111,6 +113,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
     private void loadCouponView() {
         if (getIntent() != null) {
             miActivityId = getIntent().getLongExtra(Constants.IntentKey.ACTIVITY_ID, 0);
+            isFrom = getIntent().getStringExtra(Constants.IntentKey.IS_FROM);
             getActivityDetails();
         }
     }
@@ -313,6 +316,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onItemClick(int position, View v) {
                 //trigger event
+                moActivityDetailsViewModel.buttonClicked(moActivity.getAdID(),Constants.IntentKey.OFFER_ONLINE);
                 if (moActivity.isBlinkShopOnline()) {
                     AdGydeEvents.getOfferClicked(getContext(), moActivity);
                 }
@@ -405,7 +409,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         }
 
         moBinding.lblAdditional.setText(moActivity.getAdditionLabel());
-        moBinding.tvMaxCashback.setText("Max CASHBACK Rs. " + moActivity.getQuizReward() + "");
+        moBinding.tvMaxCashback.setText("Max Cashback Rs. " + moActivity.getQuizReward() + "");
         if (moActivity.getQuizReward() == 0 || moActivity.getAdCouponType() == 1) {
             moBinding.tvMaxCashback.setVisibility(View.GONE);
         }
@@ -448,6 +452,12 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    Observer<GetUpdateUserSessionResponse> getUpdateUserSessionResponse = new Observer<GetUpdateUserSessionResponse>() {
+        @Override
+        public void onChanged(GetUpdateUserSessionResponse loJsonObject) {
+            dismissProgressDialog();
+        }
+    };
     Observer<UpdateShopOnlineBlinkResponse> updateShopOnlineBlinkObserver = new Observer<UpdateShopOnlineBlinkResponse>() {
         @Override
         public void onChanged(UpdateShopOnlineBlinkResponse loJsonObject) {
@@ -526,6 +536,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
         }
         moBinding.tvShopOnline.clearAnimation();
+        moActivityDetailsViewModel.buttonClicked(moActivity.getAdID(),Constants.IntentKey.SHOP_ONLINE);
     }
 
     private void dialogMarkAsUsed() {
@@ -818,7 +829,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         try {
             FirebaseEvents.trigger(CouponDetailsActivity.this, null, FirebaseEvents.SHOP_ONLINE_BACK_PRESS);
 
-            if (getIntent() != null && getIntent().getAction() != null && moActivity != null &&
+            if (!TextUtils.isEmpty(isFrom) && isFrom.equalsIgnoreCase(FROM_QUIZ)) {
+                Intent intent = new Intent(CouponDetailsActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            } else if (getIntent() != null && getIntent().getAction() != null && moActivity != null &&
                     getIntent().getAction().equalsIgnoreCase(Constants.IntentKey.Action.BY_PASS_QUIZ)) {
                 Common.msOfferId = "" + moActivity.getAdID(); //not possible to check long as null so add try catch for null pointer
                 Intent intent = new Intent(CouponDetailsActivity.this, HomeActivity.class);

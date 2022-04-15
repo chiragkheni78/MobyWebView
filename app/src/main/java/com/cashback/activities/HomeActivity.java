@@ -55,6 +55,7 @@ import com.cashback.fragments.MapViewFragment;
 import com.cashback.fragments.OfferListFragment;
 import com.cashback.fragments.ShareFragment;
 import com.cashback.models.Advertisement;
+import com.cashback.models.response.GetUpdateUserSessionResponse;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.viewmodel.HomeViewModel;
 import com.cashback.models.viewmodel.MapViewModel;
@@ -185,6 +186,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
         moHomeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         moHomeViewModel.getSettingStatus.observe(this, getSettingObserver);
+        moHomeViewModel.getUpdateUserSession.observe(this, getUpdateUserSessionObserver);
 
         moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
         moMapViewModel.functionCallStatus.observe(this, functionCallObserver);
@@ -513,6 +515,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             } else {
                 Common.showErrorDialog(getContext(), loJsonObject.getMessage(), false);
             }
+            dismissProgressDialog();
+        }
+    };
+    Observer<GetUpdateUserSessionResponse> getUpdateUserSessionObserver = new Observer<GetUpdateUserSessionResponse>() {
+        @Override
+        public void onChanged(GetUpdateUserSessionResponse loJsonObject) {
             dismissProgressDialog();
         }
     };

@@ -31,6 +31,7 @@ import com.cashback.adapters.ActivityListAdapter;
 import com.cashback.databinding.ActivityMyCouponsBinding;
 import com.cashback.models.Activity;
 import com.cashback.models.response.ActivityListResponse;
+import com.cashback.models.response.GetUpdateUserSessionResponse;
 import com.cashback.models.viewmodel.ActivityListViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
@@ -90,6 +91,8 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
     private void initializeContent() {
         moActivityListViewModel = new ViewModelProvider(this).get(ActivityListViewModel.class);
         moActivityListViewModel.fetchActivityStatus.observe(getActivity(), fetchActivityObserver);
+        moActivityListViewModel.getUpdateUserSession.observe(this, getUpdateUserSessionObserver);
+
         setToolbar();
         moLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         moBinding.rvActivityList.setLayoutManager(moLayoutManager);
@@ -324,6 +327,12 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
         getActivity().startActivityForResult(loIntent, REQUEST_COUPON_DETAILS);
     }
 
+    Observer<GetUpdateUserSessionResponse> getUpdateUserSessionObserver = new Observer<GetUpdateUserSessionResponse>() {
+        @Override
+        public void onChanged(GetUpdateUserSessionResponse loJsonObject) {
+            dismissProgressDialog();
+        }
+    };
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_ACTIVITY_BILL_UPLOAD) {
@@ -332,6 +341,8 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
                     moActivityList.get(miPosition).setBillUploaded(true);
                     moActivityList.get(miPosition).setCouponUsed(true);
                     moActivityListAdapter.notifyDataSetChanged();
+
+                    moActivityListViewModel.updateUserEvent(moActivityList.get(miPosition).getAdID());
                 }
             }
         } else if (requestCode == REQUEST_COUPON_DETAILS) {

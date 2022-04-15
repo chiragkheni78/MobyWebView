@@ -158,7 +158,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     private void setViewData(TransactionListResponse foJsonObject) {
         moTransactionList = foJsonObject.getTransactionList();
         moTransactionListAdapter.notifyList(moTransactionList);
-
+        moBinding.tvTitle.setText(foJsonObject.getMyCash().getMyCashName());
         if (foJsonObject.getTransactionList().size() == 0) {
             launchWalletDialog();
             moBinding.rlWallet.setVisibility(View.GONE);

@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
@@ -43,19 +44,22 @@ import com.cashback.utils.AdGydeEvents;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.credentials.Credentials;
 import com.google.android.gms.auth.api.credentials.CredentialsApi;
 import com.google.android.gms.auth.api.credentials.CredentialsClient;
 import com.google.android.gms.auth.api.credentials.CredentialsOptions;
 import com.google.android.gms.auth.api.credentials.HintRequest;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ShortProfileActivity extends BaseActivity implements View.OnClickListener {
+public class ShortProfileActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = ShortProfileActivity.class.getSimpleName();
     ActivityShortProfileBinding moBinding;
@@ -85,9 +89,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
     private void initializeContent() {
         Common.hideKeyboard(this);
         initViewModel();
-        /*if (checkAndRequestPermissions()) {
-            phoneSelection();
-        }*/
+
         moBinding.btnSaveProfile.setOnClickListener(this);
         moBinding.checkedMobile.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
@@ -162,6 +164,12 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
 
     private void phoneSelection() {
         //To retrieve the Phone Number hints, first, configure the hint selector dialog by creating a HintRequest object.
+        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.CREDENTIALS_API)
+                .addConnectionCallbacks(ShortProfileActivity.this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        googleApiClient.connect();
         HintRequest hintRequest = new HintRequest.Builder()
                 .setPhoneNumberIdentifierSupported(true)
                 .build();
@@ -173,7 +181,8 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         //Then, pass the HintRequest object to credentialsClient.getHintPickerIntent()
         // to get an intent to prompt the user to choose a phone number.
         CredentialsClient credentialsClient = Credentials.getClient(this, options);
-        PendingIntent intent = credentialsClient.getHintPickerIntent(hintRequest);
+       // PendingIntent intent = credentialsClient.getHintPickerIntent(hintRequest);
+        PendingIntent intent = Auth.CredentialsApi.getHintPickerIntent(googleApiClient, hintRequest);
         try {
             startIntentSenderForResult(
                     intent.getIntentSender(),
@@ -319,6 +328,10 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                     } else moBinding.ivBanner.setVisibility(View.GONE);
 
                     moBinding.llRoot.setVisibility(View.VISIBLE);
+                    if (checkAndRequestPermissions()) {
+                        phoneSelection();
+                    }
+
                 }
 
             } else {
@@ -475,5 +488,20 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
             ads = moShowOurAdsList.get(idx).getPromoCode();
         }
         return ads;
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

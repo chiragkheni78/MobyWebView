@@ -39,8 +39,13 @@ public class Constants {
         public static final String IS_FROM = "isFrom";
         public static final String adId = "adId";
         public static final String FROM_COUPON = "fromCoupon";
+        public static final String FROM_QUIZ = "fromQuiz";
         public static final String LOAD_OFFER_PAGE = "loadOfferPage";
         public static final String LOAD_SHARE_PAGE = "loadSharePage";
+        public static final String CURRENT_SESSION_TIME = "current_session_time";
+        public static final String OFFER_ONLINE = "offer_online";
+        public static final String SHOP_ONLINE = "shop_online";
+        public static final String BILL_UPLOADED = "bill_uploaded";
 
         public static final String FUNCTION = "function";
         public class Action {
@@ -89,6 +94,7 @@ public class Constants {
         SAVE_USER_DETAILS("saveFullProfile"),
         DELETE_USER_CARD("deleteUserCard"),
         BYPASS_QUIZ("directSubmitQuiz"),
+        UPDATE_USER_SESSION("updateUserSession"),
         ;
 
         private String type;

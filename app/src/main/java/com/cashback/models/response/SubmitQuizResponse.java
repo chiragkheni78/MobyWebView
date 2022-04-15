@@ -14,6 +14,9 @@ public class SubmitQuizResponse {
     @SerializedName("fsMessage")
     private String message;
 
+    @SerializedName("fiAddedActivityId")
+    private long addedActivityId;
+
     @SerializedName("fiCreditAmount")
     private int creditAmount;
 
@@ -63,6 +66,10 @@ public class SubmitQuizResponse {
     public SubmitQuizResponse(boolean isError, String message) {
         this.isError = isError;
         this.message = message;
+    }
+
+    public long getAddedActivityId() {
+        return addedActivityId;
     }
 
     public boolean isByPass() {

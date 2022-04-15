@@ -15,8 +15,10 @@ import com.cashback.AppGlobal;
 import com.cashback.models.request.ActivityDetailsRequest;
 import com.cashback.models.request.ActivityMarkAsUsedRequest;
 import com.cashback.models.request.UpdateShopOnlineBlinkRequest;
+import com.cashback.models.request.UpdateUserSessionRequest;
 import com.cashback.models.response.ActivityDetailsResponse;
 import com.cashback.models.response.ActivityMarkAsUsedResponse;
+import com.cashback.models.response.GetUpdateUserSessionResponse;
 import com.cashback.models.response.UpdateShopOnlineBlinkResponse;
 import com.cashback.utils.APIClient;
 import com.cashback.utils.Common;
@@ -29,6 +31,7 @@ import retrofit2.Response;
 public class ActivityDetailsViewModel extends ViewModel {
 
     public MutableLiveData<ActivityDetailsResponse> fetchActivityStatus = new MutableLiveData<>();
+    public MutableLiveData<GetUpdateUserSessionResponse> getUpdateUserSessionResponse = new MutableLiveData<>();
 
     public void getActivityDetails(Context foContext, String mobileNumber, long fiActivityID) {
         ActivityDetailsRequest loActivityDetailsRequest = new ActivityDetailsRequest(mobileNumber, fiActivityID);
@@ -67,6 +70,36 @@ public class ActivityDetailsViewModel extends ViewModel {
         });
     }
 
+    public void buttonClicked(long adId, String eventType) {
+        UpdateUserSessionRequest updateUserSessionRequest = new UpdateUserSessionRequest();
+        updateUserSessionRequest.setAction(Constants.API.UPDATE_USER_SESSION.getValue());
+        updateUserSessionRequest.setAdId(adId + "");
+        updateUserSessionRequest.setPhoneNumber(AppGlobal.getPhoneNumber());
+        updateUserSessionRequest.setEventType(eventType);
+
+        Call<GetUpdateUserSessionResponse> loRequestForFirstLoad = APIClient.getInterface().saveEvent(updateUserSessionRequest);
+        Common.printReqRes(updateUserSessionRequest, "eventType", Common.LogType.REQUEST);
+
+        loRequestForFirstLoad.enqueue(new Callback<GetUpdateUserSessionResponse>() {
+            @Override
+            public void onResponse(Call<GetUpdateUserSessionResponse> call, Response<GetUpdateUserSessionResponse> foResponse) {
+                Common.printReqRes(foResponse.body(), "eventType", Common.LogType.RESPONSE);
+                if (foResponse.isSuccessful()) {
+                    //GetPageLoadEventResponse loJsonObject = foResponse.body();
+                    Log.d("TTT", "Response..." + foResponse.body().toString());
+                } else {
+                    String fsMessage = Common.getErrorMessage(foResponse);
+                    getUpdateUserSessionResponse.postValue(new GetUpdateUserSessionResponse(true, fsMessage));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetUpdateUserSessionResponse> call, Throwable t) {
+                Common.printReqRes(t, "eventType", Common.LogType.ERROR);
+                getUpdateUserSessionResponse.postValue(new GetUpdateUserSessionResponse(true, t.getMessage()));
+            }
+        });
+    }
 
     public MutableLiveData<ActivityMarkAsUsedResponse> updateMarkAsUsedStatus = new MutableLiveData<>();
 

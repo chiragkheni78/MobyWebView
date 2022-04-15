@@ -18,7 +18,7 @@
     <string name="action_already_engaged">Already Engaged... :)</string>
     <string name="default_reward_note">TOUCH THE RED PINS NEAR YOU IN THE MALL &amp; ANSWER THE POP UP QUIZ. MUST BE “INSIDE\" THE RELEVANT STORES,\n" +
                         "ELSE YOUR REWARD MONEY WILL BE REVERSE</string>
-    <string name="bill_uploaded">You have already uploaded bill for this Ad, Trtitle_copy_to_clipboardy other brands.</string>
+    <string name="bill_uploaded">You have already uploaded bill for this Ad, Try other brands.</string>
     <string name="upload_bill_restrict">Please use your MOBY COUPON first, before you upload the bill.</string>
     <string name="coupon_expired">Expired</string>
     <string name="empty_offer_list">There is no data found with this search terms\nPlease try with other brands.</string>
@@ -163,7 +163,7 @@
 
 
     <string name="lbl_you_earned">YOUR STATEMENT</string>
-    <string name="tv_instant_cash">Cash Rewards</string>
+    <string name="tv_instant_cash">Cashback</string>
     <string name="tv_virtual_cash">Virtual Cash</string>
     <string name="tv_my_case">My Cash</string>
     <string name="instant_cash">Cash Reward</string>

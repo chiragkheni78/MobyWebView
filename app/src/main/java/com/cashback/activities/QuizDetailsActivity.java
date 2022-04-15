@@ -1,6 +1,9 @@
 package com.cashback.activities;
 
 
+import static android.view.View.GONE;
+import static com.cashback.models.viewmodel.QuizDetailsViewModel.REQUEST_CAMERA;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,26 +24,22 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.adapters.QuizOptionAdapter;
 import com.cashback.databinding.ActivityQuizDetailsBinding;
+import com.cashback.dialog.MessageDialog;
 import com.cashback.models.Ad;
 import com.cashback.models.Quiz;
 import com.cashback.models.QuizAnswer;
-import com.cashback.models.viewmodel.QuizDetailsViewModel;
 import com.cashback.models.response.QuizDetailsResponse;
 import com.cashback.models.response.SubmitQuizResponse;
+import com.cashback.models.viewmodel.QuizDetailsViewModel;
 import com.cashback.utils.Common;
 import com.cashback.utils.Constants;
-import com.cashback.dialog.MessageDialog;
 import com.cashback.utils.FirebaseEvents;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-
-import static android.view.View.GONE;
-import static com.cashback.models.viewmodel.QuizDetailsViewModel.REQUEST_CAMERA;
 
 @SuppressWarnings("All")
 public class QuizDetailsActivity extends BaseActivity implements View.OnClickListener, QuizOptionAdapter.OnOptionSelectListener {
@@ -471,10 +470,12 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
     private void showSuccessMessage(SubmitQuizResponse foJsonObject) {
 
         Common.msOfferId = "" + moOffer.getAdID();
-        Intent intent = new Intent(moContext, HomeActivity.class);
-        intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_COUPON);
+        Intent intent = new Intent(moContext, CouponDetailsActivity.class);
+        intent.putExtra(Constants.IntentKey.ACTIVITY_ID, foJsonObject.getAddedActivityId());
+        intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.FROM_QUIZ);
         //intent.putExtra("foGiftCard", foGiftCard);
         moContext.startActivity(intent);
+        // finish();
         finishAffinity();
 
 

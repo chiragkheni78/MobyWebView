@@ -12,6 +12,7 @@ import com.cashback.models.request.GetSettingRequest;
 import com.cashback.models.request.ActivityListRequest;
 import com.cashback.models.request.GetUserProfileRequest;
 import com.cashback.models.request.HelpRequest;
+import com.cashback.models.request.UpdateUserSessionRequest;
 import com.cashback.models.request.MessageDetailsRequest;
 import com.cashback.models.request.MessageListRequest;
 import com.cashback.models.request.MobileDeviceRequest;
@@ -33,6 +34,7 @@ import com.cashback.models.response.AdvertisementResponse;
 import com.cashback.models.response.BillUploadResponse;
 import com.cashback.models.response.BypassQuizResponse;
 import com.cashback.models.response.DeleteCardResponse;
+import com.cashback.models.response.GetUpdateUserSessionResponse;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.response.ActivityListResponse;
 import com.cashback.models.response.GetUserProfileResponse;
@@ -148,4 +150,8 @@ public interface AppServices {
 
     @POST("v2-apis/")
     Call<BypassQuizResponse> bypassQuiz(@Body BypassQuizRequest foRequest);
+
+    @POST("v2-apis/")
+    Call<GetUpdateUserSessionResponse> saveEvent(@Body UpdateUserSessionRequest foRequest);
+
 }
