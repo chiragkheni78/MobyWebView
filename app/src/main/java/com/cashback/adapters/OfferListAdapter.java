@@ -158,7 +158,6 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             if (lsPinColor.equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
                 liDrawable = R.drawable.btn_green;
                 loBtnAdDetails.setText(Common.getDynamicText(moContext, "online_coupon"));
-                // TODO: 04-12-2021 payal
                 //loBtnAdDetails.setText(Common.getDynamicText(moContext, "select"));
             } else if (lsPinColor.equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
                 liDrawable = R.drawable.btn_primary;

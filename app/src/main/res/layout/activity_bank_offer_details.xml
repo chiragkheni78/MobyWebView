@@ -161,23 +161,23 @@
             </ScrollView>
 
             <com.rey.material.widget.LinearLayout
-                style="@style/NormalRippleLayout"
                 android:id="@+id/llLocate"
-                android:gravity="center"
+                style="@style/NormalRippleLayout"
                 android:layout_alignParentBottom="true"
-                android:background="@color/yellow_primary">
+                android:background="@color/yellow_primary"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/btnLocate"
                     style="@style/TvLarge"
                     android:layout_width="wrap_content"
+                    android:drawableRight="@drawable/ic_enable_location_24"
+                    android:drawablePadding="@dimen/_15sdp"
                     android:gravity="center"
+                    android:padding="@dimen/padding_standard"
                     android:text="@string/locate"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:drawableRight="@drawable/ic_enable_location_24"
-                    android:drawablePadding="@dimen/_15sdp"
-                    android:padding="@dimen/padding_standard"
                     android:textStyle="bold" />
 
             </com.rey.material.widget.LinearLayout>

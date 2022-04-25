@@ -1,5 +1,6 @@
 package com.cashback.models.viewmodel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -149,6 +150,7 @@ public class ReferralTrackViewModel extends ViewModel {
         }
     }
 
+    String lsRedirect;
 
     public void retrieveFirebaseDeepLink(Context foContext, Intent foIntent) {
         SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(foContext);
@@ -156,7 +158,7 @@ public class ReferralTrackViewModel extends ViewModel {
         // [START get_deep_link]
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(foIntent)
-                .addOnSuccessListener((ShortProfileActivity) foContext, new OnSuccessListener<PendingDynamicLinkData>() {
+                .addOnSuccessListener((Activity) foContext, new OnSuccessListener<PendingDynamicLinkData>() {
                     @Override
                     public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
 
@@ -171,6 +173,7 @@ public class ReferralTrackViewModel extends ViewModel {
                                 // ...
 
                                 deepLink = pendingDynamicLinkData.getLink();
+                                AppGlobal.walletRefferal = deepLink.getQueryParameter("redirect");
 
                                 Bundle loBundle = pendingDynamicLinkData.getExtensions();
                                 Bundle scionData = loBundle.getBundle("scionData");
@@ -178,6 +181,8 @@ public class ReferralTrackViewModel extends ViewModel {
                                 String lsSource = _cmp.getString("source");
                                 String lsCampaign = _cmp.getString("campaign");
                                 String lsMedium = _cmp.getString("medium");
+
+
                                 loSharedPreferenceManager.setAppDownloadCampaign(lsCampaign);
                                 loSharedPreferenceManager.setAppDownloadMedium(lsMedium);
                                 loSharedPreferenceManager.setAppDownloadSource(lsSource);
@@ -199,7 +204,7 @@ public class ReferralTrackViewModel extends ViewModel {
                         }
                     }
                 })
-                .addOnFailureListener((ShortProfileActivity) foContext, new OnFailureListener() {
+                .addOnFailureListener((Activity) foContext, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         LogV2.logException(TAG, e);

@@ -66,6 +66,10 @@ public class TransactionListResponse {
         return transactionList;
     }
 
+    public void setTransactionList(ArrayList<Transaction> transactionList) {
+        this.transactionList = transactionList;
+    }
+
     public boolean isActivityCouponExist() {
         return isActivityCouponExist;
     }

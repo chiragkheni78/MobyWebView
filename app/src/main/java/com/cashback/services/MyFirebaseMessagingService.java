@@ -1,5 +1,10 @@
 package com.cashback.services;
 
+import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
+import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,7 +13,6 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,11 +43,6 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.cashback.utils.Constants.IntentKey.Action.ACTIVITY_LIST;
-import static com.cashback.utils.Constants.IntentKey.Action.MESSAGE_LIST;
-import static com.cashback.utils.Constants.IntentKey.Action.OFFER_LIST;
-import static com.cashback.utils.Constants.IntentKey.Action.WALLET_SCREEN;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -204,7 +203,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(String fsTitle, String fsMessage, PendingIntent foPendingIntent) {
-
+        AppGlobal.fiBadgeCount++;
         String lsChannelId = getString(R.string.default_notification_channel_id);
         String lsChannel = "default-channel";
         Uri loDefaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -216,6 +215,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(fsMessage))
                         .setAutoCancel(true)
+                        .setNumber(AppGlobal.fiBadgeCount)
+                        .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
                         .setSound(loDefaultSoundUri)
                         .setContentIntent(foPendingIntent);
 
@@ -225,10 +226,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel loChannel = new NotificationChannel(lsChannelId, lsChannel, NotificationManager.IMPORTANCE_DEFAULT);
+            loChannel.setShowBadge(true);
             loNotificationManager.createNotificationChannel(loChannel);
         }
         int oneTimeID = (int) SystemClock.uptimeMillis();
+        // ShortcutBadger.applyCount(getApplicationContext(), AppGlobal.fiBadgeCount);
+        // ShortcutBadger.applyNotification(getApplicationContext(), loNotificationManager, AppGlobal.fiBadgeCount);
+      /*  try {
+            ShortcutBadger.applyCountOrThrow(getApplicationContext(), AppGlobal.fiBadgeCount);
+        } catch (ShortcutBadgeException e) {
+            e.printStackTrace();
+        }*/
+
         loNotificationManager.notify(oneTimeID /* ID of notification */, loNotificationBuilder.build());
+
     }
 
     private void sendRegistrationToServer(String token) {

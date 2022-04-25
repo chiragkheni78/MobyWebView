@@ -99,7 +99,11 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
 
                 moBinding.tvOfferDescription.setText(offer.getDescription());
                 moBinding.tvDescription.setText(offer.getOfferDetails());
-                moBinding.tvAddress.setText(offer.getDesc3());
+                try {
+                    moBinding.tvAddress.setText(offer.getLocationList().get(0).getLandmark());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 moBinding.tvDeal.setText(offer.getTermsCondition());
                 moBinding.tvDeal.setOnClickListener(BankOfferDetailsActivity.this);
                 if (!offer.getDescription().isEmpty())
@@ -125,7 +129,7 @@ public class BankOfferDetailsActivity extends BaseActivity implements View.OnCli
 
     private void btnLocatePressed() {
 
-        if (moOffer != null && moOffer.getLocationList().size() > 0){
+        if (moOffer != null && moOffer.getLocationList().size() > 0) {
             AdLocation loLocation = moOffer.getLocationList().get(0);
             String lsUrl = "http://maps.google.com/maps?daddr=" + loLocation.getLatitude() + "," + loLocation.getLongitude();
             Common.openBrowser(getContext(), lsUrl);

@@ -37,6 +37,10 @@ public class MyCash {
         return myCashHistory;
     }
 
+    public void setMyCashHistory(ArrayList<MyCashHistory> myCashHistory) {
+        this.myCashHistory = myCashHistory;
+    }
+
     public String getMyCashName() {
         return myCashName;
     }

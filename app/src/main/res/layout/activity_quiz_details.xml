@@ -102,7 +102,7 @@
                                     android:id="@+id/tvOfferRewards"
                                     style="@style/TvStandard"
                                     android:layout_marginTop="@dimen/padding_micro"
-                                    android:text="100 - 200 Rs. (C'Back)"
+                                    android:text="Answer To Win"
                                     android:textColor="@color/colorPrimary"
                                     android:textStyle="bold" />
 

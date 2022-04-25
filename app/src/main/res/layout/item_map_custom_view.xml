@@ -6,16 +6,20 @@
     <RelativeLayout
         android:id="@+id/relativeMarkerMain"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent">
+        android:layout_height="wrap_content">
+
+        <!--        <RelativeLayout-->
+        <!--            android:layout_width="@dimen/_280sdp"-->
+        <!--            android:layout_height="@dimen/_80sdp"-->
+        <!--            android:background="@drawable/ic_red_pin_bg" />-->
 
         <ImageView
             android:id="@+id/imageMarkerBackground"
             android:layout_width="@dimen/_280sdp"
-            android:layout_height="@dimen/_85sdp"
+            android:layout_height="@dimen/_75sdp"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_marker_background_red"/>
+            android:scaleType="fitXY" />
+        <!--  android:src="@drawable/ic_marker_background_red"-->
 
         <LinearLayout
             android:layout_width="@dimen/_280sdp"
@@ -34,21 +38,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
                 android:minWidth="@dimen/_140sdp"
+                android:orientation="vertical"
                 android:paddingHorizontal="@dimen/_7sdp">
 
                 <TextView
                     android:id="@+id/tvMarkerTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:singleLine="true"
+                    android:gravity="center_vertical"
                     android:maxLines="1"
-                    tools:text="Device Name"
+                    android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="Device Name" />
 
                 <TextView
                     android:id="@+id/tvMarkerPrice"
@@ -56,11 +60,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:gravity="center_vertical"
-                    tools:text="Device Name"
-                    android:singleLine="true"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="Device Name" />
 
             </LinearLayout>
 

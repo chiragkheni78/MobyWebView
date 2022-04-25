@@ -125,6 +125,7 @@ public class MapViewModel extends ViewModel {
                     loMapMarker.setLatitude(loLocation.getLatitude());
                     loMapMarker.setLongitude(loLocation.getLongitude());
                     loMapMarker.setLandmark(loLocation.getLandmark());
+                    loMapMarker.setAdLogo(loOffer.getLogoUrl());
                     loMapMarkerList.add(loMapMarker);
                 }
             }

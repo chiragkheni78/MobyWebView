@@ -61,7 +61,7 @@ public class FragmentMyCoupons extends BaseFragment implements View.OnClickListe
     private LinearLayoutManager moLayoutManager;
 
     private String[] maSortBy = new String[]{"", "coupon-expired-desc", "price-desc", "ad_name-asc"};
-    private String[] maFilter = new String[]{"", "bill_uploaded", "bill_verified", "cashback_recieved"};
+    private String[] maFilter = new String[]{"", "online-coupons", "offline-coupons", "bill_uploaded", "bill_verified", "cashback_recieved"};
 
     private String msSortBy = "", msFilter = "";
     private boolean isPendingBillUpload;

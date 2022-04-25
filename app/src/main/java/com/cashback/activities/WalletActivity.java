@@ -159,7 +159,9 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         moTransactionList = foJsonObject.getTransactionList();
         moTransactionListAdapter.notifyList(moTransactionList);
         moBinding.tvTitle.setText(foJsonObject.getMyCash().getMyCashName());
-        if (foJsonObject.getTransactionList().size() == 0) {
+        //foJsonObject.getTransactionList().clear();
+        if (foJsonObject.getTransactionList().size() == 0 &&
+                foJsonObject.getMyCash().getMyCashHistory().size() == 0) {
             launchWalletDialog();
             moBinding.rlWallet.setVisibility(View.GONE);
         } else {
@@ -186,6 +188,11 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     String moRedeemVal;
 
     private void showTotalRewards(TransactionListResponse foJsonObject) {
+        if (moTransactionList != null && moTransactionList.size() > 0) {
+            moBinding.rvTransactionList.setVisibility(View.VISIBLE);
+        } else {
+            moBinding.rvTransactionList.setVisibility(View.GONE);
+        }
         moRedeemVal = foJsonObject.getMyCash().getAutoRedeemPer();
         long mlTotalVirtualCash = 0, mlTotalInstantCash = 0;
         if (moTransactionList.size() > 0) {
@@ -209,9 +216,13 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         moBinding.tvTimelineCoupon.setText(text);
         moBinding.lblMyCash.setText(" MyCash (Rs. " + foJsonObject.getMyCash().getTotalMyCash() + ")");
 
-        moMyCashHistory.addAll(foJsonObject.getMyCash().getMyCashHistory());
-        moExpiryHistoryAdapter.notifyDataSetChanged();
-        if (foJsonObject.getMyCash().getTotalMyCash() > 0) {
+        //foJsonObject.getMyCash().setMyCashHistory(null);
+
+        if (foJsonObject.getMyCash().getMyCashHistory() != null &&
+                foJsonObject.getMyCash().getMyCashHistory().size() > 0) {
+
+            moMyCashHistory.addAll(foJsonObject.getMyCash().getMyCashHistory());
+            moExpiryHistoryAdapter.notifyDataSetChanged();
             // moBinding.tvAmount.setText("Rs. " + foJsonObject.getMyCash().getMyCashHistory().get(0).getRemainAmount());
             // moBinding.tvExpiry.setText(foJsonObject.getMyCash().getMyCashHistory().get(0).getExpiryDate());
             //  moBinding.tvTitleExp.setText(foJsonObject.getMyCash().getMyCashHistory().get(0).getTitle());
@@ -255,6 +266,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             moBinding.tvMyCashText.setHighlightColor(Color.TRANSPARENT);
             moBinding.tvMyCashText.setEnabled(true);
             moBinding.llHiddenMyCash.setVisibility(View.VISIBLE);
+        } else {
+            moBinding.llHiddenMyCash.setVisibility(View.GONE);
         }
     }
 

@@ -120,12 +120,12 @@ public class QuizDetailsActivity extends BaseActivity implements View.OnClickLis
             moBinding.tvOfferName.setText(moOffer.getAdName());
         moBinding.tvOfferName.setVisibility(View.VISIBLE);
 
-
-        if (moOffer.getAdCouponType() == 1) {
-            moBinding.tvOfferRewards.setText("(Answer To Win)");
-        } else {
-            moBinding.tvOfferRewards.setText("₹" + moOffer.getQuizReward() + " (Max Cashback)");
-        }
+        moBinding.tvOfferRewards.setText("(Answer To Win)");
+//        if (moOffer.getAdCouponType() == 1) {
+//            moBinding.tvOfferRewards.setText("(Answer To Win)");
+//        } else {
+//            moBinding.tvOfferRewards.setText("₹" + moOffer.getQuizReward() + " (Max Cashback)");
+//        }
     }
 
     private void getQuizDetails() {

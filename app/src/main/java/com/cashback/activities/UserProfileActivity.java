@@ -269,7 +269,9 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             moBinding.etLastName.setText(loUserDetails.getLastName());
             moBinding.etEmail.setText(loUserDetails.getEmail());
             moBinding.etDob.setText(loUserDetails.getBirthDate());
-            moBinding.etPhoneNo.setText(loUserDetails.getMobileNumber().replace("+91", ""));
+            moBinding.etPhoneNo.setText(loUserDetails.getMobileNumber().replaceAll("[\\D]", "").
+                    replaceFirst("91", ""));
+            // moBinding.etPhoneNo.setText(loUserDetails.getMobileNumber().replace("+91", ""));
             if (!TextUtils.isEmpty(moGetUserProfileResponse.getPaymentDetails().getFsPaytmMobile()))
                 moBinding.etPaytmNumber.setText(moGetUserProfileResponse.getPaymentDetails().getFsPaytmMobile());
             setBankOfferRadiusBox(loUserDetails.getBankOfferRadius());

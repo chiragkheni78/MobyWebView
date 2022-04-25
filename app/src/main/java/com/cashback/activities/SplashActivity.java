@@ -1,20 +1,22 @@
 package com.cashback.activities;
 
+import static com.cashback.utils.Constants.SPLASH_TIME;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
+import android.util.Log;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cashback.AppGlobal;
 import com.cashback.databinding.ActivitySplashBinding;
 import com.cashback.models.response.StaticLabelsResponse;
 import com.cashback.models.viewmodel.ReferralTrackViewModel;
 import com.cashback.models.viewmodel.SplashViewModel;
-
-import static com.cashback.utils.Constants.SPLASH_TIME;
+import com.cashback.utils.SharedPreferenceManager;
 
 public class SplashActivity extends BaseActivity {
 
@@ -51,9 +53,9 @@ public class SplashActivity extends BaseActivity {
         moSplashViewModel.fetchStaticLabels.observe(this, fetchStaticLabelsObserver);
         moSplashViewModel.fetchStaticLabelsList(getContext());
 
-//        moReferralTrackViewModel = new ViewModelProvider(this).get(ReferralTrackViewModel.class);
-//        moReferralTrackViewModel.retrieveFirebaseDeepLink(this, getIntent());
-//        moReferralTrackViewModel.checkInstallReferrer(getContext());
+        moReferralTrackViewModel = new ViewModelProvider(this).get(ReferralTrackViewModel.class);
+        moReferralTrackViewModel.retrieveFirebaseDeepLink(this, getIntent());
+        moReferralTrackViewModel.checkInstallReferrer(getContext());
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -64,10 +66,15 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void openActivity() {
+        SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(this);
 
         Intent loIntent = null;
         if (getPreferenceManager().isUserLogin()) {
-            loIntent = new Intent(SplashActivity.this, HomeActivity.class);
+            if (AppGlobal.walletRefferal.equalsIgnoreCase("wallet")) {
+                loIntent = new Intent(SplashActivity.this, WalletActivity.class);
+                //loSharedPreferenceManager.setAppDownloadCampaign("");
+            } else
+                loIntent = new Intent(SplashActivity.this, HomeActivity.class);
         } else {
             loIntent = new Intent(SplashActivity.this, ShortProfileActivity.class);
         }

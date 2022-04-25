@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 
 @SuppressWarnings("All")
-public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.DataObjectHolder> {
+public class    ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.DataObjectHolder> {
 
     private static String TAG = ActivityListAdapter.class.getSimpleName();
     private ArrayList<Activity> moActivityList;
@@ -51,7 +51,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView loTvAdName, loTvQuizReward, loTvDate, loTvCashBackAmount, tvCouponCode,
-                tvRegisterBill, tvRequiredPayout, tvExpireDay, lblReward;
+                tvRegisterBill, tvRequiredPayout, tvExpireDay, lblReward, tvCoupon;
         LinearLayout loLlRoot, loLllRegisterBill, loLlFade;
         ImageView ivLogo;
         RelativeLayout cardItemActivity;
@@ -59,6 +59,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         public DataObjectHolder(View foView) {
             super(foView);
             lblReward = foView.findViewById(R.id.lblReward);
+            tvCoupon = foView.findViewById(R.id.tvCoupon);
             tvRequiredPayout = foView.findViewById(R.id.tvRequiredPayout);
             cardItemActivity = foView.findViewById(R.id.cardItemActivityMain);
             loTvAdName = foView.findViewById(R.id.tvOfferName);
@@ -151,6 +152,11 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             handleLogicalOperation(foHolder, loActivity);
 
+            if (loActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
+                foHolder.tvCoupon.setVisibility(View.VISIBLE);
+            } else {
+                foHolder.tvCoupon.setVisibility(View.GONE);
+            }
             if (Common.msOfferId != null && !Common.msOfferId.isEmpty()) {
                 if (Common.msOfferId.equalsIgnoreCase("" + loActivity.getAdID())) {
 //                    foHolder.loTvAdName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));

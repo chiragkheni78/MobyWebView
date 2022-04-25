@@ -1,6 +1,7 @@
 package com.cashback.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,19 @@ public class MainStoreAdapter extends RecyclerView.Adapter<MainStoreAdapter.MyVi
         return new MyViewHolder(itemView);
     }
 
+    public void setBlurImage(boolean isBlur) {
+        if (!isBlur) {
+            for (int i = 0; i < moMainStoreList.size(); i++) {
+                moMainStoreList.get(i).setBlurScale(0.6F);
+            }
+        } else {
+            for (int i = 0; i < moMainStoreList.size(); i++) {
+                moMainStoreList.get(i).setBlurScale(1);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         moHolder = holder;
@@ -58,23 +72,32 @@ public class MainStoreAdapter extends RecyclerView.Adapter<MainStoreAdapter.MyVi
                 context.getResources().getDrawable(R.drawable.ic_moby_small),
                 null);
 
-        if (miMainStoreId == moMainStoreList.get(position).getCategoryId()) {
-            selectedItem = position;
+        if (moMainStoreList.get(position).getBlurScale() != 0.0)
+            holder.ivMainStore.setAlpha(moMainStoreList.get(position).getBlurScale());
+
+        if (moMainStoreList.get(position).isSelected()) {
             holder.rlMainStore.setBackground(ActivityCompat.getDrawable(context, R.drawable.border_for_card));
-        } else if (selectedItem == position) {
-            holder.rlMainStore.setBackground(ActivityCompat.getDrawable(context, R.drawable.border_for_card));
-        } else
+        } else {
             holder.rlMainStore.setBackground(null);
+        }
+
+//        if (miMainStoreId == moMainStoreList.get(position).getCategoryId()) {
+//            selectedItem = position;
+//            holder.rlMainStore.setBackground(ActivityCompat.getDrawable(context, R.drawable.border_for_card));
+//        } else if (selectedItem == position) {
+//            holder.rlMainStore.setBackground(ActivityCompat.getDrawable(context, R.drawable.border_for_card));
+//        } else
+//            holder.rlMainStore.setBackground(null);
 
         holder.rlMainStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                miMainStoreId = -1;
+                /*miMainStoreId = -1;
                 int previousItem = selectedItem;
-                selectedItem = position;
-                moSearchFragment.selectMainStore(moMainStoreList.get(position));
-                notifyItemChanged(previousItem);
-                notifyItemChanged(position);
+                selectedItem = position;*/
+                moSearchFragment.selectMainStore(position);
+                // notifyItemChanged(previousItem);
+                //notifyItemChanged(position);
             }
         });
     }

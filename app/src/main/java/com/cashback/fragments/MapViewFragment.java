@@ -1,5 +1,12 @@
 package com.cashback.fragments;
 
+import static android.app.Activity.RESULT_OK;
+import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
+import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
+import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
+import static com.cashback.models.viewmodel.MapViewModel.REQUEST_CHECK_SETTINGS;
+import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -33,8 +40,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.BankOfferDetailsActivity;
-import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.activities.PhoneLoginActivity;
+import com.cashback.activities.QuizDetailsActivity;
 import com.cashback.databinding.FragmentMapViewBinding;
 import com.cashback.dialog.MessageDialog;
 import com.cashback.models.Ad;
@@ -54,19 +61,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
-import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
-import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
-import static com.cashback.models.viewmodel.MapViewModel.MY_PERMISSIONS_LOCATION;
-import static com.cashback.models.viewmodel.MapViewModel.REQUEST_CHECK_SETTINGS;
-import static com.cashback.utils.Constants.IntentKey.SCREEN_TITLE;
 
 @SuppressWarnings("All")
 public class MapViewFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
@@ -286,13 +288,17 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                         int liPosition = moMarkerMap.get(marker.getId());
                         MapMarker loMapMarker = moMapViewModel.getMapMarkerList().get(liPosition);
 
-                        Intent loIntent = new Intent(getContext(), OfferDetailsActivity.class);
+                        Intent loIntent = new Intent(getContext(), QuizDetailsActivity.class);
 
                         if (loMapMarker.getAdType().contains(Constants.AdType.BANK_OFFER.getValue())) {
                             loIntent = new Intent(getContext(), BankOfferDetailsActivity.class);
+                            loIntent.putExtra(Constants.IntentKey.OFFER_ID, loMapMarker.getAdID());
+                            loIntent.putExtra(Constants.IntentKey.LOCATION_ID, loMapMarker.getLocationID());
+                        } else {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable(Constants.IntentKey.OFFER_OBJECT, moOfferList.get(liPosition));
+                            loIntent.putExtras(bundle);
                         }
-                        loIntent.putExtra(Constants.IntentKey.OFFER_ID, loMapMarker.getAdID());
-                        loIntent.putExtra(Constants.IntentKey.LOCATION_ID, loMapMarker.getLocationID());
                         getActivity().startActivity(loIntent);
                     }
                 }
@@ -347,7 +353,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                     int liPosition = moMarkerMap.get(marker.getId());
                     MapMarker loMapMarker = moMapViewModel.getMapMarkerList().get(liPosition);
 
-                    Intent loIntent = new Intent(getContext(), OfferDetailsActivity.class);
+                    Intent loIntent = new Intent(getContext(), QuizDetailsActivity.class);//OfferDetailsActivity
 
                     if (loMapMarker.getAdType().contains(Constants.AdType.BANK_OFFER.getValue())) {
                         loIntent = new Intent(getContext(), BankOfferDetailsActivity.class);
@@ -446,12 +452,22 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                 MapMarker loMapMarker = moMapViewModel.getMapMarkerList().get(liPosition);
 
                 if (loMapMarker.getAdType().equalsIgnoreCase(Constants.AdType.BANK_OFFER.getValue())) {
-                    imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_yellow));
-                    imagePin.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_yellow));
+                    //imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_yellow));
+                    imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_yellow_pin_bg));
                 } else {
-                    imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_red));
-                    imagePin.setImageDrawable(getResources().getDrawable(R.drawable.ic_location_red));
+                    imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_red_pin_bg));
+                    // imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_red));
                 }
+               /* Common.loadImage(imagePin, loMapMarker.getAdLogo(),
+                        getResources().getDrawable(R.drawable.ic_moby_small),
+                        getResources().getDrawable(R.drawable.ic_moby_small));*/
+
+                Picasso.get().
+                        load(Constants.IMAGE_BASE_URL + loMapMarker.getAdLogo()).
+                        placeholder(R.drawable.ic_moby_small).
+                        resize(50, 50).
+                        into(imagePin, new MarkerCallback(marker));
+
             }
 
             if (marker != null) {
@@ -470,5 +486,25 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
         }
     }
 
+    public class MarkerCallback implements Callback {
+        Marker marker = null;
+
+        MarkerCallback(Marker marker) {
+            this.marker = marker;
+        }
+
+        @Override
+        public void onSuccess() {
+            if (marker != null && marker.isInfoWindowShown()) {
+                marker.hideInfoWindow();
+                marker.showInfoWindow();
+            }
+        }
+
+        @Override
+        public void onError(Exception e) {
+
+        }
+    }
 }
 

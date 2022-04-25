@@ -1,7 +1,5 @@
 package com.cashback.dialog;
 
-import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,8 +10,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -91,7 +87,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         moBinding.rvCategories.setLayoutManager(layoutManagerCategories);
 
         moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-     //   moMapViewModel.functionCallStatus.observe((LifecycleOwner) activity, functionCallObserver);
+        //   moMapViewModel.functionCallStatus.observe((LifecycleOwner) activity, functionCallObserver);
 
         moBinding.btnApplyFilter.setOnClickListener(this);
         moBinding.tvOfflineStore.setOnClickListener(this);
@@ -210,6 +206,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
                 this.dismiss();
                 break;
             case R.id.tvAllStore:
+                enableDisableView(moBinding.rlMainStore, true);
                 fbIsClickStore = true;
                 checkPermissionStatus();
                 moPosition = 0;
@@ -218,7 +215,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
                 moBinding.tvAllStore.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 break;
             case R.id.tvOfflineStore:
-                fbIsClickStore = true;
+                setMainStoreUnSelect();
+                enableDisableView(moBinding.rlMainStore, false);
                 checkPermissionStatus();
                 moPosition = 2;
                 clearBgForView();
@@ -226,6 +224,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
                 moBinding.tvOfflineStore.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 break;
             case R.id.tvOnlineStore:
+                enableDisableView(moBinding.rlMainStore, true);
                 fbIsClickStore = false;
                 moPosition = 1;
                 clearBgForView();
@@ -271,18 +270,43 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         }
     }
 
-    public void selectMainStore(Category category) {
-        //Log.d("TTT", "main store..." + category.getCategoryId() + category.getCategoryName());
-        miLastMainStoreId = category.getCategoryId();
+    public void enableDisableView(View view, boolean enabled) {
+        view.setEnabled(enabled);
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
 
-        for (int i = 0; i < moCategories.size(); i++) {
+            for (int idx = 0; idx < group.getChildCount(); idx++) {
+                enableDisableView(group.getChildAt(idx), enabled);
+            }
+        }
+        mainStoreAdapter.setBlurImage(enabled);
+    }
+
+    public void setMainStoreUnSelect() {
+        miLastMainStoreId = -1;
+        for (int i = 0; i < moMainStoreList.size(); i++) {
+            moMainStoreList.get(i).setSelected(false);
+        }
+        mainStoreAdapter.notifyDataSetChanged();
+    }
+
+    public void selectMainStore(int moPosition) {
+        //Log.d("TTT", "main store..." + category.getCategoryId() + category.getCategoryName());
+        for (int i = 0; i < moMainStoreList.size(); i++) {
+            moMainStoreList.get(i).setSelected(false);
+        }
+        miLastMainStoreId = moMainStoreList.get(moPosition).getCategoryId();
+        moMainStoreList.get(moPosition).setSelected(true);
+        mainStoreAdapter.notifyDataSetChanged();
+       /* for (int i = 0; i < moCategories.size(); i++) {
             if (moCategories.get(i).getCategoryId() == miLastMainStoreId) {
                 dialogCategoryAdapter.miLastCategoryId = miLastMainStoreId;
                 miLastCategoryId = miLastMainStoreId;
                 dialogCategoryAdapter.notifyDataSetChanged();
                 break;
             }
-        }
+        }*/
+
     }
 
     @Override
@@ -292,10 +316,22 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
             miLastCategoryId = category.getCategoryId();
             Log.d("TTT", "category select..");
 
+         /*   for (int i = 0; i < moMainStoreList.size(); i++) {
+                if (moMainStoreList.get(i).getCategoryId() == miLastCategoryId) {
+                    mainStoreAdapter.miMainStoreId = miLastCategoryId;
+                    miLastMainStoreId = miLastCategoryId;
+                    mainStoreAdapter.notifyDataSetChanged();
+                    break;
+                }
+            }*/
+            for (int i = 0; i < moMainStoreList.size(); i++) {
+                moMainStoreList.get(i).setSelected(false);
+            }
             for (int i = 0; i < moMainStoreList.size(); i++) {
                 if (moMainStoreList.get(i).getCategoryId() == miLastCategoryId) {
                     mainStoreAdapter.miMainStoreId = miLastCategoryId;
                     miLastMainStoreId = miLastCategoryId;
+                    moMainStoreList.get(i).setSelected(true);
                     mainStoreAdapter.notifyDataSetChanged();
                     break;
                 }

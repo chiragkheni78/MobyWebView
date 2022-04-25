@@ -91,7 +91,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.GREEN.getValue())) {
             loTvToolbarTitle.setText("Online Coupon");
         } else if (moActivity.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
-            loTvToolbarTitle.setText("Physical Store Coupon");
+            loTvToolbarTitle.setText("Offline Store Coupon");
         }
     }
 
@@ -255,7 +255,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         AdLocationAdapter loStoreLocationAdapter = new AdLocationAdapter(getContext(), moActivity.getLocationList());
         moBinding.rvLocations.setAdapter(loStoreLocationAdapter);
 
-        moBinding.tvShopOffline.setVisibility(View.GONE);
+        moBinding.tvShopOffline.setVisibility(View.VISIBLE);
         loStoreLocationAdapter.setOnItemClickListener(new AdLocationAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -393,17 +393,17 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void displayEarnText() {
         //display cashback text
-        moBinding.tvDiscountUpto.setText(Common.getColorText("upto\n", Color.BLACK));
+        moBinding.tvDiscountUpto.setText(Common.getColorText("Upto\n", Color.BLACK));
         moBinding.tvDiscountUpto.append(Common.getColorSizeText(moActivity.getDiscountUpTo(), Color.BLACK, 1.30f));
         moBinding.tvDiscountUpto.append(Common.getColorSizeText("\nDiscount", Color.BLACK, 1.15f));
 
         if (moActivity.getAdCouponType() == 1) {
-            moBinding.tvExactCashback.setText(Common.getColorText("upto\n", Color.WHITE));
+            moBinding.tvExactCashback.setText(Common.getColorText("Upto\n", Color.WHITE));
             moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCbAmazon(), Color.WHITE, 1.30f));
             moBinding.tvExactCashback.append(Common.getColorSizeText("\nInstant\nDiscount", Color.WHITE, 1.10f));
             moBinding.tvCardMsg.setVisibility(View.VISIBLE);
         } else {
-            moBinding.tvExactCashback.setText(Common.getColorText("exact\n", Color.WHITE));
+            moBinding.tvExactCashback.setText(Common.getColorText("Exact\n", Color.WHITE));
             moBinding.tvExactCashback.append(Common.getColorSizeText(moActivity.getFlatCashBack(), Color.WHITE, 1.30f));
             moBinding.tvExactCashback.append(Common.getColorSizeText("\nCashback", Color.WHITE, 1.10f));
         }
@@ -481,7 +481,8 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                 dialogMarkAsUsed();
                 break;
             case R.id.tvShopOffline:
-                shopOfflinePressed(false);
+                //shopOfflinePressed(false);
+                moBinding.llInStore.setVisibility(View.VISIBLE);
             case R.id.ivArrow:
                 if (moBinding.ivArrow.getTag() != null) {
                     if (moBinding.ivArrow.getTag().equals("UP")) {

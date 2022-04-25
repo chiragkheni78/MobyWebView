@@ -29,8 +29,7 @@ public class AdLocation implements Serializable {
 
     @SerializedName("fsCity")
     String city;
-
-     @SerializedName("fsState")
+    @SerializedName("fsState")
     String state;
 
     @SerializedName("ffDistanceToUser")

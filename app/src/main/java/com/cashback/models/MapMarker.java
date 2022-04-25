@@ -27,6 +27,15 @@ public class MapMarker {
     double longitude;
 
     String landmark;
+    String adLogo;
+
+    public String getAdLogo() {
+        return adLogo;
+    }
+
+    public void setAdLogo(String adLogo) {
+        this.adLogo = adLogo;
+    }
 
     public long getAdID() {
         return adID;

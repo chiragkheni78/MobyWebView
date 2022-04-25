@@ -260,9 +260,12 @@
     <!--Timeline Filter-->
     <string-array name="filter_by">
         <item>All Coupons</item>
+        <item>Online Coupons</item>
+        <item>Offline Coupons</item>
         <item>Bills Upload</item>
         <item>Verified Coupons</item>
         <item>Paid</item>
+
     </string-array>
 </resources>
 

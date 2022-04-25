@@ -181,7 +181,7 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
         //Then, pass the HintRequest object to credentialsClient.getHintPickerIntent()
         // to get an intent to prompt the user to choose a phone number.
         CredentialsClient credentialsClient = Credentials.getClient(this, options);
-       // PendingIntent intent = credentialsClient.getHintPickerIntent(hintRequest);
+        // PendingIntent intent = credentialsClient.getHintPickerIntent(hintRequest);
         PendingIntent intent = Auth.CredentialsApi.getHintPickerIntent(googleApiClient, hintRequest);
         try {
             startIntentSenderForResult(
@@ -273,7 +273,6 @@ public class ShortProfileActivity extends BaseActivity implements View.OnClickLi
                         getPreferenceManager().setReferralLink(loUserDetails.getReferralUrl());
                         getPreferenceManager().setPhoneNumber(loUserDetails.getMobileNumber());
                     }
-
                     Intent intent = new Intent(ShortProfileActivity.this, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

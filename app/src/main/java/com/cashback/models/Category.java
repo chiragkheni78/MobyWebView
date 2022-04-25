@@ -11,10 +11,29 @@ public class Category {
     @SerializedName("fsCategoryImage")
     String fsCategoryImage;
 
+    float blurScale = 1;
+    boolean isSelected;
+
     public Category(int categoryId, String categoryName, String fsCategoryImage) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.fsCategoryImage = fsCategoryImage;
+    }
+
+    public float getBlurScale() {
+        return blurScale;
+    }
+
+    public void setBlurScale(float blurScale) {
+        this.blurScale = blurScale;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public String getCategoryName() {

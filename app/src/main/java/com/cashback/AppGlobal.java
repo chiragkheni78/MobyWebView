@@ -23,6 +23,8 @@ import java.util.ArrayList;
 public class AppGlobal extends Application {
 
 
+    public static String walletRefferal = "";
+    public static int fiBadgeCount = 0;
     public static boolean isDisplayRewardNote = false;
     public static boolean isSearchButtonBlink = true;
     public static boolean isDealBannerClosed = false;

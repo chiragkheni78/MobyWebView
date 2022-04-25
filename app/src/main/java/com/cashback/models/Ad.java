@@ -108,7 +108,7 @@ public class Ad implements Serializable {
     }
 
     public String getDescription() {
-        return description = (description != null)? description: "";
+        return description = (description != null) ? description : "";
     }
 
     public String getCampaignName() {
@@ -168,7 +168,7 @@ public class Ad implements Serializable {
     }
 
     public String getOfferDetails() {
-        return offerDetails = (offerDetails != null)? offerDetails : "none";
+        return offerDetails = (offerDetails != null) ? offerDetails : "none";
     }
 
     public String getCardName() {

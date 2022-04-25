@@ -17,7 +17,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -184,6 +187,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void initializeContent() {
 
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.parse("package:" + getPackageName()));
+            startActivity(intent);
+        }*/
+
         moHomeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         moHomeViewModel.getSettingStatus.observe(this, getSettingObserver);
         moHomeViewModel.getUpdateUserSession.observe(this, getUpdateUserSessionObserver);
@@ -191,6 +204,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
         moMapViewModel.functionCallStatus.observe(this, functionCallObserver);
 
+        AppGlobal.fiBadgeCount=0;
         setNavigationBar();
         moBinding.toolbar.ivMobyIcon.setOnClickListener(this);
         moBinding.toolbar.ibShare.setOnClickListener(this);
