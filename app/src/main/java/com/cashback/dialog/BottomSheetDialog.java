@@ -87,7 +87,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         moBinding.rvCategories.setLayoutManager(layoutManagerCategories);
 
         moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-        //   moMapViewModel.functionCallStatus.observe((LifecycleOwner) activity, functionCallObserver);
+        // moMapViewModel.functionCallStatus.observe((LifecycleOwner) activity, functionCallObserver);
 
         moBinding.btnApplyFilter.setOnClickListener(this);
         moBinding.tvOfflineStore.setOnClickListener(this);
@@ -115,6 +115,12 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         }
         setMainStoreAdapter();
         setCategoryAdapter();
+
+        if (moPosition == 2) {
+            /*moBinding.tvOnlineStore.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+            moBinding.tvOnlineStore.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));*/
+            moBinding.tvOnlineStore.performClick();
+        }
         // setExpiringSoonAdapter();
         //  setBiggestServingAdapter();
     }
@@ -206,25 +212,25 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
                 this.dismiss();
                 break;
             case R.id.tvAllStore:
-                enableDisableView(moBinding.rlMainStore, true);
+                moPosition = 0;
                 fbIsClickStore = true;
                 checkPermissionStatus();
-                moPosition = 0;
+                enableDisableView(moBinding.rlCategories, true);
                 clearBgForView();
                 moBinding.tvAllStore.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_color_primary_left));
                 moBinding.tvAllStore.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 break;
             case R.id.tvOfflineStore:
-                setMainStoreUnSelect();
-                enableDisableView(moBinding.rlMainStore, false);
-                checkPermissionStatus();
                 moPosition = 2;
+                fbIsClickStore = true;
+                checkPermissionStatus();
+                enableDisableView(moBinding.rlCategories, false);
                 clearBgForView();
                 moBinding.tvOfflineStore.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.bg_color_primary_right));
                 moBinding.tvOfflineStore.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 break;
             case R.id.tvOnlineStore:
-                enableDisableView(moBinding.rlMainStore, true);
+                enableDisableView(moBinding.rlCategories, true);
                 fbIsClickStore = false;
                 moPosition = 1;
                 clearBgForView();
@@ -271,6 +277,12 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
     }
 
     public void enableDisableView(View view, boolean enabled) {
+        if (!enabled) {
+            moBinding.llMainStore.setVisibility(View.GONE);
+            // miLastMainStoreId = -1;
+        } else {
+            moBinding.llMainStore.setVisibility(View.VISIBLE);
+        }
         view.setEnabled(enabled);
         if (view instanceof ViewGroup) {
             ViewGroup group = (ViewGroup) view;
@@ -279,10 +291,11 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
                 enableDisableView(group.getChildAt(idx), enabled);
             }
         }
-        mainStoreAdapter.setBlurImage(enabled);
+        // mainStoreAdapter.setBlurImage(enabled);
     }
 
     public void setMainStoreUnSelect() {
+        moBinding.llMainStore.setVisibility(View.GONE);
         miLastMainStoreId = -1;
         for (int i = 0; i < moMainStoreList.size(); i++) {
             moMainStoreList.get(i).setSelected(false);
@@ -298,6 +311,9 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         miLastMainStoreId = moMainStoreList.get(moPosition).getCategoryId();
         moMainStoreList.get(moPosition).setSelected(true);
         mainStoreAdapter.notifyDataSetChanged();
+        miLastCategoryId = miLastMainStoreId;
+        dialogCategoryAdapter.miLastCategoryId = miLastMainStoreId;
+        dialogCategoryAdapter.notifyDataSetChanged();
        /* for (int i = 0; i < moCategories.size(); i++) {
             if (moCategories.get(i).getCategoryId() == miLastMainStoreId) {
                 dialogCategoryAdapter.miLastCategoryId = miLastMainStoreId;

@@ -15,79 +15,102 @@
 
         <ImageView
             android:id="@+id/imageMarkerBackground"
-            android:layout_width="@dimen/_280sdp"
-            android:layout_height="@dimen/_75sdp"
+            android:layout_width="@dimen/_175sdp"
+            android:layout_height="@dimen/_98sdp"
             android:adjustViewBounds="true"
             android:scaleType="fitXY" />
         <!--  android:src="@drawable/ic_marker_background_red"-->
 
         <LinearLayout
-            android:layout_width="@dimen/_280sdp"
-            android:layout_height="@dimen/_55sdp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/_15sdp">
-
-            <ImageView
-                android:id="@+id/imageMarkerPin"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:src="@drawable/ic_location_red" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:minWidth="@dimen/_140sdp"
-                android:orientation="vertical"
-                android:paddingHorizontal="@dimen/_7sdp">
+                android:layout_width="@dimen/_175sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/_15sdp">
+
+                <ImageView
+                    android:id="@+id/imageMarkerPin"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:src="@drawable/ic_location_red" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minWidth="@dimen/_140sdp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/_7sdp">
+
+                    <TextView
+                        android:id="@+id/tvMarkerTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        tools:text="Device Name" />
+
+                    <TextView
+                        android:id="@+id/tvMarkerPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        tools:text="Device Name" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tvMarkerTitle"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    tools:text="Device Name" />
-
-                <TextView
-                    android:id="@+id/tvMarkerPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    tools:text="Device Name" />
+                    android:includeFontPadding="false"
+                    android:text="@string/navigation_drawer_open"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:gravity="center_vertical"
-                android:includeFontPadding="false"
-                android:text="@string/navigation_drawer_open"
-                android:textColor="@color/red"
-                android:textSize="14sp" />
+                android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="@dimen/_12sdp"
-                android:layout_height="@dimen/_12sdp"
-                android:rotation="180"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_left_arrow"
-                app:tint="@color/red" />
+                <TextView
+                    android:id="@+id/tvBrandName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
 
+                <ImageView
+                    android:id="@+id/ivArrow"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:rotation="180"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_left_arrow"
+                    app:tint="@color/red" />
+            </RelativeLayout>
         </LinearLayout>
-
     </RelativeLayout>
-
 </layout>

@@ -61,12 +61,17 @@ public class FirebaseEvents {
 
         bundle.putString("mobile", AppGlobal.getPhoneNumber());
 
-        AppGlobal.getFirebaseAnalytics().logEvent(eventName, bundle);
-        triggerFacebookEvent(context, eventName, bundle);
+        // TODO: 27-04-2022 payal
+       // AppGlobal.getFirebaseAnalytics().logEvent(eventName, bundle);
+        //triggerFacebookEvent(context, eventName, bundle);
     }
 
     private static void triggerFacebookEvent(Context context, String eventName, Bundle bundle) {
-        AppEventsLogger logger = AppEventsLogger.newLogger(context);
-        logger.logEvent(eventName);
+        try {
+            AppEventsLogger logger = AppEventsLogger.newLogger(context);
+            logger.logEvent(eventName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -12,10 +12,7 @@ import com.cashback.models.response.MessageDetailImage;
 import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
 import com.facebook.FacebookSdk;
-import com.facebook.LoggingBehavior;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.ArrayList;

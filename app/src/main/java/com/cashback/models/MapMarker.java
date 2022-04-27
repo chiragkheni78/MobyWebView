@@ -9,6 +9,8 @@ public class MapMarker {
     String adType;
 
     String pinColor;
+    String discountUpTo;
+    String flatCashBack;
 
     String productName;
 
@@ -28,6 +30,22 @@ public class MapMarker {
 
     String landmark;
     String adLogo;
+
+    public String getDiscountUpTo() {
+        return discountUpTo;
+    }
+
+    public String getFlatCashBack() {
+        return flatCashBack;
+    }
+
+    public void setDiscountUpTo(String discountUpTo) {
+        this.discountUpTo = discountUpTo;
+    }
+
+    public void setFlatCashBack(String flatCashBack) {
+        this.flatCashBack = flatCashBack;
+    }
 
     public String getAdLogo() {
         return adLogo;

@@ -22,6 +22,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -317,6 +318,7 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
 
     private void updateMyLocationOnMap() {
+        Log.d("TTT", "updateMyLocationOnMap location..." + moCurrentLocation);
         moCurrentLocation = moMapViewModel.getCurrentLocation();
         if (moCurrentLocation != null) {
             if (moCurrentLocationMarker != null) {
@@ -441,9 +443,11 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             View myContentsView = getLayoutInflater().inflate(R.layout.item_map_custom_view, null);
             TextView tvTitle = (TextView) myContentsView.findViewById(R.id.tvMarkerTitle);
             TextView tvPrice = (TextView) myContentsView.findViewById(R.id.tvMarkerPrice);
+            TextView tvBrandName = (TextView) myContentsView.findViewById(R.id.tvBrandName);
 
             ImageView imageBack = (ImageView) myContentsView.findViewById(R.id.imageMarkerBackground);
             ImageView imagePin = (ImageView) myContentsView.findViewById(R.id.imageMarkerPin);
+
 
             if (moMarkerMap != null && moMarkerMap.size() > 0
                     && marker.getId() != null && moMarkerMap.containsKey(marker.getId())) {
@@ -452,11 +456,23 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                 MapMarker loMapMarker = moMapViewModel.getMapMarkerList().get(liPosition);
 
                 if (loMapMarker.getAdType().equalsIgnoreCase(Constants.AdType.BANK_OFFER.getValue())) {
-                    //imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_yellow));
+                    tvTitle.setVisibility(View.VISIBLE);
+                    tvPrice.setVisibility(View.VISIBLE);
                     imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_yellow_pin_bg));
+                    tvTitle.setText(loMapMarker.getAdType());
+                    tvPrice.setText(loMapMarker.getLandmark());
                 } else {
+                    if (marker != null && !TextUtils.isEmpty(marker.getTitle())) {
+                        tvTitle.setText(marker.getTitle() + " Discount");
+                    } else {
+                        tvTitle.setVisibility(View.GONE);
+                    }
+
                     imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_red_pin_bg));
-                    // imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_marker_background_red));
+                    if (!TextUtils.isEmpty(loMapMarker.getFlatCashBack()))
+                        tvPrice.setText(loMapMarker.getFlatCashBack() + " Cashback");
+                    else
+                        tvPrice.setVisibility(View.GONE);
                 }
                /* Common.loadImage(imagePin, loMapMarker.getAdLogo(),
                         getResources().getDrawable(R.drawable.ic_moby_small),
@@ -468,11 +484,8 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                         resize(50, 50).
                         into(imagePin, new MarkerCallback(marker));
 
-            }
 
-            if (marker != null) {
-                tvTitle.setText(marker.getTitle());
-                tvPrice.setText(marker.getSnippet());
+                tvBrandName.setText(loMapMarker.getAdName());
             }
 
             return myContentsView;

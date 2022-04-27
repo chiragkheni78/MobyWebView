@@ -48,6 +48,9 @@ public class Transaction {
     @SerializedName("fsWalletName")
     String walletName;
 
+    @SerializedName("fsAdLogo")
+    String adLogo;
+
     @SerializedName("fsTrasactionType")
     String transactionType;
 
@@ -66,7 +69,9 @@ public class Transaction {
     @SerializedName("fsEstimatePayDate")
     String estimatedPayDate;
 
-
+    public String getAdLogo() {
+        return adLogo;
+    }
 
     public String getActivityType() {
         return activityType;

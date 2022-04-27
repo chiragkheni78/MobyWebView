@@ -95,6 +95,7 @@ public class MainStoreAdapter extends RecyclerView.Adapter<MainStoreAdapter.MyVi
                 /*miMainStoreId = -1;
                 int previousItem = selectedItem;
                 selectedItem = position;*/
+                //moSearchFragment.selectMainStore(position);
                 moSearchFragment.selectMainStore(position);
                 // notifyItemChanged(previousItem);
                 //notifyItemChanged(position);

@@ -17,10 +17,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -58,7 +55,6 @@ import com.cashback.fragments.MapViewFragment;
 import com.cashback.fragments.OfferListFragment;
 import com.cashback.fragments.ShareFragment;
 import com.cashback.models.Advertisement;
-import com.cashback.models.response.GetUpdateUserSessionResponse;
 import com.cashback.models.response.GetSettingResponse;
 import com.cashback.models.viewmodel.HomeViewModel;
 import com.cashback.models.viewmodel.MapViewModel;
@@ -187,24 +183,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private void initializeContent() {
 
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-            intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.parse("package:" + getPackageName()));
-            startActivity(intent);
-        }*/
-
         moHomeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         moHomeViewModel.getSettingStatus.observe(this, getSettingObserver);
-        moHomeViewModel.getUpdateUserSession.observe(this, getUpdateUserSessionObserver);
 
         moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
         moMapViewModel.functionCallStatus.observe(this, functionCallObserver);
 
-        AppGlobal.fiBadgeCount=0;
         setNavigationBar();
         moBinding.toolbar.ivMobyIcon.setOnClickListener(this);
         moBinding.toolbar.ibShare.setOnClickListener(this);
@@ -532,12 +516,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             dismissProgressDialog();
         }
     };
-    Observer<GetUpdateUserSessionResponse> getUpdateUserSessionObserver = new Observer<GetUpdateUserSessionResponse>() {
-        @Override
-        public void onChanged(GetUpdateUserSessionResponse loJsonObject) {
-            dismissProgressDialog();
-        }
-    };
 
     private void handleView(GetSettingResponse foJsonObject) {
 
@@ -769,17 +747,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     if (moPosition == R.id.itemNearBy) {
                         dialogOpenMapPopup(HomeActivity.this);
                     } else {
+                        AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
                         if (AppGlobal.fbIsBottomSheetIsOpen) {
                             AppGlobal.fbIsBottomSheetIsOpen = false;
                             return;
                         }
-                        AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
                         if (AppGlobal.getLocation() != null) {
                             loadOffers();
                         } else {
                             moMapViewModel.getLastKnownLocation(HomeActivity.this);
                         }
-
                     }
                     break;
             }

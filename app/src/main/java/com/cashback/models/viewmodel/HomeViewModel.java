@@ -55,7 +55,7 @@ public class HomeViewModel extends ViewModel {
                 Common.printReqRes(foResponse.body(), "getGlobalSetting", Common.LogType.RESPONSE);
                 if (foResponse.isSuccessful()) {
                     GetSettingResponse loJsonObject = foResponse.body();
-                    Log.d("TTT", "Response..." + foResponse.body().toString());
+                    Log.d("TTT", "Response..." + loJsonObject.isFbIsGpsEnInApp());
                     AppGlobal.setCategories(loJsonObject.getCategoryList());
                     AppGlobal.setMainStore(loJsonObject.getFoMainStore());
                     AppGlobal.setTotalBillVerified(loJsonObject.getTotalBillVerified());

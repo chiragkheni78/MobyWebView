@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -63,6 +64,8 @@ public class MapViewModel extends ViewModel {
     ArrayList<MapMarker> moMapMarkerList;
 
     public void fetchOffers(Context foContext, String mobileNumber, double latitude, double longitude, boolean isMarketingAd, boolean isBlockUser, int pageViewType) {
+        //latitude = 21.2308729;
+        //longitude = 72.8611336;
         FetchOffersRequest loFetchOffersRequest = new FetchOffersRequest(mobileNumber, latitude, longitude, isMarketingAd, isBlockUser, pageViewType);
         loFetchOffersRequest.setAction(Constants.API.GET_OFFER_LIST.getValue());
         loFetchOffersRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
@@ -126,6 +129,8 @@ public class MapViewModel extends ViewModel {
                     loMapMarker.setLongitude(loLocation.getLongitude());
                     loMapMarker.setLandmark(loLocation.getLandmark());
                     loMapMarker.setAdLogo(loOffer.getLogoUrl());
+                    loMapMarker.setDiscountUpTo(loOffer.getDiscountUpTo());
+                    loMapMarker.setFlatCashBack(loOffer.getFlatCashBack());
                     loMapMarkerList.add(loMapMarker);
                 }
             }
@@ -139,7 +144,7 @@ public class MapViewModel extends ViewModel {
         MapMarker loMapMarker = moMapMarkerList.get(fiPosition);
 
         LatLng loPosition = new LatLng(loMapMarker.getLatitude(), loMapMarker.getLongitude());
-        String lsTitle = loMapMarker.getAdName();
+        String lsTitle = loMapMarker.getDiscountUpTo();
         String lsSnippet;//loMapMarker.getProductName() + "\t\t₹" + loMapMarker.getQuizReward();
         BitmapDescriptor loPinIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE);
 
@@ -147,7 +152,8 @@ public class MapViewModel extends ViewModel {
             loPinIcon = BitmapDescriptorFactory.defaultMarker(62.0f);
             lsSnippet = loMapMarker.getProductName();
         } else {
-            lsSnippet = "Rs. " + loMapMarker.getQuizReward();
+            //lsSnippet = "Rs. " + loMapMarker.getQuizReward();
+            lsSnippet = loMapMarker.getFlatCashBack();
             if (loMapMarker.isEngagedFlag()) {
                 loPinIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE); // Gray
             } else {
@@ -319,6 +325,7 @@ public class MapViewModel extends ViewModel {
             }
             for (Location location : locationResult.getLocations()) {
                 if (location != null) {
+                    Log.d("TTT", "locationCallback location..." + location);
                     moCurrentLocation = location;
                     stopLocationUpdates();
                     functionCallStatus.postValue(FETCH_OFFERS);
