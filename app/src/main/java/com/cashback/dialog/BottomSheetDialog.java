@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -21,6 +23,8 @@ import com.cashback.databinding.BottomSheetLayoutBinding;
 import com.cashback.models.Category;
 import com.cashback.models.SubCategory;
 import com.cashback.models.viewmodel.MapViewModel;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -39,6 +43,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
     private DialogCategoryAdapter dialogCategoryAdapter;
     MapViewModel moMapViewModel;
     private Activity activity;
+    // private FusedLocationProviderClient client;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -87,8 +92,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         moBinding.rvCategories.setLayoutManager(layoutManagerCategories);
 
         moMapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-        // moMapViewModel.functionCallStatus.observe((LifecycleOwner) activity, functionCallObserver);
-
+        moMapViewModel.functionCallStatus.observe((LifecycleOwner) activity, functionCallObserver);
+        //client = LocationServices.getFusedLocationProviderClient(getActivity());
         moBinding.btnApplyFilter.setOnClickListener(this);
         moBinding.tvOfflineStore.setOnClickListener(this);
         moBinding.tvOnlineStore.setOnClickListener(this);
@@ -125,13 +130,13 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         //  setBiggestServingAdapter();
     }
 
- /*   Observer<String> functionCallObserver = fsFunctionName -> {
+    Observer<String> functionCallObserver = fsFunctionName -> {
         switch (fsFunctionName) {
-            case FETCH_OFFERS:
+            case MapViewModel.FETCH_OFFERS:
                 Log.d("TTT", "call fetch offer bottom...");
                 break;
         }
-    };*/
+    };
 
     private void setMainStoreAdapter() {
         moMainStoreList = AppGlobal.getMoMainStore();
@@ -209,6 +214,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
                         miLastCategoryId,
                         miLastMainStoreId
                 );
+                AppGlobal.fbIsBottomSheetIsOpen = false;
                 this.dismiss();
                 break;
             case R.id.tvAllStore:

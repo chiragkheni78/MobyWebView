@@ -161,9 +161,9 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "text_verify_phone_no"));
             moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number_map"));
         } else if (!moMapViewModel.isLocationEnabled((getContext()))) {
-            moBinding.llErrorMessage.setVisibility(View.VISIBLE);
-            moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "disable_location"));
-            moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "disable_location_msg"));
+           // moBinding.llErrorMessage.setVisibility(View.VISIBLE);
+           // moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "disable_location"));
+            //moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "disable_location_msg"));
             errorButtonPressed();
         } else {
             moBinding.llErrorMessage.setVisibility(View.GONE);

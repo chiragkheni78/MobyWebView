@@ -722,8 +722,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void checkPermissionStatus() {
-        Log.d("TTT", "mbIsLocationRequired..." + mbIsLocationRequired);
-        if (mbIsLocationRequired) {
+       // Log.d("TTT", "mbIsLocationRequired..." + mbIsLocationRequired);
+        if (mbIsLocationRequired || AppGlobal.fbIsBottomSheetIsOpen) {
             if (!moMapViewModel.checkGPSEnabled(this)) {
                 moMapViewModel.enableGPS(this);
             }
