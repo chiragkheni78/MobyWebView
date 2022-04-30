@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,7 +15,6 @@ import com.cashback.databinding.ActivitySplashBinding;
 import com.cashback.models.response.StaticLabelsResponse;
 import com.cashback.models.viewmodel.ReferralTrackViewModel;
 import com.cashback.models.viewmodel.SplashViewModel;
-import com.cashback.utils.SharedPreferenceManager;
 
 public class SplashActivity extends BaseActivity {
 
@@ -66,8 +64,6 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void openActivity() {
-        SharedPreferenceManager loSharedPreferenceManager = new SharedPreferenceManager(this);
-
         Intent loIntent = null;
         if (getPreferenceManager().isUserLogin()) {
             if (AppGlobal.walletRefferal.equalsIgnoreCase("wallet")) {

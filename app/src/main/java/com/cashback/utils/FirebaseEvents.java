@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.cashback.AppGlobal;
+import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
 public class FirebaseEvents {
@@ -55,7 +56,6 @@ public class FirebaseEvents {
 
     public static void trigger(Context context, Bundle bundle, String eventName) {
         eventName = "AND_" + eventName;
-
         if (bundle == null)
             bundle = new Bundle();
 
@@ -68,6 +68,5 @@ public class FirebaseEvents {
     private static void triggerFacebookEvent(Context context, String eventName, Bundle bundle) {
         AppEventsLogger logger = AppEventsLogger.newLogger(context);
         logger.logEvent(eventName);
-
     }
 }

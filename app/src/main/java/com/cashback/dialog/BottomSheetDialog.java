@@ -81,6 +81,8 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
             AppGlobal.fbIsBottomSheetIsOpen = true;
             if (!moMapViewModel.checkGPSEnabled(getActivity())) {
                 moMapViewModel.enableGPS(getActivity());
+            }else{
+                moMapViewModel.getLastKnownLocation(getActivity());
             }
         }
     }

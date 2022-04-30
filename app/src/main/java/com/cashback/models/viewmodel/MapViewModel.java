@@ -245,7 +245,7 @@ public class MapViewModel extends ViewModel {
                 if (e instanceof ResolvableApiException) {
                     // Location settings are not satisfied, but this can be fixed
                     // by showing the user a dialog.
-                    MessageDialog loDialog = new MessageDialog(foContext, null, "GPS location is required to show in-store offers", "Enable GPS", false);
+                   /* MessageDialog loDialog = new MessageDialog(foContext, null, "GPS location is required to show in-store offers", "Enable GPS", false);
                     loDialog.setClickListener(v -> {
                         loDialog.dismiss();
                         try {
@@ -258,7 +258,15 @@ public class MapViewModel extends ViewModel {
                             // Ignore the error.
                         }
                     });
-                    loDialog.show();
+                    loDialog.show();*/
+
+                    ResolvableApiException resolvable = (ResolvableApiException) e;
+                    try {
+                        resolvable.startResolutionForResult(foContext,
+                                REQUEST_CHECK_SETTINGS);
+                    } catch (IntentSender.SendIntentException sendIntentException) {
+                        sendIntentException.printStackTrace();
+                    }
                 }
             }
         });

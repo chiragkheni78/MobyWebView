@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.adgyde.android.AdGyde;
@@ -18,13 +17,6 @@ import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
 import com.cashback.AppGlobal;
-import com.cashback.activities.ShortProfileActivity;
-import com.cashback.activities.SplashActivity;
-import com.cashback.models.request.StaticLabelsRequest;
-import com.cashback.models.response.StaticLabelsResponse;
-import com.cashback.utils.APIClient;
-import com.cashback.utils.Common;
-import com.cashback.utils.Constants;
 import com.cashback.utils.FirebaseEvents;
 import com.cashback.utils.LogV2;
 import com.cashback.utils.SharedPreferenceManager;
@@ -33,14 +25,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 
-import org.json.JSONObject;
-
 import java.net.URLDecoder;
 import java.util.HashMap;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class ReferralTrackViewModel extends ViewModel {

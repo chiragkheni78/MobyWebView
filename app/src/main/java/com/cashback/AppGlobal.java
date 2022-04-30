@@ -12,7 +12,6 @@ import com.cashback.models.response.MessageDetailImage;
 import com.cashback.utils.Constants;
 import com.cashback.utils.SharedPreferenceManager;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -62,7 +61,9 @@ public class AppGlobal extends Application {
 
     private void initFacebookSDK() {
         FacebookSdk.fullyInitialize();
-//        FacebookSdk.setIsDebugEnabled(true);
+        // AppEventsLogger.activateApp(this);
+
+        //        FacebookSdk.setIsDebugEnabled(true);
 //        FacebookSdk.addLoggingBehavior(LoggingBehavior.APP_EVENTS);
     }
 

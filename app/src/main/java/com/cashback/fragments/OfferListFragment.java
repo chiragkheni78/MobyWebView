@@ -296,6 +296,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         isLoading = true;
 
         //  String lsSearchText = (moBinding.etSearch.getText().length() > 0) ? moBinding.etSearch.getText().toString().trim() : "";
+
         OfferFilter loOfferFilter = new OfferFilter(msSearchText, miCurrentPage, miCategoryId, mlBannerID, miAdType);
 
         if (AppGlobal.getLocation() == null) {

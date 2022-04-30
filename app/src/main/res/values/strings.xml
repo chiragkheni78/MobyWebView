@@ -3,7 +3,7 @@
 
     <string name="facebook_app_id">576205213451199</string>
     <string name="fb_login_protocol_scheme">fb576205213451199</string>
-
+    <string name="facebook_client_token">ca4c821f09871ac1e36d3b54f508c08f</string>
     <!--messages-->
     <string name="validate_age">Please enter your age</string>
     <string name="validate_phone">Please enter valid phone number</string>

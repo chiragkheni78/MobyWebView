@@ -18,6 +18,7 @@ import com.cashback.databinding.ActivityMessageDetailBinding;
 import com.cashback.models.response.MessageDetailsResponse;
 import com.cashback.models.viewmodel.MessagesViewModel;
 import com.cashback.utils.Common;
+import com.cashback.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 public class MessageDetailActivity extends BaseActivity {
@@ -62,6 +63,15 @@ public class MessageDetailActivity extends BaseActivity {
             moBinding.ivBanner.setVisibility(View.VISIBLE);
             Picasso.get().load(AppGlobal.getMessageDetailImage().get(0).getImageUrl()).into(moBinding.ivBanner);
         }
+        moBinding.ivBanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(moContext, HomeActivity.class);
+                intent.putExtra(Constants.IntentKey.IS_FROM, Constants.IntentKey.LOAD_OFFER_PAGE);
+                moContext.startActivity(intent);
+                finishAffinity();
+            }
+        });
     }
 
     private void setToolbar() {

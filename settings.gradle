@@ -1,2 +1,2 @@
-include ':app'
 rootProject.name = "Moby Cashback"
+include ':app'
