@@ -20,22 +20,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="15dp"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingTop="15dp"
             android:visibility="visible">
 
-            <TextView
-                android:id="@+id/tvCouponCode"
+            <androidx.cardview.widget.CardView xmlns:card="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="MOBY24525"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/_18sdp"
-                android:textStyle="bold"
-                android:visibility="visible" />
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_26sdp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true"
+                card:cardBackgroundColor="@color/grey">
+
+                <TextView
+                    android:id="@+id/tvCouponCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="MOBY24525"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/_18sdp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+            </androidx.cardview.widget.CardView>
+
 
         </LinearLayout>
 
@@ -47,19 +58,45 @@
             android:paddingHorizontal="25dp"
             android:paddingVertical="@dimen/padding_standard">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="@dimen/_3sdp"
+                android:text="SHARE COUPON CODE WITH CASHIER"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
             <EditText
                 android:id="@+id/etBillAmount"
                 style="@style/etStandard"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_36sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:background="@drawable/bg_white_blue"
                 android:gravity="center"
-                android:hint="@string/hint_bill_amount"
+                android:hint="@string/hint_ask_cashier_for_bill_amt"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLines="1"
                 android:textColor="@color/primary_text"
-                android:textSize="@dimen/txt_large" />
+                android:textSize="@dimen/txt_standard" />
+
+            <EditText
+                android:id="@+id/etStoreCode"
+                style="@style/etStandard"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/bg_white_blue"
+                android:gravity="center"
+                android:hint="@string/hint_ask_cashier_for_store"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:inputType="text"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/txt_standard" />
 
 
             <TextView
@@ -82,6 +119,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -90,9 +129,9 @@
                 style="@style/RippleBtnStandard"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/padding_standard"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/white"
-                android:text="@string/btn_mark_coupon_used" />
+                android:background="@drawable/back_primary_round_border"
+                android:text="@string/btn_mark_coupon_used"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </LinearLayout>

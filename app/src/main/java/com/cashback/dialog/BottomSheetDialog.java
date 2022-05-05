@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -23,8 +27,6 @@ import com.cashback.databinding.BottomSheetLayoutBinding;
 import com.cashback.models.Category;
 import com.cashback.models.SubCategory;
 import com.cashback.models.viewmodel.MapViewModel;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -80,7 +82,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
     public void onPause() {
         super.onPause();
         //Log.d("TTT", "dialog is pause...");
-       // AppGlobal.fbIsBottomSheetIsOpen = false;
+        // AppGlobal.fbIsBottomSheetIsOpen = false;
     }
 
     private void checkPermissionStatus() {
@@ -111,10 +113,23 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         moBinding.ivCategories.setOnClickListener(this);
         moBinding.ivExpiringSoon.setOnClickListener(this);
         moBinding.ivBiggestSarvings.setOnClickListener(this);
+        moBinding.btnSearch.setOnClickListener(this);
 
         if (!TextUtils.isEmpty(msSearchText)) {
             moBinding.etSearch.setText(msSearchText);
         }
+
+        moBinding.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    // Your piece of code on keyboard search click
+                    performFilterClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         clearBgForView();
         if (moPosition == 0) {
@@ -221,14 +236,12 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnApplyFilter:
-                onApplyClickFilter.onFilterClick(
-                        moPosition,
-                        moBinding.etSearch.getText().toString().trim(),
-                        miLastCategoryId,
-                        miLastMainStoreId
-                );
-                AppGlobal.fbIsBottomSheetIsOpen = false;
-                this.dismiss();
+            case R.id.btnSearch:
+               /* if(TextUtils.isEmpty(moBinding.etSearch.getText().toString().trim())){
+                    Toast.makeText(activity,"Please enter search",Toast.LENGTH_SHORT).show();
+                    return;
+                }*/
+                performFilterClick();
                 break;
             case R.id.tvAllStore:
                 moPosition = 0;
@@ -293,6 +306,17 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
                 }
                 break;
         }
+    }
+
+    public void performFilterClick() {
+        onApplyClickFilter.onFilterClick(
+                moPosition,
+                moBinding.etSearch.getText().toString().trim(),
+                miLastCategoryId,
+                miLastMainStoreId
+        );
+        AppGlobal.fbIsBottomSheetIsOpen = false;
+        this.dismiss();
     }
 
     public void enableDisableView(View view, boolean enabled) {

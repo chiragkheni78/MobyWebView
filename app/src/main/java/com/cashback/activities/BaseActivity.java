@@ -1,5 +1,6 @@
 package com.cashback.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -54,7 +55,6 @@ public class BaseActivity extends AppCompatActivity {
         if (!isFinishing())
             Common.dismissProgressDialog(loProgressDialog);
     }
-
 
     @Override
     protected void onDestroy() {

@@ -35,7 +35,7 @@ android {
         applicationId "com.mobyads"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 161
+        versionCode 162
         versionName "2.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

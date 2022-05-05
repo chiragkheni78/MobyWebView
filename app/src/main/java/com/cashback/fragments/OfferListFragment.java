@@ -4,6 +4,8 @@ import static com.cashback.AppGlobal.isSearchButtonBlink;
 import static com.cashback.models.viewmodel.MapViewModel.FETCH_OFFERS;
 import static com.cashback.models.viewmodel.MapViewModel.LOAD_MAP_VIEW;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.location.Location;
@@ -12,7 +14,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -482,7 +486,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             } else if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.YELLOW.getValue())) {
                 Intent loIntent = new Intent(getContext(), BankOfferDetailsActivity.class);
                 loIntent.putExtra(Constants.IntentKey.OFFER_ID, moOfferList.get(position).getAdID());
-                loIntent.putExtra(Constants.IntentKey.LOCATION_ID,  moOfferList.get(position).getLocationList().get(0).getLocationID());
+                loIntent.putExtra(Constants.IntentKey.LOCATION_ID, moOfferList.get(position).getLocationList().get(0).getLocationID());
                 startActivity(loIntent);
                 return;
             } else {
@@ -579,6 +583,7 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onFilterClick(int position, String searchText, int categoryId, int mainStoreId) {
+        //hideKeyboard(getActivity());
         isFilterApply = true;
         //Log.d("TTT", "before id..." + categoryId + "\t " + mainStoreId);
         miLastMainStoreId = mainStoreId;
@@ -592,5 +597,9 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
         // Log.d("TTT", "after id..." + miCategoryId);
         msSearchText = (searchText.length() > 0) ? searchText.toString().trim() : "";
         refreshData();
+    }
+
+    public void hideKeyboard(Activity activity) {
+       // getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 }

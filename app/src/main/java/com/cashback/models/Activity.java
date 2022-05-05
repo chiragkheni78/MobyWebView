@@ -196,6 +196,10 @@ public class Activity implements LifecycleOwner {
     @SerializedName("fsAdditionLabel")
     String additionLabel;
 
+    public void setMarkIsUsedType(int fiMarkIsUsedType) {
+        this.markAsUsedType = fiMarkIsUsedType;
+    }
+
     public String getWalletName() {
         return walletName;
     }

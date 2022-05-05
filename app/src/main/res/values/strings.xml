@@ -68,6 +68,8 @@
     <string name="text_login_msg">We will send you an</string>
     <string name="hint_mobile_no">10 digit mobile number</string>
     <string name="hint_bill_amount">Enter bill amount</string>
+    <string name="hint_ask_cashier_for_bill_amt">ASK CASHIER FOR BILL AMT</string>
+    <string name="hint_ask_cashier_for_store">ASK CASHIER FOR STORE CODE</string>
 
     <string name="status_verification_failed">Verification failed</string>
     <string name="status_sign_in_failed">Sign-in failed</string>
@@ -229,8 +231,8 @@
     <string name="my_case_offer">Congrats! You got MyCash Credit %1$s,\nCheck Expiry/History Of MyCash.</string>
     <string name="share_title">REFER TO YOUR FRIENDS &amp; FAMILY,\nEARN CASH WHENEVER THEY SHOP</string>
 
-    <string name="btn_use_coupon_store">Use Coupon @ Store</string>
-    <string name="btn_scan_moby_qr_code">Scan MOBY QR Code</string>
+    <string name="btn_use_coupon_store">VIEW COUPON TO MARK</string>
+    <string name="btn_scan_moby_qr_code">SCAN QR CODE @ CASHIER</string>
     <string name="btn_view_coupon_code">View Coupon Code</string>
 
     <string name="alert_msg_out_range">You need to be Within %s Mtrs of the Ad pin to answer the Quiz and Get instant Cash/Gift.</string>

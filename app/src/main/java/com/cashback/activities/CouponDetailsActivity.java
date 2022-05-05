@@ -292,12 +292,10 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
 //        3 : Mark with coupon code on excel upload(With QR)
 //        4 : Mark with coupon code on excel upload(Without QR)
 
-        if (moActivity.getMarkAsUsedType() == 1) {
+        if (moActivity.getMarkAsUsedType() == 1 || moActivity.getMarkAsUsedType() == 4) {
             moBinding.tvMarkAsUsed.setText(getString(R.string.btn_use_coupon_store));
         } else if (moActivity.getMarkAsUsedType() == 2 || moActivity.getMarkAsUsedType() == 3) {
             moBinding.tvMarkAsUsed.setText(getString(R.string.btn_scan_moby_qr_code));
-        } else if (moActivity.getMarkAsUsedType() == 4) {
-            moBinding.tvMarkAsUsed.setText(getString(R.string.btn_view_coupon_code));
         }
     }
 
@@ -316,7 +314,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onItemClick(int position, View v) {
                 //trigger event
-                moActivityDetailsViewModel.buttonClicked(moActivity.getAdID(),Constants.IntentKey.OFFER_ONLINE);
+                moActivityDetailsViewModel.buttonClicked(moActivity.getAdID(), Constants.IntentKey.OFFER_ONLINE);
                 if (moActivity.isBlinkShopOnline()) {
                     AdGydeEvents.getOfferClicked(getContext(), moActivity);
                 }
@@ -537,7 +535,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             AdGydeEvents.shopOnlineClicked(getContext(), moActivity);
         }
         moBinding.tvShopOnline.clearAnimation();
-        moActivityDetailsViewModel.buttonClicked(moActivity.getAdID(),Constants.IntentKey.SHOP_ONLINE);
+        moActivityDetailsViewModel.buttonClicked(moActivity.getAdID(), Constants.IntentKey.SHOP_ONLINE);
     }
 
     private void dialogMarkAsUsed() {
@@ -547,7 +545,7 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
             openPhoneLogin(null);
             return;
         }
-
+       // Log.d("TTT", "mark as used.." + moActivity.getMarkAsUsedType());
         if (moActivity != null) {
             if (moActivity.getMarkAsUsedType() == 1) {
                 dialogMarkWithPhone();
@@ -599,7 +597,11 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
         final TextView loTvCouponCode = moDialog.findViewById(R.id.tvCouponCode);
         final TextView loTvCbMessage = moDialog.findViewById(R.id.tvCbMessage);
         final EditText loEtBillAmount = moDialog.findViewById(R.id.etBillAmount);
+        final EditText loEtStoreCode = moDialog.findViewById(R.id.etStoreCode);
 
+        if (moActivity.getMarkAsUsedType() == 3) {
+            loEtStoreCode.setVisibility(View.GONE);
+        }
         loTvCouponCode.setText(moActivity.getCouponCode());
         loTvCbMessage.setText(Common.getDynamicText(getContext(), "your_cashback_credit")
                 .replace("XXX", moActivity.getFlatCashBack()).replace("YY", String.valueOf(moActivity.getVirtualCashTransferDays())));
@@ -614,6 +616,18 @@ public class CouponDetailsActivity extends BaseActivity implements View.OnClickL
                             Common.getDynamicText(getContext(), "validate_transaction_amount"),
                             false);
                     return;
+                } else if (moActivity.getMarkAsUsedType() == 4 && TextUtils.isEmpty(loEtStoreCode.getText().toString().trim())) {
+                    Common.showErrorDialog(getContext(),
+                            "Please enter store code",
+                            false);
+                    return;
+                } else if (moActivity.getMarkAsUsedType() == 4 && !TextUtils.isEmpty(loEtStoreCode.getText().toString().trim())) {
+                    if (!loEtStoreCode.getText().toString().trim().equals(moActivity.getQrCodeText())) {
+                        Common.showErrorDialog(getContext(),
+                                "Invalid store code, Please contact store owner",
+                                false);
+                        return;
+                    }
                 }
 
                 moDialog.dismiss();
