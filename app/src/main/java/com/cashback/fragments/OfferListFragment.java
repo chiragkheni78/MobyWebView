@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cashback.AppGlobal;
 import com.cashback.R;
+import com.cashback.activities.BankOfferDetailsActivity;
 import com.cashback.activities.HomeActivity;
 import com.cashback.activities.OfferDetailsActivity;
 import com.cashback.activities.QuizDetailsActivity;
@@ -478,6 +479,12 @@ public class OfferListFragment extends BaseFragment implements View.OnClickListe
             }
             if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.RED.getValue())) {
                 verifyLocation(loOffer);
+            } else if (loOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.YELLOW.getValue())) {
+                Intent loIntent = new Intent(getContext(), BankOfferDetailsActivity.class);
+                loIntent.putExtra(Constants.IntentKey.OFFER_ID, moOfferList.get(position).getAdID());
+                loIntent.putExtra(Constants.IntentKey.LOCATION_ID,  moOfferList.get(position).getLocationList().get(0).getLocationID());
+                startActivity(loIntent);
+                return;
             } else {
                 if (loOffer.isQuizFlow()) {
                     openQuizDetails(loOffer);

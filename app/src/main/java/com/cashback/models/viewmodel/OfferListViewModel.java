@@ -29,6 +29,7 @@ public class OfferListViewModel extends ViewModel {
     public MutableLiveData<FetchOffersResponse> fetchOffersStatus = new MutableLiveData<>();
 
     public void fetchOffers(Context foContext, String mobileNumber, double latitude, double longitude, boolean isMarketingAd, boolean isBlockUser, int pageViewType, OfferFilter foOfferFilter) {
+
         if (foOfferFilter.getAdType() == 2) {
             pageViewType = 2;
         }

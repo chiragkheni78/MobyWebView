@@ -161,9 +161,10 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "text_verify_phone_no"));
             moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "msg_verify_phone_number_map"));
         } else if (!moMapViewModel.isLocationEnabled((getContext()))) {
-           // moBinding.llErrorMessage.setVisibility(View.VISIBLE);
-           // moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "disable_location"));
-            //moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "disable_location_msg"));
+             moBinding.llErrorMessage.setVisibility(View.VISIBLE);
+             moBinding.tvErrorTitle.setText(Common.getDynamicText(getContext(), "disable_location"));
+            moBinding.tvErrorMessage.setText(Common.getDynamicText(getContext(), "disable_location_msg"));
+            errorButtonPressed();
             errorButtonPressed();
         } else {
             moBinding.llErrorMessage.setVisibility(View.GONE);
@@ -478,11 +479,18 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
                         getResources().getDrawable(R.drawable.ic_moby_small),
                         getResources().getDrawable(R.drawable.ic_moby_small));*/
 
-                Picasso.get().
-                        load(Constants.IMAGE_BASE_URL + loMapMarker.getAdLogo()).
-                        placeholder(R.drawable.ic_moby_small).
-                        resize(50, 50).
-                        into(imagePin, new MarkerCallback(marker));
+                if (loMapMarker.getPinColor().equalsIgnoreCase(Constants.PinColor.YELLOW.getValue())) {
+                    Picasso.get().
+                            load(loMapMarker.getAdLogo()).
+                            placeholder(R.drawable.ic_moby_small).
+                            resize(50, 50).
+                            into(imagePin, new MarkerCallback(marker));
+                } else
+                    Picasso.get().
+                            load(Constants.IMAGE_BASE_URL + loMapMarker.getAdLogo()).
+                            placeholder(R.drawable.ic_moby_small).
+                            resize(50, 50).
+                            into(imagePin, new MarkerCallback(marker));
 
 
                 tvBrandName.setText(loMapMarker.getAdName());

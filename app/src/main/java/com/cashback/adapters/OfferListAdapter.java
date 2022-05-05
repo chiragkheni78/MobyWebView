@@ -65,7 +65,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             loLlFade = foView.findViewById(R.id.llFade);
             view1 = foView.findViewById(R.id.view1);
             // rlTop = foView.findViewById(R.id.rlTop);
-           // loLoaderChip = foView.findViewById(R.id.loaderChip);
+            // loLoaderChip = foView.findViewById(R.id.loaderChip);
             foView.setOnClickListener(this);
             loBtnAdDetails.setOnClickListener(this);
         }
@@ -117,7 +117,7 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
 //            foHolder.loTvBrandName.setTextColor(ActivityCompat.getColor(moContext, R.color.white));
 //
 //            foHolder.loBtnAdDetails.setCompoundDrawablesWithIntrinsicBounds(null, null, Common.getColorDrawable(moContext, R.drawable.ic_next_12, R.color.black), null);
-             setAnimations(foHolder.loLlFade);
+            setAnimations(foHolder.loLlFade);
         } else {
 
         }
@@ -171,7 +171,12 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
     }
 
     private void setLogo(ImageView loIvLogo, Ad foAdOffer) {
-        Common.loadImage(loIvLogo, foAdOffer.getLogoUrl(), null, null);
+        if (foAdOffer.getPinColor().equalsIgnoreCase(Constants.PinColor.YELLOW.getValue())) {
+            Common.loadImageBank(loIvLogo, foAdOffer.getLogoUrl(), null, null);
+        } else {
+            Common.loadImage(loIvLogo, foAdOffer.getLogoUrl(), null, null);
+        }
+
     }
 
     private void setOfferLabel(TextView foTvCashBackOffer, Ad foAdOffer) {

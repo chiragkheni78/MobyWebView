@@ -26,6 +26,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.ScaleXSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -397,12 +398,40 @@ public class Common {
         }
     }
 
+    public static void loadImageBank(ImageView loImageView, String fsURL, Drawable fdError, Drawable placeholder) {
+
+        try {
+            if (fsURL != null) {
+                fsURL = (fsURL).replace("https", "http");
+               // Log.d("TTT", "fsURL..." + fsURL);
+
+                RequestCreator loRequest = Picasso.get().load(fsURL);
+
+                if (fdError != null && placeholder != null) {
+                    loRequest.error(fdError)
+                            .placeholder(placeholder)
+                            .into(loImageView);
+                } else if (fdError != null && placeholder == null) {
+                    loRequest.error(fdError)
+                            .into(loImageView);
+                } else if (fdError == null && placeholder != null) {
+                    loRequest.placeholder(placeholder)
+                            .into(loImageView);
+                } else {
+                    loRequest.into(loImageView);
+                }
+            }
+        } catch (Exception e) {
+            LogV2.logException(TAG, e);
+        }
+    }
+
     public static void loadImage(ImageView loImageView, String fsURL, Drawable fdError, Drawable placeholder) {
 
         try {
             if (fsURL != null) {
                 fsURL = (Constants.IMAGE_BASE_URL + fsURL).replace("https", "http");
-
+                //Log.d("TTT", "fsURL..." + fsURL);
 
                 RequestCreator loRequest = Picasso.get().load(fsURL);
 

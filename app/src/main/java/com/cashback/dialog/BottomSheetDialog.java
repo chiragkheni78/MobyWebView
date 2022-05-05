@@ -76,12 +76,19 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
         checkPermissionStatus();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        //Log.d("TTT", "dialog is pause...");
+       // AppGlobal.fbIsBottomSheetIsOpen = false;
+    }
+
     private void checkPermissionStatus() {
         if (!AppGlobal.fbIsGpsEnInApp && fbIsClickStore) {
             AppGlobal.fbIsBottomSheetIsOpen = true;
             if (!moMapViewModel.checkGPSEnabled(getActivity())) {
                 moMapViewModel.enableGPS(getActivity());
-            }else{
+            } else {
                 moMapViewModel.getLastKnownLocation(getActivity());
             }
         }
@@ -135,7 +142,11 @@ public class BottomSheetDialog extends BottomSheetDialogFragment implements View
     Observer<String> functionCallObserver = fsFunctionName -> {
         switch (fsFunctionName) {
             case MapViewModel.FETCH_OFFERS:
-                Log.d("TTT", "call fetch offer bottom...");
+                //Log.d("TTT", "call fetch offer bottom...");
+                //moMapViewModel.getLastKnownLocation(getActivity());
+                if (moMapViewModel.getCurrentLocation() != null) {
+                    AppGlobal.setLocation(moMapViewModel.getCurrentLocation());
+                }
                 break;
         }
     };

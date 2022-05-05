@@ -722,7 +722,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void checkPermissionStatus() {
-       // Log.d("TTT", "mbIsLocationRequired..." + mbIsLocationRequired);
+        // Log.d("TTT", "mbIsLocationRequired..." + mbIsLocationRequired);
         if (mbIsLocationRequired || AppGlobal.fbIsBottomSheetIsOpen) {
             if (!moMapViewModel.checkGPSEnabled(this)) {
                 moMapViewModel.enableGPS(this);
@@ -735,6 +735,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         public void onChanged(String foFunctionName) {
             switch (foFunctionName) {
                 case LOAD_MAP_VIEW:
+                    if (AppGlobal.fbIsBottomSheetIsOpen) {
+                        return;
+                    }
                     Log.d("TTT", "map view load...");
                     //all permission granted
                     mbIsLocationRequired = false;

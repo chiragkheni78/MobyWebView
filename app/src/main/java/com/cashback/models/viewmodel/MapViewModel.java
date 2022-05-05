@@ -64,8 +64,9 @@ public class MapViewModel extends ViewModel {
     ArrayList<MapMarker> moMapMarkerList;
 
     public void fetchOffers(Context foContext, String mobileNumber, double latitude, double longitude, boolean isMarketingAd, boolean isBlockUser, int pageViewType) {
-        //latitude = 21.2308729;
-        //longitude = 72.8611336;
+        //latitude = 21.2335;
+        //longitude = 72.8636;
+
         FetchOffersRequest loFetchOffersRequest = new FetchOffersRequest(mobileNumber, latitude, longitude, isMarketingAd, isBlockUser, pageViewType);
         loFetchOffersRequest.setAction(Constants.API.GET_OFFER_LIST.getValue());
         loFetchOffersRequest.setDeviceId(Common.getDeviceUniqueId(foContext));
@@ -245,7 +246,7 @@ public class MapViewModel extends ViewModel {
                 if (e instanceof ResolvableApiException) {
                     // Location settings are not satisfied, but this can be fixed
                     // by showing the user a dialog.
-                   /* MessageDialog loDialog = new MessageDialog(foContext, null, "GPS location is required to show in-store offers", "Enable GPS", false);
+                    MessageDialog loDialog = new MessageDialog(foContext, null, "GPS location is required to show in-store offers", "Enable GPS", false);
                     loDialog.setClickListener(v -> {
                         loDialog.dismiss();
                         try {
@@ -258,15 +259,15 @@ public class MapViewModel extends ViewModel {
                             // Ignore the error.
                         }
                     });
-                    loDialog.show();*/
+                    loDialog.show();
 
-                    ResolvableApiException resolvable = (ResolvableApiException) e;
+                 /*   ResolvableApiException resolvable = (ResolvableApiException) e;
                     try {
                         resolvable.startResolutionForResult(foContext,
                                 REQUEST_CHECK_SETTINGS);
                     } catch (IntentSender.SendIntentException sendIntentException) {
                         sendIntentException.printStackTrace();
-                    }
+                    }*/
                 }
             }
         });
@@ -286,6 +287,7 @@ public class MapViewModel extends ViewModel {
                             if (location != null) {
                                 // Logic to handle location object
                                 moCurrentLocation = location;
+                                Log.d("TTT", "getLastKnownLocation..." + moCurrentLocation);
                                 functionCallStatus.postValue(FETCH_OFFERS);
                             } else {
                                 startLocationUpdates(foContext);

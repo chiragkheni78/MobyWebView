@@ -128,7 +128,7 @@
     <!--buttons-->
     <string name="online_coupon">SELECT\nDEAL</string>
     <string name="instore_coupon">OFFLINE\nCOUPON</string>
-    <string name="view_details">VIEW\nDETAILS</string>
+    <string name="view_details">SELECT\nOFFER</string>
     <string name="engaged">ENGAGED</string>
 
     <string name="win_coupon">Win Coupon</string>

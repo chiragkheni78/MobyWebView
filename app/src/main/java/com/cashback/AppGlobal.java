@@ -61,10 +61,6 @@ public class AppGlobal extends Application {
 
     private void initFacebookSDK() {
         FacebookSdk.fullyInitialize();
-        // AppEventsLogger.activateApp(this);
-
-        //        FacebookSdk.setIsDebugEnabled(true);
-//        FacebookSdk.addLoggingBehavior(LoggingBehavior.APP_EVENTS);
     }
 
     public static FirebaseAnalytics getFirebaseAnalytics() {
