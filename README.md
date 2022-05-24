@@ -31,7 +31,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```java
 dependencies {
-    implementation 'com.github.Payaljay:CustomWebviewNew:v1.0.5'
+    implementation 'com.github.chiragkheni78:MobyWebView:V1.0.0'
 }
 ```
 
