@@ -14,12 +14,13 @@
 
 #### Gradle Dependency (jcenter)
 
-Add it in your root build.gradle at the end of repositories:
+Add it in your root settings.gradle at the end of repositories:
 
 ```java
-	allprojects {
-		repositories {
+	dependencyResolutionManagement {
+        repositories {
 			...
+            jcenter()
 			maven { url 'https://jitpack.io' }
 		}
 	}
@@ -31,7 +32,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```java
 dependencies {
-    implementation 'com.github.chiragkheni78:MobyWebView:V1.0.1'
+    implementation 'com.github.chiragkheni78:MobyWebView:V1.0.4'
 }
 ```
 
@@ -58,7 +59,7 @@ You have to add permission in your `AndroidManifest.xml`
 #### Basic WebView
 
 ```java
-FinestWebViewBuilder builder = new FinestWebViewBuilder().setUrl(url);
+MobyWebViewBuilder builder = new MobyWebViewBuilder().setUrl(url);
 builder.loadWebView();
 ```
 
