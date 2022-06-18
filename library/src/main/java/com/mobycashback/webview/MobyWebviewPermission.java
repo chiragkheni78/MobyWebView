@@ -91,6 +91,7 @@ public class MobyWebviewPermission extends WebView {
     protected Listener mListener;
     protected long mLastError;
     private boolean isStoragePermission;
+    private boolean isCategories;
 
     public MobyWebviewPermission(Context context) {
         super(context);
@@ -114,7 +115,7 @@ public class MobyWebviewPermission extends WebView {
     private static final String TAG = "WebViewActivity";
     public ValueCallback<Uri[]> filePathCallBack;
 
-    @SuppressLint({"SetJavaScriptEnabled"})
+    @SuppressLint({"SetJavaScriptEnabled", "JavascriptInterface"})
     private void initView(Context context) {
         if (context instanceof Activity) {
             mActivity = new WeakReference<Activity>((Activity) context);
@@ -232,7 +233,7 @@ public class MobyWebviewPermission extends WebView {
             this.context = context;
         }
 
-        @JavascriptInterface
+
         public void openLinkOnBrowser(String message) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(message));
             mActivity.get().startActivity(browserIntent);
@@ -243,7 +244,6 @@ public class MobyWebviewPermission extends WebView {
         this.evaluateJavascript(javascript, new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String s) {
-
             }
         });
     }
@@ -365,6 +365,17 @@ public class MobyWebviewPermission extends WebView {
         getLocation();
     }
 
+    public boolean setCategories(boolean isCategories) {
+        if (isCategories){
+            Intent intent = new Intent(mActivity.get(), CategoriesActivity.class);
+            mActivity.get().startActivity(intent);
+
+        }else {
+           loadUrl("https://app.mobyads.in/publisher/A01234567/?fsMobile=918140663133&fsEmail=johndeo@gmail.com&fsFirstName=Chirag&fsLastName=Kheni&fiDeviceType=0");
+        }
+        return true;
+    }
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         // super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
@@ -451,6 +462,7 @@ public class MobyWebviewPermission extends WebView {
             case REQUEST_CAMERA_PERMISSIONS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     scanBarcodeFun();
+
                     Log.e("value", "Permission Granted, Now you can use local drive .");
                 } else {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity.get(), Manifest.permission.CAMERA)) {
@@ -496,6 +508,7 @@ public class MobyWebviewPermission extends WebView {
     private void checkCameraPermission() {
         if (ActivityCompat.checkSelfPermission(mActivity.get(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             scanBarcodeFun();
+
         } else {
             ActivityCompat.requestPermissions(mActivity.get(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSIONS);
         }

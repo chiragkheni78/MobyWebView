@@ -2,6 +2,7 @@ package com.mobycashback.webview;
 
 import android.app.Application;
 import android.content.Context;
+import android.provider.Settings;
 
 public class LibApp extends Application {
 
@@ -24,6 +25,11 @@ public class LibApp extends Application {
      */
     public static Context getContext() {
         return instance;
+    }
+
+    public static String getDeviceUniqueId() {
+        return Settings.Secure.getString(LibApp.getContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
     }
 
 }

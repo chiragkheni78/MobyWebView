@@ -21,9 +21,11 @@ import com.mobycashback.webview.databinding.ActivityWebBinding;
 
 public class MobyWebActivity extends AppCompatActivity implements MobyWebviewPermission.Listener, View.OnClickListener {
     String url, setPrimaryColor, setSecondaryColor, setPrimaryTextColor, setSecondaryTextColor;
-    boolean isAccessStorage, isAccessGPS;
+    boolean isAccessStorage, isAccessGPS, isCategories;
     ActivityWebBinding moBinding;
     ViewBinding binding;
+    MobyWebviewPermission webviewPermission;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +34,16 @@ public class MobyWebActivity extends AppCompatActivity implements MobyWebviewPer
 
         moBinding = ActivityWebBinding.inflate(getLayoutInflater());
         setContentView(getContentView(moBinding));
-
         if (getIntent() != null) {
             url = getIntent().getStringExtra("url");
             isAccessGPS = getIntent().getBooleanExtra("isAccessGPS", false);
             isAccessStorage = getIntent().getBooleanExtra("isAccessStorage", false);
+            isCategories = getIntent().getBooleanExtra("isCategories", false);
             setPrimaryColor = getIntent().getStringExtra("setPrimaryColor");
             setSecondaryColor = getIntent().getStringExtra("setSecondaryColor");
             setPrimaryTextColor = getIntent().getStringExtra("setPrimaryTextColor");
             setSecondaryTextColor = getIntent().getStringExtra("setSecondaryTextColor");
         }
-
 
         moBinding.llTop.setBackgroundColor(Color.parseColor(setPrimaryColor));
         moBinding.ivWallet.setColorFilter(Color.parseColor(setSecondaryColor), android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -58,10 +59,11 @@ public class MobyWebActivity extends AppCompatActivity implements MobyWebviewPer
         moBinding.llOffer.setOnClickListener(this);
         moBinding.llWallet.setOnClickListener(this);
 
-
         moBinding.webview.setListener(this, this);
         moBinding.webview.setGeolocationEnabled(isAccessGPS);
         moBinding.webview.setAccessStorage(isAccessStorage);
+        moBinding.webview.setCategories(isCategories);
+
         moBinding.webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -137,14 +139,27 @@ public class MobyWebActivity extends AppCompatActivity implements MobyWebviewPer
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.ivBack) {
-            onBackPressed();
-        } else if (id == R.id.llCoupon) {
-            moBinding.webview.loadJavaScript("openMenuFromNative('my-coupons')");
-        } else if (id == R.id.llOffer) {
-            moBinding.webview.loadJavaScript("openMenuFromNative('my-offers')");
-        } else if (id == R.id.llWallet) {
-            moBinding.webview.loadJavaScript("openMenuFromNative('my-wallet')");
+        if (isCategories) {
+            if (id == R.id.ivBack) {
+                onBackPressed();
+            } else if (id == R.id.llCoupon) {
+                webviewPermission.loadUrl(APIClient.MY_COUPONS);
+                Toast.makeText(this, "select coupon....", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.llOffer) {
+                moBinding.webview.loadUrl(APIClient.MY_OFFERS);
+            } else if (id == R.id.llWallet) {
+                moBinding.webview.loadUrl(APIClient.WALLET);
+            }
+        } else {
+            if (id == R.id.ivBack) {
+                onBackPressed();
+            } else if (id == R.id.llCoupon) {
+                moBinding.webview.loadJavaScript("openMenuFromNative('my-coupons')");
+            } else if (id == R.id.llOffer) {
+                moBinding.webview.loadJavaScript("openMenuFromNative('my-offers')");
+            } else if (id == R.id.llWallet) {
+                moBinding.webview.loadJavaScript("openMenuFromNative('my-wallet')");
+            }
         }
     }
 }

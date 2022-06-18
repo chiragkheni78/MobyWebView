@@ -3,6 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/app/src/main/res/layout/activity_main.xml" value="0.17708333333333334" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/drawable/card_border_bg.xml" value="0.1155" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/drawable/ic_my_coupon.xml" value="0.1465" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/drawable/ic_my_wallet.xml" value="0.1465" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/drawable/ic_offer.xml" value="0.1465" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/layout/activity_categories.xml" value="0.20416666666666666" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/layout/activity_qr_scanner.xml" value="0.2" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/layout/activity_web.xml" value="0.18" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/layout/item_category.xml" value="0.20416666666666666" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/layout/item_category_layout.xml" value="0.203125" />
+        <entry key="..\:/Trusha/GitDemo/MobyWebView/library/src/main/res/layout/item_dialog_category.xml" value="0.20416666666666666" />
         <entry key="..\:/Trusha/MobyWebView/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/jay81/Payal/Chirag/New folder/CustomWebview/app/src/main/res/drawable/ic_my_coupon_24.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/jay81/Payal/Chirag/New folder/CustomWebview/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />

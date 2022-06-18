@@ -2,27 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/RootLayout"
-    tools:context=".MobyWebActivity">
+    tools:context=".CategoriesActivity">
 
     <LinearLayout
         android:id="@+id/llTop"
         style="@style/NormalLayout"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="#FF2401"
+        android:background="#970B3A"
         android:orientation="horizontal">
 
         <LinearLayout
             style="@style/NormalLayout"
             android:layout_width="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:gravity="center_vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:gravity="center_vertical">
 
             <ImageView
                 android:id="@+id/ivBack"
                 style="@style/ImageTiny"
                 android:layout_margin="0dp"
-                android:src="@drawable/ic_back" />
+                android:src="@drawable/ic_back"/>
 
         </LinearLayout>
 
@@ -36,36 +36,34 @@
             <LinearLayout
                 android:id="@+id/llOffer"
                 style="@style/NormalLayout"
-                android:layout_weight="1"
-                android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="0dp">
+                android:padding="0dp"
+                android:gravity="center"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/ivMyOffer"
                     style="@style/ImageTiny"
-                    android:layout_margin="0dp"
                     android:src="@drawable/ic_offer" />
 
                 <TextView
                     android:id="@+id/tvMyOffer"
                     style="@style/TvXSmall"
                     android:layout_marginStart="@dimen/_4sdp"
-                    android:text="My Offers" />
+                    android:text="My Offers"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llCoupon"
                 style="@style/NormalLayout"
-                android:layout_weight="1"
-                android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="0dp">
+                android:padding="0dp"
+                android:gravity="center"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/ivCoupon"
                     style="@style/ImageTiny"
-                    android:layout_margin="0dp"
                     android:src="@drawable/ic_my_coupon" />
 
                 <TextView
@@ -78,25 +76,30 @@
             <LinearLayout
                 android:id="@+id/llWallet"
                 style="@style/NormalLayout"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_weight="1"
                 android:orientation="horizontal"
-                android:padding="0dp">
+                android:padding="0dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/ivWallet"
                     style="@style/ImageTiny"
-                    android:layout_margin="0dp"
-                    android:src="@drawable/ic_my_wallet" />
+                    android:src="@drawable/ic_my_wallet"/>
 
                 <TextView
                     android:id="@+id/tvWallet"
                     style="@style/TvXSmall"
+
                     android:layout_marginStart="@dimen/_4sdp"
                     android:text="Wallet" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category"
+        style="@style/RecyclerviewCard"
+        android:layout_margin="@dimen/_10sdp" />
 
 
     <com.mobycashback.webview.MobyWebviewPermission
