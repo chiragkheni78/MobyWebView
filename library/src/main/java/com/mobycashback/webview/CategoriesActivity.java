@@ -73,7 +73,7 @@ public class CategoriesActivity extends AppCompatActivity {
         moBinding.llOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = APIClient.MY_OFFERS;
+                url = APIClient.MY_OFFERS;
                 setWebview();
                 builder.setUrl(url);
             }
@@ -81,7 +81,7 @@ public class CategoriesActivity extends AppCompatActivity {
         moBinding.llCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = APIClient.MY_COUPONS;
+                url = APIClient.MY_COUPONS;
                 setWebview();
                 builder.setUrl(url);
             }
