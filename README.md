@@ -9,6 +9,7 @@
 * Storage Permission
 * Custom toolbar text color
 * Custom background color for toolbar
+* Category Permission
 
 ## Getting started
 
@@ -32,7 +33,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```java
 dependencies {
-    implementation 'com.github.chiragkheni78:MobyWebView:V1.0.4'
+    implementation 'com.github.chiragkheni78:MobyWebView:V1.0.6'
 }
 ```
 
@@ -110,6 +111,13 @@ Toolbar color will be set as `setSecondaryTextColor`.
 setSecondaryTextColor("color")
 ```
 
+#### Category permission
+```java
+Show Category function is used for enable 'category screen' before webview. 
+If you set true then the category screen visible else its not appear and 'direct display webview'.
+You can use below function for set category screen.
+setCategories(true)
+```
 
 
 
