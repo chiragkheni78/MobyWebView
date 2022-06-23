@@ -10,6 +10,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -24,6 +26,7 @@ import com.adgyde.android.AdGyde;
 import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.HomeActivity;
+import com.cashback.fragments.OfferListFragment;
 import com.cashback.models.request.SyncTokenRequest;
 import com.cashback.models.response.SyncTokenResponse;
 import com.cashback.utils.APIClient;
@@ -36,8 +39,14 @@ import com.cashback.utils.SharedPreferenceManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -99,7 +108,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String lsMessage = loJsonBody.getString("message");
             long llAdID = 0, llLocationID = 0, llActivityID = 0, llMessageID = 0;
             int liCategoryId = 0;
-
             if (loJsonBody.has("fbIsTrack")) {
                 boolean fbIsTrack = loJsonBody.getBoolean("fbIsTrack");
                 if (fbIsTrack) {
@@ -184,8 +192,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             PendingIntent.FLAG_ONE_SHOT);
                     break;
             }
-
-            sendNotification(lsTitle, lsMessage, loPendingIntent);
+            sendNotification(lsTitle, lsMessage, loPendingIntent, loJsonBody);
         } catch (Exception e) {
             LogV2.logException(TAG, e);
         }
@@ -202,7 +209,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void sendNotification(String fsTitle, String fsMessage, PendingIntent foPendingIntent) {
+    private void sendNotification(String fsTitle, String fsMessage, PendingIntent foPendingIntent, JSONObject foBody) throws JSONException {
         AppGlobal.fiBadgeCount++;
         String lsChannelId = getString(R.string.default_notification_channel_id);
         String lsChannel = "default-channel";
@@ -219,6 +226,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
                         .setSound(loDefaultSoundUri)
                         .setContentIntent(foPendingIntent);
+
+
+        Bitmap loBitmap;
+        InputStream loInputStream;
+        if (foBody != null) {
+            if (foBody.has("image") && foBody.getString("image") != "") {
+                String loImg = foBody.getString("image");
+                try {
+                    URL loUrl = new URL(loImg);
+                    loInputStream = loUrl.openConnection().getInputStream();
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(loInputStream);
+                    loBitmap = BitmapFactory.decodeStream(bufferedInputStream);
+                    loNotificationBuilder.setStyle(new NotificationCompat.BigPictureStyle()
+                            .bigPicture(loBitmap));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 
         NotificationManager loNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -241,7 +268,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         loNotificationManager.notify(oneTimeID /* ID of notification */, loNotificationBuilder.build());
 
     }
-
     private void sendRegistrationToServer(String token) {
         SharedPreferenceManager moSharedPreferenceManager = new SharedPreferenceManager(this);
         moSharedPreferenceManager.setFcmToken(token);
