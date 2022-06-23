@@ -26,7 +26,6 @@ import com.adgyde.android.AdGyde;
 import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.activities.HomeActivity;
-import com.cashback.fragments.OfferListFragment;
 import com.cashback.models.request.SyncTokenRequest;
 import com.cashback.models.response.SyncTokenResponse;
 import com.cashback.utils.APIClient;
@@ -45,7 +44,6 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
@@ -138,11 +136,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (loJsonBody.has("message_id"))
                 llMessageID = loJsonBody.getInt("message_id");
 
-
             switch (liNotifyID) {
                 case NotificationType.OFFER_LIST:
                     loIntent = new Intent(this, HomeActivity.class);
                     loIntent.setAction(OFFER_LIST);
+                    loIntent.putExtra("body", loJsonBody.toString());
                     loIntent.putExtra(Constants.IntentKey.CATEGORY_ID, liCategoryId);
                     loIntent.putExtra(Constants.IntentKey.OFFER_ID, llAdID);
                     loIntent.putExtra(Constants.IntentKey.LOCATION_ID, llLocationID);
@@ -157,6 +155,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     loIntent.setAction(ACTIVITY_LIST);
                     loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityID);
                     loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    loIntent.putExtra("body", loJsonBody.toString());
                     loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,
                             PendingIntent.FLAG_ONE_SHOT);
                     break;
@@ -172,6 +171,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     loIntent.setAction(WALLET_SCREEN);
                     loIntent.putExtra(Constants.IntentKey.ACTIVITY_ID, llActivityID);
                     loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    loIntent.putExtra("body", loJsonBody.toString());
                     loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,
                             PendingIntent.FLAG_ONE_SHOT);
                     break;
@@ -181,6 +181,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     loIntent.setAction(MESSAGE_LIST);
                     loIntent.putExtra(Constants.IntentKey.MESSAGE_ID, llMessageID);
                     loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    loIntent.putExtra("body", loJsonBody.toString());
                     loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,
                             PendingIntent.FLAG_ONE_SHOT);
                     break;
@@ -188,6 +189,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 default:
                     loIntent = new Intent(this, HomeActivity.class);
                     loIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    loIntent.putExtra("body", loJsonBody.toString());
                     loPendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, loIntent,
                             PendingIntent.FLAG_ONE_SHOT);
                     break;
@@ -268,6 +270,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         loNotificationManager.notify(oneTimeID /* ID of notification */, loNotificationBuilder.build());
 
     }
+
     private void sendRegistrationToServer(String token) {
         SharedPreferenceManager moSharedPreferenceManager = new SharedPreferenceManager(this);
         moSharedPreferenceManager.setFcmToken(token);

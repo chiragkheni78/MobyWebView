@@ -71,6 +71,8 @@ import com.google.android.play.core.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -673,8 +675,24 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                         break;
                     default:
                     case OFFER_LIST:
-                        int liCategoryId = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
-                        long llOfferId = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
+                        //condition
+                        int liCategoryId = 0;
+                        long llOfferId = 0;
+                        try {
+
+                            JSONObject loJsonObject = new JSONObject(getIntent().getStringExtra("body"));
+                            if (loJsonObject.has("isCategoryActive")) {
+                                liCategoryId = loJsonObject.getInt("ad_category");
+                                llOfferId = loJsonObject.getLong("ad_id");
+                            } else {
+                                liCategoryId = getIntent().getIntExtra(Constants.IntentKey.CATEGORY_ID, 0);
+                                llOfferId = getIntent().getLongExtra(Constants.IntentKey.OFFER_ID, 0);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         long llLocationId = getIntent().getLongExtra(Constants.IntentKey.LOCATION_ID, 0);
                         loadOfferListFragment(liCategoryId, llOfferId, llLocationId, 0);
                         break;
