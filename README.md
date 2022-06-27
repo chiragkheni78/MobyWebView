@@ -33,7 +33,7 @@ Easily reference the library in your Android projects using this dependency in y
 
 ```java
 dependencies {
-    implementation 'com.github.chiragkheni78:MobyWebView:V1.0.6'
+    implementation 'com.github.chiragkheni78:MobyWebView:V1.0.7'
 }
 ```
 
