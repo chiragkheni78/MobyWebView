@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewbinding.ViewBinding;
 
+import com.mobycashback.utils.Common;
 import com.mobycashback.webview.databinding.ActivityWebBinding;
 
 
@@ -35,14 +36,14 @@ public class MobyWebActivity extends AppCompatActivity implements MobyWebviewPer
         moBinding = ActivityWebBinding.inflate(getLayoutInflater());
         setContentView(getContentView(moBinding));
         if (getIntent() != null) {
-            url = getIntent().getStringExtra("url");
-            isAccessGPS = getIntent().getBooleanExtra("isAccessGPS", false);
-            isAccessStorage = getIntent().getBooleanExtra("isAccessStorage", false);
-            isCategories = getIntent().getBooleanExtra("isCategories", false);
-            setPrimaryColor = getIntent().getStringExtra("setPrimaryColor");
-            setSecondaryColor = getIntent().getStringExtra("setSecondaryColor");
-            setPrimaryTextColor = getIntent().getStringExtra("setPrimaryTextColor");
-            setSecondaryTextColor = getIntent().getStringExtra("setSecondaryTextColor");
+            url = getIntent().getStringExtra(Common.URL);
+            isAccessGPS = getIntent().getBooleanExtra(Common.ACCESS_GPS, false);
+            isAccessStorage = getIntent().getBooleanExtra(Common.ACCESS_STORAGE, false);
+            isCategories = getIntent().getBooleanExtra(Common.CATEGORY, false);
+            setPrimaryColor = getIntent().getStringExtra(Common.PRIMARY_COLOR);
+            setSecondaryColor = getIntent().getStringExtra(Common.SECONDARY_COLOR);
+            setPrimaryTextColor = getIntent().getStringExtra(Common.PRIMARY_TEXT_COLOR);
+            setSecondaryTextColor = getIntent().getStringExtra(Common.SECONDARY_TEXT_COLOR);
         }
 
         moBinding.llTop.setBackgroundColor(Color.parseColor(setPrimaryColor));
@@ -62,7 +63,6 @@ public class MobyWebActivity extends AppCompatActivity implements MobyWebviewPer
         moBinding.webview.setListener(this, this);
         moBinding.webview.setGeolocationEnabled(isAccessGPS);
         moBinding.webview.setAccessStorage(isAccessStorage);
-        moBinding.webview.setCategories(isCategories);
 
         moBinding.webview.setWebViewClient(new WebViewClient() {
             @Override

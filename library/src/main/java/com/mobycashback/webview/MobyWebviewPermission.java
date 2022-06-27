@@ -35,6 +35,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -124,7 +125,9 @@ public class MobyWebviewPermission extends WebView {
         // LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // you should not use a new instance of MyWebView here
         // MyWebview view = (MyWebView) inflater.inflate(R.layout.custom_webview, this);
-        CookieManager.getInstance().setAcceptThirdPartyCookies(this, true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().setAcceptThirdPartyCookies(this, true);
+        }
         this.getSettings().setJavaScriptEnabled(true);
         this.getSettings().setLoadWithOverviewMode(true);
         this.getSettings().setUseWideViewPort(true);
@@ -134,13 +137,8 @@ public class MobyWebviewPermission extends WebView {
         this.getSettings().getAllowFileAccess();
         this.getSettings().getAllowFileAccessFromFileURLs();
         this.getSettings().getAllowUniversalAccessFromFileURLs();
-        this.addJavascriptInterface(new JavaScriptInterface(mActivity.get()), "Android");
 
-        if (Build.VERSION.SDK_INT >= 19) {
-            this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        } else if (Build.VERSION.SDK_INT >= 11 && Build.VERSION.SDK_INT < 19) {
-            this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
+        this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         this.addJavascriptInterface(new WebViewJavaScriptInterface(mActivity.get()), "app");
 
@@ -233,10 +231,25 @@ public class MobyWebviewPermission extends WebView {
             this.context = context;
         }
 
-
+        @JavascriptInterface
         public void openLinkOnBrowser(String message) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(message));
             mActivity.get().startActivity(browserIntent);
+        }
+
+        @JavascriptInterface
+        public void scanBarcode() {
+            checkCameraPermission();
+        }
+
+        @JavascriptInterface
+        public void openCampaignLink(String fsLink) {
+            openBrowser(mActivity.get(), fsLink);
+        }
+
+        @JavascriptInterface
+        public void triggerGPS() {
+            checkLocationSettings();
         }
     }
 
@@ -268,18 +281,22 @@ public class MobyWebviewPermission extends WebView {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
-                takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Log.e(TAG, "Unable to create Image File", ex);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mCameraPhotoPath =
+                        getContext().getPackageName() + ".provider";
+                Uri photoURI = FileProvider.getUriForFile(getContext(), mCameraPhotoPath, photoFile);
 
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                }
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             } else {
-                takePictureIntent = null;
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             }
         }
 
@@ -314,30 +331,6 @@ public class MobyWebviewPermission extends WebView {
         this.isStoragePermission = isStoragePermission;
     }
 
-    public class JavaScriptInterface {
-        Context mContext;
-
-        // Instantiate the interface and set the context
-        JavaScriptInterface(Context c) {
-            mContext = c;
-        }
-
-        @JavascriptInterface
-        public void scanBarcode() {
-            checkCameraPermission();
-        }
-
-        @JavascriptInterface
-        public void openCampaignLink(String fsLink) {
-            openBrowser(mActivity.get(), fsLink);
-        }
-
-        @JavascriptInterface
-        public void triggerGPS() {
-            checkLocationSettings();
-        }
-    }
-
     private void scanBarcodeFun() {
         Intent intent = new Intent(mActivity.get(), QrScannerActivity.class);
         mActivity.get().startActivityForResult(intent, SCAN_QR_REQUEST_CODE);
@@ -363,17 +356,6 @@ public class MobyWebviewPermission extends WebView {
             return;
         }
         getLocation();
-    }
-
-    public boolean setCategories(boolean isCategories) {
-        if (isCategories){
-            Intent intent = new Intent(mActivity.get(), CategoriesActivity.class);
-            mActivity.get().startActivity(intent);
-
-        }else {
-           loadUrl("https://app.mobyads.in/publisher/A01234567/?fsMobile=918140663133&fsEmail=johndeo@gmail.com&fsFirstName=Chirag&fsLastName=Kheni&fiDeviceType=0");
-        }
-        return true;
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

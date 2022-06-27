@@ -100,12 +100,12 @@ public class MobyWebViewBuilder {
             } else {
                 Intent intent = new Intent(LibApp.getContext(), MobyWebActivity.class);
                 intent.putExtra(Common.URL, String.valueOf(url));
-                intent.putExtra(Common.ACCESS_GPS, String.valueOf(isAccessGPS));
-                intent.putExtra(Common.ACCESS_STORAGE, String.valueOf(isAccessStorage));
-                intent.putExtra(Common.PRIMARY_COLOR, String.valueOf(setPrimaryColor));
-                intent.putExtra(Common.SECONDARY_COLOR, String.valueOf(setSecondaryColor));
-                intent.putExtra(Common.PRIMARY_TEXT_COLOR, String.valueOf(setPrimaryTextColor));
-                intent.putExtra(Common.SECONDARY_TEXT_COLOR, String.valueOf(setSecondaryTextColor));
+                intent.putExtra(Common.ACCESS_GPS, isAccessGPS);
+                intent.putExtra(Common.ACCESS_STORAGE, isAccessStorage);
+                intent.putExtra(Common.PRIMARY_COLOR, setPrimaryColor);
+                intent.putExtra(Common.SECONDARY_COLOR, setSecondaryColor);
+                intent.putExtra(Common.PRIMARY_TEXT_COLOR, setPrimaryTextColor);
+                intent.putExtra(Common.SECONDARY_TEXT_COLOR, setSecondaryTextColor);
                 intent.putExtra(Common.CATEGORY, isCategories);
                 if (!isFromCategory) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
