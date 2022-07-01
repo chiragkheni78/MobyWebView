@@ -108,6 +108,7 @@ If you set true then the category screen visible else its not appear and 'direct
 You can use below function for set category screen.
 setCategories(true)
 ```
-
-
+# my webView permission documentation
+see documentation [here]
+[a link](https://github.com/chiragkheni78/MobyWebView/blob/main/WEBVIEW_PERMISSION.md)
 
