@@ -41,11 +41,9 @@ public static final int REQUEST_LOCATION_PERMISSIONS = 101;
 FusedLocationProviderClient fusedLocationClient;
 LocationRequest mLocationRequest;
 boolean isGPSSettingCall;
-String url = "https://mpokket.mobyads.in/publisher/MPOKKET/?&fiLoadCategory=19&fiBannerId=305&fsMobile=+919726782363&fiGender=0&fiAge=32";
-
 ```
 
-Set the permission of location in `onRequestPermissionsResult()` Like -
+Set the permission of location in `onRequestPermissionsResult()` in the activity Like -
 ```java
 switch (requestCode){
     case REQUEST_LOCATION_PERMISSIONS:
@@ -93,7 +91,7 @@ switch (requestCode){
 }
 ```
 
-Check the location setting are enabled or not with below code.
+To check the location setting are enabled or not in activity with below code.
 ```java
  private void checkLocationSettings() {
     if (!isLocationEnabled()) {
@@ -135,7 +133,7 @@ Set location service to enabled location in activity For Example-
     }
 ```
 
-Get the google play services location using `FusedLocation` provider in `getLocation()` Like -
+Get the google play services location using `FusedLocation` provider in `getLocation()` in the activity Like -
 ```java
 private void getLocation() {
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -196,7 +194,7 @@ Set geoLocationCallback in `callApis()` function in your activity.
 }
 ```
 
-Check location request, if permission is granted then return `true`.
+Check location request, if permission is granted then return `true` in the activity Like-.
 ```java
 private boolean checkAndRequestLocationPermissions() {
         int locationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -219,7 +217,7 @@ private boolean checkAndRequestLocationPermissions() {
         return true;
     }
 ```
-Add below code to set the force enable location permission.
+Add below code to set the force enable location permission in the activity.
 ```java
  public void onResume() {
         if (isGPSSettingCall) {
@@ -351,7 +349,7 @@ switch(requestCode){
      break;
  ```
 
-Open Category for select the camera or gallery with below code.
+Open Category for select the camera or gallery in activity with below code.
 ```java
 private void fileChoose(){
     Intent takePictureIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -460,7 +458,7 @@ switch (requestCode){
 }
 ```
 
-check the camera permission is granted or not in the `checkCameraPermission()` Like-
+check the camera permission is granted or not in the `checkCameraPermission()` in activity Like-
 ```java
 private void checkCameraPermission() {
     if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
@@ -471,7 +469,7 @@ private void checkCameraPermission() {
 }
 ```
 
-Create a path of file to store the image in `createImageFile()` function.
+To create a path of file to store the image in `createImageFile()` function in activity.
 ```java
  private File createImageFile()throws IOException{
     // Create an image file name
@@ -488,7 +486,7 @@ Create a path of file to store the image in `createImageFile()` function.
  }
 ```
 
-Check camera and gallery request, if permission is granted then return `true`.
+Check camera and gallery request, if permission is granted then return `true` in activity.
 ```java
 private boolean checkAndRequestCameraPermissions(){
     int loPermissionStorage=ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -529,7 +527,7 @@ moBinding.webView.setWebChromeClient(new WebChromeClient(){
 
 #### 3.Open link in browser
 
-#### Manifest setting for access camera
+#### Manifest setting to open link in browser 
 
 You have to add permission in your `AndroidManifest.xml`
 
@@ -539,7 +537,6 @@ You have to add permission in your `AndroidManifest.xml`
 ```
 
 If you want to load your link in browser then add the function in your activity like-.
-
 ```java
  /*
  * Call java interface.
@@ -571,37 +568,31 @@ public class WebViewJavaScriptInterface {
     }
 }
 ```
+Also add the `setWebChromeClient()` in onCreate() of your activity Like-
+```java
+moBinding.webView.setWebChromeClient(new WebChromeClient(){
+    /*
+    * This function will be show alert dialog.
+    */
+    @Override
+    public boolean onJsAlert(WebView view,String url,String message,JsResult result){
+        return super.onJsAlert(view,url,message,result);
+    }
+}
+```
 
 #### 4.Open menu from native
 
-#### Manifest setting for access camera
+#### Manifest setting for access open menu from native
 
 You have to add permission in your `AndroidManifest.xml`
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
 ```
-
-Call interface in onCreate() in your activity with below code.
+If you want open menu from native then just add below code whenever you want to call either click on button or onCreate() in your activity like below.
 ```java
-  webView.addJavascriptInterface(new WebViewJavaScriptInterface(MainActivity.this), "app");
-  webView.loadUrl(url);
+ webView.evaluateJavascript("openMenuFromNative('my-offers')", null);
 ```
-
-Add the `setWebChromeClient()` in onCreate() Like-
-```java
-moBinding.webView.setWebChromeClient(new WebChromeClient(){
-    /*
-     * This function will be show alert dialog.  
-    */
-    @Override
-    public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-        return super.onJsAlert(view, url, message, result);
-    }
-```
-
-Create the sub class of javascript interface for open menu from native to browser in your activity.
-Which is define in above `WebViewJavaScriptInterface` class.
-
 
 #### Set Common Alert Dialog
 To show the custom alert dialog in the activity with below code.
