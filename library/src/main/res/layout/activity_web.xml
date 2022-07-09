@@ -38,7 +38,7 @@
                 style="@style/NormalLayout"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="0dp">
 
@@ -51,6 +51,7 @@
                 <TextView
                     android:id="@+id/tvMyOffer"
                     style="@style/TvXSmall"
+                    android:gravity="center"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:text="My Offers" />
             </LinearLayout>
@@ -60,7 +61,7 @@
                 style="@style/NormalLayout"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="0dp">
 
@@ -73,7 +74,7 @@
                 <TextView
                     android:id="@+id/tvCoupon"
                     style="@style/TvXSmall"
-                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:text="My Coupons" />
             </LinearLayout>
@@ -84,6 +85,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="0dp">
 
@@ -96,6 +98,7 @@
                 <TextView
                     android:id="@+id/tvWallet"
                     style="@style/TvXSmall"
+                    android:gravity="center"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:text="Wallet" />
             </LinearLayout>
