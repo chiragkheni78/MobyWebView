@@ -137,7 +137,8 @@ public class MobyWebviewPermission extends WebView {
         this.getSettings().getAllowFileAccess();
         this.getSettings().getAllowFileAccessFromFileURLs();
         this.getSettings().getAllowUniversalAccessFromFileURLs();
-
+        this.getSettings().setLoadWithOverviewMode(true);
+        this.getSettings().setUseWideViewPort(true);
         this.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
         this.addJavascriptInterface(new WebViewJavaScriptInterface(mActivity.get()), "app");
