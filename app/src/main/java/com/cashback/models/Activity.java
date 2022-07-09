@@ -73,6 +73,9 @@ public class Activity implements LifecycleOwner {
     @SerializedName("fsFlatCashBackAmazon")
     String flatCbAmazon;
 
+    @SerializedName("fbIsMyCash")
+    String providerCashLabel;
+
     public long getActivityID() {
         return activityID;
     }
@@ -83,6 +86,10 @@ public class Activity implements LifecycleOwner {
 
     public String getDiscountUpTo() {
         return discountUpTo;
+    }
+
+    public String getProviderCashLabel() {
+        return providerCashLabel;
     }
 
     public void setBlinkShopOnline(boolean clickShopOnline) {

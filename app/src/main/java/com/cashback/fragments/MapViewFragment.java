@@ -471,7 +471,11 @@ public class MapViewFragment extends BaseFragment implements OnMapReadyCallback,
 
                     imageBack.setImageDrawable(getResources().getDrawable(R.drawable.ic_red_pin_bg));
                     if (!TextUtils.isEmpty(loMapMarker.getFlatCashBack()))
-                        tvPrice.setText(loMapMarker.getFlatCashBack() + " Cashback");
+                        if (loMapMarker.getProviderCashLabel().equals("yes")) {
+                            tvPrice.setText(loMapMarker.getFlatCashBack() +" "+ AppGlobal.msProviderCashLabel);
+                        } else {
+                            tvPrice.setText(loMapMarker.getFlatCashBack() + " " + Constants.CASHBACK);
+                        }
                     else
                         tvPrice.setVisibility(View.GONE);
                 }

@@ -36,6 +36,7 @@ public class AppGlobal extends Application {
     public static ArrayList<Advertisement> moSharePageImages;
     public static ArrayList<MessageDetailImage> moMessageDetailImage;
     public static Location moLocation;
+    public static String msProviderCashLabel;
 
     public static int getTotalBillVerified() {
         return fiTotalBillVerified;

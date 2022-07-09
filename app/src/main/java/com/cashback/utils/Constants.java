@@ -11,6 +11,7 @@ public class Constants {
 
     public static String IMAGE_BASE_URL = "https://mobyads.in/moby/";
     public static String DEFAULT_REFERRAL_CODE = ""; //SAMSUNG //APPNEXTSAM
+    public static String CASHBACK="Cashback";
 
 
     public class FragmentTag {

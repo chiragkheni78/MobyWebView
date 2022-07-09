@@ -60,6 +60,8 @@ public class HomeViewModel extends ViewModel {
                     AppGlobal.setMainStore(loJsonObject.getFoMainStore());
                     AppGlobal.setTotalBillVerified(loJsonObject.getTotalBillVerified());
                     AppGlobal.fbIsGpsEnInApp = loJsonObject.isFbIsGpsEnInApp();
+                    AppGlobal.msProviderCashLabel = loJsonObject.getCashbackString();
+
                     //AppGlobal.fbIsGpsEnInApp = false;
                     if (loJsonObject.getMessageDetailImage() != null && loJsonObject.getMessageDetailImage().size() > 0) {
                         AppGlobal.setMessageDetailImage(loJsonObject.getMessageDetailImage());

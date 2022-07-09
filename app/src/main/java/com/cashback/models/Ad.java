@@ -55,6 +55,13 @@ public class Ad implements Serializable {
     @SerializedName("fiAdCouponType")
     int adCouponType;
 
+    @SerializedName("fbIsMyCash")
+    String providerCashLabel;
+
+    public String getProviderCashLabel(){
+        return providerCashLabel;
+    }
+
     public long getAdID() {
         return adID;
     }

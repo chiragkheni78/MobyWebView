@@ -56,12 +56,15 @@ public class MapViewModel extends ViewModel {
 
     public static final String LOAD_MAP_VIEW = "loadMapView";
     public static final String FETCH_OFFERS = "fetchOffers";
-
+    public final static int REQUEST_CHECK_SETTINGS = 200;
+    public static final int MY_PERMISSIONS_LOCATION = 103;
     public MutableLiveData<FetchOffersResponse> fetchOffersStatus = new MutableLiveData<>();
     public MutableLiveData<String> functionCallStatus = new MutableLiveData<>();
-
-    private ArrayList<Ad> moOfferList;
     ArrayList<MapMarker> moMapMarkerList;
+    LocationRequest locationRequest;
+    Location moCurrentLocation;
+    private ArrayList<Ad> moOfferList;
+    private FusedLocationProviderClient fusedLocationClient;
 
     public void fetchOffers(Context foContext, String mobileNumber, double latitude, double longitude, boolean isMarketingAd, boolean isBlockUser, int pageViewType) {
         //latitude = 21.2335;
@@ -132,6 +135,7 @@ public class MapViewModel extends ViewModel {
                     loMapMarker.setAdLogo(loOffer.getLogoUrl());
                     loMapMarker.setDiscountUpTo(loOffer.getDiscountUpTo());
                     loMapMarker.setFlatCashBack(loOffer.getFlatCashBack());
+                    loMapMarker.setProviderCashLabel(loOffer.getProviderCashLabel());
                     loMapMarkerList.add(loMapMarker);
                 }
             }
@@ -173,7 +177,6 @@ public class MapViewModel extends ViewModel {
                 .icon(loPinIcon);
     }
 
-
     public boolean isLocationEnabled(Context foContext) {
 
         if (!Common.isGPSEnabled(foContext)
@@ -202,12 +205,6 @@ public class MapViewModel extends ViewModel {
         }
 
     }
-
-    public final static int REQUEST_CHECK_SETTINGS = 200;
-    public static final int MY_PERMISSIONS_LOCATION = 103;
-    private FusedLocationProviderClient fusedLocationClient;
-    LocationRequest locationRequest;
-    Location moCurrentLocation;
 
     public LocationRequest getLocationRequest(Activity foContext) {
         if (locationRequest == null) {
@@ -327,6 +324,10 @@ public class MapViewModel extends ViewModel {
             fusedLocationClient.removeLocationUpdates(locationCallback);
     }
 
+    public Location getCurrentLocation() {
+        return moCurrentLocation;
+    }
+
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -345,8 +346,5 @@ public class MapViewModel extends ViewModel {
         }
     };
 
-    public Location getCurrentLocation() {
-        return moCurrentLocation;
-    }
 
 }

@@ -31,6 +31,8 @@ public class MapMarker {
     String landmark;
     String adLogo;
 
+    String providerCashLabel;
+
     public String getDiscountUpTo() {
         return discountUpTo;
     }
@@ -39,12 +41,20 @@ public class MapMarker {
         return flatCashBack;
     }
 
+    public String getProviderCashLabel() {
+        return providerCashLabel;
+    }
+
     public void setDiscountUpTo(String discountUpTo) {
         this.discountUpTo = discountUpTo;
     }
 
     public void setFlatCashBack(String flatCashBack) {
         this.flatCashBack = flatCashBack;
+    }
+
+    public void setProviderCashLabel(String providerCashLabel){
+        this.providerCashLabel = providerCashLabel;
     }
 
     public String getAdLogo() {

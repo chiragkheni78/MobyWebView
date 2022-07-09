@@ -330,7 +330,12 @@ public class    ActivityListAdapter extends RecyclerView.Adapter<ActivityListAda
                 //foTvCashbackAmount.setText(Common.getColorText("Extra ", Color.WHITE));
             }
             foTvCashbackAmount.append(Common.getColorText(foActivity.getFlatCashBack(), fiPrimaryColor));
-            foTvCashbackAmount.append(Common.getColorText(" Cashback", Color.WHITE));
+
+            if (foActivity.getProviderCashLabel().equals("yes")) {
+                foTvCashbackAmount.append(Common.getColorText(" "+AppGlobal.msProviderCashLabel, Color.WHITE));
+            } else {
+                foTvCashbackAmount.append(Common.getColorText(" " +Constants.CASHBACK, Color.WHITE));
+            }
         }
         foTvCashbackAmount.setBackground(ActivityCompat.getDrawable(moContext, R.drawable.rect_black));
     }

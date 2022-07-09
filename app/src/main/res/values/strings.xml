@@ -250,6 +250,14 @@
     <string name="valid_ads_msg">Please select any one Ad on.</string>
     <string name="total_credit">Total Credits</string>
 
+    <string name="cash_label_dialog_msg">
+        AFTER CHECKOUT / PAYMENTS,\n
+        CHECK MESSAGES OR SMS FOR\n
+            “TRACKING MESSAGE”
+        \nWITHIN 5 MINS TO 24 HRS\n
+        AFTER THAT MYCASH CREDIT\n
+        WILL SHOW IN YOUR WALLET
+    </string>
 
     <!--Timeline Sorting-->
     <string-array name="sort_by">

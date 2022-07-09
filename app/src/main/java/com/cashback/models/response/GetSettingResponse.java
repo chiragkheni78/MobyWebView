@@ -75,6 +75,9 @@ public class GetSettingResponse {
     @SerializedName("foShareBanner")
     String[] shareBanner;
 
+    @SerializedName("fsMyCashLabel")
+    String providerCashLabel;
+
     @SerializedName("foDealOfTheDays")
     private ArrayList<DealOfTheDayResponse> dealsOfTheDay;
 
@@ -183,6 +186,10 @@ public class GetSettingResponse {
 
     public boolean isUserExist() {
         return isUserExist;
+    }
+
+    public String getCashbackString(){
+        return providerCashLabel;
     }
 
     public void setUserExist(boolean userExist) {

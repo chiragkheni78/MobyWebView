@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cashback.AppGlobal;
 import com.cashback.R;
 import com.cashback.models.Ad;
 import com.cashback.utils.Common;
@@ -199,7 +200,13 @@ public class OfferListAdapter extends RecyclerView.Adapter<OfferListAdapter.Data
             }
             //  foTvCashBackOffer.append(Common.getColorSizeText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
             foTvCashBackOffer.append(Common.getColorText(foAdOffer.getFlatCashBack(), fiPrimaryColor));
-            foTvCashBackOffer.append(Common.getColorText(" Cashback", Color.WHITE));
+
+            if (foAdOffer.getProviderCashLabel().equals("yes")) {
+                foTvCashBackOffer.append(Common.getColorText(" "+AppGlobal.msProviderCashLabel, Color.WHITE));
+            } else {
+                foTvCashBackOffer.append(Common.getColorText(" "+Constants.CASHBACK, Color.WHITE));
+            }
+
             // foTvCashBackOffer.append(Common.getColorSpaceText(" Cashback", Color.WHITE));
         }
 
