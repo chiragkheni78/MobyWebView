@@ -51,7 +51,8 @@
                 <TextView
                     android:id="@+id/tvMyOffer"
                     style="@style/TvXSmall"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:text="My Offers" />
             </LinearLayout>
@@ -74,7 +75,8 @@
                 <TextView
                     android:id="@+id/tvCoupon"
                     style="@style/TvXSmall"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:text="My Coupons" />
             </LinearLayout>
@@ -98,7 +100,7 @@
                 <TextView
                     android:id="@+id/tvWallet"
                     style="@style/TvXSmall"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:text="Wallet" />
             </LinearLayout>
